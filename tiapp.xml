@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><ti:app xmlns:ti="http://ti.appcelerator.org">
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
     <deployment-targets>
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
@@ -12,7 +13,7 @@
     <version>1.0</version>
     <publisher>Matthew Congrove</publisher>
     <url>http://mattcongrove.com</url>
-    <description>An open-source Titanium project to quickly allow charities to build mobile applications.</description>
+    <description>An open-source Titanium project that allows charities to quickly build mobile applications.</description>
     <copyright>2012 by Matthew Congrove</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
@@ -44,8 +45,10 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-    <modules><module platform="android" version="1.0">ti.physicalSizeCategory</module>
-</modules>
-<plugins><plugin version="1.0">ti.alloy</plugin>
-</plugins>
+    <modules>
+        <module platform="android" version="1.0">ti.physicalSizeCategory</module>
+    </modules>
+    <plugins>
+        <plugin version="1.0">ti.alloy</plugin>
+    </plugins>
 </ti:app>
