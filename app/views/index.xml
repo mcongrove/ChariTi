@@ -1,0 +1,9 @@
+<Alloy>
+	<Window id="MainWindow">
+		<View id="GlobalWrapper">
+			<View id="ContentWrapper" />
+			
+			<Require type="widget" src="com.mcongrove.tabs" id="Tabs"/>
+		</View>
+	</Window>
+</Alloy>

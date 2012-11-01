@@ -1,0 +1,14 @@
+"#Wrapper": {
+	height: "50dp",
+	backgroundColor: "#000",
+	bottom: "0dp"
+},
+"#TabContainer": {
+	layout: "horizontal",
+	zIndex: 100
+},
+"#indicator": {
+	backgroundColor: "#800528",
+	left: 0,
+	zIndex: 99
+}

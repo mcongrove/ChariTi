@@ -1,0 +1,25 @@
+{
+	"id": "MercyCorps.001",
+	"settings": {
+		"webViewDefaultStyling": "<style>* { margin: 0; padding: 0; font-family: Arial; font-size: 14px; line-height: 16px }</style>",
+		"emailSettings": {
+			"subject": "Check out this great NPBC Chamber content!",
+			"body": "I found this and thought you might find it interesting:<br /><br />",
+			"footer": "Sent by <a href='http://npbchamber.com/'>NPBC Chamber</a>"
+		}
+	},
+	"plugins": {
+		"facebook": "187692147928682",
+		"googleAnalytics": "UA-24040667-1",
+		"twitterConsumerKey": "BNA3xCaM75Lr45zYIByXLQ",
+		"twitterConsumerSecret": "uxMAnnEl5cHnMMWIz3Vvu1rqiZ53mgLheFlGcPsV0"
+	},
+	"tabs": [
+		{
+			"title": "News",
+			"feed": "https://www.facebook.com/feeds/page.php?id=55935221520&format=rss20",
+			"type": "news",
+			"image": "/icons/article.png"		
+		}
+	]
+}

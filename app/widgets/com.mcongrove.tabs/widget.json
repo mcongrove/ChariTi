@@ -1,0 +1,13 @@
+{
+	"id": "com.mcongrove.tabs",
+	"name": "tabs",
+	"description" : "",
+	"author": "",
+	"version": "1.0",
+	"copyright":"Copyright 2012 Matthew Congrove",
+	"license":"Public Domain",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"",
+	"platforms":"android,ios,mobileweb"
+}

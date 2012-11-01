@@ -1,0 +1,7 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="TabContainer" />
+		
+		<View id="indicator" />
+	</View>
+</Alloy>
