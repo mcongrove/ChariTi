@@ -24,11 +24,6 @@ var APP = {
 	 */
 	detailController: null,
 	/**
-	 * Setup the main content database
-	 * @type {Object}
-	 */
-	Database: null,
-	/**
 	 * The main app window
 	 * @type {Object}
 	 */
@@ -92,7 +87,7 @@ var APP = {
 	build: function() {
 		var tabs = [];
 		
-		for(var i = 0; i < APP.Nodes.length; i++) {
+		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			tabs.push({
 				id: i,
 				title: APP.Nodes[i].title,
@@ -113,7 +108,11 @@ var APP = {
 	 * Setup the database bindings
 	 */
 	setupDatabase: function() {
-		APP.Database = Ti.Database.open("Charitti");
+		var db = Ti.Database.open("Charitti");
+		
+		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
+		
+		db.close();
 	},
 	/**
 	 * Global event handler to change screens
@@ -129,10 +128,10 @@ var APP = {
 			// Remove current controller view
 			APP.removeCurrentScreen(function() {
 				// Create the new screen controller
-				APP.currentController = Alloy.createController(APP.Nodes[_id].type, APP.Nodes[_id]);
+				APP.currentController = Alloy.createController(APP.Nodes[_id].type, APP.Nodes[_id]).getView();
 
 				// Add the new screen to the window
-				APP.ContentWrapper.add(APP.currentController.Wrapper);
+				APP.ContentWrapper.add(APP.currentController);
 			});
 		}
 	},
@@ -142,7 +141,7 @@ var APP = {
 	 */
 	removeCurrentScreen: function(_callback) {
 		if(APP.currentController) {
-			APP.ContentWrapper.remove(APP.currentController.Wrapper);
+			APP.ContentWrapper.remove(APP.currentController);
 			
 			APP.currentController = null;
 		}
@@ -158,17 +157,17 @@ var APP = {
 	 */
 	openDetailScreen: function(_controller, _params) {
 		// Create the new screen controller
-		APP.detailController = Alloy.createController(_controller, _params);
+		APP.detailController = Alloy.createController(_controller, _params).getView();
 		
-		APP.MainWindow.add(APP.detailController.Wrapper);
+		APP.ContentWrapper.add(APP.detailController);
 	},
 	/**
 	 * Removes the detail screen
 	 * @param {Function} _callback
 	 */
-	removeDetailScreen: function(_callback) {
+	closeDetailScreen: function(_callback) {
 		if(APP.detailController) {
-			APP.ContentWrapper.remove(APP.detailController.Wrapper);
+			APP.ContentWrapper.remove(APP.detailController);
 			
 			APP.detailController = null;
 		}

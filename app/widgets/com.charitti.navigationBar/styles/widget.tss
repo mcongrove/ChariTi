@@ -1,0 +1,25 @@
+"#Wrapper": {
+	top: "0dp",
+	left: "0dp",
+	width: Ti.UI.SIZE,
+	height: "46dp",
+	backgroundColor: "#000"
+},
+"#back": {
+	top: "15dp",
+	left: "15dp",
+	width: "19dp",
+	height: "16dp"
+},
+"#title": {
+	top: "10dp",
+	left: "46dp",
+	right: "46dp",
+	height: "26dp",
+	font: {
+		fontSize: "22dp",
+		fontWeight: "bold"
+	},
+	color: "#FFF",
+	textAlign: "center"
+}

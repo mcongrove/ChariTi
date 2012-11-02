@@ -17,9 +17,15 @@
 	"tabs": [
 		{
 			"title": "News",
-			"feed": "https://www.facebook.com/feeds/page.php?id=55935221520&format=rss20",
+			"feed": "http://www.mercycorps.org/services/rss/homepage.xml",
 			"type": "news",
-			"image": "/icons/article.png"		
+			"image": "/icons/news1.png"		
+		},
+		{
+			"title": "Blog",
+			"feed": "http://www.mercycorps.org/blog/feed",
+			"type": "blog",
+			"image": "/icons/news2.png"		
 		}
 	]
 }

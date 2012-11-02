@@ -1,0 +1,7 @@
+<Alloy>
+	<View id="Wrapper">
+		<ImageView id="back" image="/com.charitti.navigationBar/back.png" />
+		
+		<Label id="title" />
+	</View>
+</Alloy>
