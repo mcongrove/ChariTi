@@ -33,6 +33,12 @@
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
 			"image": "/icons/photo.png"		
+		},
+		{
+			"title": "Video",
+			"username": "mercycorps",
+			"type": "youtube",
+			"image": "/icons/video2.png"
 		}
 	]
 }

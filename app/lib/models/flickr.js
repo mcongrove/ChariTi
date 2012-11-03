@@ -2,45 +2,38 @@ var HTTP = require("http");
 var UTIL = require("utilities");
 
 var ApiBase = null;
-var Username = null;
-
-var callbackCount = 0;
-var callbackTarget = 0;
 
 var init = function() {
 	var db = Ti.Database.open("Charitti");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS flickr_sets (id TEXT PRIMARY KEY, title TEXT, date_create TEXT, date_update TEXT, description TEXT, photo_count TEXT);");
-	db.execute("CREATE TABLE IF NOT EXISTS flickr_photos (id TEXT PRIMARY KEY, set_id TEXT, title TEXT, url_m TEXT, width_m TEXT, height_m TEXT, url_sq TEXT);");
+	db.execute("CREATE TABLE IF NOT EXISTS flickr_photos (id TEXT PRIMARY KEY, set_id TEXT, title TEXT, url_m TEXT, url_sq TEXT);");
 	
 	db.close();
 };
 
 exports.setApiKey = function(_key) {
-	ApiBase = "http://api.flickr.com/services/rest/?api_key=" + _key + "&format=json&nojsoncallback=1&method=flickr."
+	ApiBase = "http://api.flickr.com/services/rest/?api_key=" + _key + "&format=json&nojsoncallback=1&method=flickr.";
 };
 
 exports.generateNsid = function(_params) {
-	if(Ti.App.Properties.hasProperty("FLICKR_HAS_NSID") && Ti.App.Properties.getBool("FLICKR_HAS_NSID")) {
+	if(Ti.App.Properties.hasProperty("FLICKR_NSID")) {
 		_params.callback();
 		
 		return;
 	}
 	
-	Username = _params.username;
-	
 	HTTP.request({
 		timeout: 10000,
 		type: "GET",
 		format: "JSON",
-		url: ApiBase + "urls.lookupUser&url=flickr.com%2Fphotos%2F" + Username,
+		url: ApiBase + "urls.lookupUser&url=flickr.com%2Fphotos%2F" + _params.username,
 		passthrough: _params.callback,
 		success: exports.handleNsid
 	});
 };
 
 exports.handleNsid = function(_data, _url, _passthrough) {
-	Ti.App.Properties.setBool("FLICKR_HAS_NSID", true);
 	Ti.App.Properties.setString("FLICKR_NSID", _data.user.id);
 	
 	if(typeof _passthrough !== "undefined") {
@@ -89,8 +82,6 @@ exports.retrieveSets = function(_params) {
 exports.handleSets = function(_data, _url, _callback) {
 	var db = Ti.Database.open("Charitti");
 	
-	callbackTarget = _data.photosets.photoset.length;
-	
 	if(_data.photosets.photoset.length > 1) {
 		db.execute("DELETE FROM flickr_sets;");
 		db.execute("DELETE FROM flickr_photos;");
@@ -99,7 +90,7 @@ exports.handleSets = function(_data, _url, _callback) {
 	db.execute("BEGIN TRANSACTION;");
 	
 	for(var i = 0, x = _data.photosets.photoset.length; i < x; i++) {
-		var set = _data.photosets.photoset[i];
+		var set			= _data.photosets.photoset[i];
 		
 		var id			= UTIL.escapeString(set.id);
 		var title		= UTIL.escapeString(set.title["_content"]);
@@ -108,60 +99,57 @@ exports.handleSets = function(_data, _url, _callback) {
 		var description	= UTIL.escapeString(set.description["_content"]);
 		var photo_count	= UTIL.escapeString(set.photos);
 		
-		db.execute("INSERT OR ABORT INTO flickr_sets (id, title, date_create, date_update, description, photo_count) VALUES (" + id + ", " + title + ", " + date_create + ", " + date_update + ", " + description + ", " + photo_count + ");");
-		
-		exports.retrieveSet({
-			id: set.id,
-			callback: _callback
-		});
+		db.execute("INSERT OR REPLACE INTO flickr_sets (id, title, date_create, date_update, description, photo_count) VALUES (" + id + ", " + title + ", " + date_create + ", " + date_update + ", " + description + ", " + photo_count + ");");
 	}
 	
 	db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
 	db.execute("END TRANSACTION;");
 	db.close();
+	
+	if(_callback) {
+		_callback();
+	}
 };
 
 exports.retrieveSet = function(_params) {
-	HTTP.request({
-		timeout: 10000,
-		type: "GET",
-		format: "JSON",
-		url: ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id,
-		passthrough: _params.callback,
-		success: exports.handleSet
-	});
+	if(exports.isStale(ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id)) {
+		HTTP.request({
+			timeout: 10000,
+			type: "GET",
+			format: "JSON",
+			url: ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id,
+			passthrough: _params.callback,
+			success: exports.handleSet
+		});
+	} else {
+		_params.callback();
+	}
 };
 
 exports.handleSet = function(_data, _url, _callback) {
 	var db = Ti.Database.open("Charitti");
 	
-	callbackCount++;
-	
 	db.execute("BEGIN TRANSACTION;");
 	
 	for(var i = 0, x = _data.photoset.photo.length; i < x; i++) {
-		var photo	= _data.photoset.photo[i];
-		
-		var set_id	= _url.match(/photoset_id=(\d*)/i);
+		var photo		= _data.photoset.photo[i];
+		var set_id		= _url.match(/photoset_id=(\d*)/i);
 		
 		var id			= UTIL.escapeString(photo.id);
 		set_id			= UTIL.escapeString(set_id[1]);
 		var title		= UTIL.escapeString(photo.title);
 		var url_m		= UTIL.escapeString(photo.url_m);
-		var width_m		= UTIL.escapeString(photo.width_m);
-		var height_m	= UTIL.escapeString(photo.height_m);
 		var url_sq		= UTIL.escapeString(photo.url_sq);
 		
-		db.execute("INSERT OR ABORT INTO flickr_photos (id, set_id, title, url_m, width_m, height_m, url_sq) VALUES (" + id + ", " + set_id + ", " + title + ", " + url_m + ", " + width_m + ", " + height_m + ", " + url_sq + ");");
+		db.execute("INSERT OR REPLACE INTO flickr_photos (id, set_id, title, url_m, url_sq) VALUES (" + id + ", " + set_id + ", " + title + ", " + url_m + ", " + url_sq + ");");
 	}
 	
+	db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
 	db.execute("END TRANSACTION;");
 	db.close();
 	
-	if(callbackCount === callbackTarget) {
-		if(_callback) {
-			_callback();
-		}
+	if(_callback) {
+		_callback();
 	}
 };
 
@@ -200,8 +188,6 @@ exports.getSet = function(_id) {
 			set_id: data.fieldByName("set_id"),
 			title: data.fieldByName("title"),
 			url_m: data.fieldByName("url_m"),
-			width_m: data.fieldByName("width_m"),
-			height_m: data.fieldByName("height_m"),
 			url_sq: data.fieldByName("url_sq")
 		});
 		
@@ -225,8 +211,6 @@ exports.getPhoto = function(_id) {
 			set_id: data.fieldByName("set_id"),
 			title: data.fieldByName("title"),
 			url_m: data.fieldByName("url_m"),
-			width_m: data.fieldByName("width_m"),
-			height_m: data.fieldByName("height_m"),
 			url_sq: data.fieldByName("url_sq")
 		};
 		

@@ -5,17 +5,21 @@ var MODEL = require("models/flickr");
 var DATA = arguments[0] || {};
 
 $.init = function() {
-	$.handleData(MODEL.getSet(DATA.id));
+	MODEL.retrieveSet({
+		id: DATA.id,
+		callback: $.handleData
+	});
+	
+	$.NavigationBar.title.text = DATA.title;
 };
 
-$.handleData = function(_data) {
-	$.NavigationBar.title.text = DATA.title;
-	
+$.handleData = function() {
+	var data = MODEL.getSet(DATA.id);
 	var top = 10;
 	var left = -67;
 	var counter = 0;
 	
-	for(var i = 0, x = _data.length; i < x; i++) {
+	for(var i = 0, x = data.length; i < x; i++) {
 		if(counter == 4) {
 			counter = 1;
 			
@@ -28,8 +32,8 @@ $.handleData = function(_data) {
 		}
 		
 		var thumbnail = Alloy.createController("flickr_thumb", {
-			id: _data[i].id,
-			image: _data[i].url_sq,
+			id: data[i].id,
+			image: data[i].url_sq,
 			top: top + "dp",
 			left: left + "dp",
 			bottom: (i + 1 == x) ? true : false
