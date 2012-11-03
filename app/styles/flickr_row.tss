@@ -1,0 +1,25 @@
+"#Wrapper": {
+	height: "48dp"
+},
+"#heading": {
+	top: "5dp",
+	left: "5dp",
+	right: "5dp",
+	height: "19dp",
+	font: {
+		fontSize: "16dp",
+		fontWeight: "bold"
+	},
+	color: "#000"
+},
+"#subHeading": {
+	left: "5dp",
+	right: "5dp",
+	bottom: "5dp",
+	height: "14dp",
+	font: {
+		fontSize: "12dp",
+		fontWeight: "normal"
+	},
+	color: "#666"
+}

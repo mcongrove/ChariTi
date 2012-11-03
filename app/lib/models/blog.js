@@ -12,7 +12,7 @@ var init = function() {
 exports.isStale = function(_url) {
 	var db = Ti.Database.open("Charitti");
 	var freshTime = new Date().getTime() - 3600000;
-	var lastUpdate=0;
+	var lastUpdate = 0;
 	
 	var data = db.execute("SELECT time FROM updates WHERE url = " + UTIL.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
 	
@@ -53,7 +53,7 @@ exports.handleData = function(_data, _url, _passthrough) {
 	var db		= Ti.Database.open("Charitti");
 	
 	if(nodes.length > 1) {
-		db.execute("DELETE FROM blog");
+		db.execute("DELETE FROM blog;");
 	}
 	
 	db.execute("BEGIN TRANSACTION;");

@@ -1,0 +1,7 @@
+"#Image": {
+	width: "67dp",
+	height: "67dp",
+	borderWidth: "1dp",
+	borderColor: "#999",
+	preventDefaultImage: true
+}

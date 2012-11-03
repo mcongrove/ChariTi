@@ -1,0 +1,10 @@
+"#Wrapper": {
+	backgroundColor: "#000"
+},
+"#content": {
+	top: "46dp"
+},
+"#image": {
+	width: Ti.UI.FILL,
+	preventDefaultImage: true
+}

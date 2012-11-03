@@ -22,7 +22,8 @@ var APP = {
 	 * The detail controller
 	 * @type {Object}
 	 */
-	detailController: null,
+	currentDetailController: null,
+	detailControllers: [],
 	/**
 	 * The main app window
 	 * @type {Object}
@@ -140,6 +141,8 @@ var APP = {
 	 * @param {Function} _callback
 	 */
 	removeCurrentScreen: function(_callback) {
+		APP.closeAllDetailScreens();
+		
 		if(APP.currentController) {
 			APP.ContentWrapper.remove(APP.currentController);
 			
@@ -157,24 +160,38 @@ var APP = {
 	 */
 	openDetailScreen: function(_controller, _params) {
 		// Create the new screen controller
-		APP.detailController = Alloy.createController(_controller, _params).getView();
+		APP.currentDetailController = Alloy.createController(_controller, _params).getView();
 		
-		APP.ContentWrapper.add(APP.detailController);
+		APP.detailControllers.push(APP.currentDetailController);
+		
+		APP.ContentWrapper.add(APP.currentDetailController);
 	},
 	/**
 	 * Removes the detail screen
 	 * @param {Function} _callback
 	 */
 	closeDetailScreen: function(_callback) {
-		if(APP.detailController) {
-			APP.ContentWrapper.remove(APP.detailController);
+		if(APP.currentDetailController) {
+			APP.ContentWrapper.remove(APP.currentDetailController);
+			APP.detailControllers.pop();
 			
-			APP.detailController = null;
+			APP.currentDetailController = null;
 		}
 
 		if(typeof(_callback) !== "undefined") {
 			_callback();
 		}
+	},
+	/**
+	 * Removes ALL detail screens
+	 * @param {Function} _callback
+	 */
+	closeAllDetailScreens: function(_callback) {
+		for(var i = 0, x = APP.detailControllers.length; i < x; i++) {
+			APP.ContentWrapper.remove(APP.detailControllers[i]);
+		}
+		
+		APP.detailControllers = [];
 	},
 	/**
 	 * Global network event handler

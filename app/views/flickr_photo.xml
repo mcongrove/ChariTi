@@ -1,0 +1,9 @@
+<Alloy>
+	<View id="Wrapper">
+		<Require type="widget" src="com.charitti.navigationBar" id="NavigationBar"/>
+		
+		<View id="content">
+			<ImageView id="image" />
+		</View>
+	</View>
+</Alloy>

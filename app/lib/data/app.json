@@ -3,9 +3,9 @@
 	"settings": {
 		"webViewDefaultStyling": "<style>* { margin: 0; padding: 0; font-family: Arial; font-size: 14px; line-height: 16px }</style>",
 		"emailSettings": {
-			"subject": "Check out this great NPBC Chamber content!",
+			"subject": "Check out this great Mercy Corps content!",
 			"body": "I found this and thought you might find it interesting:<br /><br />",
-			"footer": "Sent by <a href='http://npbchamber.com/'>NPBC Chamber</a>"
+			"footer": "Sent via <a href='http://www.mercycorps.org/'>Mercy Corps</a>"
 		}
 	},
 	"plugins": {
@@ -26,6 +26,13 @@
 			"feed": "http://www.mercycorps.org/blog/feed",
 			"type": "blog",
 			"image": "/icons/news2.png"		
+		},
+		{
+			"title": "Photos",
+			"username": "mercycorps",
+			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
+			"type": "flickr",
+			"image": "/icons/photo.png"		
 		}
 	]
 }
