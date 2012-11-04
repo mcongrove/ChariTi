@@ -19,6 +19,10 @@ var APP = {
 	currentController: null,
 	currentControllerId: null,
 	/**
+	 * Temporary holder for the previous screen controller
+	 */
+	previousController: null,
+	/**
 	 * The detail controller
 	 * @type {Object}
 	 */
@@ -131,33 +135,31 @@ var APP = {
 		if(_id == APP.currentControllerId) {
 			// Do nothing
 		} else {
+			// Save the current controller for removal
+			APP.previousController = APP.currentController;
+			
+			// Create a new screen
 			APP.currentControllerId = _id;
+			APP.currentController = Alloy.createController(APP.Nodes[_id].type, APP.Nodes[_id]).getView();
+			
+			// Add the new screen to the window
+			APP.ContentWrapper.add(APP.currentController);
 
-			// Remove current controller view
-			APP.removeCurrentScreen(function() {
-				// Create the new screen controller
-				APP.currentController = Alloy.createController(APP.Nodes[_id].type, APP.Nodes[_id]).getView();
-
-				// Add the new screen to the window
-				APP.ContentWrapper.add(APP.currentController);
-			});
+			// Remove previouw controller view
+			APP.removeScreen(APP.previousController);
 		}
 	},
 	/**
 	 * Global function to remove screens
 	 * @param {Function} _callback
 	 */
-	removeCurrentScreen: function(_callback) {
+	removeScreen: function(_controller) {
 		APP.closeAllDetailScreens();
 		
-		if(APP.currentController) {
-			APP.ContentWrapper.remove(APP.currentController);
+		if(_controller) {
+			APP.ContentWrapper.remove(_controller);
 			
-			APP.currentController = null;
-		}
-
-		if(typeof(_callback) !== "undefined") {
-			_callback();
+			APP.previousController = null;
 		}
 	},
 	/**
