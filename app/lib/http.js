@@ -26,6 +26,7 @@ exports.request = function(_params) {
 		xhr.onload = function(_data) {
 			if(_data) {
 				switch(_params.format.toLowerCase()) {
+					case "data":
 					case "xml":
 						_data = this.responseData;
 						break;
