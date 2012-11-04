@@ -12,12 +12,6 @@
 			"text":	"#FFF"
 		}
 	},
-	"plugins": {
-		"facebook": "187692147928682",
-		"googleAnalytics": "UA-24040667-1",
-		"twitterConsumerKey": "BNA3xCaM75Lr45zYIByXLQ",
-		"twitterConsumerSecret": "uxMAnnEl5cHnMMWIz3Vvu1rqiZ53mgLheFlGcPsV0"
-	},
 	"tabs": [
 		{
 			"title": "News",
