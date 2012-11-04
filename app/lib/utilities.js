@@ -36,12 +36,12 @@ exports.cleanEscapeString = function(_string) {
 exports.xmlNormalize = function(_string) {
 	_string = exports.htmlDecode(_string);
 	_string = _string.replace(/&nbsp;*/ig, " ");
-	_string = _string.replace(/&\s*/g, "&amp;");
+	_string = _string.replace(/&(?!amp;)\s*/g, "&amp;");
 	_string = _string.replace(/^\s+|\s+$/g, "");
-	_string = _string.replace(/<title>/ig, "<title><![CDATA[");
-	_string = _string.replace(/<\/title>/ig, "]]></title>");
-	_string = _string.replace(/<description>/ig, "<description><![CDATA[");
-	_string = _string.replace(/<\/description>/ig, "]]></description>");
+	_string = _string.replace(/<title>(?!<!\[CDATA\[)/ig, "<title><![CDATA[");
+	_string = _string.replace(/<description>(?!<!\[CDATA\[)/ig, "<description><![CDATA[");
+	_string = _string.replace(/(\]\]>)?<\/title>/ig, "]]></title>");
+	_string = _string.replace(/(\]\]>)?<\/description>/ig, "]]></description>");
 	
 	return _string;
 };

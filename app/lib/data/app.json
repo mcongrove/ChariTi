@@ -28,6 +28,12 @@
 			"image": "/icons/news2.png"		
 		},
 		{
+			"title": "Facebook",
+			"feed": "http://www.facebook.com/feeds/page.php?id=7263476274&format=rss20",
+			"type": "facebook",
+			"image": "/icons/facebook.png"
+		},
+		{
 			"title": "Photos",
 			"username": "mercycorps",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",

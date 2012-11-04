@@ -4,6 +4,7 @@
 "#content": {
 	layout: "vertical",
 	top: "46dp",
+	showVerticalScrollIndicator: true
 },
 "#heading": {
 	top: "15dp",
