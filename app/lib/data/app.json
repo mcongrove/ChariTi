@@ -33,10 +33,11 @@
 			"image": "/icons/facebook.png"
 		},
 		{
-			"title": "Haiti Update",
-			"url": "http://www.givewell.org/files/DisasterRelief/Mercycorps/haiti_1yr_progressreport_v12.pdf",
-			"type": "pdf",
-			"image": "/icons/news1.png"
+			"title": "About",
+			"heading": "Saving lives in the world’s toughest places",
+			"text": "Mercy Corps helps people turn the crises they confront into the opportunities they deserve.\n\nDriven by local needs, our programs provide communities in the world’s toughest places with the tools and support they need to transform their own lives. Our worldwide team in 41 countries is improving the lives of 19 million people.",
+			"type": "text",
+			"image": "/icons/news2.png"
 		}
 	],
 	"inactiveTabs": [
@@ -86,6 +87,12 @@
 			],
 			"type": "map",
 			"image": "/icons/map1.png"
+		},
+		{
+			"title": "Haiti Update",
+			"url": "http://www.givewell.org/files/DisasterRelief/Mercycorps/haiti_1yr_progressreport_v12.pdf",
+			"type": "pdf",
+			"image": "/icons/news1.png"
 		}
 	]
 }

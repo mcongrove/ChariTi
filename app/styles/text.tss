@@ -1,0 +1,28 @@
+"#Wrapper": {
+	backgroundColor: "white",
+	layout: "vertical",
+	showVerticalScrollIndicator: true
+},
+"#heading": {
+	top: "15dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "16dp",
+		fontWeight: "bold"
+	},
+	color: "#000"
+},
+"#text": {
+	top: "10dp",
+	left: "15dp",
+	right: "15dp",
+	bottom: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "13dp",
+		fontWeight: "normal"
+	},
+	color: "#333"
+}

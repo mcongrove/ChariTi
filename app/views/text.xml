@@ -1,0 +1,7 @@
+<Alloy>
+	<ScrollView id="Wrapper">
+		<Label id="heading" />
+		
+		<Label id="text" />
+	</ScrollView>
+</Alloy>
