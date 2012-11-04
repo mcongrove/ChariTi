@@ -1,17 +1,16 @@
 var APP = require("core");
-var UTIL = require("utilities");
 
 var CONFIG = arguments[0];
 
 $.init = function() {
 	if(CONFIG.url) {
-		$.content.url				= CONFIG.url;
-		$.content.scalesPageToFit	= true;
-		$.content.willHandleTouches	= false;
+		$.content.url = CONFIG.url;
+		$.content.scalesPageToFit = true;
+		$.content.willHandleTouches = false;
 		
 		$.initToolbar();
 	} else {
-		$.content.html				= CONFIG.html;
+		$.content.html = CONFIG.html;
 	}
 };
 
@@ -21,7 +20,9 @@ $.initToolbar = function() {
 	var width = Math.floor(Ti.Platform.displayCaps.platformWidth / 4);
 	
 	$.containerBack.width		= width + "dp";
+	$.containerBack.visible		= false;
 	$.containerForward.width	= width + "dp";
+	$.containerForward.visible	= false;
 	$.containerRefresh.width	= width + "dp";
 	$.containerStop.width		= width + "dp";
 	$.containerStop.left		= 0 - width + "dp";

@@ -1,7 +1,6 @@
 {
 	"id": "MercyCorps.001",
 	"settings": {
-		"webViewDefaultStyling": "<style>* { margin: 0; padding: 0; font-family: Arial; font-size: 14px; line-height: 16px }</style>",
 		"emailSettings": {
 			"subject": "Check out this great Mercy Corps content!",
 			"body": "I found this and thought you might find it interesting:<br /><br />",
@@ -33,6 +32,36 @@
 			"type": "facebook",
 			"image": "/icons/facebook.png"
 		},
+		{
+			"title": "Map",
+			"points": [
+				{
+					"latitude": "28.24560022171899",
+					"longitude": "-80.72571516036987",
+					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"title": "Place A",
+					"subTitle": "This is a subtitle"
+				},
+				{
+					"latitude": "28.24704626421908",
+					"longitude": "-80.73882579803467",
+					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"title": "Place B",
+					"subTitle": ""
+				},
+				{
+					"latitude": "28.228406881099808",
+					"longitude": "-80.73399782180786",
+					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"title": "Place C",
+					"subTitle": "This is a subtitle"
+				}
+			],
+			"type": "map",
+			"image": "/icons/map1.png"
+		}
+	],
+	"inactiveTabs": [
 		{
 			"title": "Photos",
 			"username": "mercycorps",

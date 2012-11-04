@@ -1,0 +1,5 @@
+"#Wrapper": {
+	 userLocation: true,
+	 regionFit: true,
+	 mapType: Ti.Map.STANDARD_TYPE
+}

@@ -1,0 +1,3 @@
+<Alloy>
+	<View ns="Ti.Map" id="Wrapper" />
+</Alloy>
