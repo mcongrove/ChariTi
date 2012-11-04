@@ -1,3 +1,7 @@
 <Alloy>
-	<View ns="Ti.Map" id="Wrapper" />
+	<View id="Wrapper">
+		<Require type="widget" src="com.charitti.titleBar" id="TitleBar" image="logo.png" />
+		
+		<View ns="Ti.Map" id="content" />
+	</View>
 </Alloy>

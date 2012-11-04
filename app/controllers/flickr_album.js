@@ -9,7 +9,9 @@ $.init = function() {
 		callback: $.handleData
 	});
 	
-	$.NavigationBar.title.text = DATA.title;
+	$.NavigationBar.title.text				= DATA.title;
+	$.NavigationBar.title.color				= APP.Settings.colors.text || "#FFF";
+	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 };
 
 $.handleData = function() {

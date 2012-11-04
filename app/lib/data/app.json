@@ -5,6 +5,11 @@
 			"subject": "Check out this great Mercy Corps content!",
 			"body": "I found this and thought you might find it interesting:<br /><br />",
 			"footer": "Sent via <a href='http://www.mercycorps.org/'>Mercy Corps</a>"
+		},
+		"colors": {
+			"primary": "#800528",
+			"secondary": "#B30738",
+			"text":	"#FFF"
 		}
 	},
 	"plugins": {
@@ -33,15 +38,6 @@
 			"image": "/icons/facebook.png"
 		},
 		{
-			"title": "About",
-			"heading": "Saving lives in the world’s toughest places",
-			"text": "Mercy Corps helps people turn the crises they confront into the opportunities they deserve.\n\nDriven by local needs, our programs provide communities in the world’s toughest places with the tools and support they need to transform their own lives. Our worldwide team in 41 countries is improving the lives of 19 million people.",
-			"type": "text",
-			"image": "/icons/news2.png"
-		}
-	],
-	"inactiveTabs": [
-		{
 			"title": "Photos",
 			"username": "mercycorps",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
@@ -53,9 +49,11 @@
 			"username": "mercycorps",
 			"type": "youtube",
 			"image": "/icons/video2.png"
-		},
+		}
+	],
+	"inactiveTabs": [
 		{
-			"title": "Accountability",
+			"title": "Finance",
 			"url": "http://www.mercycorps.org/impact",
 			"type": "web",
 			"image": "/icons/financial3.png"
@@ -89,10 +87,17 @@
 			"image": "/icons/map1.png"
 		},
 		{
-			"title": "Haiti Update",
+			"title": "Haiti",
 			"url": "http://www.givewell.org/files/DisasterRelief/Mercycorps/haiti_1yr_progressreport_v12.pdf",
 			"type": "pdf",
 			"image": "/icons/news1.png"
+		},
+		{
+			"title": "About",
+			"heading": "Saving lives in the world’s toughest places",
+			"text": "Mercy Corps helps people turn the crises they confront into the opportunities they deserve.\n\nDriven by local needs, our programs provide communities in the world’s toughest places with the tools and support they need to transform their own lives. Our worldwide team in 41 countries is improving the lives of 19 million people.",
+			"type": "text",
+			"image": "/icons/news2.png"
 		}
 	]
 }

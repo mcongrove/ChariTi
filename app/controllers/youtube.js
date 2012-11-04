@@ -5,6 +5,8 @@ var MODEL = require("models/youtube");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	
 	MODEL.setUsername({
 		username: CONFIG.username,
 		callback: $.handleUsername
@@ -32,11 +34,11 @@ $.handleVideos = function(_data) {
 		rows.push(row);
 	}
 	
-	$.Wrapper.setData(rows);
+	$.content.setData(rows);
 };
 
 // Event listeners
-$.Wrapper.addEventListener("click", function(_event) {
+$.content.addEventListener("click", function(_event) {
 	APP.openDetailScreen("youtube_video", {
 		url: _event.row.url,
 		title: _event.row.setTitle

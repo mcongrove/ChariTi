@@ -1,6 +1,8 @@
 var CONFIG = arguments[0];
 
 $.init = function() {
+	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	
 	var annotations = [];
 	
 	for(var i = 0, x = CONFIG.points.length; i < x; i++) {
@@ -15,16 +17,16 @@ $.init = function() {
 		annotations.push(annotation);
 	}
 	
-	$.Wrapper.setAnnotations(annotations);
+	$.content.setAnnotations(annotations);
 	
-	$.Wrapper.setRegion({
+	$.content.setRegion({
 		latitude: CONFIG.points[0].latitude,
 		longitude: CONFIG.points[0].longitude, 
 		latitudeDelta: 0.04,
 		longitudeDelta: 0.04
 	});
 	
-	$.Wrapper.selectAnnotation(annotations[0]);
+	$.content.selectAnnotation(annotations[0]);
 };
 
 // Kick off the init

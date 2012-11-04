@@ -4,6 +4,8 @@ var MODEL = require("models/flickr");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	
 	MODEL.setApiKey(CONFIG.apiKey);
 	
 	MODEL.generateNsid({
@@ -32,11 +34,11 @@ $.handleSets = function(_data) {
 		rows.push(row);
 	}
 	
-	$.Wrapper.setData(rows);
+	$.content.setData(rows);
 };
 
 // Event listeners
-$.Wrapper.addEventListener("click", function(_event) {
+$.content.addEventListener("click", function(_event) {
 	APP.openDetailScreen("flickr_album", {
 		id: _event.row.id,
 		title: _event.row.setTitle

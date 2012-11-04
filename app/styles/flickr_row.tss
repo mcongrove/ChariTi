@@ -1,25 +1,27 @@
 "#Wrapper": {
-	height: "48dp"
+	height: Ti.UI.SIZE,
+	selectedBackgroundColor: "#DDD",
+	layout: "vertical"
 },
 "#heading": {
-	top: "5dp",
-	left: "5dp",
-	right: "5dp",
-	height: "19dp",
+	top: "10dp",
+	left: "10dp",
+	right: "10dp",
+	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "16dp",
-		fontWeight: "bold"
-	},
-	color: "#000"
-},
-"#subHeading": {
-	left: "5dp",
-	right: "5dp",
-	bottom: "5dp",
-	height: "14dp",
-	font: {
-		fontSize: "12dp",
 		fontWeight: "normal"
 	},
 	color: "#666"
+},
+"#subHeading": {
+	left: "10dp",
+	right: "10dp",
+	bottom: "10dp",
+	top: "2dp",
+	height: "14dp",
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	}
 }

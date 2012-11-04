@@ -1,4 +1,6 @@
-"#Wrapper": {
-	backgroundColor: "white",
-	rowHeight: "48dp"
+"#content": {
+	top: "46dp",
+	backgroundColor: "#EEE",
+	rowHeight: "48dp",
+	separatorColor: "#DDD"
 }

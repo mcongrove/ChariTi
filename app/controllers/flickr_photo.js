@@ -8,7 +8,9 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
-	$.NavigationBar.title.text = _data.title;
+	$.NavigationBar.title.text				= _data.title;
+	$.NavigationBar.title.color				= APP.Settings.colors.text || "#FFF";
+	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	
 	$.image.image = _data.url_m;
 };

@@ -1,5 +1,5 @@
 "#Wrapper": {
-	backgroundColor: "#FFF"
+	backgroundColor: "#EEE"
 },
 "#content": {
 	layout: "vertical",
@@ -12,10 +12,10 @@
 	right: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
-		fontSize: "16dp",
+		fontSize: "18dp",
 		fontWeight: "bold"
 	},
-	color: "#000"
+	color: "#666"
 },
 "#date": {
 	top: "5dp",
@@ -23,8 +23,8 @@
 	right: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
-		fontSize: "11dp",
-		fontWeight: "normal"
+		fontSize: "12dp",
+		fontWeight: "bold"
 	},
 	color: "#000"
 },
@@ -35,7 +35,7 @@
 	bottom: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
-		fontSize: "13dp",
+		fontSize: "14dp",
 		fontWeight: "normal"
 	},
 	color: "#333"

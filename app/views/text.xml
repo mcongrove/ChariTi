@@ -1,7 +1,11 @@
 <Alloy>
-	<ScrollView id="Wrapper">
-		<Label id="heading" />
+	<View id="Wrapper">
+		<Require type="widget" src="com.charitti.titleBar" id="TitleBar" image="logo.png" />
 		
-		<Label id="text" />
-	</ScrollView>
+		<ScrollView id="content">
+			<Label id="heading" />
+			
+			<Label id="text" />
+		</ScrollView>
+	</View>
 </Alloy>

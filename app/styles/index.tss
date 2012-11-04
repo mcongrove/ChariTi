@@ -1,3 +1,6 @@
+"#MainWindow": {
+	backgroundColor: "#EEE"
+},
 "#ContentWrapper": {
 	top: "0dp",
 	bottom: "60dp"

@@ -1,7 +1,7 @@
 <Alloy>
 	<TableViewRow id="Wrapper">
-		<Label id="heading" />
-		
 		<Label id="subHeading" />
+		
+		<Label id="heading" />
 	</TableViewRow>
 </Alloy>

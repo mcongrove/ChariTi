@@ -98,7 +98,14 @@ var APP = {
 		}
 		
 		// Create a tab group
-		APP.Tabs.init(tabs);
+		APP.Tabs.init({
+			tabs: tabs,
+			colors: {
+				primary: APP.Settings.colors.primary,
+				secondary: APP.Settings.colors.secondary,
+				text: APP.Settings.colors.text
+			}
+		});
 
 		// Add a handler for the spinner (drop-down selection)
 		APP.Tabs.Wrapper.addEventListener("click", function(_event) {

@@ -1,5 +1,6 @@
-"#Wrapper": {
-	 userLocation: true,
-	 regionFit: true,
-	 mapType: Ti.Map.STANDARD_TYPE
+"#content": {
+	top: "46dp",
+	userLocation: true,
+	regionFit: true,
+	mapType: Ti.Map.STANDARD_TYPE
 }

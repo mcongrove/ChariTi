@@ -1,3 +1,7 @@
 <Alloy>
-	<TableView id="Wrapper" />
+	<View id="Wrapper">
+		<Require type="widget" src="com.charitti.titleBar" id="TitleBar" image="logo.png" />
+		
+		<TableView id="content" />
+	</View>
 </Alloy>

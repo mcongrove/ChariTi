@@ -5,6 +5,8 @@ var MODEL = require("models/news");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	
 	MODEL.fetch({
 		url: CONFIG.feed,
 		callback: function() {
@@ -26,11 +28,11 @@ $.handleData = function(_data) {
 		rows.push(row);
 	}
 	
-	$.Wrapper.setData(rows);
+	$.content.setData(rows);
 };
 
 // Event listeners
-$.Wrapper.addEventListener("click", function(_event) {
+$.content.addEventListener("click", function(_event) {
 	APP.openDetailScreen("news_article", {
 		id: _event.row.id
 	});

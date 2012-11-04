@@ -1,6 +1,5 @@
 "#Wrapper": {
 	height: "60dp",
-	backgroundColor: "#000",
 	bottom: "0dp"
 },
 "#TabContainer": {
@@ -8,7 +7,8 @@
 	zIndex: 100
 },
 "#indicator": {
-	backgroundColor: "#222",
-	left: 0,
-	zIndex: 99
+	top: "3dp",
+	bottom: "3dp",
+	zIndex: 99,
+	borderRadius: "3dp"
 }

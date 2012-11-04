@@ -12,8 +12,10 @@ $.handleData = function(_data) {
 	$.heading.text	= _data.title;
 	$.text.text		= _data.description;
 	$.date.text		= UTIL.toDateRelative(_data.date);
+	$.date.color	= APP.Settings.colors.primary;
 	
-	$.NavigationBar.title.text = "Facebook Post";
+	$.NavigationBar.title.color				= APP.Settings.colors.text || "#FFF";
+	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 };
 
 // Event listeners

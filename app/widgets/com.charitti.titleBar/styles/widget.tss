@@ -1,0 +1,7 @@
+"#Wrapper": {
+	top: "0dp",
+	left: "0dp",
+	width: Ti.UI.FILL,
+	height: "46dp",
+	backgroundColor: "#000"
+}
