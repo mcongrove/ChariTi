@@ -1,0 +1,20 @@
+"#content": {
+	backgroundColor: "#000",
+	bottom: "48dp"
+},
+"#toolbar": {
+	visible: false,
+	backgroundColor: "#111",
+	height: "48dp",
+	layout: "horizontal",
+	bottom: "0dp"
+},
+".container": {
+	left: "0dp",
+	height: "48dp"
+},
+".button": {
+	width: "28dp",
+	height: "28dp",
+	touchEnabled: false
+}
