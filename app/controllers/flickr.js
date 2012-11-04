@@ -1,5 +1,4 @@
 var APP = require("core");
-var UTIL = require("utilities");
 var MODEL = require("models/flickr");
 
 var CONFIG = arguments[0];

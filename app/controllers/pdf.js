@@ -1,4 +1,3 @@
-var APP = require("core");
 var HTTP = require("http");
 
 var CONFIG = arguments[0];

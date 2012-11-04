@@ -1,6 +1,3 @@
-var APP = require("core");
-var UTIL = require("utilities");
-
 var CONFIG = arguments[0];
 
 $.init = function() {
