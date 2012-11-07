@@ -1,6 +1,5 @@
 "#content": {
-	backgroundColor: "#000",
-	bottom: "48dp"
+	backgroundColor: "#000"
 },
 "#toolbar": {
 	visible: false,

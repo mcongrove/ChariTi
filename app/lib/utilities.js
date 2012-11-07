@@ -69,6 +69,7 @@ exports.htmlDecode = function(_string, _quote_style) {
 	}
 	
 	tmp_str = tmp_str.split("&#039;").join("'");
+	tmp_str = tmp_str.split("&#39;").join("'");
 
 	return tmp_str;
 };
@@ -110,6 +111,7 @@ exports.htmlTranslationTable = function(_table, _quote_style) {
 		entities["8216"] = "&lsquo;";
 		entities["8212"] = "&mdash;";
 		entities["8211"] = "&ndash;";
+		entities["8211"] = "&#x2013;";
 		entities["338"] = "&OElig;";
 		entities["339"] = "&oelig;";
 		entities["8240"] = "&permil;";

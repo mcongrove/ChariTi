@@ -23,14 +23,18 @@ exports.generateNsid = function(_params) {
 		return;
 	}
 	
-	HTTP.request({
-		timeout: 10000,
-		type: "GET",
-		format: "JSON",
-		url: ApiBase + "urls.lookupUser&url=flickr.com%2Fphotos%2F" + _params.username,
-		passthrough: _params.callback,
-		success: exports.handleNsid
-	});
+	if(_params.username.indexOf("@") > 0) {
+		exports.handleNsid({ user: { id: _params.username }}, null, _params.callback);
+	} else {
+		HTTP.request({
+			timeout: 10000,
+			type: "GET",
+			format: "JSON",
+			url: ApiBase + "urls.lookupUser&url=flickr.com%2Fphotos%2F" + _params.username,
+			passthrough: _params.callback,
+			success: exports.handleNsid
+		});
+	}
 };
 
 exports.handleNsid = function(_data, _url, _passthrough) {

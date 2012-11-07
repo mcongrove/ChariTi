@@ -14,6 +14,7 @@ $.init = function() {
 
 $.initToolbar = function() {
 	$.toolbar.visible = true;
+	$.content.bottom = "48dp";
 	
 	var width = Math.floor(Ti.Platform.displayCaps.platformWidth / 4);
 	

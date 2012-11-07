@@ -26,7 +26,16 @@ $.handlePdf = function(_data, _url) {
 };
 
 $.getFileName = function(_url) {
-	return _url.match(/[^/]*(?=\.pdf)/ig)[0] + ".pdf";
+	var match = _url.match(/[^/]*(?=\.pdf)/ig);
+	var filename;
+	
+	if(match && match[0]) {
+		filename = match[0];
+	} else {
+		filename = "temp";
+	}
+	
+	return filename + ".pdf";
 };
 
 $.fileExists = function(_url) {
