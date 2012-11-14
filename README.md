@@ -1,10 +1,8 @@
-<img src="https://github.com/mcongrove/CharitTi/raw/master/Chariti.png" style="float: left; margin: 0 20px 0 0;" />
+![](https://github.com/mcongrove/CharitTi/raw/master/Chariti.png)
 
-###### Created and maintained by Matthew Congrove
 ### An open-source Titanium project that allows charities to quickly build mobile applications.
-##### NOTICE: In order to ensure your application is easily updated to the latest version of the ChariTi framework, please keep all edits to the `/app/lib/data/` folder.
-
-<br style="clear: both;" />
+###### Created and maintained by Matthew Congrove
+###### NOTICE: In order to ensure your application is easily updated to the latest version of the ChariTi framework, please keep all edits to the `/app/lib/data/` folder.
 
 
 
@@ -29,7 +27,7 @@ The ChariTi framework is built to allow the often-times small team of staffers a
 - iPad (split-screen)
 
 **Requirements:**
-##### _We are actively working to remove the necessity for you to download or install any software. This should be available in the 1.1 or 1.2 release of ChariTi._
+###### _We are actively working to remove the necessity for you to download or install any software. This should be available in the 1.1 or 1.2 release of ChariTi._
 
 - [Appcelerator Titanium Studio](http://www.appcelerator.com/platform/titanium-studio)
 - [Appcelerator Titanium Mobile SDK](http://www.appcelerator.com/platform/titanium-sdk) v2.1+
