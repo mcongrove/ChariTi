@@ -103,7 +103,7 @@ var APP = {
 				id: i,
 				title: APP.Nodes[i].title,
 				image: APP.Nodes[i].image,
-				controller: APP.Nodes[i].type
+				controller: APP.Nodes[i].type.toLowerCase()
 			});
 		}
 		
@@ -150,7 +150,7 @@ var APP = {
 			
 			// Create a new screen
 			APP.currentControllerId = _id;
-			APP.currentController = Alloy.createController(APP.Nodes[_id].type, APP.Nodes[_id]).getView();
+			APP.currentController = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
 			
 			// Add the new screen to the window
 			APP.ContentWrapper.add(APP.currentController);
