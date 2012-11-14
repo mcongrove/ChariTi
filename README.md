@@ -1,10 +1,8 @@
-<img src="https://github.com/mcongrove/CharitTi/raw/master/Chariti.png" style="float: left; margin: 0 20px 0 0;" />
+![](https://github.com/mcongrove/CharitTi/raw/master/Chariti.png)
 
-###### Created and maintained by Matthew Congrove
 ### An open-source Titanium project that allows charities to quickly build mobile applications.
-##### NOTICE: In order to ensure your application is easily updated to the latest version of the ChariTi framework, please keep all edits to the `/app/lib/data/` folder.
-
-<br style="clear: both;" />
+###### Created and maintained by Matthew Congrove
+###### NOTICE: In order to ensure your application is easily updated to the latest version of the ChariTi framework, please keep all edits to the `/app/lib/data/` folder.
 
 
 
