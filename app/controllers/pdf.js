@@ -3,6 +3,9 @@ var HTTP = require("http");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	Ti.API.debug("pdf.init");
+	Ti.API.info(JSON.stringify(CONFIG));
+	
 	if(!$.fileExists(CONFIG.url)) {
 		HTTP.request({
 			timeout: 10000,
@@ -17,6 +20,8 @@ $.init = function() {
 };
 
 $.handlePdf = function(_data, _url) {
+	Ti.API.debug("pdf.handlePdf");
+	
 	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, $.getFileName(_url));
 	
 	file.createFile();
@@ -26,6 +31,8 @@ $.handlePdf = function(_data, _url) {
 };
 
 $.getFileName = function(_url) {
+	Ti.API.debug("pdf.getFileName");
+	
 	var match = _url.match(/[^/]*(?=\.pdf)/ig);
 	var filename;
 	
@@ -39,6 +46,8 @@ $.getFileName = function(_url) {
 };
 
 $.fileExists = function(_url) {
+	Ti.API.debug("pdf.fileExists");
+	
 	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, $.getFileName(_url));
 	
 	if(file.exists()) {

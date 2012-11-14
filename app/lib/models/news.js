@@ -2,6 +2,8 @@ var HTTP = require("http");
 var UTIL = require("utilities");
 
 var init = function() {
+	Ti.API.debug("NEWS.init");
+	
 	var db = Ti.Database.open("Charitti");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT, link TEXT);");
@@ -33,6 +35,9 @@ exports.isStale = function(_url) {
 };
 
 exports.fetch = function(_params) {
+	Ti.API.debug("NEWS.fetch");
+	Ti.API.info(JSON.stringify(_params));
+	
 	if(exports.isStale(_params.url)) {
 		HTTP.request({
 			timeout: 10000,
@@ -48,6 +53,8 @@ exports.fetch = function(_params) {
 };
 
 exports.handleData = function(_data, _url, _passthrough) {
+	Ti.API.debug("NEWS.handleData");
+	
 	var xml		= Ti.XML.parseString(UTIL.xmlNormalize(_data));
 	var nodes	= xml.documentElement.getElementsByTagName("item");
 	var db		= Ti.Database.open("Charitti");
@@ -77,6 +84,8 @@ exports.handleData = function(_data, _url, _passthrough) {
 };
 
 exports.getAllArticles = function() {
+	Ti.API.debug("NEWS.getAllArticles");
+	
 	var db		= Ti.Database.open("Charitti");
 	var data	= db.execute("SELECT * FROM news ORDER BY date DESC;");
 	var temp	= [];
@@ -100,6 +109,8 @@ exports.getAllArticles = function() {
 };
 
 exports.getArticle = function(_id) {
+	Ti.API.debug("NEWS.getArticle");
+	
 	var db		= Ti.Database.open("Charitti");
 	var data	= db.execute("SELECT * FROM news WHERE id = " + UTIL.cleanEscapeString(_id) + ";");
 	var temp;

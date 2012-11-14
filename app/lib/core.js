@@ -53,6 +53,8 @@ var APP = {
 	 * NOTE: This should only be fired in index controller file and only once.
 	 */
 	init: function() {
+		Ti.API.debug("APP.init");
+		
 		// Global system Events
 		Ti.Network.addEventListener("change", APP.networkObserverUpdate);
 		Ti.App.addEventListener("pause", APP.exit);
@@ -72,6 +74,8 @@ var APP = {
 	 * Loads in the appropriate controllers
 	 */
 	loadContent: function() {
+		Ti.API.debug("APP.loadContent");
+		
 		var contentFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
 		
 		if(!contentFile.exists()) {
@@ -90,6 +94,8 @@ var APP = {
 	 * Builds out the tab group
 	 */
 	build: function() {
+		Ti.API.debug("APP.build");
+		
 		var tabs = [];
 		
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
@@ -120,6 +126,8 @@ var APP = {
 	 * Setup the database bindings
 	 */
 	setupDatabase: function() {
+		Ti.API.debug("APP.setupDatabase");
+		
 		var db = Ti.Database.open("Charitti");
 		
 		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
@@ -131,6 +139,8 @@ var APP = {
 	 * @param  {String} _id The ID of the tab being opened
 	 */
 	handleNavigation: function(_id) {
+		Ti.API.debug("APP.handleNavigation " + _id);
+		
 		// Requesting same screen as we"re on
 		if(_id == APP.currentControllerId) {
 			// Do nothing
@@ -207,19 +217,20 @@ var APP = {
 	 * @param  {Object} _event Standard Ti callback
 	 */
 	networkObserverUpdate: function(_event) {
-
+		Ti.API.debug("APP.networkObserverUpdate");
 	},
 	/**
 	 * Exit event observer
 	 */
 	exit: function() {
-
+		Ti.API.debug("APP.exit");
 	},
 	/**
 	 * Resume event observer
 	 */
 	resume: function() {
 		// TODO: Check last time we updated, re-synch if it's been a while
+		Ti.API.debug("APP.resume");
 	}
 };
 

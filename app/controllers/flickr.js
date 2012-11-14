@@ -4,6 +4,9 @@ var MODEL = require("models/flickr");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	Ti.API.debug("flickr.init");
+	Ti.API.trace(JSON.stringify(CONFIG));
+	
 	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.setApiKey(CONFIG.apiKey);
@@ -15,12 +18,16 @@ $.init = function() {
 };
 
 $.handleNsid = function() {
+	Ti.API.debug("flickr.handleNsid");
+	
 	MODEL.retrieveSets({
 		callback: $.handleSets
 	});
 };
 
 $.handleSets = function(_data) {
+	Ti.API.debug("flickr.handleSets");
+	
 	var data = MODEL.getSets();
 	var rows = [];
 	
@@ -39,6 +46,8 @@ $.handleSets = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
+	Ti.API.debug("flickr @click " + _event.row.id);
+	
 	APP.openDetailScreen("flickr_album", {
 		id: _event.row.id,
 		title: _event.row.setTitle

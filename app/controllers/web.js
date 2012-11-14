@@ -1,6 +1,9 @@
 var CONFIG = arguments[0];
 
 $.init = function() {
+	Ti.API.debug("web.init");
+	Ti.API.info(JSON.stringify(CONFIG));
+	
 	if(CONFIG.url) {
 		$.content.url = CONFIG.url;
 		$.content.scalesPageToFit = true;
@@ -13,6 +16,8 @@ $.init = function() {
 };
 
 $.initToolbar = function() {
+	Ti.API.debug("web.initToolbar");
+	
 	$.toolbar.visible = true;
 	$.content.bottom = "48dp";
 	
@@ -75,6 +80,8 @@ $.containerStop.addEventListener("click", function(_event) {
 });
 
 $.containerSafari.addEventListener("click", function(_event) {
+	Ti.API.debug("web @open");
+	
 	Ti.Platform.openURL(CONFIG.url);
 });
 

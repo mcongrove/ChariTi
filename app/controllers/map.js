@@ -3,6 +3,9 @@ var APP = require("core");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	Ti.API.debug("map.init");
+	Ti.API.info(JSON.stringify(CONFIG));
+	
 	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	var annotations = [];

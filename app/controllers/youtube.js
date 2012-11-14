@@ -5,6 +5,9 @@ var MODEL = require("models/youtube");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	Ti.API.debug("youtube.init");
+	Ti.API.info(JSON.stringify(CONFIG));
+	
 	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.setUsername({
@@ -14,12 +17,16 @@ $.init = function() {
 };
 
 $.handleUsername = function() {
+	Ti.API.debug("youtube.handleUsername");
+	
 	MODEL.retrieveVideos({
 		callback: $.handleVideos
 	});
 };
 
 $.handleVideos = function(_data) {
+	Ti.API.debug("youtube.handleVideos");
+	
 	var data = MODEL.getVideos();
 	var rows = [];
 	
@@ -39,6 +46,8 @@ $.handleVideos = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
+	Ti.API.debug("youtube @click " + _event.row.url);
+	
 	APP.openDetailScreen("youtube_video", {
 		url: _event.row.url,
 		title: _event.row.setTitle

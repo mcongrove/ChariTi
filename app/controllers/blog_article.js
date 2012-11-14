@@ -5,10 +5,15 @@ var MODEL = require("models/blog");
 var DATA = arguments[0] || {};
 
 $.init = function() {
+	Ti.API.debug("blog_article.init");
+	Ti.API.trace(JSON.stringify(DATA));
+	
 	$.handleData(MODEL.getArticle(DATA.id));
 };
 
 $.handleData = function(_data) {
+	Ti.API.debug("blog_article.handleData");
+	
 	$.heading.text	= _data.title;
 	$.text.text		= _data.description;
 	$.date.text		= UTIL.toDateRelative(_data.date);
@@ -20,6 +25,8 @@ $.handleData = function(_data) {
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
+	Ti.API.debug("blog_article @close");
+	
 	APP.closeDetailScreen();
 });
 

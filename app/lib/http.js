@@ -13,6 +13,8 @@
  *  _params.headers     : Array of request headers
  */
 exports.request = function(_params) {
+	Ti.API.trace("HTTP.request " + _params.url);
+	
 	if(Ti.Network.online) {
 		// Setup the xhr object
 		var xhr = Ti.Network.createHTTPClient();

@@ -5,6 +5,9 @@ var MODEL = require("models/news");
 var CONFIG = arguments[0];
 
 $.init = function() {
+	Ti.API.debug("news.init");
+	Ti.API.info(JSON.stringify(CONFIG));
+	
 	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.fetch({
@@ -16,6 +19,8 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
+	Ti.API.debug("news.handleData");
+	
 	var rows = [];
 	
 	for(var i = 0, x = _data.length; i < x; i++) {
@@ -33,6 +38,8 @@ $.handleData = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
+	Ti.API.debug("news @click " + _event.row.id);
+	
 	APP.openDetailScreen("news_article", {
 		id: _event.row.id
 	});

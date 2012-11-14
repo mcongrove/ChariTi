@@ -5,6 +5,8 @@ var ApiBase = null;
 var Username = null;
 
 var init = function() {
+	Ti.API.debug("YOUTUBE.init");
+	
 	var db = Ti.Database.open("Charitti");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS youtube (id TEXT PRIMARY KEY, title TEXT, description TEXT, date TEXT, views TEXT, link TEXT, image TEXT);");
@@ -13,6 +15,8 @@ var init = function() {
 };
 
 exports.setUsername = function(_params) {
+	Ti.API.debug("YOUTUBE.setUsername");
+	
 	ApiBase = "http://gdata.youtube.com/feeds/mobile/users/" + _params.username + "/uploads?alt=json&format=1&safeSearch=none&v=2&";
 	
 	if(Ti.App.Properties.hasProperty("YOUTUBE_USERID")) {
@@ -50,6 +54,8 @@ exports.isStale = function(_url) {
 };
 
 exports.retrieveVideos = function(_params) {
+	Ti.API.debug("YOUTUBE.retrieveVideos");
+	
 	if(exports.isStale(ApiBase + "max-results=20")) {
 		HTTP.request({
 			timeout: 10000,
@@ -65,6 +71,8 @@ exports.retrieveVideos = function(_params) {
 };
 
 exports.handleVideos = function(_data, _url, _callback) {
+	Ti.API.debug("YOUTUBE.handleVideos");
+	
 	var db = Ti.Database.open("Charitti");
 	
 	if(_data.feed.entry.length > 1) {
@@ -80,7 +88,7 @@ exports.handleVideos = function(_data, _url, _callback) {
 		var title		= UTIL.escapeString(video.title.$t);
 		var description	= UTIL.escapeString(video.media$group.media$description.$t);
 		var date		= UTIL.escapeString(video.published.$t.split("T")[0].replace(/-/g, "/") + " " + video.published.$t.split("T")[1].split(".")[0]);
-		var views		= UTIL.escapeString(video.yt$statistics.viewCount);
+		var views		= UTIL.escapeString(video.yt$statistics && video.yt$statistics.viewCount ? video.yt$statistics.viewCount : "0");
 		var link		= UTIL.escapeString("http://www.youtube.com/watch?v=" + video.media$group.yt$videoid.$t);
 		var image		= UTIL.escapeString(video.media$group.media$thumbnail[0].url);
 		
@@ -97,6 +105,8 @@ exports.handleVideos = function(_data, _url, _callback) {
 };
 
 exports.getVideos = function() {
+	Ti.API.debug("YOUTUBE.getVideos");
+	
 	var db		= Ti.Database.open("Charitti");
 	var data	= db.execute("SELECT * FROM youtube ORDER BY date DESC;");
 	var temp	= [];

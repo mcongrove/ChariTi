@@ -4,6 +4,8 @@ var UTIL = require("utilities");
 var ApiBase = null;
 
 var init = function() {
+	Ti.API.debug("FLICKR.init");
+	
 	var db = Ti.Database.open("Charitti");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS flickr_sets (id TEXT PRIMARY KEY, title TEXT, date_create TEXT, date_update TEXT, description TEXT, photo_count TEXT);");
@@ -13,10 +15,14 @@ var init = function() {
 };
 
 exports.setApiKey = function(_key) {
+	Ti.API.debug("FLICKR.setApiKey");
+	
 	ApiBase = "http://api.flickr.com/services/rest/?api_key=" + _key + "&format=json&nojsoncallback=1&method=flickr.";
 };
 
 exports.generateNsid = function(_params) {
+	Ti.API.debug("FLICKR.generateNsid");
+	
 	if(Ti.App.Properties.hasProperty("FLICKR_NSID")) {
 		_params.callback();
 		
@@ -38,6 +44,8 @@ exports.generateNsid = function(_params) {
 };
 
 exports.handleNsid = function(_data, _url, _passthrough) {
+	Ti.API.debug("FLICKR.handleNsid");
+	
 	Ti.App.Properties.setString("FLICKR_NSID", _data.user.id);
 	
 	if(typeof _passthrough !== "undefined") {
@@ -69,6 +77,8 @@ exports.isStale = function(_url) {
 };
 
 exports.retrieveSets = function(_params) {
+	Ti.API.debug("FLICKR.retrieveSets");
+	
 	if(exports.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"))) {
 		HTTP.request({
 			timeout: 10000,
@@ -84,6 +94,8 @@ exports.retrieveSets = function(_params) {
 };
 
 exports.handleSets = function(_data, _url, _callback) {
+	Ti.API.debug("FLICKR.handleSets");
+	
 	var db = Ti.Database.open("Charitti");
 	
 	if(_data.photosets.photoset.length > 1) {
@@ -116,6 +128,8 @@ exports.handleSets = function(_data, _url, _callback) {
 };
 
 exports.retrieveSet = function(_params) {
+	Ti.API.debug("FLICKR.retrieveSet");
+	
 	if(exports.isStale(ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id)) {
 		HTTP.request({
 			timeout: 10000,
@@ -131,6 +145,8 @@ exports.retrieveSet = function(_params) {
 };
 
 exports.handleSet = function(_data, _url, _callback) {
+	Ti.API.debug("FLICKR.handleSet");
+	
 	var db = Ti.Database.open("Charitti");
 	
 	db.execute("BEGIN TRANSACTION;");
@@ -158,6 +174,8 @@ exports.handleSet = function(_data, _url, _callback) {
 };
 
 exports.getSets = function() {
+	Ti.API.debug("FLICKR.getSets");
+	
 	var db		= Ti.Database.open("Charitti");
 	var data	= db.execute("SELECT * FROM flickr_sets ORDER BY date_update DESC;");
 	var temp	= [];
@@ -182,6 +200,8 @@ exports.getSets = function() {
 };
 
 exports.getSet = function(_id) {
+	Ti.API.debug("FLICKR.getSet");
+	
 	var db		= Ti.Database.open("Charitti");
 	var data	= db.execute("SELECT * FROM flickr_photos WHERE set_id = " + UTIL.cleanEscapeString(_id) + ";");
 	var temp	= [];
@@ -205,6 +225,8 @@ exports.getSet = function(_id) {
 };
 
 exports.getPhoto = function(_id) {
+	Ti.API.debug("FLICKR.getPhoto");
+	
 	var db		= Ti.Database.open("Charitti");
 	var data	= db.execute("SELECT * FROM flickr_photos WHERE id = " + UTIL.cleanEscapeString(_id) + " LIMIT 1;");
 	var temp	= [];
