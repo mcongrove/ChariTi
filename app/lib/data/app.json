@@ -1,5 +1,6 @@
 {
 	"id": "MercyCorps.001",
+	"configurationUrl": "http://localhost/app.json",
 	"settings": {
 		"emailSettings": {
 			"subject": "Check out this great Mercy Corps content!",
@@ -39,10 +40,10 @@
 			"image": "photo.png"		
 		},
 		{
-			"title": "Video",
+			"title": "Tweets",
 			"username": "mercycorps",
-			"type": "youtube",
-			"image": "video2.png"
+			"type": "twitter",
+			"image": "twitter2.png"
 		}
 	],
 	"inactiveTabs": [
@@ -53,10 +54,10 @@
 			"image": "financial3.png"
 		},
 		{
-			"title": "Tweets",
+			"title": "Video",
 			"username": "mercycorps",
-			"type": "twitter",
-			"image": "twitter2.png"
+			"type": "youtube",
+			"image": "video2.png"
 		},
 		{
 			"title": "Map",

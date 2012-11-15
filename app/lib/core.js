@@ -1,4 +1,5 @@
-var Alloy = require("alloy");
+var Alloy	= require("alloy");
+var HTTP	= require("http");
 
 /**
  * Main app singleton
@@ -69,6 +70,9 @@ var APP = {
 		
 		// Builds out the tab group
 		APP.build();
+		
+		// Updates the app.json file from a remote source
+		APP.update();
 	},
 	/**
 	 * Loads in the appropriate controllers
@@ -86,6 +90,7 @@ var APP = {
 		var data = JSON.parse(content.text);
 		
 		APP.ID = data.id;
+		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 7 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
 		APP.Plugins = data.plugins;
 		APP.Nodes = data.tabs;
@@ -123,6 +128,28 @@ var APP = {
 		});
 	},
 	/**
+	 * Updates the app.json from a remote source
+	 */
+	update: function() {
+		Ti.API.debug("APP.update");
+		
+		if(APP.ConfigurationURL) {
+			HTTP.request({
+				timeout: 10000,
+				type: "GET",
+				format: "DATA",
+				url: APP.ConfigurationURL,
+				success: function(_data) {
+					Ti.API.debug("APP.update @loaded");
+					
+					var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
+					
+					file.write(_data);
+				}
+			});
+		}
+	},
+	/**
 	 * Setup the database bindings
 	 */
 	setupDatabase: function() {
@@ -139,7 +166,7 @@ var APP = {
 	 * @param  {String} _id The ID of the tab being opened
 	 */
 	handleNavigation: function(_id) {
-		Ti.API.debug("APP.handleNavigation " + _id);
+		Ti.API.debug("APP.handleNavigation");
 		
 		// Requesting same screen as we"re on
 		if(_id == APP.currentControllerId) {
