@@ -1,3 +1,3 @@
-You can find more information, including documentation, on the [ChariTi GitHub Page](http://mcongrove.github.com/CharitTi/).
+You can find more information, including documentation, on the [ChariTi GitHub Page](http://mcongrove.github.com/ChariTi/).
 
-![](https://github.com/mcongrove/CharitTi/raw/master/Chariti.png)
+![](https://github.com/mcongrove/ChariTi/raw/master/Chariti.png)
