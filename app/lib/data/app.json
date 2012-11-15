@@ -53,6 +53,12 @@
 			"image": "/icons/financial3.png"
 		},
 		{
+			"title": "Tweets",
+			"username": "mercycorps",
+			"type": "twitter",
+			"image": "/icons/twitter2.png"
+		},
+		{
 			"title": "Map",
 			"points": [
 				{

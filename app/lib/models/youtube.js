@@ -63,15 +63,15 @@ exports.retrieveVideos = function(_params) {
 			format: "JSON",
 			url: ApiBase + "max-results=20",
 			passthrough: _params.callback,
-			success: exports.handleVideos
+			success: exports.handleData
 		});
 	} else {
 		_params.callback();
 	}
 };
 
-exports.handleVideos = function(_data, _url, _callback) {
-	Ti.API.debug("YOUTUBE.handleVideos");
+exports.handleData = function(_data, _url, _callback) {
+	Ti.API.debug("YOUTUBE.handleData");
 	
 	var db = Ti.Database.open("Charitti");
 	
