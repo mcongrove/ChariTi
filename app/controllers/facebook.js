@@ -11,7 +11,7 @@ $.init = function() {
 	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.fetch({
-		url: CONFIG.feed,
+		url: "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid,
 		callback: function() {
 			$.handleData(MODEL.getAllArticles());
 		}

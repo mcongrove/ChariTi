@@ -27,7 +27,7 @@
 		},
 		{
 			"title": "Facebook",
-			"feed": "http://www.facebook.com/feeds/page.php?id=7263476274&format=rss20",
+			"userid": "7263476274",
 			"type": "facebook",
 			"image": "/icons/facebook.png"
 		},
