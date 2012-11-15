@@ -24,10 +24,14 @@ exports.generateNsid = function(_params) {
 	Ti.API.debug("FLICKR.generateNsid");
 	
 	if(Ti.App.Properties.hasProperty("FLICKR_NSID")) {
-		_params.callback();
-		
-		return;
+		if(Ti.App.Properties.hasProperty("FLICKR_USERNAME") && Ti.App.Properties.getString("FLICKR_NSID") == _params.username) {
+			_params.callback();
+			
+			return;
+		}
 	}
+	
+	Ti.App.Properties.setString("FLICKR_USERNAME", _params.username);
 	
 	if(_params.username.indexOf("@") > 0) {
 		exports.handleNsid({ user: { id: _params.username }}, null, _params.callback);
