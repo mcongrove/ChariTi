@@ -73,31 +73,30 @@ exports.retrieveVideos = function(_params) {
 exports.handleData = function(_data, _url, _callback) {
 	Ti.API.debug("YOUTUBE.handleData");
 	
-	var db = Ti.Database.open("Charitti");
-	
-	if(_data.feed.entry.length > 1) {
+	if(_data.feed.entry.length > 0) {
+		var db = Ti.Database.open("Charitti");
+		
 		db.execute("DELETE FROM youtube;");
-	}
-	
-	db.execute("BEGIN TRANSACTION;");
-	
-	for(var i = 0, x = _data.feed.entry.length; i < x; i++) {
-		var video		= _data.feed.entry[i];
+		db.execute("BEGIN TRANSACTION;");
 		
-		var id			= UTIL.escapeString(video.media$group.yt$videoid.$t);
-		var title		= UTIL.escapeString(video.title.$t);
-		var description	= UTIL.escapeString(video.media$group.media$description.$t);
-		var date		= UTIL.escapeString(video.published.$t.split("T")[0].replace(/-/g, "/") + " " + video.published.$t.split("T")[1].split(".")[0]);
-		var views		= UTIL.escapeString(video.yt$statistics && video.yt$statistics.viewCount ? video.yt$statistics.viewCount : "0");
-		var link		= UTIL.escapeString("http://www.youtube.com/watch?v=" + video.media$group.yt$videoid.$t);
-		var image		= UTIL.escapeString(video.media$group.media$thumbnail[0].url);
+		for(var i = 0, x = _data.feed.entry.length; i < x; i++) {
+			var video		= _data.feed.entry[i];
+			
+			var id			= UTIL.escapeString(video.media$group.yt$videoid.$t);
+			var title		= UTIL.escapeString(video.title.$t);
+			var description	= UTIL.escapeString(video.media$group.media$description.$t);
+			var date		= UTIL.escapeString(video.published.$t.split("T")[0].replace(/-/g, "/") + " " + video.published.$t.split("T")[1].split(".")[0]);
+			var views		= UTIL.escapeString(video.yt$statistics && video.yt$statistics.viewCount ? video.yt$statistics.viewCount : "0");
+			var link		= UTIL.escapeString("http://www.youtube.com/watch?v=" + video.media$group.yt$videoid.$t);
+			var image		= UTIL.escapeString(video.media$group.media$thumbnail[0].url);
+			
+			db.execute("INSERT OR ABORT INTO youtube (id, title, description, date, views, link, image) VALUES (" + id + ", " + title + ", " + description + ", " + date + ", " + views + ", " + link + ", " + image + ");");
+		}
 		
-		db.execute("INSERT OR ABORT INTO youtube (id, title, description, date, views, link, image) VALUES (" + id + ", " + title + ", " + description + ", " + date + ", " + views + ", " + link + ", " + image + ");");
+		db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
+		db.execute("END TRANSACTION;");
+		db.close();
 	}
-	
-	db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
-	db.execute("END TRANSACTION;");
-	db.close();
 	
 	if(_callback) {
 		_callback();

@@ -55,27 +55,26 @@ exports.fetch = function(_params) {
 exports.handleData = function(_data, _url, _callback) {
 	Ti.API.debug("TWITTER.handleData");
 	
-	var db = Ti.Database.open("Charitti");
-	
-	if(_data.length > 1) {
+	if(_data.length > 0) {
+		var db = Ti.Database.open("Charitti");
+		
 		db.execute("DELETE FROM twitter;");
-	}
-	
-	db.execute("BEGIN TRANSACTION;");
-	
-	for(var i = 0, x = _data.length; i < x; i++) {
-		var tweet	= _data[i];
+		db.execute("BEGIN TRANSACTION;");
 		
-		var id		= UTIL.escapeString(tweet.id_str);
-		var text	= UTIL.escapeString(tweet.text);
-		var date	= UTIL.escapeString(new Date(tweet.created_at).getTime() + "");
+		for(var i = 0, x = _data.length; i < x; i++) {
+			var tweet	= _data[i];
+			
+			var id		= UTIL.escapeString(tweet.id_str);
+			var text	= UTIL.escapeString(tweet.text);
+			var date	= UTIL.escapeString(new Date(tweet.created_at).getTime() + "");
+			
+			db.execute("INSERT OR ABORT INTO twitter (id, text, date) VALUES (" + id + ", " + text + ", " + date + ");");
+		}
 		
-		db.execute("INSERT OR ABORT INTO twitter (id, text, date) VALUES (" + id + ", " + text + ", " + date + ");");
+		db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
+		db.execute("END TRANSACTION;");
+		db.close();
 	}
-	
-	db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
-	db.execute("END TRANSACTION;");
-	db.close();
 	
 	if(_callback) {
 		_callback();

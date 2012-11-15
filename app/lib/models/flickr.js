@@ -100,31 +100,30 @@ exports.retrieveSets = function(_params) {
 exports.handleSets = function(_data, _url, _callback) {
 	Ti.API.debug("FLICKR.handleSets");
 	
-	var db = Ti.Database.open("Charitti");
-	
-	if(_data.photosets.photoset.length > 1) {
+	if(_data.photosets.photoset.length > 0) {
+		var db = Ti.Database.open("Charitti");
+		
 		db.execute("DELETE FROM flickr_sets;");
 		db.execute("DELETE FROM flickr_photos;");
-	}
-	
-	db.execute("BEGIN TRANSACTION;");
-	
-	for(var i = 0, x = _data.photosets.photoset.length; i < x; i++) {
-		var set			= _data.photosets.photoset[i];
+		db.execute("BEGIN TRANSACTION;");
 		
-		var id			= UTIL.escapeString(set.id);
-		var title		= UTIL.escapeString(set.title["_content"]);
-		var date_create	= UTIL.escapeString(set.date_create);
-		var date_update	= UTIL.escapeString(set.date_update);
-		var description	= UTIL.escapeString(set.description["_content"]);
-		var photo_count	= UTIL.escapeString(set.photos);
+		for(var i = 0, x = _data.photosets.photoset.length; i < x; i++) {
+			var set			= _data.photosets.photoset[i];
+			
+			var id			= UTIL.escapeString(set.id);
+			var title		= UTIL.escapeString(set.title["_content"]);
+			var date_create	= UTIL.escapeString(set.date_create);
+			var date_update	= UTIL.escapeString(set.date_update);
+			var description	= UTIL.escapeString(set.description["_content"]);
+			var photo_count	= UTIL.escapeString(set.photos);
+			
+			db.execute("INSERT OR REPLACE INTO flickr_sets (id, title, date_create, date_update, description, photo_count) VALUES (" + id + ", " + title + ", " + date_create + ", " + date_update + ", " + description + ", " + photo_count + ");");
+		}
 		
-		db.execute("INSERT OR REPLACE INTO flickr_sets (id, title, date_create, date_update, description, photo_count) VALUES (" + id + ", " + title + ", " + date_create + ", " + date_update + ", " + description + ", " + photo_count + ");");
+		db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
+		db.execute("END TRANSACTION;");
+		db.close();
 	}
-	
-	db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
-	db.execute("END TRANSACTION;");
-	db.close();
 	
 	if(_callback) {
 		_callback();
@@ -151,26 +150,28 @@ exports.retrieveSet = function(_params) {
 exports.handleSet = function(_data, _url, _callback) {
 	Ti.API.debug("FLICKR.handleSet");
 	
-	var db = Ti.Database.open("Charitti");
-	
-	db.execute("BEGIN TRANSACTION;");
-	
-	for(var i = 0, x = _data.photoset.photo.length; i < x; i++) {
-		var photo		= _data.photoset.photo[i];
-		var set_id		= _url.match(/photoset_id=(\d*)/i);
+	if(_data.photoset.photo.length > 0) {
+		var db = Ti.Database.open("Charitti");
 		
-		var id			= UTIL.escapeString(photo.id);
-		set_id			= UTIL.escapeString(set_id[1]);
-		var title		= UTIL.escapeString(photo.title);
-		var url_m		= UTIL.escapeString(photo.url_m);
-		var url_sq		= UTIL.escapeString(photo.url_sq);
+		db.execute("BEGIN TRANSACTION;");
 		
-		db.execute("INSERT OR REPLACE INTO flickr_photos (id, set_id, title, url_m, url_sq) VALUES (" + id + ", " + set_id + ", " + title + ", " + url_m + ", " + url_sq + ");");
+		for(var i = 0, x = _data.photoset.photo.length; i < x; i++) {
+			var photo		= _data.photoset.photo[i];
+			var set_id		= _url.match(/photoset_id=(\d*)/i);
+			
+			var id			= UTIL.escapeString(photo.id);
+			set_id			= UTIL.escapeString(set_id[1]);
+			var title		= UTIL.escapeString(photo.title);
+			var url_m		= UTIL.escapeString(photo.url_m);
+			var url_sq		= UTIL.escapeString(photo.url_sq);
+			
+			db.execute("INSERT OR REPLACE INTO flickr_photos (id, set_id, title, url_m, url_sq) VALUES (" + id + ", " + set_id + ", " + title + ", " + url_m + ", " + url_sq + ");");
+		}
+		
+		db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
+		db.execute("END TRANSACTION;");
+		db.close();
 	}
-	
-	db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
-	db.execute("END TRANSACTION;");
-	db.close();
 	
 	if(_callback) {
 		_callback();
