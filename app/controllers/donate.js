@@ -8,7 +8,7 @@ $.init = function() {
 	
 	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
-	$.content.url = CONFIG.file;
+	$.content.url = "/data/" + CONFIG.file;
 };
 
 // Event listeners

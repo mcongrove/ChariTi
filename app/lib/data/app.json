@@ -17,32 +17,32 @@
 			"title": "News",
 			"feed": "http://www.mercycorps.org/services/rss/homepage.xml",
 			"type": "news",
-			"image": "/icons/news1.png"		
+			"image": "news1.png"		
 		},
 		{
 			"title": "Blog",
 			"feed": "http://www.mercycorps.org/blog/feed",
 			"type": "blog",
-			"image": "/icons/news2.png"		
+			"image": "news2.png"		
 		},
 		{
 			"title": "Facebook",
 			"userid": "7263476274",
 			"type": "facebook",
-			"image": "/icons/facebook.png"
+			"image": "facebook.png"
 		},
 		{
 			"title": "Photos",
 			"username": "mercycorps",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
-			"image": "/icons/photo.png"		
+			"image": "photo.png"		
 		},
 		{
 			"title": "Video",
 			"username": "mercycorps",
 			"type": "youtube",
-			"image": "/icons/video2.png"
+			"image": "video2.png"
 		}
 	],
 	"inactiveTabs": [
@@ -50,13 +50,13 @@
 			"title": "Finance",
 			"url": "http://www.mercycorps.org/impact",
 			"type": "web",
-			"image": "/icons/financial3.png"
+			"image": "financial3.png"
 		},
 		{
 			"title": "Tweets",
 			"username": "mercycorps",
 			"type": "twitter",
-			"image": "/icons/twitter2.png"
+			"image": "twitter2.png"
 		},
 		{
 			"title": "Map",
@@ -84,20 +84,20 @@
 				}
 			],
 			"type": "map",
-			"image": "/icons/map1.png"
+			"image": "map1.png"
 		},
 		{
 			"title": "Haiti",
 			"url": "http://www.givewell.org/files/DisasterRelief/Mercycorps/haiti_1yr_progressreport_v12.pdf",
 			"type": "pdf",
-			"image": "/icons/news1.png"
+			"image": "news1.png"
 		},
 		{
 			"title": "About",
 			"heading": "Saving lives in the world’s toughest places",
 			"text": "Mercy Corps helps people turn the crises they confront into the opportunities they deserve.\n\nDriven by local needs, our programs provide communities in the world’s toughest places with the tools and support they need to transform their own lives. Our worldwide team in 41 countries is improving the lives of 19 million people.",
 			"type": "text",
-			"image": "/icons/news2.png"
+			"image": "news2.png"
 		}
 	]
 }
