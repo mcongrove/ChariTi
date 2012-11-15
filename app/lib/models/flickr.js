@@ -24,7 +24,7 @@ exports.generateNsid = function(_params) {
 	Ti.API.debug("FLICKR.generateNsid");
 	
 	if(Ti.App.Properties.hasProperty("FLICKR_NSID")) {
-		if(Ti.App.Properties.hasProperty("FLICKR_USERNAME") && Ti.App.Properties.getString("FLICKR_NSID") == _params.username) {
+		if(Ti.App.Properties.hasProperty("FLICKR_USERNAME") && Ti.App.Properties.getString("FLICKR_USERNAME") == _params.username) {
 			_params.callback();
 			
 			return;
