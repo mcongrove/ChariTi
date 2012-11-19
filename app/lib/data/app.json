@@ -1,63 +1,70 @@
 {
-	"id": "MercyCorps.001",
-	"configurationUrl": "http://localhost/app.json",
+	"id": "ChariTi.001",
+	"configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
 	"settings": {
 		"emailSettings": {
-			"subject": "Check out this great Mercy Corps content!",
+			"subject": "Check out this great ChariTi content!",
 			"body": "I found this and thought you might find it interesting:<br /><br />",
-			"footer": "Sent via <a href='http://www.mercycorps.org/'>Mercy Corps</a>"
+			"footer": "Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
 		},
 		"colors": {
-			"primary": "#800528",
-			"secondary": "#B30738",
+			"primary": "#327B9F",
+			"secondary": "#569BBE",
 			"text":	"#FFF"
 		}
 	},
 	"tabs": [
 		{
+			"title": "ChariTi",
+			"heading": "Open Source Mobile Framework for Charities",
+			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
+			"type": "text",
+			"image": "home"
+		},
+		{
 			"title": "News",
-			"feed": "http://www.mercycorps.org/services/rss/homepage.xml",
+			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "news",
-			"image": "news1.png"		
+			"image": "news1"		
 		},
 		{
 			"title": "Blog",
-			"feed": "http://www.mercycorps.org/blog/feed",
+			"feed": "http://feeds.feedburner.com/thinkmobile-blog",
 			"type": "blog",
-			"image": "news2.png"		
-		},
-		{
-			"title": "Facebook",
-			"userid": "7263476274",
-			"type": "facebook",
-			"image": "facebook.png"
+			"image": "news2"		
 		},
 		{
 			"title": "Photos",
-			"username": "mercycorps",
+			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
-			"image": "photo.png"		
+			"image": "photo"		
 		},
 		{
 			"title": "Tweets",
-			"username": "mercycorps",
+			"username": "appcelerator",
 			"type": "twitter",
-			"image": "twitter2.png"
+			"image": "twitter2"
 		}
 	],
-	"inactiveTabs": [
+	"nontabs": [
+		{
+			"title": "Facebook",
+			"userid": "20594753592",
+			"type": "facebook",
+			"image": "facebook"
+		},
 		{
 			"title": "Finance",
-			"url": "http://www.mercycorps.org/impact",
+			"url": "http://m.appcelerator.com/?t=m",
 			"type": "web",
-			"image": "financial3.png"
+			"image": "home"
 		},
 		{
 			"title": "Video",
-			"username": "mercycorps",
+			"username": "appcelerator",
 			"type": "youtube",
-			"image": "video2.png"
+			"image": "video2"
 		},
 		{
 			"title": "Map",
@@ -85,20 +92,13 @@
 				}
 			],
 			"type": "map",
-			"image": "map1.png"
+			"image": "map1"
 		},
 		{
-			"title": "Haiti",
-			"url": "http://www.givewell.org/files/DisasterRelief/Mercycorps/haiti_1yr_progressreport_v12.pdf",
+			"title": "Case Study",
+			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
-			"image": "news1.png"
-		},
-		{
-			"title": "About",
-			"heading": "Saving lives in the world’s toughest places",
-			"text": "Mercy Corps helps people turn the crises they confront into the opportunities they deserve.\n\nDriven by local needs, our programs provide communities in the world’s toughest places with the tools and support they need to transform their own lives. Our worldwide team in 41 countries is improving the lives of 19 million people.",
-			"type": "text",
-			"image": "news2.png"
+			"image": "social1"
 		}
 	]
 }

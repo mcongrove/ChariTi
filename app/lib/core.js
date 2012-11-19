@@ -107,7 +107,7 @@ var APP = {
 			tabs.push({
 				id: i,
 				title: APP.Nodes[i].title,
-				image: "/icons/" + APP.Nodes[i].image,
+				image: "/icons/" + APP.Nodes[i].image + ".png",
 				controller: APP.Nodes[i].type.toLowerCase()
 			});
 		}
