@@ -1,0 +1,104 @@
+{
+	"id": "ChariTi.001",
+	"configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
+	"settings": {
+		"emailSettings": {
+			"subject": "Check out this great ChariTi content!",
+			"body": "I found this and thought you might find it interesting:<br /><br />",
+			"footer": "Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
+		},
+		"colors": {
+			"primary": "#327B9F",
+			"secondary": "#569BBE",
+			"text":	"#FFF"
+		}
+	},
+	"tabs": [
+		{
+			"title": "ChariTi",
+			"heading": "Open Source Mobile Framework for Charities",
+			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
+			"type": "text",
+			"image": "home"
+		},
+		{
+			"title": "News",
+			"feed": "http://developer.appcelerator.com/blog/feed",
+			"type": "news",
+			"image": "news1"		
+		},
+		{
+			"title": "Blog",
+			"feed": "http://feeds.feedburner.com/thinkmobile-blog",
+			"type": "blog",
+			"image": "news2"		
+		},
+		{
+			"title": "Photos",
+			"username": "39494278@N04",
+			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
+			"type": "flickr",
+			"image": "photo"		
+		},
+		{
+			"title": "Tweets",
+			"username": "appcelerator",
+			"type": "twitter",
+			"image": "twitter2"
+		}
+	],
+	"nontabs": [
+		{
+			"title": "Facebook",
+			"userid": "20594753592",
+			"type": "facebook",
+			"image": "facebook"
+		},
+		{
+			"title": "Finance",
+			"url": "http://m.appcelerator.com/?t=m",
+			"type": "web",
+			"image": "home"
+		},
+		{
+			"title": "Video",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video2"
+		},
+		{
+			"title": "Map",
+			"points": [
+				{
+					"latitude": "28.24560022171899",
+					"longitude": "-80.72571516036987",
+					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"title": "Place A",
+					"subTitle": "This is a subtitle"
+				},
+				{
+					"latitude": "28.24704626421908",
+					"longitude": "-80.73882579803467",
+					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"title": "Place B",
+					"subTitle": ""
+				},
+				{
+					"latitude": "28.228406881099808",
+					"longitude": "-80.73399782180786",
+					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"title": "Place C",
+					"subTitle": "This is a subtitle"
+				}
+			],
+			"type": "map",
+			"image": "map1"
+		},
+		{
+			"title": "Case Study",
+			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
+			"type": "pdf",
+			"image": "social1"
+		}
+	]
+}

@@ -25,5 +25,5 @@
 		fontSize: "14dp",
 		fontWeight: "normal"
 	},
-	color: "#333"
+	color: "#666"
 }
