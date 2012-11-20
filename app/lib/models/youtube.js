@@ -53,7 +53,7 @@ exports.isStale = function(_url) {
 	}
 };
 
-exports.retrieveVideos = function(_params) {
+exports.fetch = function(_params) {
 	Ti.API.debug("YOUTUBE.retrieveVideos");
 	
 	if(exports.isStale(ApiBase + "max-results=20")) {
@@ -63,7 +63,20 @@ exports.retrieveVideos = function(_params) {
 			format: "JSON",
 			url: ApiBase + "max-results=20",
 			passthrough: _params.callback,
-			success: exports.handleData
+			success: exports.handleData,
+			failure: function(_error) {
+				var alert = Ti.UI.createAlertDialog({
+					title: "Connection Error",
+					message: "The request has timed out.",
+					ok: "Retry"
+				});
+				
+				alert.addEventListener("click", function(_data) {
+					exports.fetch(_params);
+				});
+				
+				alert.show();
+			}
 		});
 	} else {
 		_params.callback();

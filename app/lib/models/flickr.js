@@ -90,7 +90,20 @@ exports.retrieveSets = function(_params) {
 			format: "JSON",
 			url: ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"),
 			passthrough: _params.callback,
-			success: exports.handleSets
+			success: exports.handleSets,
+			failure: function(_error) {
+				var alert = Ti.UI.createAlertDialog({
+					title: "Connection Error",
+					message: "The request has timed out.",
+					ok: "Retry"
+				});
+				
+				alert.addEventListener("click", function(_data) {
+					exports.retrieveSets(_params);
+				});
+				
+				alert.show();
+			}
 		});
 	} else {
 		_params.callback();
@@ -140,7 +153,20 @@ exports.retrieveSet = function(_params) {
 			format: "JSON",
 			url: ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id,
 			passthrough: _params.callback,
-			success: exports.handleSet
+			success: exports.handleSet,
+			failure: function(_error) {
+				var alert = Ti.UI.createAlertDialog({
+					title: "Connection Error",
+					message: "The request has timed out.",
+					ok: "Retry"
+				});
+				
+				alert.addEventListener("click", function(_data) {
+					exports.retrieveSet(_params);
+				});
+				
+				alert.show();
+			}
 		});
 	} else {
 		_params.callback();

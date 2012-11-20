@@ -19,7 +19,7 @@ $.init = function() {
 $.handleUsername = function() {
 	Ti.API.debug("youtube.handleUsername");
 	
-	MODEL.retrieveVideos({
+	MODEL.fetch({
 		callback: $.handleVideos
 	});
 };

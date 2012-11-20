@@ -45,7 +45,20 @@ exports.fetch = function(_params) {
 			format: "JSON",
 			url: _params.url,
 			passthrough: _params.callback,
-			success: exports.handleData
+			success: exports.handleData,
+			failure: function(_error) {
+				var alert = Ti.UI.createAlertDialog({
+					title: "Connection Error",
+					message: "The request has timed out.",
+					ok: "Retry"
+				});
+				
+				alert.addEventListener("click", function(_data) {
+					exports.fetch(_params);
+				});
+				
+				alert.show();
+			}
 		});
 	} else {
 		_params.callback();
