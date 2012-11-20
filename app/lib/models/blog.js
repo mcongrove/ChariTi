@@ -66,9 +66,9 @@ exports.handleData = function(_data, _url, _passthrough) {
 		
 		for(var i = 0, x = nodes.length; i < x; i++) {
 			var title		= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("title").item(0).text);
-			var date		= UTIL.cleanEscapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
+			var date		= UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
 			var description	= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("description").item(0).text);
-			var link		= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("link").item(0).text);
+			var link		= UTIL.escapeString(nodes.item(i).getElementsByTagName("link").item(0).text);
 			
 			db.execute("INSERT INTO blog (id, title, date, description, link) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ");");
 		}

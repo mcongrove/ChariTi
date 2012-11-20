@@ -1,0 +1,48 @@
+{
+	"id": "SpecialOlympics.001",
+	"settings": {
+		"emailSettings": {
+			"subject": "Check out this great Special Olympics content!",
+			"body": "I found this and thought you might find it interesting:<br /><br />",
+			"footer": "Sent via <a href='http://www.specialolympics.org/'>Special Olympics</a>"
+		},
+		"colors": {
+			"primary": "#FF0000",
+			"secondary": "#820000",
+			"text":	"#FFF"
+		}
+	},
+	"tabs": [
+		{
+			"title": "Blog",
+			"feed": "http://specialolympicsblog.wordpress.com/feed/",
+			"type": "blog",
+			"image": "news2"		
+		},
+		{
+			"title": "Photos",
+			"username": "soi-photo-stream",
+			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
+			"type": "flickr",
+			"image": "photo"		
+		},
+		{
+			"title": "Video",
+			"username": "SpecialOlympicsHQ",
+			"type": "youtube",
+			"image": "video2"
+		},
+		{
+			"title": "Tweets",
+			"username": "SpecialOlympics",
+			"type": "twitter",
+			"image": "twitter2"		
+		},
+		{
+			"title": "Donate",
+			"file": "donate.html",
+			"type": "donate",
+			"image": "donate1"
+		}
+	]
+}

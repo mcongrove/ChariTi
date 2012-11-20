@@ -83,8 +83,8 @@ exports.handleData = function(_data, _url, _callback) {
 			var video		= _data.feed.entry[i];
 			
 			var id			= UTIL.escapeString(video.media$group.yt$videoid.$t);
-			var title		= UTIL.escapeString(video.title.$t);
-			var description	= UTIL.escapeString(video.media$group.media$description.$t);
+			var title		= UTIL.cleanEscapeString(video.title.$t);
+			var description	= UTIL.cleanEscapeString(video.media$group.media$description.$t);
 			var date		= UTIL.escapeString(video.published.$t.split("T")[0].replace(/-/g, "/") + " " + video.published.$t.split("T")[1].split(".")[0]);
 			var views		= UTIL.escapeString(video.yt$statistics && video.yt$statistics.viewCount ? video.yt$statistics.viewCount : "0");
 			var link		= UTIL.escapeString("http://www.youtube.com/watch?v=" + video.media$group.yt$videoid.$t);

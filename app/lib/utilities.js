@@ -2,6 +2,10 @@
  * Escapes a string for SQL insertion
  */
 exports.escapeString = function(_string) {
+	if(typeof _string !== "string") {
+		return "\"" + _string + "\"";
+	}
+	
 	return "\"" + _string.replace(/"/g, "'") + "\"";
 };
 
@@ -9,6 +13,11 @@ exports.escapeString = function(_string) {
  * Removes HTML entities, replaces breaks/paragraphs with newline, strips HTML, trims
  */
 exports.cleanString = function(_string) {
+	if(typeof _string !== "string") {
+		return _string;
+	}
+	
+	_string = _string.replace(/&amp;*/ig, "&");
 	_string = exports.htmlDecode(_string);
 	_string = _string.replace(/\s*<br[^>]*>\s*/ig, "\n");
 	_string = _string.replace(/\s*<\/p>*\s*/ig, "\n\n");
@@ -34,7 +43,6 @@ exports.cleanEscapeString = function(_string) {
  * Cleans up nasty XML
  */
 exports.xmlNormalize = function(_string) {
-	_string = exports.htmlDecode(_string);
 	_string = _string.replace(/&nbsp;*/ig, " ");
 	_string = _string.replace(/&(?!amp;)\s*/g, "&amp;");
 	_string = _string.replace(/^\s+|\s+$/g, "");
@@ -49,335 +57,286 @@ exports.xmlNormalize = function(_string) {
 /**
  * Decodes HTML entities
  */
-exports.htmlDecode = function(_string, _quote_style) {
-	var hash_map = {};
-	var symbol = "";
-	var tmp_str = "";
-	var entity = "";
+exports.htmlDecode = function(_string) {
 	var tmp_str = _string.toString();
-
-	if(false === (hash_map = exports.htmlTranslationTable("HTML_ENTITIES", _quote_style))) {
-		return false;
+	var hash_map = exports.htmlTranslationTable();
+	var results = tmp_str.match(/&#\d*;/ig);
+	
+	if(results) {
+		for(var i = 0, x = results.length; i < x; i++) {
+			var code = parseInt(results[i].replace("&#", "").replace(";", ""), 10);
+			
+			hash_map[results[i]] = code;
+		}
 	}
 	
-	delete(hash_map["&"]);
-	hash_map["&"] = "&amp;";
-
-	for(symbol in hash_map) {
-		entity = hash_map[symbol];
+	for(var entity in hash_map) {
+		var symbol = String.fromCharCode(hash_map[entity]);
+		
 		tmp_str = tmp_str.split(entity).join(symbol);
 	}
 	
-	tmp_str = tmp_str.split("&#039;").join("'");
-	tmp_str = tmp_str.split("&#39;").join("'");
-
 	return tmp_str;
 };
 
-exports.htmlTranslationTable = function(_table, _quote_style) {
+exports.htmlTranslationTable = function() {
 	var entities = {};
-	var hash_map = {};
-	var decimal = 0;
-	var symbol = "";
-	var constMappingTable = {};
-	var constMappingQuoteStyle = {};
-	var useTable = {};
-	var useQuoteStyle = {};
 	
-	constMappingTable[0] = "HTML_SPECIALCHARS";
-	constMappingTable[1] = "HTML_ENTITIES";
-	constMappingQuoteStyle[0] = "ENT_NOQUOTES";
-	constMappingQuoteStyle[2] = "ENT_COMPAT";
-	constMappingQuoteStyle[3] = "ENT_QUOTES";
-	useTable = !isNaN(_table) ? constMappingTable[_table] : _table ? _table.toUpperCase() : "HTML_SPECIALCHARS";
-	useQuoteStyle = !isNaN(_quote_style) ? constMappingQuoteStyle[_quote_style] : _quote_style ? _quote_style.toUpperCase() : "ENT_COMPAT";
+	entities["&amp;"] = "38";
+	entities["&bdquo;"] = "8222";
+	entities["&bull;"] = "8226";
+	entities["&circ;"] = "710";
+	entities["&dagger;"] = "8224";
+	entities["&Dagger;"] = "8225";
+	entities["&fnof;"] = "402";
+	entities["&hellip;"] = "8230";
+	entities["&ldquo;"] = "8220";
+	entities["&lsaquo;"] = "8249";
+	entities["&lsquo;"] = "8216";
+	entities["&mdash;"] = "8212";
+	entities["&ndash;"] = "8211";
+	entities["&OElig;"] = "338";
+	entities["&oelig;"] = "339";
+	entities["&permil;"] = "8240";
+	entities["&rdquo;"] = "8221";
+	entities["&rsaquo;"] = "8250";
+	entities["&rsquo;"] = "8217";
+	entities["&sbquo;"] = "8218";
+	entities["&scaron;"] = "353";
+	entities["&Scaron;"] = "352";
+	entities["&tilde;"] = "152";
+	entities["&trade;"] = "8482";
+	entities["&Yuml;"] = "376";
+	entities["&Igrave;"] = "204";
+	entities["&igrave;"] = "236";
+	entities["&Iota;"] = "921";
+	entities["&iota;"] = "953";
+	entities["&Iuml;"] = "207";
+	entities["&iuml;"] = "239";
+	entities["&larr;"] = "8592";
+	entities["&lArr;"] = "8656";
+	entities["&Aacute;"] = "193";
+	entities["&aacute;"] = "225";
+	entities["&Acirc;"] = "194";
+	entities["&acirc;"] = "226";
+	entities["&acute;"] = "180";
+	entities["&AElig;"] = "198";
+	entities["&aelig;"] = "230";
+	entities["&Agrave;"] = "192";
+	entities["&agrave;"] = "224";
+	entities["&alefsym;"] = "8501";
+	entities["&Alpha;"] = "913";
+	entities["&alpha;"] = "945";
+	entities["&and;"] = "8743";
+	entities["&ang;"] = "8736";
+	entities["&Aring;"] = "197";
+	entities["&aring;"] = "229";
+	entities["&asymp;"] = "8776";
+	entities["&Atilde;"] = "195";
+	entities["&atilde;"] = "227";
+	entities["&Auml;"] = "196";
+	entities["&auml;"] = "228";
+	entities["&Beta;"] = "914";
+	entities["&beta;"] = "946";
+	entities["&brvbar;"] = "166";
+	entities["&cap;"] = "8745";
+	entities["&Ccedil;"] = "199";
+	entities["&ccedil;"] = "231";
+	entities["&cedil;"] = "184";
+	entities["&cent;"] = "162";
+	entities["&Chi;"] = "935";
+	entities["&chi;"] = "967";
+	entities["&clubs;"] = "9827";
+	entities["&cong;"] = "8773";
+	entities["&copy;"] = "169";
+	entities["&crarr;"] = "8629";
+	entities["&cup;"] = "8746";
+	entities["&curren;"] = "164";
+	entities["&darr;"] = "8595";
+	entities["&dArr;"] = "8659";
+	entities["&deg;"] = "176";
+	entities["&Delta;"] = "916";
+	entities["&delta;"] = "948";
+	entities["&diams;"] = "9830";
+	entities["&divide;"] = "247";
+	entities["&Eacute;"] = "201";
+	entities["&eacute;"] = "233";
+	entities["&Ecirc;"] = "202";
+	entities["&ecirc;"] = "234";
+	entities["&Egrave;"] = "200";
+	entities["&egrave;"] = "232";
+	entities["&empty;"] = "8709";
+	entities["&emsp;"] = "8195";
+	entities["&ensp;"] = "8194";
+	entities["&Epsilon;"] = "917";
+	entities["&epsilon;"] = "949";
+	entities["&equiv;"] = "8801";
+	entities["&Eta;"] = "919";
+	entities["&eta;"] = "951";
+	entities["&ETH;"] = "208";
+	entities["&eth;"] = "240";
+	entities["&Euml;"] = "203";
+	entities["&euml;"] = "235";
+	entities["&euro;"] = "8364";
+	entities["&exist;"] = "8707";
+	entities["&forall;"] = "8704";
+	entities["&frac12;"] = "189";
+	entities["&frac14;"] = "188";
+	entities["&frac34;"] = "190";
+	entities["&frasl;"] = "8260";
+	entities["&Gamma;"] = "915";
+	entities["&gamma;"] = "947";
+	entities["&ge;"] = "8805";
+	entities["&harr;"] = "8596";
+	entities["&hArr;"] = "8660";
+	entities["&hearts;"] = "9829";
+	entities["&Iacute;"] = "205";
+	entities["&iacute;"] = "237";
+	entities["&Icirc;"] = "206";
+	entities["&icirc;"] = "238";
+	entities["&iexcl;"] = "161";
+	entities["&image;"] = "8465";
+	entities["&infin;"] = "8734";
+	entities["&int;"] = "8747";
+	entities["&iquest;"] = "191";
+	entities["&isin;"] = "8712";
+	entities["&Kappa;"] = "922";
+	entities["&kappa;"] = "954";
+	entities["&Lambda;"] = "923";
+	entities["&lambda;"] = "955";
+	entities["&lang;"] = "9001";
+	entities["&laquo;"] = "171";
+	entities["&lceil;"] = "8968";
+	entities["&le;"] = "8804";
+	entities["&lfloor;"] = "8970";
+	entities["&lowast;"] = "8727";
+	entities["&loz;"] = "9674";
+	entities["&lrm;"] = "8206";
+	entities["&macr;"] = "175";
+	entities["&micro;"] = "181";
+	entities["&middot;"] = "183";
+	entities["&minus;"] = "8722";
+	entities["&Mu;"] = "924";
+	entities["&mu;"] = "956";
+	entities["&nabla;"] = "8711";
+	entities["&nbsp;"] = "160";
+	entities["&ne;"] = "8800";
+	entities["&ni;"] = "8715";
+	entities["&not;"] = "172";
+	entities["&notin;"] = "8713";
+	entities["&nsub;"] = "8836";
+	entities["&Ntilde;"] = "209";
+	entities["&ntilde;"] = "241";
+	entities["&Nu;"] = "925";
+	entities["&nu;"] = "957";
+	entities["&Oacute;"] = "211";
+	entities["&oacute;"] = "243";
+	entities["&Ocirc;"] = "212";
+	entities["&ocirc;"] = "244";
+	entities["&Ograve;"] = "210";
+	entities["&ograve;"] = "242";
+	entities["&oline;"] = "8254";
+	entities["&Omega;"] = "937";
+	entities["&omega;"] = "969";
+	entities["&Omicron;"] = "927";
+	entities["&omicron;"] = "959";
+	entities["&oplus;"] = "8853";
+	entities["&or;"] = "8744";
+	entities["&ordf;"] = "170";
+	entities["&ordm;"] = "186";
+	entities["&Oslash;"] = "216";
+	entities["&oslash;"] = "248";
+	entities["&Otilde;"] = "213";
+	entities["&otilde;"] = "245";
+	entities["&otimes;"] = "8855";
+	entities["&Ouml;"] = "214";
+	entities["&ouml;"] = "246";
+	entities["&para;"] = "182";
+	entities["&part;"] = "8706";
+	entities["&perp;"] = "8869";
+	entities["&Phi;"] = "934";
+	entities["&phi;"] = "966";
+	entities["&Pi;"] = "928";
+	entities["&pi;"] = "960";
+	entities["&piv;"] = "982";
+	entities["&plusmn;"] = "177";
+	entities["&pound;"] = "163";
+	entities["&prime;"] = "8242";
+	entities["&Prime;"] = "8243";
+	entities["&prod;"] = "8719";
+	entities["&prop;"] = "8733";
+	entities["&Psi;"] = "936";
+	entities["&psi;"] = "968";
+	entities["&radic;"] = "8730";
+	entities["&rang;"] = "9002";
+	entities["&raquo;"] = "187";
+	entities["&rarr;"] = "8594";
+	entities["&rArr;"] = "8658";
+	entities["&rceil;"] = "8969";
+	entities["&real;"] = "8476";
+	entities["&reg;"] = "174";
+	entities["&rfloor;"] = "8971";
+	entities["&Rho;"] = "929";
+	entities["&rho;"] = "961";
+	entities["&rlm;"] = "8207";
+	entities["&sdot;"] = "8901";
+	entities["&sect;"] = "167";
+	entities["&shy;"] = "173";
+	entities["&Sigma;"] = "931";
+	entities["&sigma;"] = "963";
+	entities["&sigmaf;"] = "962";
+	entities["&sim;"] = "8764";
+	entities["&spades;"] = "9824";
+	entities["&sub;"] = "8834";
+	entities["&sube;"] = "8838";
+	entities["&sum;"] = "8721";
+	entities["&sup;"] = "8835";
+	entities["&sup1;"] = "185";
+	entities["&sup2;"] = "178";
+	entities["&sup3;"] = "179";
+	entities["&supe;"] = "8839";
+	entities["&szlig;"] = "223";
+	entities["&Tau;"] = "932";
+	entities["&tau;"] = "964";
+	entities["&there4;"] = "8756";
+	entities["&Theta;"] = "920";
+	entities["&theta;"] = "952";
+	entities["&thetasym;"] = "977";
+	entities["&thinsp;"] = "8201";
+	entities["&THORN;"] = "222";
+	entities["&thorn;"] = "254";
+	entities["&tilde;"] = "732";
+	entities["&times;"] = "215";
+	entities["&Uacute;"] = "218";
+	entities["&uacute;"] = "250";
+	entities["&uarr;"] = "8593";
+	entities["&uArr;"] = "8657";
+	entities["&Ucirc;"] = "219";
+	entities["&ucirc;"] = "251";
+	entities["&Ugrave;"] = "217";
+	entities["&ugrave;"] = "249";
+	entities["&uml;"] = "168";
+	entities["&upsih;"] = "978";
+	entities["&Upsilon;"] = "933";
+	entities["&upsilon;"] = "965";
+	entities["&Uuml;"] = "220";
+	entities["&uuml;"] = "252";
+	entities["&weierp;"] = "8472";
+	entities["&Xi;"] = "926";
+	entities["&xi;"] = "958";
+	entities["&Yacute;"] = "221";
+	entities["&yacute;"] = "253";
+	entities["&yen;"] = "165";
+	entities["&yuml;"] = "255";
+	entities["&Zeta;"] = "918";
+	entities["&zeta;"] = "950";
+	entities["&zwj;"] = "8205";
+	entities["&zwnj;"] = "8204";
+	entities["&quot;"] = "34";
+	entities["&lt;"] = "60";
+	entities["&gt;"] = "62";
 
-	if(useTable !== "HTML_SPECIALCHARS" && useTable !== "HTML_ENTITIES") {
-		return false;
-	}
-
-	entities["38"] = "&amp;";
-	
-	if(useTable === "HTML_ENTITIES") {
-		entities["8222"] = "&bdquo;";
-		entities["8226"] = "&bull;";
-		entities["710"] = "&circ;";
-		entities["8224"] = "&dagger;";
-		entities["8225"] = "&Dagger;";
-		entities["402"] = "&fnof;";
-		entities["8230"] = "&hellip;";
-		entities["8220"] = "&ldquo;";
-		entities["8249"] = "&lsaquo;";
-		entities["8216"] = "&lsquo;";
-		entities["8212"] = "&mdash;";
-		entities["8211"] = "&ndash;";
-		entities["8211"] = "&#x2013;";
-		entities["338"] = "&OElig;";
-		entities["339"] = "&oelig;";
-		entities["8240"] = "&permil;";
-		entities["8221"] = "&rdquo;";
-		entities["8250"] = "&rsaquo;";
-		entities["8217"] = "&rsquo;";
-		entities["8218"] = "&sbquo;";
-		entities["353"] = "&scaron;";
-		entities["352"] = "&Scaron;";
-		entities["152"] = "&tilde;";
-		entities["8482"] = "&trade;";
-		entities["376"] = "&Yuml;";
-		entities["204"] = "&Igrave;";
-		entities["236"] = "&igrave;";
-		entities["921"] = "&Iota;";
-		entities["953"] = "&iota;";
-		entities["207"] = "&Iuml;";
-		entities["239"] = "&iuml;";
-		entities["8592"] = "&larr;";
-		entities["8656"] = "&lArr;";
-		entities["264"] = "&#264;";
-		entities["265"] = "&#265;";
-		entities["372"] = "&#372;";
-		entities["373"] = "&#373;";
-		entities["374"] = "&#374;";
-		entities["375"] = "&#375;";
-		entities["8729"] = "&#8729;";
-		entities["9642"] = "&#9642;";
-		entities["9643"] = "&#9643;";
-		entities["9702"] = "&#9702;";
-		entities["193"] = "&Aacute;";
-		entities["225"] = "&aacute;";
-		entities["194"] = "&Acirc;";
-		entities["226"] = "&acirc;";
-		entities["180"] = "&acute;";
-		entities["198"] = "&AElig;";
-		entities["230"] = "&aelig;";
-		entities["192"] = "&Agrave;";
-		entities["224"] = "&agrave;";
-		entities["8501"] = "&alefsym;";
-		entities["913"] = "&Alpha;";
-		entities["945"] = "&alpha;";
-		entities["8743"] = "&and;";
-		entities["8736"] = "&ang;";
-		entities["197"] = "&Aring;";
-		entities["229"] = "&aring;";
-		entities["8776"] = "&asymp;";
-		entities["195"] = "&Atilde;";
-		entities["227"] = "&atilde;";
-		entities["196"] = "&Auml;";
-		entities["228"] = "&auml;";
-		entities["914"] = "&Beta;";
-		entities["946"] = "&beta;";
-		entities["166"] = "&brvbar;";
-		entities["8745"] = "&cap;";
-		entities["199"] = "&Ccedil;";
-		entities["231"] = "&ccedil;";
-		entities["184"] = "&cedil;";
-		entities["162"] = "&cent;";
-		entities["935"] = "&Chi;";
-		entities["967"] = "&chi;";
-		entities["9827"] = "&clubs;";
-		entities["8773"] = "&cong;";
-		entities["169"] = "&copy;";
-		entities["8629"] = "&crarr;";
-		entities["8746"] = "&cup;";
-		entities["164"] = "&curren;";
-		entities["8595"] = "&darr;";
-		entities["8659"] = "&dArr;";
-		entities["176"] = "&deg;";
-		entities["916"] = "&Delta;";
-		entities["948"] = "&delta;";
-		entities["9830"] = "&diams;";
-		entities["247"] = "&divide;";
-		entities["201"] = "&Eacute;";
-		entities["233"] = "&eacute;";
-		entities["202"] = "&Ecirc;";
-		entities["234"] = "&ecirc;";
-		entities["200"] = "&Egrave;";
-		entities["232"] = "&egrave;";
-		entities["8709"] = "&empty;";
-		entities["8195"] = "&emsp;";
-		entities["8194"] = "&ensp;";
-		entities["917"] = "&Epsilon;";
-		entities["949"] = "&epsilon;";
-		entities["8801"] = "&equiv;";
-		entities["919"] = "&Eta;";
-		entities["951"] = "&eta;";
-		entities["208"] = "&ETH;";
-		entities["240"] = "&eth;";
-		entities["203"] = "&Euml;";
-		entities["235"] = "&euml;";
-		entities["8364"] = "&euro;";
-		entities["8707"] = "&exist;";
-		entities["8704"] = "&forall;";
-		entities["189"] = "&frac12;";
-		entities["188"] = "&frac14;";
-		entities["190"] = "&frac34;";
-		entities["8260"] = "&frasl;";
-		entities["915"] = "&Gamma;";
-		entities["947"] = "&gamma;";
-		entities["8805"] = "&ge;";
-		entities["8596"] = "&harr;";
-		entities["8660"] = "&hArr;";
-		entities["9829"] = "&hearts;";
-		entities["205"] = "&Iacute;";
-		entities["237"] = "&iacute;";
-		entities["206"] = "&Icirc;";
-		entities["238"] = "&icirc;";
-		entities["161"] = "&iexcl;";
-		entities["8465"] = "&image;";
-		entities["8734"] = "&infin;";
-		entities["8747"] = "&int;";
-		entities["191"] = "&iquest;";
-		entities["8712"] = "&isin;";
-		entities["922"] = "&Kappa;";
-		entities["954"] = "&kappa;";
-		entities["923"] = "&Lambda;";
-		entities["955"] = "&lambda;";
-		entities["9001"] = "&lang;";
-		entities["171"] = "&laquo;";
-		entities["8968"] = "&lceil;";
-		entities["8804"] = "&le;";
-		entities["8970"] = "&lfloor;";
-		entities["8727"] = "&lowast;";
-		entities["9674"] = "&loz;";
-		entities["8206"] = "&lrm;";
-		entities["175"] = "&macr;";
-		entities["181"] = "&micro;";
-		entities["183"] = "&middot;";
-		entities["8722"] = "&minus;";
-		entities["924"] = "&Mu;";
-		entities["956"] = "&mu;";
-		entities["8711"] = "&nabla;";
-		entities["160"] = "&nbsp;";
-		entities["8800"] = "&ne;";
-		entities["8715"] = "&ni;";
-		entities["172"] = "&not;";
-		entities["8713"] = "&notin;";
-		entities["8836"] = "&nsub;";
-		entities["209"] = "&Ntilde;";
-		entities["241"] = "&ntilde;";
-		entities["925"] = "&Nu;";
-		entities["957"] = "&nu;";
-		entities["211"] = "&Oacute;";
-		entities["243"] = "&oacute;";
-		entities["212"] = "&Ocirc;";
-		entities["244"] = "&ocirc;";
-		entities["210"] = "&Ograve;";
-		entities["242"] = "&ograve;";
-		entities["8254"] = "&oline;";
-		entities["937"] = "&Omega;";
-		entities["969"] = "&omega;";
-		entities["927"] = "&Omicron;";
-		entities["959"] = "&omicron;";
-		entities["8853"] = "&oplus;";
-		entities["8744"] = "&or;";
-		entities["170"] = "&ordf;";
-		entities["186"] = "&ordm;";
-		entities["216"] = "&Oslash;";
-		entities["248"] = "&oslash;";
-		entities["213"] = "&Otilde;";
-		entities["245"] = "&otilde;";
-		entities["8855"] = "&otimes;";
-		entities["214"] = "&Ouml;";
-		entities["246"] = "&ouml;";
-		entities["182"] = "&para;";
-		entities["8706"] = "&part;";
-		entities["8869"] = "&perp;";
-		entities["934"] = "&Phi;";
-		entities["966"] = "&phi;";
-		entities["928"] = "&Pi;";
-		entities["960"] = "&pi;";
-		entities["982"] = "&piv;";
-		entities["177"] = "&plusmn;";
-		entities["163"] = "&pound;";
-		entities["8242"] = "&prime;";
-		entities["8243"] = "&Prime;";
-		entities["8719"] = "&prod;";
-		entities["8733"] = "&prop;";
-		entities["936"] = "&Psi;";
-		entities["968"] = "&psi;";
-		entities["8730"] = "&radic;";
-		entities["9002"] = "&rang;";
-		entities["187"] = "&raquo;";
-		entities["8594"] = "&rarr;";
-		entities["8658"] = "&rArr;";
-		entities["8969"] = "&rceil;";
-		entities["8476"] = "&real;";
-		entities["174"] = "&reg;";
-		entities["8971"] = "&rfloor;";
-		entities["929"] = "&Rho;";
-		entities["961"] = "&rho;";
-		entities["8207"] = "&rlm;";
-		entities["8901"] = "&sdot;";
-		entities["167"] = "&sect;";
-		entities["173"] = "&shy;";
-		entities["931"] = "&Sigma;";
-		entities["963"] = "&sigma;";
-		entities["962"] = "&sigmaf;";
-		entities["8764"] = "&sim;";
-		entities["9824"] = "&spades;";
-		entities["8834"] = "&sub;";
-		entities["8838"] = "&sube;";
-		entities["8721"] = "&sum;";
-		entities["8835"] = "&sup;";
-		entities["185"] = "&sup1;";
-		entities["178"] = "&sup2;";
-		entities["179"] = "&sup3;";
-		entities["8839"] = "&supe;";
-		entities["223"] = "&szlig;";
-		entities["932"] = "&Tau;";
-		entities["964"] = "&tau;";
-		entities["8756"] = "&there4;";
-		entities["920"] = "&Theta;";
-		entities["952"] = "&theta;";
-		entities["977"] = "&thetasym;";
-		entities["8201"] = "&thinsp;";
-		entities["222"] = "&THORN;";
-		entities["254"] = "&thorn;";
-		entities["732"] = "&tilde;";
-		entities["215"] = "&times;";
-		entities["218"] = "&Uacute;";
-		entities["250"] = "&uacute;";
-		entities["8593"] = "&uarr;";
-		entities["8657"] = "&uArr;";
-		entities["219"] = "&Ucirc;";
-		entities["251"] = "&ucirc;";
-		entities["217"] = "&Ugrave;";
-		entities["249"] = "&ugrave;";
-		entities["168"] = "&uml;";
-		entities["978"] = "&upsih;";
-		entities["933"] = "&Upsilon;";
-		entities["965"] = "&upsilon;";
-		entities["220"] = "&Uuml;";
-		entities["252"] = "&uuml;";
-		entities["8472"] = "&weierp;";
-		entities["926"] = "&Xi;";
-		entities["958"] = "&xi;";
-		entities["221"] = "&Yacute;";
-		entities["253"] = "&yacute;";
-		entities["165"] = "&yen;";
-		entities["255"] = "&yuml;";
-		entities["918"] = "&Zeta;";
-		entities["950"] = "&zeta;";
-		entities["8205"] = "&zwj;";
-		entities["8204"] = "&zwnj;";
-	}
-
-	if(useQuoteStyle !== "ENT_NOQUOTES") {
-		entities["34"] = "&quot;";
-	}
-	
-	if(useQuoteStyle === "ENT_QUOTES") {
-		entities["39"] = "&#39;";
-	}
-	
-	entities["60"] = "&lt;";
-	entities["62"] = "&gt;";
-
-	for (decimal in entities) {
-		symbol = String.fromCharCode(decimal);
-		hash_map[symbol] = entities[decimal];
-	}
-
-	return hash_map;
+	return entities;
 };
 
 /**

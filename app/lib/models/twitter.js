@@ -65,7 +65,7 @@ exports.handleData = function(_data, _url, _callback) {
 			var tweet	= _data[i];
 			
 			var id		= UTIL.escapeString(tweet.id_str);
-			var text	= UTIL.escapeString(tweet.text);
+			var text	= UTIL.cleanEscapeString(tweet.text);
 			var date	= UTIL.escapeString(new Date(tweet.created_at).getTime() + "");
 			
 			db.execute("INSERT OR ABORT INTO twitter (id, text, date) VALUES (" + id + ", " + text + ", " + date + ");");

@@ -111,10 +111,10 @@ exports.handleSets = function(_data, _url, _callback) {
 			var set			= _data.photosets.photoset[i];
 			
 			var id			= UTIL.escapeString(set.id);
-			var title		= UTIL.escapeString(set.title["_content"]);
+			var title		= UTIL.cleanEscapeString(set.title["_content"]);
 			var date_create	= UTIL.escapeString(set.date_create);
 			var date_update	= UTIL.escapeString(set.date_update);
-			var description	= UTIL.escapeString(set.description["_content"]);
+			var description	= UTIL.cleanEscapeString(set.description["_content"]);
 			var photo_count	= UTIL.escapeString(set.photos);
 			
 			db.execute("INSERT OR REPLACE INTO flickr_sets (id, title, date_create, date_update, description, photo_count) VALUES (" + id + ", " + title + ", " + date_create + ", " + date_update + ", " + description + ", " + photo_count + ");");
