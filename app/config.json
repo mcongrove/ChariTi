@@ -8,7 +8,6 @@
     "dependencies": {
         "com.charitti.tabs": "1.0",
         "com.charitti.navigationBar": "1.0",
-        "com.charitti.titleBar": "1.0",
         "com.charitti.loading": "1.0"
     }
 }
