@@ -1,4 +1,32 @@
 /**
+ * Checks to see if an item in the cache is stale or fresh
+ */
+exports.isStale = function(_url, _time) {
+	var db = Ti.Database.open("Charitti");
+	var time = new Date().getTime();
+	var cacheTime = _time ? _time : 5;
+	var freshTime = time - (cacheTime * 60 * 1000);
+	var lastUpdate = 0;
+	
+	var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
+	
+	while(data.isValidRow()) {
+		lastUpdate = data.fieldByName("time");
+
+		data.next();
+	}
+	
+	data.close();
+	db.close();
+	
+	if(lastUpdate > freshTime) {
+		return false;
+	} else {
+		return true;
+	}
+};
+
+/**
  * Escapes a string for SQL insertion
  */
 exports.escapeString = function(_string) {

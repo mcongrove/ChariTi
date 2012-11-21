@@ -8,7 +8,7 @@ $.init = function() {
 	Ti.API.debug("youtube.init");
 	Ti.API.info(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.setUsername({
 		username: CONFIG.username,
@@ -20,6 +20,7 @@ $.handleUsername = function() {
 	Ti.API.debug("youtube.handleUsername");
 	
 	MODEL.fetch({
+		cache: CONFIG.cache,
 		callback: $.handleVideos
 	});
 };

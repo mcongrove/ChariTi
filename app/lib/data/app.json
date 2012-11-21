@@ -1,11 +1,11 @@
 {
 	"id": "ChariTi.001",
-	"configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
+	"_configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
 	"settings": {
 		"emailSettings": {
 			"subject": "Check out this great ChariTi content!",
 			"body": "I found this and thought you might find it interesting:<br /><br />",
-			"footer": "Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
+			"footer": "<br /><br />Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
 		},
 		"colors": {
 			"primary": "#327B9F",
@@ -25,26 +25,30 @@
 			"title": "News",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "news",
-			"image": "news1"		
+			"image": "news1",
+			"cache": 15
 		},
 		{
 			"title": "Blog",
 			"feed": "http://feeds.feedburner.com/thinkmobile-blog",
 			"type": "blog",
-			"image": "news2"		
+			"image": "news2",
+			"cache": 30
 		},
 		{
 			"title": "Photos",
 			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
-			"image": "photo"		
+			"image": "photo",
+			"cache": 60
 		},
 		{
 			"title": "Tweets",
 			"username": "appcelerator",
 			"type": "twitter",
-			"image": "twitter2"
+			"image": "twitter2",
+			"cache": 5
 		}
 	],
 	"nontabs": [
@@ -52,7 +56,8 @@
 			"title": "Facebook",
 			"userid": "20594753592",
 			"type": "facebook",
-			"image": "facebook"
+			"image": "facebook",
+			"cache": 10
 		},
 		{
 			"title": "Finance",
@@ -64,7 +69,8 @@
 			"title": "Video",
 			"username": "appcelerator",
 			"type": "youtube",
-			"image": "video2"
+			"image": "video2",
+			"cache": 60
 		},
 		{
 			"title": "Map",

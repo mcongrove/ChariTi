@@ -6,7 +6,7 @@ Ti.API.debug("text");
 Ti.API.info(JSON.stringify(CONFIG));
 
 $.heading.text	= CONFIG.heading;
+$.heading.color = APP.Settings.colors.primary || "#666";
 $.text.text		= CONFIG.text;
 
-$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-$.heading.color = APP.Settings.colors.primary || "#666";
+$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";

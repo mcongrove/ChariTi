@@ -7,7 +7,7 @@ $.init = function() {
 	Ti.API.debug("flickr.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.setApiKey(CONFIG.apiKey);
 	
@@ -21,6 +21,7 @@ $.handleNsid = function() {
 	Ti.API.debug("flickr.handleNsid");
 	
 	MODEL.retrieveSets({
+		cache: CONFIG.cache,
 		callback: $.handleSets
 	});
 };
@@ -50,6 +51,7 @@ $.content.addEventListener("click", function(_event) {
 	
 	APP.openDetailScreen("flickr_album", {
 		id: _event.row.id,
+		cache: CONFIG.cache,
 		title: _event.row.setTitle
 	});
 });

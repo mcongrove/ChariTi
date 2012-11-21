@@ -8,10 +8,11 @@ $.init = function() {
 	Ti.API.debug("twitter.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.fetch({
 		url: "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&exclude_replies=true&count=50&screen_name=" + CONFIG.username,
+		cache: CONFIG.cache,
 		callback: function() {
 			$.handleData(MODEL.getTweets());
 		}

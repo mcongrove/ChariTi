@@ -6,7 +6,7 @@ $.init = function() {
 	Ti.API.debug("map.init");
 	Ti.API.info(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	var annotations = [];
 	

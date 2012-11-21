@@ -9,12 +9,14 @@ $.init = function() {
 	
 	MODEL.retrieveSet({
 		id: DATA.id,
+		cache: DATA.cache,
 		callback: $.handleData
 	});
 	
+	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	$.NavigationBar.title.text				= DATA.title;
 	$.NavigationBar.title.color				= APP.Settings.colors.text || "#FFF";
-	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
+	$.NavigationBar.back.visible			= true;
 };
 
 $.handleData = function() {

@@ -8,10 +8,11 @@ $.init = function() {
 	Ti.API.debug("facebook.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.fetch({
 		url: "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid,
+		cache: CONFIG.cache,
 		callback: function() {
 			$.handleData(MODEL.getAllArticles());
 		}

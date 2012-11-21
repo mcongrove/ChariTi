@@ -6,7 +6,7 @@ $.init = function() {
 	Ti.API.debug("donate.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	$.content.url = "/data/" + CONFIG.file;
 };

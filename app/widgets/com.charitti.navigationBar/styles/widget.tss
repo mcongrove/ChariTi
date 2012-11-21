@@ -6,20 +6,26 @@
 	backgroundColor: "#000"
 },
 "#back": {
-	top: "15dp",
-	left: "15dp",
-	width: "19dp",
-	height: "16dp"
+	top: "0dp",
+	left: "0dp",
+	width: "46dp",
+	height: "46dp"
 },
-"#title": {
-	top: "10dp",
-	left: "46dp",
-	right: "46dp",
-	height: "26dp",
-	font: {
-		fontSize: "22dp",
-		fontWeight: "bold"
-	},
-	color: "#FFF",
-	textAlign: "center"
+"#backImage": {
+	top: "9dp",
+	left: "9dp",
+	width: "28dp",
+	height: "28dp"
+},
+"#custom": {
+	top: "0dp",
+	right: "0dp",
+	width: "46dp",
+	height: "46dp"
+},
+"#customImage": {
+	top: "9dp",
+	left: "9dp",
+	width: "28dp",
+	height: "28dp"
 }

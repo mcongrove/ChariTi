@@ -57,33 +57,10 @@ exports.handleNsid = function(_data, _url, _passthrough) {
 	}
 };
 
-exports.isStale = function(_url) {
-	var db = Ti.Database.open("Charitti");
-	var freshTime = new Date().getTime() - 300000;
-	var lastUpdate = 0;
-	
-	var data = db.execute("SELECT time FROM updates WHERE url = " + UTIL.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
-	while(data.isValidRow()) {
-		lastUpdate = data.fieldByName("time");
-
-		data.next();
-	}
-	
-	data.close();
-	db.close();
-	
-	if(lastUpdate > freshTime) {
-		return false;
-	} else {
-		return true;
-	}
-};
-
 exports.retrieveSets = function(_params) {
 	Ti.API.debug("FLICKR.retrieveSets");
 	
-	if(exports.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"))) {
+	if(UTIL.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"), _params.cache)) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
@@ -146,7 +123,7 @@ exports.handleSets = function(_data, _url, _callback) {
 exports.retrieveSet = function(_params) {
 	Ti.API.debug("FLICKR.retrieveSet");
 	
-	if(exports.isStale(ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id)) {
+	if(UTIL.isStale(ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id), _params.cache) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",

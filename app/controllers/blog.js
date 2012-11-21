@@ -8,10 +8,11 @@ $.init = function() {
 	Ti.API.debug("blog.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
-	$.TitleBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.fetch({
 		url: CONFIG.feed,
+		cache: CONFIG.cache,
 		callback: function() {
 			$.handleData(MODEL.getAllArticles());
 		}

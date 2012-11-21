@@ -11,34 +11,11 @@ var init = function() {
 	db.close();
 };
 
-exports.isStale = function(_url) {
-	var db = Ti.Database.open("Charitti");
-	var freshTime = new Date().getTime() - 300000;
-	var lastUpdate = 0;
-	
-	var data = db.execute("SELECT time FROM updates WHERE url = " + UTIL.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
-	while(data.isValidRow()) {
-		lastUpdate = data.fieldByName("time");
-
-		data.next();
-	}
-	
-	data.close();
-	db.close();
-	
-	if(lastUpdate > freshTime) {
-		return false;
-	} else {
-		return true;
-	}
-};
-
 exports.fetch = function(_params) {
 	Ti.API.debug("FACEBOOK.fetch");
 	Ti.API.info(JSON.stringify(_params));
 	
-	if(exports.isStale(_params.url)) {
+	if(UTIL.isStale(_params.url, _params.cache)) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",

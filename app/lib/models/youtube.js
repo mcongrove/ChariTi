@@ -14,29 +14,6 @@ var init = function() {
 	db.close();
 };
 
-exports.isStale = function(_url) {
-	var db = Ti.Database.open("Charitti");
-	var freshTime = new Date().getTime() - 300000;
-	var lastUpdate = 0;
-	
-	var data = db.execute("SELECT time FROM updates WHERE url = " + UTIL.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
-	while(data.isValidRow()) {
-		lastUpdate = data.fieldByName("time");
-
-		data.next();
-	}
-	
-	data.close();
-	db.close();
-	
-	if(lastUpdate > freshTime) {
-		return false;
-	} else {
-		return true;
-	}
-};
-
 exports.setUsername = function(_params) {
 	Ti.API.debug("YOUTUBE.setUsername");
 	
@@ -56,7 +33,7 @@ exports.setUsername = function(_params) {
 exports.fetch = function(_params) {
 	Ti.API.debug("YOUTUBE.retrieveVideos");
 	
-	if(exports.isStale(ApiBase + "max-results=20")) {
+	if(UTIL.isStale(ApiBase + "max-results=20", _params.cache)) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",

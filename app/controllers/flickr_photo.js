@@ -13,9 +13,10 @@ $.init = function() {
 $.handleData = function(_data) {
 	Ti.API.debug("flickr.handleData");
 	
+	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	$.NavigationBar.title.text				= _data.title;
 	$.NavigationBar.title.color				= APP.Settings.colors.text || "#FFF";
-	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
+	$.NavigationBar.back.visible			= true;
 	
 	$.image.image = _data.url_m;
 };

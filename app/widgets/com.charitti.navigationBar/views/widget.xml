@@ -1,7 +1,11 @@
 <Alloy>
 	<View id="Wrapper">
-		<ImageView id="back" image="/com.charitti.navigationBar/back.png" />
+		<View id="back" visible="false">
+			<ImageView id="backImage" image="/com.charitti.navigationBar/back.png" />
+		</View>
 		
-		<Label id="title" />
+		<View id="custom" visible="false">
+			<ImageView id="customImage" />
+		</View>
 	</View>
 </Alloy>
