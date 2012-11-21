@@ -256,7 +256,6 @@ var APP = {
 	 * Resume event observer
 	 */
 	resume: function() {
-		// TODO: Check last time we updated, re-synch if it's been a while
 		Ti.API.debug("APP.resume");
 	}
 };

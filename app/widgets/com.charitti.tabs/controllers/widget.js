@@ -48,16 +48,20 @@ $.init = function(_params) {
 };
 
 $.setIndex = function(_index) {
-	var animation = Ti.UI.createAnimation({
-		left: (_index * $.width) + 3 + "dp",
-		duration: 250
-	});
-	
-	animation.addEventListener("complete", function(_event) {
+	if(OS_IOS) {
+		var animation = Ti.UI.createAnimation({
+			left: (_index * $.width) + 3 + "dp",
+			duration: 250
+		});
+		
+		animation.addEventListener("complete", function(_event) {
+			$.indicator.left = (_index * $.width) + 3 + "dp";
+		});
+		
+		$.indicator.animate(animation);
+	} else {
 		$.indicator.left = (_index * $.width) + 3 + "dp";
-	});
-	
-	$.indicator.animate(animation);
+	}
 };
 
 $.Wrapper.addEventListener("click", function(_event) {

@@ -59,7 +59,7 @@ exports.handleNsid = function(_data, _url, _passthrough) {
 
 exports.isStale = function(_url) {
 	var db = Ti.Database.open("Charitti");
-	var freshTime = new Date().getTime() - 3600000;
+	var freshTime = new Date().getTime() - 300000;
 	var lastUpdate = 0;
 	
 	var data = db.execute("SELECT time FROM updates WHERE url = " + UTIL.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");

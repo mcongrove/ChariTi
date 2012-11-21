@@ -14,25 +14,9 @@ var init = function() {
 	db.close();
 };
 
-exports.setUsername = function(_params) {
-	Ti.API.debug("YOUTUBE.setUsername");
-	
-	ApiBase = "http://gdata.youtube.com/feeds/mobile/users/" + _params.username + "/uploads?alt=json&format=1&safeSearch=none&v=2&";
-	
-	if(Ti.App.Properties.hasProperty("YOUTUBE_USERID")) {
-		_params.callback();
-		
-		return;
-	}
-	
-	Ti.App.Properties.setString("YOUTUBE_USERID", _params.username);
-	
-	_params.callback();
-};
-
 exports.isStale = function(_url) {
 	var db = Ti.Database.open("Charitti");
-	var freshTime = new Date().getTime() - 3600000;
+	var freshTime = new Date().getTime() - 300000;
 	var lastUpdate = 0;
 	
 	var data = db.execute("SELECT time FROM updates WHERE url = " + UTIL.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
@@ -51,6 +35,22 @@ exports.isStale = function(_url) {
 	} else {
 		return true;
 	}
+};
+
+exports.setUsername = function(_params) {
+	Ti.API.debug("YOUTUBE.setUsername");
+	
+	ApiBase = "http://gdata.youtube.com/feeds/mobile/users/" + _params.username + "/uploads?alt=json&format=1&safeSearch=none&v=2&";
+	
+	if(Ti.App.Properties.hasProperty("YOUTUBE_USERID")) {
+		_params.callback();
+		
+		return;
+	}
+	
+	Ti.App.Properties.setString("YOUTUBE_USERID", _params.username);
+	
+	_params.callback();
 };
 
 exports.fetch = function(_params) {
