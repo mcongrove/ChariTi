@@ -6,8 +6,8 @@
     "os:ios": {},
     "os:android": {},
     "dependencies": {
-        "com.charitti.tabs": "1.0",
-        "com.charitti.navigationBar": "1.0",
-        "com.charitti.loading": "1.0"
+        "com.chariti.tabs": "1.0",
+        "com.chariti.navigationBar": "1.0",
+        "com.chariti.loading": "1.0"
     }
 }

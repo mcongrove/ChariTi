@@ -7,6 +7,8 @@ $.init = function() {
 	Ti.API.debug("flickr.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
+	APP.openLoading();
+	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.setApiKey(CONFIG.apiKey);
@@ -43,6 +45,8 @@ $.handleSets = function(_data) {
 	}
 	
 	$.content.setData(rows);
+	
+	APP.closeLoading();
 };
 
 // Event listeners

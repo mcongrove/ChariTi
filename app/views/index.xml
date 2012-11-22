@@ -3,7 +3,7 @@
 		<View id="GlobalWrapper">
 			<View id="ContentWrapper" />
 			
-			<Require type="widget" src="com.charitti.tabs" id="Tabs" />
+			<Require type="widget" src="com.chariti.tabs" id="Tabs" />
 		</View>
 	</Window>
 </Alloy>

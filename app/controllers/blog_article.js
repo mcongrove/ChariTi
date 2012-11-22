@@ -17,7 +17,7 @@ $.handleData = function(_data) {
 	Ti.API.debug("blog_article.handleData");
 	
 	$.heading.text	= _data.title;
-	$.text.text		= _data.description;
+	$.text.value	= _data.description;
 	$.date.text		= UTIL.toDateRelative(_data.date);
 	$.date.color	= APP.Settings.colors.primary;
 	

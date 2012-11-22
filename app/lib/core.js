@@ -45,6 +45,12 @@ var APP = {
 	 */
 	ContentWrapper: null,
 	/**
+	 * The loading view
+	 * @type {Object}
+	 */
+	Loading: Alloy.createWidget("com.chariti.loading").getView(),
+	cancelLoading: false,
+	/**
 	 * Tabs Widget
 	 * @type {Object}
 	 */
@@ -175,6 +181,9 @@ var APP = {
 			// Save the current controller for removal
 			APP.previousController = APP.currentController;
 			
+			// Closes any loading screens
+			APP.closeLoading();
+			
 			// Create a new screen
 			APP.currentControllerId = _id;
 			APP.currentController = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
@@ -238,6 +247,26 @@ var APP = {
 		}
 		
 		APP.detailControllers = [];
+	},
+	/**
+	 * Shows the loading screen
+	 */
+	openLoading: function() {
+		APP.cancelLoading = false;
+		
+		setTimeout(function() {
+			if(!APP.cancelLoading) {
+				APP.GlobalWrapper.add(APP.Loading);
+			}
+		}, 100);
+	},
+	/**
+	 * Closes the loading screen
+	 */
+	closeLoading: function() {
+		APP.cancelLoading = true;
+		
+		APP.GlobalWrapper.remove(APP.Loading);
 	},
 	/**
 	 * Global network event handler

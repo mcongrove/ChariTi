@@ -30,13 +30,15 @@
 },
 "#text": {
 	top: "10dp",
-	left: "15dp",
-	right: "15dp",
+	left: "5dp",
+	right: "5dp",
 	bottom: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
 		fontWeight: "normal"
 	},
-	color: "#333"
+	color: "#333",
+	backgroundColor: "transparent",
+	editable: false
 }

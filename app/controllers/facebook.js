@@ -8,6 +8,8 @@ $.init = function() {
 	Ti.API.debug("facebook.init");
 	Ti.API.trace(JSON.stringify(CONFIG));
 	
+	APP.openLoading();
+	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	
 	MODEL.fetch({
@@ -35,6 +37,8 @@ $.handleData = function(_data) {
 	}
 	
 	$.content.setData(rows);
+	
+	APP.closeLoading();
 };
 
 // Event listeners

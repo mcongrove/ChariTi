@@ -1,0 +1,29 @@
+"#Wrapper": {
+	width: Ti.UI.FILL,
+	top: "46dp",
+	bottom: "60dp"
+},
+"#Background": {
+	backgroundColor: "#000",
+	opacity: 0.7,
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL
+},
+"#Loading": {
+	height: "20dp",
+	width: "20dp",
+	images: [
+		"/com.chariti.loading/00.png",
+		"/com.chariti.loading/01.png",
+		"/com.chariti.loading/02.png",
+		"/com.chariti.loading/03.png",
+		"/com.chariti.loading/04.png",
+		"/com.chariti.loading/05.png",
+		"/com.chariti.loading/06.png",
+		"/com.chariti.loading/07.png",
+		"/com.chariti.loading/08.png",
+		"/com.chariti.loading/09.png",
+		"/com.chariti.loading/10.png",
+		"/com.chariti.loading/11.png"
+	]
+}

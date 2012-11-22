@@ -4,8 +4,8 @@
 	"settings": {
 		"emailSettings": {
 			"subject": "Check out this great ChariTi content!",
-			"body": "I found this and thought you might find it interesting:<br /><br />",
-			"footer": "<br /><br />Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
+			"body": "I found this and thought you might find it interesting:",
+			"footer": "Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
 		},
 		"colors": {
 			"primary": "#327B9F",
