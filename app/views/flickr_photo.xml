@@ -4,6 +4,11 @@
 		
 		<View id="content">
 			<ImageView id="image" />
+			
+			<View id="meta">
+				<Label id="title" />
+				<Label id="description" />
+			</View>
 		</View>
 	</View>
 </Alloy>

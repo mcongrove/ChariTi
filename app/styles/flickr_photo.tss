@@ -7,4 +7,34 @@
 "#image": {
 	width: Ti.UI.FILL,
 	preventDefaultImage: true
+},
+"#meta": {
+	backgroundImage: "/images/transparent.png",
+	height: Ti.UI.SIZE,
+	width: Ti.UI.FILL,
+	layout: "vertical",
+	bottom: "0dp"
+},
+"#title": {
+	top: "15dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "14dp",
+		fontWeight: "bold"
+	},
+	color: "#FFF"
+},
+"#description": {
+	top: "5dp",
+	left: "15dp",
+	right: "15dp",
+	bottom: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "12dp",
+		fontWeight: "regular"
+	},
+	color: "#FFF"
 }
