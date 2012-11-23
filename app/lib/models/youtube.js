@@ -45,11 +45,16 @@ exports.fetch = function(_params) {
 				var alert = Ti.UI.createAlertDialog({
 					title: "Connection Error",
 					message: "The request has timed out.",
-					ok: "Retry"
+					buttonNames: [ "Retry", "Cancel" ],
+					cancel: 1
 				});
 				
-				alert.addEventListener("click", function(_data) {
-					exports.fetch(_params);
+				alert.addEventListener("click", function(_event) {
+					if(_event.index != _event.source.cancel) {
+						exports.fetch(_params);
+					} else {
+						_params.callback();
+					}
 				});
 				
 				alert.show();
