@@ -1,7 +1,9 @@
 var APP = require("core");
 var MODEL = require("models/flickr");
 
-var DATA = arguments[0] || {};
+var DATA		= arguments[0] || {};
+var PREVIOUS	= null;
+var NEXT		= null;
 
 var metaVisible = false;
 
@@ -15,6 +17,9 @@ $.init = function() {
 $.handleData = function(_data) {
 	Ti.API.debug("flickr.handleData");
 	
+	PREVIOUS	= MODEL.getPhoto(null, (parseInt(_data.index, 10) - 1).toString());
+	NEXT		= MODEL.getPhoto(null, (parseInt(_data.index, 10) + 1).toString());
+	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	$.NavigationBar.back.visible			= true;
 	
@@ -25,13 +30,41 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.content.addEventListener("singletap", function(_event) {
 	if(metaVisible) {
 		metaVisible		= false;
 		$.meta.visible	= false;
 	} else {
 		metaVisible		= true;
 		$.meta.visible	= true;
+	}
+});
+
+$.content.addEventListener("swipe", function(_event) {
+	if(_event.direction == "right") {
+		if(PREVIOUS) {
+			Ti.API.debug("flickr @previous");
+			
+			DATA.id			= PREVIOUS.id;
+			PREVIOUS		= null;
+			NEXT			= null;
+			metaVisible		= false;
+			$.meta.visible	= false;
+			
+			$.init();
+		}
+	} else if(_event.direction == "left") {
+		if(NEXT) {
+			Ti.API.debug("flickr @next");
+			
+			DATA.id			= NEXT.id;
+			PREVIOUS		= null;
+			NEXT			= null;
+			metaVisible		= false;
+			$.meta.visible	= false;
+			
+			$.init();
+		}
 	}
 });
 
