@@ -2,11 +2,13 @@
 	"id": "ChariTi.001",
 	"_configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
 	"settings": {
-		"emailSettings": {
+		"email": {
 			"subject": "Check out this great ChariTi content!",
 			"body": "I found this and thought you might find it interesting:",
 			"footer": "Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
 		},
+		"facebook": "Check out this great ChariTi content",
+		"twitter": "Check out this great ChariTi content",
 		"colors": {
 			"primary": "#327B9F",
 			"secondary": "#569BBE",

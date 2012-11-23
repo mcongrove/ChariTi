@@ -47,6 +47,7 @@
     </mobileweb>
     <modules>
         <module platform="android" version="1.0">ti.physicalSizeCategory</module>
+        <module platform="iphone" version="1.3">dk.napp.social</module>
     </modules>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>

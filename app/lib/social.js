@@ -1,18 +1,39 @@
 var APP = require("core");
+var SOCIAL = require("dk.napp.social");
+
+exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();
+exports.facebookSupported	= SOCIAL.isFacebookSupported();
+exports.twitterSupported	= SOCIAL.isTwitterSupported();
 
 /**
  * Shares information via e-mail
  */
-exports.email = function(_text) {
+exports.email = function(_url) {
 	var email = Ti.UI.createEmailDialog();
 	
 	if(email.isSupported()) {
 		email.html			= true;
-		email.subject		= APP.Settings.emailSettings.subject;
-		email.messageBody	= APP.Settings.emailSettings.body + "<br /><br />" + _text + "<br /><br />" + APP.Settings.emailSettings.footer;
+		email.subject		= APP.Settings.email.subject;
+		email.messageBody	= APP.Settings.email.body + "<br /><br /><a href='" + _url + "'>" + _url + "</a><br /><br />" + APP.Settings.email.footer;
 		
 		email.open();
-	} else {
-		alert("E-mail is not set up on this device");
+	}
+};
+
+exports.facebook = function(_url) {
+	if(exports.facebookSupported) {
+		SOCIAL.facebook({
+			text: APP.Settings.facebook,
+			url: _url
+		});
+	}
+};
+
+exports.twitter = function(_url) {
+	if(exports.twitterSupported) {
+		SOCIAL.twitter({
+			text: APP.Settings.twitter,
+			url: _url
+		});
 	}
 };
