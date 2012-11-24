@@ -1,5 +1,6 @@
 {
 	"id": "ChariTi.001",
+	"version": "1.0",
 	"_configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
 	"settings": {
 		"email": {
@@ -9,6 +10,11 @@
 		},
 		"facebook": "Check out this great ChariTi content",
 		"twitter": "Check out this great ChariTi content",
+		"notifications": {
+			"enabled": true,
+			"key": "AuKi5Qn3QKGTno3xX9ECYA",
+			"secret": "s-RDQejhRwmx-j4DCaXPMw"
+		},
 		"colors": {
 			"primary": "#327B9F",
 			"secondary": "#569BBE",

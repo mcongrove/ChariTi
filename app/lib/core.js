@@ -1,5 +1,6 @@
 var Alloy	= require("alloy");
 var HTTP	= require("http");
+var UA;
 
 /**
  * Main app singleton
@@ -10,6 +11,7 @@ var APP = {
 	 * Holds data from the JSON config file
 	 */
 	ID: null,
+	VERSION: null,
 	Nodes: [],
 	Plugins: null,
 	Settings: null,
@@ -79,6 +81,11 @@ var APP = {
 		
 		// Updates the app.json file from a remote source
 		APP.update();
+		
+		// Set up push notifications
+		if(APP.Settings.notifications.enabled) {
+			APP.registerPush();
+		}
 	},
 	/**
 	 * Loads in the appropriate controllers
@@ -96,6 +103,7 @@ var APP = {
 		var data = JSON.parse(content.text);
 		
 		APP.ID = data.id;
+		APP.VERSION = data.version;
 		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 7 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
 		APP.Plugins = data.plugins;
@@ -267,6 +275,51 @@ var APP = {
 		APP.cancelLoading = true;
 		
 		APP.GlobalWrapper.remove(APP.Loading);
+	},
+	/**
+	 * Registers the app for push notifications
+	 */
+	registerPush: function() {
+		Ti.API.debug("APP.registerPush");
+		
+		UA = require("ti.urbanairship");
+		
+		UA.options = {
+			APP_STORE_OR_AD_HOC_BUILD: true,
+			PRODUCTION_APP_KEY: APP.Settings.notifications.key,
+			PRODUCTION_APP_SECRET: APP.Settings.notifications.secret,
+			LOGGING_ENABLED: false
+		};
+		
+		Ti.Network.registerForPushNotifications({
+			types: [
+				Ti.Network.NOTIFICATION_TYPE_BADGE,
+				Ti.Network.NOTIFICATION_TYPE_ALERT,
+				Ti.Network.NOTIFICATION_TYPE_SOUND
+			],
+			success: function(_event) {
+				Ti.API.debug("APP.registerPush @success");
+				Ti.API.trace(_event.deviceToken);
+				
+				UA.registerDevice(_event.deviceToken, {
+					tags: [
+						APP.Version,
+						Ti.Platform.osname,
+						Ti.Platform.locale
+					]
+				});
+			},
+			error: function(_event) {
+				Ti.API.debug("APP.registerPush @error");
+				Ti.API.trace(JSON.stringify(_event));
+			},
+			callback: function(_event) {
+				Ti.API.debug("APP.registerPush @callback");
+				Ti.API.trace(JSON.stringify(_event));
+				
+				UA.handleNotification(_event.data);
+			}
+		});
 	},
 	/**
 	 * Global network event handler
