@@ -1,7 +1,7 @@
 {
 	"id": "ChariTi.001",
 	"version": "1.0",
-	"_configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
+	"configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
 	"settings": {
 		"email": {
 			"subject": "Check out this great ChariTi content!",
