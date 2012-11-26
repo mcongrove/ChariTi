@@ -35,55 +35,63 @@ $.initToolbar = function() {
 };
 
 // Event listeners
-$.content.addEventListener("load", function(_event) {
-	if($.content.canGoBack()) {
-		$.containerBack.visible	= true;
-	} else {
-		$.containerBack.visible	= false;
-	}
+if(CONFIG.url) {
+	$.content.addEventListener("load", function(_event) {
+		if($.content.canGoBack()) {
+			$.containerBack.visible	= true;
+		} else {
+			$.containerBack.visible	= false;
+		}
+		
+		if($.content.canGoForward()) {
+			$.containerForward.visible	= true;
+		} else {
+			$.containerForward.visible	= false;
+		}
+		
+		$.containerStop.visible		= false;
+		$.containerRefresh.visible	= true;
+	});
 	
-	if($.content.canGoForward()) {
-		$.containerForward.visible	= true;
-	} else {
-		$.containerForward.visible	= false;
-	}
+	$.content.addEventListener("beforeload", function(_event) {
+		$.containerRefresh.visible	= false;
+		$.containerStop.visible		= true;
+	});
 	
-	$.containerStop.visible		= false;
-	$.containerRefresh.visible	= true;
-});
-
-$.content.addEventListener("beforeload", function(_event) {
-	$.containerRefresh.visible	= false;
-	$.containerStop.visible		= true;
-});
-
-$.containerBack.addEventListener("click", function(_event) {
-	$.content.goBack();
-});
-
-$.containerForward.addEventListener("click", function(_event) {
-	$.content.goForward();
-});
-
-$.containerRefresh.addEventListener("click", function(_event) {
-	$.content.reload();
+	$.containerBack.addEventListener("click", function(_event) {
+		$.content.goBack();
+	});
 	
-	$.containerRefresh.visible	= false;
-	$.containerStop.visible		= true;
-});
-
-$.containerStop.addEventListener("click", function(_event) {
-	$.content.stopLoading();
+	$.containerForward.addEventListener("click", function(_event) {
+		$.content.goForward();
+	});
 	
-	$.containerStop.visible		= false;
-	$.containerRefresh.visible	= true;
-});
-
-$.containerSafari.addEventListener("click", function(_event) {
-	Ti.API.debug("web @open");
+	$.containerRefresh.addEventListener("click", function(_event) {
+		$.content.reload();
+		
+		$.containerRefresh.visible	= false;
+		$.containerStop.visible		= true;
+	});
 	
-	Ti.Platform.openURL(CONFIG.url);
-});
+	$.containerStop.addEventListener("click", function(_event) {
+		$.content.stopLoading();
+		
+		$.containerStop.visible		= false;
+		$.containerRefresh.visible	= true;
+	});
+	
+	$.containerSafari.addEventListener("click", function(_event) {
+		Ti.API.debug("web @open");
+		
+		Ti.Platform.openURL(CONFIG.url);
+	});
+} else {
+	Ti.App.addEventListener("APP:openTab", function(_event) {
+		Ti.API.debug("web @openTab");
+		
+		APP.handleNavigation(_event.index);
+	});
+}
 
 // Kick off the init
 $.init();

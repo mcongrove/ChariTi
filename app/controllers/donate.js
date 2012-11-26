@@ -12,10 +12,16 @@ $.init = function() {
 };
 
 // Event listeners
-Ti.App.addEventListener("linkclick", function(_event) {
-	Ti.API.debug("donate @open");
+Ti.App.addEventListener("APP:openLink", function(_event) {
+	Ti.API.debug("donate @openLink");
 	
 	Ti.Platform.openURL(_event.url);
+});
+
+Ti.App.addEventListener("APP:openTab", function(_event) {
+	Ti.API.debug("donate @openTab");
+	
+	APP.handleNavigation(_event.index);
 });
 
 // Kick off the init

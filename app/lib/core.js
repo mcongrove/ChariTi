@@ -186,6 +186,9 @@ var APP = {
 		if(_id == APP.currentControllerId) {
 			// Do nothing
 		} else {
+			// Move the tab selection indicator
+			APP.Tabs.setIndex(_id);
+			
 			// Save the current controller for removal
 			APP.previousController = APP.currentController;
 			
