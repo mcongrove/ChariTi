@@ -30,7 +30,8 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("twitter_row", {
 			id: _data[i].id,
 			heading: _data[i].text,
-			subHeading: UTIL.toDateRelative(_data[i].date)
+			subHeading: UTIL.toDateRelative(_data[i].date),
+			username: CONFIG.username
 		}).getView();
 		
 		rows.push(row);

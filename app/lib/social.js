@@ -37,3 +37,19 @@ exports.twitter = function(_url) {
 		});
 	}
 };
+
+exports.twitterRetweet = function(_text, _username) {
+	if(exports.twitterSupported) {
+		SOCIAL.twitter({
+			text: "RT @" + _username + ": " + _text
+		});
+	}
+};
+
+exports.twitterReply = function(_username) {
+	if(exports.twitterSupported) {
+		SOCIAL.twitter({
+			text: "@" + _username + " "
+		});
+	}
+};
