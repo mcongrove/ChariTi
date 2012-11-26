@@ -82,7 +82,7 @@ exports.getAllArticles = function() {
 	Ti.API.debug("NEWS.getAllArticles");
 	
 	var db		= Ti.Database.open("Charitti");
-	var data	= db.execute("SELECT * FROM news ORDER BY date DESC;");
+	var data	= db.execute("SELECT * FROM news ORDER BY date DESC LIMIT 25;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

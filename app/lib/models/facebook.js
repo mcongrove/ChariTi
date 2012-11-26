@@ -82,7 +82,7 @@ exports.getAllArticles = function() {
 	Ti.API.debug("FACEBOOK.getAllArticles");
 	
 	var db		= Ti.Database.open("Charitti");
-	var data	= db.execute("SELECT * FROM facebook ORDER BY date DESC;");
+	var data	= db.execute("SELECT * FROM facebook ORDER BY date DESC LIMIT 25;");
 	var temp	= [];
 
 	while(data.isValidRow()) {
