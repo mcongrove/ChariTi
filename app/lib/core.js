@@ -303,6 +303,7 @@ var APP = {
 				
 				UA.registerDevice(_event.deviceToken, {
 					tags: [
+						APP.ID,
 						APP.Version,
 						Ti.Platform.osname,
 						Ti.Platform.locale
