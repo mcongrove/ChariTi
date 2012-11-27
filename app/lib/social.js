@@ -1,4 +1,3 @@
-var APP = require("core");
 var SOCIAL = require("dk.napp.social");
 
 exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();

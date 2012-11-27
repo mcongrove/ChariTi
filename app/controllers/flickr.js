@@ -4,8 +4,7 @@ var MODEL = require("models/flickr");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("flickr.init");
-	Ti.API.trace(JSON.stringify(CONFIG));
+	APP.log("debug", "flickr.init | " + JSON.stringify(CONFIG));
 	
 	APP.openLoading();
 	
@@ -20,7 +19,7 @@ $.init = function() {
 };
 
 $.handleNsid = function() {
-	Ti.API.debug("flickr.handleNsid");
+	APP.log("debug", "flickr.handleNsid");
 	
 	MODEL.retrieveSets({
 		cache: CONFIG.cache,
@@ -29,7 +28,7 @@ $.handleNsid = function() {
 };
 
 $.handleSets = function(_data) {
-	Ti.API.debug("flickr.handleSets");
+	APP.log("debug", "flickr.handleSets");
 	
 	var data = MODEL.getSets();
 	var rows = [];
@@ -51,7 +50,7 @@ $.handleSets = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
-	Ti.API.debug("flickr @click " + _event.row.id);
+	APP.log("debug", "flickr @click " + _event.row.id);
 	
 	APP.openDetailScreen("flickr_album", {
 		id: _event.row.id,

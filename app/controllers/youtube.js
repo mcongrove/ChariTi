@@ -5,8 +5,7 @@ var MODEL = require("models/youtube");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("youtube.init");
-	Ti.API.info(JSON.stringify(CONFIG));
+	APP.log("debug", "youtube.init | " + JSON.stringify(CONFIG));
 	
 	APP.openLoading();
 	
@@ -19,7 +18,7 @@ $.init = function() {
 };
 
 $.handleUsername = function() {
-	Ti.API.debug("youtube.handleUsername");
+	APP.log("debug", "youtube.handleUsername");
 	
 	MODEL.fetch({
 		cache: CONFIG.cache,
@@ -28,7 +27,7 @@ $.handleUsername = function() {
 };
 
 $.handleVideos = function(_data) {
-	Ti.API.debug("youtube.handleVideos");
+	APP.log("debug", "youtube.handleVideos");
 	
 	var data = MODEL.getVideos();
 	var rows = [];
@@ -51,7 +50,7 @@ $.handleVideos = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
-	Ti.API.debug("youtube @click " + _event.row.url);
+	APP.log("debug", "youtube @click " + _event.row.url);
 	
 	APP.openDetailScreen("youtube_video", {
 		url: _event.row.url,

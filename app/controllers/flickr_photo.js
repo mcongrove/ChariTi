@@ -8,14 +8,13 @@ var NEXT		= null;
 var metaVisible = false;
 
 $.init = function() {
-	Ti.API.debug("flickr_photo.init");
-	Ti.API.trace(JSON.stringify(DATA));
+	APP.log("debug", "flickr_photo.init | " + JSON.stringify(DATA));
 	
 	$.handleData(MODEL.getPhoto(DATA.id));
 };
 
 $.handleData = function(_data) {
-	Ti.API.debug("flickr_photo.handleData");
+	APP.log("debug", "flickr_photo.handleData");
 	
 	PREVIOUS	= MODEL.getPhoto(null, (parseInt(_data.index, 10) - 1).toString());
 	NEXT		= MODEL.getPhoto(null, (parseInt(_data.index, 10) + 1).toString());
@@ -43,7 +42,7 @@ $.content.addEventListener("singletap", function(_event) {
 $.content.addEventListener("swipe", function(_event) {
 	if(_event.direction == "right") {
 		if(PREVIOUS) {
-			Ti.API.debug("flickr_photo @previous");
+			APP.log("debug", "flickr_photo @previous");
 			
 			DATA.id			= PREVIOUS.id;
 			PREVIOUS		= null;
@@ -55,7 +54,7 @@ $.content.addEventListener("swipe", function(_event) {
 		}
 	} else if(_event.direction == "left") {
 		if(NEXT) {
-			Ti.API.debug("flickr_photo @next");
+			APP.log("debug", "flickr_photo @next");
 			
 			DATA.id			= NEXT.id;
 			PREVIOUS		= null;
@@ -69,7 +68,7 @@ $.content.addEventListener("swipe", function(_event) {
 });
 
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	Ti.API.debug("flickr_photo @close");
+	APP.log("debug", "flickr_photo @close");
 	
 	APP.closeDetailScreen();
 });
