@@ -1,5 +1,6 @@
 var Alloy	= require("alloy");
 var HTTP	= require("http");
+var UTIL	= require("utilities");
 var UA;
 
 /**
@@ -169,9 +170,10 @@ var APP = {
 	setupDatabase: function() {
 		Ti.API.debug("APP.setupDatabase");
 		
-		var db = Ti.Database.open("Charitti");
+		var db = Ti.Database.open("ChariTi");
 		
 		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS log (time TEXT, type TEXT, message TEXT);");
 		
 		db.close();
 	},
@@ -326,8 +328,41 @@ var APP = {
 		});
 	},
 	/**
+	 * Logs all console data
+	 * @param {String} _severity A severity type (error, trace, info)
+	 * @param {String} _text The text to log
+	 */
+	log: function(_severity, _text) {
+		switch(_severity) {
+			case debug:
+				Ti.API.debug(_text);
+				break;
+			case error:
+				Ti.API.error(_text);
+				break;
+			case info:
+				Ti.API.info(_text);
+				break;
+			case log:
+				Ti.API.log(_text);
+				break;
+			case trace:
+				Ti.API.trace(_text);
+				break;
+			case warn:
+				Ti.API.warn(_text);
+				break;
+		}
+		
+		var time	= UTIL.escapeString(new Date().getTime());
+		var type	= UTIL.escapeString(_severity);
+		var message	= UTIL.escapeString(_text);
+		
+		db.execute("INSERT INTO log (time, type, message) VALUES (" + time + ", " + type + ", " + message + ");");
+	},
+	/**
 	 * Global network event handler
-	 * @param  {Object} _event Standard Ti callback
+	 * @param {Object} _event Standard Ti callback
 	 */
 	networkObserverUpdate: function(_event) {
 		Ti.API.debug("APP.networkObserverUpdate");

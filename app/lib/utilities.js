@@ -2,7 +2,7 @@
  * Checks to see if an item in the cache is stale or fresh
  */
 exports.isStale = function(_url, _time) {
-	var db = Ti.Database.open("Charitti");
+	var db = Ti.Database.open("ChariTi");
 	var time = new Date().getTime();
 	var cacheTime = _time ? _time : 5;
 	var freshTime = time - (cacheTime * 60 * 1000);

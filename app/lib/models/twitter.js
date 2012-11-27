@@ -4,7 +4,7 @@ var UTIL = require("utilities");
 var init = function() {
 	Ti.API.debug("TWITTER.init");
 	
-	var db = Ti.Database.open("Charitti");
+	var db = Ti.Database.open("ChariTi");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS twitter (id INTEGER PRIMARY KEY, text TEXT, date TEXT);");
 	
@@ -51,7 +51,7 @@ exports.handleData = function(_data, _url, _callback) {
 	Ti.API.debug("TWITTER.handleData");
 	
 	if(_data.length > 0) {
-		var db = Ti.Database.open("Charitti");
+		var db = Ti.Database.open("ChariTi");
 		
 		db.execute("DELETE FROM twitter;");
 		db.execute("BEGIN TRANSACTION;");
@@ -79,7 +79,7 @@ exports.handleData = function(_data, _url, _callback) {
 exports.getTweets = function() {
 	Ti.API.debug("TWITTER.getVideos");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM twitter ORDER BY date DESC;");
 	var temp	= [];
 

@@ -7,7 +7,7 @@ var Username = null;
 var init = function() {
 	Ti.API.debug("YOUTUBE.init");
 	
-	var db = Ti.Database.open("Charitti");
+	var db = Ti.Database.open("ChariTi");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS youtube (id TEXT PRIMARY KEY, title TEXT, description TEXT, date TEXT, views TEXT, link TEXT, image TEXT);");
 	
@@ -69,7 +69,7 @@ exports.handleData = function(_data, _url, _callback) {
 	Ti.API.debug("YOUTUBE.handleData");
 	
 	if(_data.feed.entry.length > 0) {
-		var db = Ti.Database.open("Charitti");
+		var db = Ti.Database.open("ChariTi");
 		
 		db.execute("DELETE FROM youtube;");
 		db.execute("BEGIN TRANSACTION;");
@@ -101,7 +101,7 @@ exports.handleData = function(_data, _url, _callback) {
 exports.getVideos = function() {
 	Ti.API.debug("YOUTUBE.getVideos");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM youtube ORDER BY date DESC;");
 	var temp	= [];
 

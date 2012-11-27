@@ -4,7 +4,7 @@ var UTIL = require("utilities");
 var init = function() {
 	Ti.API.debug("NEWS.init");
 	
-	var db = Ti.Database.open("Charitti");
+	var db = Ti.Database.open("ChariTi");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT, link TEXT);");
 	
@@ -54,7 +54,7 @@ exports.handleData = function(_data, _url, _passthrough) {
 	var nodes	= xml.documentElement.getElementsByTagName("item");
 	
 	if(nodes.length > 0) {
-		var db	= Ti.Database.open("Charitti");
+		var db	= Ti.Database.open("ChariTi");
 		
 		db.execute("DELETE FROM news;");
 		db.execute("BEGIN TRANSACTION;");
@@ -81,7 +81,7 @@ exports.handleData = function(_data, _url, _passthrough) {
 exports.getAllArticles = function() {
 	Ti.API.debug("NEWS.getAllArticles");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM news ORDER BY date DESC LIMIT 25;");
 	var temp	= [];
 
@@ -106,7 +106,7 @@ exports.getAllArticles = function() {
 exports.getArticle = function(_id) {
 	Ti.API.debug("NEWS.getArticle");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM news WHERE id = " + UTIL.cleanEscapeString(_id) + ";");
 	var temp;
 

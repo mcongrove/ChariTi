@@ -6,7 +6,7 @@ var ApiBase = null;
 var init = function() {
 	Ti.API.debug("FLICKR.init");
 	
-	var db = Ti.Database.open("Charitti");
+	var db = Ti.Database.open("ChariTi");
 	
 	db.execute("CREATE TABLE IF NOT EXISTS flickr_sets (id TEXT PRIMARY KEY, title TEXT, date_create TEXT, date_update TEXT, description TEXT, photo_count TEXT);");
 	db.execute("CREATE TABLE IF NOT EXISTS flickr_photos (id TEXT PRIMARY KEY, set_id TEXT, indx TEXT, title TEXT, url_m TEXT, url_sq TEXT);");
@@ -96,7 +96,7 @@ exports.handleSets = function(_data, _url, _callback) {
 	Ti.API.debug("FLICKR.handleSets");
 	
 	if(_data.photosets.photoset.length > 0) {
-		var db = Ti.Database.open("Charitti");
+		var db = Ti.Database.open("ChariTi");
 		
 		db.execute("DELETE FROM flickr_sets;");
 		db.execute("DELETE FROM flickr_photos;");
@@ -159,7 +159,7 @@ exports.handleSet = function(_data, _url, _callback) {
 	Ti.API.debug("FLICKR.handleSet");
 	
 	if(_data.photoset.photo.length > 0) {
-		var db = Ti.Database.open("Charitti");
+		var db = Ti.Database.open("ChariTi");
 		
 		db.execute("BEGIN TRANSACTION;");
 		
@@ -190,7 +190,7 @@ exports.handleSet = function(_data, _url, _callback) {
 exports.getSets = function() {
 	Ti.API.debug("FLICKR.getSets");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM flickr_sets ORDER BY date_update DESC;");
 	var temp	= [];
 
@@ -216,7 +216,7 @@ exports.getSets = function() {
 exports.getSet = function(_id) {
 	Ti.API.debug("FLICKR.getSet");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM flickr_photos WHERE set_id = " + UTIL.cleanEscapeString(_id) + ";");
 	var temp	= [];
 	
@@ -242,7 +242,7 @@ exports.getSet = function(_id) {
 exports.getPhoto = function(_id, _index) {
 	Ti.API.debug("FLICKR.getPhoto");
 	
-	var db		= Ti.Database.open("Charitti");
+	var db		= Ti.Database.open("ChariTi");
 	var data	= null;
 	var temp	= null;
 	
