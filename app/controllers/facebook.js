@@ -5,8 +5,7 @@ var MODEL = require("models/facebook");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("facebook.init");
-	Ti.API.trace(JSON.stringify(CONFIG));
+	APP.log("debug", "facebook.init | " + JSON.stringify(CONFIG));
 	
 	APP.openLoading();
 	
@@ -22,7 +21,7 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
-	Ti.API.debug("facebook.handleData");
+	APP.log("debug", "facebook.handleData");
 	
 	var rows = [];
 	
@@ -43,7 +42,7 @@ $.handleData = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
-	Ti.API.debug("facebook @click " + _event.row.id);
+	APP.log("debug", "facebook @click " + _event.row.id);
 	
 	APP.openDetailScreen("facebook_article", {
 		id: _event.row.id

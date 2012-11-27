@@ -1,10 +1,11 @@
+var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");
 
 var ApiBase = null;
 
 var init = function() {
-	Ti.API.debug("FLICKR.init");
+	APP.log("debug", "FLICKR.init");
 	
 	var db = Ti.Database.open("ChariTi");
 	
@@ -15,13 +16,13 @@ var init = function() {
 };
 
 exports.setApiKey = function(_key) {
-	Ti.API.debug("FLICKR.setApiKey");
+	APP.log("debug", "FLICKR.setApiKey");
 	
 	ApiBase = "http://api.flickr.com/services/rest/?api_key=" + _key + "&format=json&nojsoncallback=1&method=flickr.";
 };
 
 exports.generateNsid = function(_params) {
-	Ti.API.debug("FLICKR.generateNsid");
+	APP.log("debug", "FLICKR.generateNsid");
 	
 	if(Ti.App.Properties.hasProperty("FLICKR_NSID")) {
 		if(Ti.App.Properties.hasProperty("FLICKR_USERNAME") && Ti.App.Properties.getString("FLICKR_USERNAME") == _params.username) {
@@ -48,7 +49,7 @@ exports.generateNsid = function(_params) {
 };
 
 exports.handleNsid = function(_data, _url, _passthrough) {
-	Ti.API.debug("FLICKR.handleNsid");
+	APP.log("debug", "FLICKR.handleNsid");
 	
 	Ti.App.Properties.setString("FLICKR_NSID", _data.user.id);
 	
@@ -58,7 +59,7 @@ exports.handleNsid = function(_data, _url, _passthrough) {
 };
 
 exports.retrieveSets = function(_params) {
-	Ti.API.debug("FLICKR.retrieveSets");
+	APP.log("debug", "FLICKR.retrieveSets");
 	
 	if(UTIL.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"), _params.cache)) {
 		HTTP.request({
@@ -93,7 +94,7 @@ exports.retrieveSets = function(_params) {
 };
 
 exports.handleSets = function(_data, _url, _callback) {
-	Ti.API.debug("FLICKR.handleSets");
+	APP.log("debug", "FLICKR.handleSets");
 	
 	if(_data.photosets.photoset.length > 0) {
 		var db = Ti.Database.open("ChariTi");
@@ -126,7 +127,7 @@ exports.handleSets = function(_data, _url, _callback) {
 };
 
 exports.retrieveSet = function(_params) {
-	Ti.API.debug("FLICKR.retrieveSet");
+	APP.log("debug", "FLICKR.retrieveSet");
 	
 	if(UTIL.isStale(ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id), _params.cache) {
 		HTTP.request({
@@ -156,7 +157,7 @@ exports.retrieveSet = function(_params) {
 };
 
 exports.handleSet = function(_data, _url, _callback) {
-	Ti.API.debug("FLICKR.handleSet");
+	APP.log("debug", "FLICKR.handleSet");
 	
 	if(_data.photoset.photo.length > 0) {
 		var db = Ti.Database.open("ChariTi");
@@ -188,7 +189,7 @@ exports.handleSet = function(_data, _url, _callback) {
 };
 
 exports.getSets = function() {
-	Ti.API.debug("FLICKR.getSets");
+	APP.log("debug", "FLICKR.getSets");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM flickr_sets ORDER BY date_update DESC;");
@@ -214,7 +215,7 @@ exports.getSets = function() {
 };
 
 exports.getSet = function(_id) {
-	Ti.API.debug("FLICKR.getSet");
+	APP.log("debug", "FLICKR.getSet");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM flickr_photos WHERE set_id = " + UTIL.cleanEscapeString(_id) + ";");
@@ -240,7 +241,7 @@ exports.getSet = function(_id) {
 };
 
 exports.getPhoto = function(_id, _index) {
-	Ti.API.debug("FLICKR.getPhoto");
+	APP.log("debug", "FLICKR.getPhoto");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= null;

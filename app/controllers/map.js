@@ -3,8 +3,7 @@ var APP = require("core");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("map.init");
-	Ti.API.info(JSON.stringify(CONFIG));
+	APP.log("debug", "map.init | " + JSON.stringify(CONFIG));
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	

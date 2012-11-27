@@ -1,3 +1,4 @@
+var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");
 
@@ -5,7 +6,7 @@ var ApiBase = null;
 var Username = null;
 
 var init = function() {
-	Ti.API.debug("YOUTUBE.init");
+	APP.log("debug", "YOUTUBE.init");
 	
 	var db = Ti.Database.open("ChariTi");
 	
@@ -15,7 +16,7 @@ var init = function() {
 };
 
 exports.setUsername = function(_params) {
-	Ti.API.debug("YOUTUBE.setUsername");
+	APP.log("debug", "YOUTUBE.setUsername");
 	
 	ApiBase = "http://gdata.youtube.com/feeds/mobile/users/" + _params.username + "/uploads?alt=json&format=1&safeSearch=none&v=2&";
 	
@@ -31,7 +32,7 @@ exports.setUsername = function(_params) {
 };
 
 exports.fetch = function(_params) {
-	Ti.API.debug("YOUTUBE.retrieveVideos");
+	APP.log("debug", "YOUTUBE.retrieveVideos");
 	
 	if(UTIL.isStale(ApiBase + "max-results=20", _params.cache)) {
 		HTTP.request({
@@ -66,7 +67,7 @@ exports.fetch = function(_params) {
 };
 
 exports.handleData = function(_data, _url, _callback) {
-	Ti.API.debug("YOUTUBE.handleData");
+	APP.log("debug", "YOUTUBE.handleData");
 	
 	if(_data.feed.entry.length > 0) {
 		var db = Ti.Database.open("ChariTi");
@@ -99,7 +100,7 @@ exports.handleData = function(_data, _url, _callback) {
 };
 
 exports.getVideos = function() {
-	Ti.API.debug("YOUTUBE.getVideos");
+	APP.log("debug", "YOUTUBE.getVideos");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM youtube ORDER BY date DESC;");

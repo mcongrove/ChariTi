@@ -1,8 +1,8 @@
+var APP = require("core");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("web.init");
-	Ti.API.info(JSON.stringify(CONFIG));
+	APP.log("debug", "web.init | " + JSON.stringify(CONFIG));
 	
 	if(CONFIG.url) {
 		$.content.url = CONFIG.url;
@@ -16,7 +16,7 @@ $.init = function() {
 };
 
 $.initToolbar = function() {
-	Ti.API.debug("web.initToolbar");
+	APP.log("debug", "web.initToolbar");
 	
 	$.toolbar.visible = true;
 	$.content.bottom = "48dp";
@@ -81,13 +81,13 @@ if(CONFIG.url) {
 	});
 	
 	$.containerSafari.addEventListener("click", function(_event) {
-		Ti.API.debug("web @open");
+		APP.log("debug", "web @open");
 		
 		Ti.Platform.openURL(CONFIG.url);
 	});
 } else {
 	Ti.App.addEventListener("APP:openTab", function(_event) {
-		Ti.API.debug("web @openTab");
+		APP.log("debug", "web @openTab");
 		
 		APP.handleNavigation(_event.index);
 	});

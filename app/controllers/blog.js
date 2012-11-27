@@ -5,8 +5,7 @@ var MODEL = require("models/blog");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("blog.init");
-	Ti.API.trace(JSON.stringify(CONFIG));
+	APP.log("debug", "blog.init | " + JSON.stringify(CONFIG));
 	
 	APP.openLoading();
 	
@@ -22,7 +21,7 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
-	Ti.API.debug("blog.handleData");
+	APP.log("debug", "blog.handleData");
 	
 	var rows = [];
 	
@@ -43,7 +42,7 @@ $.handleData = function(_data) {
 
 // Event listeners
 $.content.addEventListener("click", function(_event) {
-	Ti.API.debug("blog @click " + _event.row.id);
+	APP.log("debug", "blog @click " + _event.row.id);
 	
 	APP.openDetailScreen("blog_article", {
 		id: _event.row.id

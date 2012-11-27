@@ -7,14 +7,13 @@ var DATA = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
-	Ti.API.debug("news_article.init");
-	Ti.API.info(JSON.stringify(DATA));
+	APP.log("debug", "news_article.init | " + JSON.stringify(DATA));
 	
 	$.handleData(MODEL.getArticle(DATA.id));
 };
 
 $.handleData = function(_data) {
-	Ti.API.debug("news_article.handleData");
+	APP.log("debug", "news_article.handleData");
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;
@@ -31,13 +30,13 @@ $.handleData = function(_data) {
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	Ti.API.debug("news_article @close");
+	APP.log("debug", "news_article @close");
 	
 	APP.closeDetailScreen();
 });
 
 $.NavigationBar.custom.addEventListener("click", function(_event) {
-	Ti.API.debug("news_article @menu");
+	APP.log("debug", "news_article @menu");
 	
 	var options = [];
 	var mapping = [];
@@ -57,23 +56,23 @@ $.NavigationBar.custom.addEventListener("click", function(_event) {
 	dialog.addEventListener("click", function(_event) {
 		switch(mapping[_event.index]) {
 			case "facebook":
-				Ti.API.trace("news_article @menu_facebook")
+				APP.log("trace", "news_article @menu_facebook")
 				SOCIAL.facebook(ACTION.url);
 				break;
 			case "twitter":
-				Ti.API.trace("news_article @menu_twitter")
+				APP.log("trace", "news_article @menu_twitter")
 				SOCIAL.twitter(ACTION.url);
 				break;
 			case "email":
-				Ti.API.trace("news_article @menu_email")
+				APP.log("trace", "news_article @menu_email")
 				SOCIAL.email(ACTION.url);
 				break;
 			case "safari":
-				Ti.API.trace("news_article @menu_safari")
+				APP.log("trace", "news_article @menu_safari")
 				Ti.Platform.openURL(ACTION.url);
 				break;
 			case "safari":
-				Ti.API.trace("news_article @menu_cancel")
+				APP.log("trace", "news_article @menu_cancel")
 				break;
 		}
 	});
