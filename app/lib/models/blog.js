@@ -1,8 +1,9 @@
+var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");
 
 var init = function() {
-	Ti.API.debug("BLOG.init");
+	APP.log("debug", "BLOG.init");
 	
 	var db = Ti.Database.open("ChariTi");
 	
@@ -12,8 +13,8 @@ var init = function() {
 };
 
 exports.fetch = function(_params) {
-	Ti.API.debug("BLOG.fetch");
-	Ti.API.info(JSON.stringify(_params));
+	APP.log("debug", "BLOG.fetch");
+	APP.log("trace", JSON.stringify(_params));
 	
 	if(UTIL.isStale(_params.url, _params.cache)) {
 		HTTP.request({
@@ -48,7 +49,7 @@ exports.fetch = function(_params) {
 };
 
 exports.handleData = function(_data, _url, _passthrough) {
-	Ti.API.debug("BLOG.handleData");
+	APP.log("debug", "BLOG.handleData");
 	
 	var xml		= Ti.XML.parseString(UTIL.xmlNormalize(_data));
 	var nodes	= xml.documentElement.getElementsByTagName("item");
@@ -79,7 +80,7 @@ exports.handleData = function(_data, _url, _passthrough) {
 };
 
 exports.getAllArticles = function() {
-	Ti.API.debug("BLOG.getAllArticles");
+	APP.log("debug", "BLOG.getAllArticles");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM blog ORDER BY date DESC LIMIT 25;");
@@ -104,7 +105,7 @@ exports.getAllArticles = function() {
 };
 
 exports.getArticle = function(_id) {
-	Ti.API.debug("BLOG.getArticle");
+	APP.log("debug", "BLOG.getArticle");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM blog WHERE id = " + UTIL.cleanEscapeString(_id) + ";");

@@ -1,8 +1,9 @@
+var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");
 
 var init = function() {
-	Ti.API.debug("TWITTER.init");
+	APP.log("debug", "TWITTER.init");
 	
 	var db = Ti.Database.open("ChariTi");
 	
@@ -12,8 +13,8 @@ var init = function() {
 };
 
 exports.fetch = function(_params) {
-	Ti.API.debug("TWITTER.fetch");
-	Ti.API.info(JSON.stringify(_params));
+	APP.log("debug", "TWITTER.fetch");
+	APP.log("trace", JSON.stringify(_params));
 	
 	if(UTIL.isStale(_params.url, _params.cache)) {
 		HTTP.request({
@@ -48,7 +49,7 @@ exports.fetch = function(_params) {
 };
 
 exports.handleData = function(_data, _url, _callback) {
-	Ti.API.debug("TWITTER.handleData");
+	APP.log("debug", "TWITTER.handleData");
 	
 	if(_data.length > 0) {
 		var db = Ti.Database.open("ChariTi");
@@ -77,7 +78,7 @@ exports.handleData = function(_data, _url, _callback) {
 };
 
 exports.getTweets = function() {
-	Ti.API.debug("TWITTER.getVideos");
+	APP.log("debug", "TWITTER.getVideos");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM twitter ORDER BY date DESC;");

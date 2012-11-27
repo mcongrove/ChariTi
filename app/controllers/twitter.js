@@ -5,8 +5,7 @@ var MODEL = require("models/twitter");
 var CONFIG = arguments[0];
 
 $.init = function() {
-	Ti.API.debug("twitter.init");
-	Ti.API.trace(JSON.stringify(CONFIG));
+	APP.log("debug", "twitter.init | " + JSON.stringify(CONFIG));
 	
 	APP.openLoading();
 	
@@ -22,7 +21,7 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
-	Ti.API.debug("twitter.handleData");
+	APP.log("debug", "twitter.handleData");
 	
 	var rows = [];
 	

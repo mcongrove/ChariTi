@@ -92,7 +92,7 @@ var APP = {
 	 * Loads in the appropriate controllers
 	 */
 	loadContent: function() {
-		Ti.API.debug("APP.loadContent");
+		APP.log("debug", "APP.loadContent");
 		
 		var contentFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
 		
@@ -114,7 +114,7 @@ var APP = {
 	 * Builds out the tab group
 	 */
 	build: function() {
-		Ti.API.debug("APP.build");
+		APP.log("debug", "APP.build");
 		
 		var tabs = [];
 		
@@ -146,7 +146,7 @@ var APP = {
 	 * Updates the app.json from a remote source
 	 */
 	update: function() {
-		Ti.API.debug("APP.update");
+		APP.log("debug", "APP.update");
 		
 		if(APP.ConfigurationURL) {
 			HTTP.request({
@@ -155,7 +155,7 @@ var APP = {
 				format: "DATA",
 				url: APP.ConfigurationURL,
 				success: function(_data) {
-					Ti.API.debug("APP.update @loaded");
+					APP.log("debug", "APP.update @loaded");
 					
 					var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
 					
@@ -182,7 +182,7 @@ var APP = {
 	 * @param  {String} _id The ID of the tab being opened
 	 */
 	handleNavigation: function(_id) {
-		Ti.API.debug("APP.handleNavigation");
+		APP.log("debug", "APP.handleNavigation");
 		
 		// Requesting same screen as we"re on
 		if(_id == APP.currentControllerId) {
@@ -285,7 +285,7 @@ var APP = {
 	 * Registers the app for push notifications
 	 */
 	registerPush: function() {
-		Ti.API.debug("APP.registerPush");
+		APP.log("debug", "APP.registerPush");
 		
 		UA = require("ti.urbanairship");
 		
@@ -303,8 +303,8 @@ var APP = {
 				Ti.Network.NOTIFICATION_TYPE_SOUND
 			],
 			success: function(_event) {
-				Ti.API.debug("APP.registerPush @success");
-				Ti.API.trace(_event.deviceToken);
+				APP.log("debug", "APP.registerPush @success");
+				APP.log("trace", _event.deviceToken);
 				
 				UA.registerDevice(_event.deviceToken, {
 					tags: [
@@ -316,12 +316,12 @@ var APP = {
 				});
 			},
 			error: function(_event) {
-				Ti.API.debug("APP.registerPush @error");
-				Ti.API.trace(JSON.stringify(_event));
+				APP.log("debug", "APP.registerPush @error");
+				APP.log("trace", JSON.stringify(_event));
 			},
 			callback: function(_event) {
-				Ti.API.debug("APP.registerPush @callback");
-				Ti.API.trace(JSON.stringify(_event));
+				APP.log("debug", "APP.registerPush @callback");
+				APP.log("trace", JSON.stringify(_event));
 				
 				UA.handleNotification(_event.data);
 			}
@@ -333,51 +333,54 @@ var APP = {
 	 * @param {String} _text The text to log
 	 */
 	log: function(_severity, _text) {
-		switch(_severity) {
-			case debug:
+		switch(_severity.toLowerCase()) {
+			case "debug":
 				Ti.API.debug(_text);
 				break;
-			case error:
+			case "error":
 				Ti.API.error(_text);
 				break;
-			case info:
+			case "info":
 				Ti.API.info(_text);
 				break;
-			case log:
+			case "log":
 				Ti.API.log(_text);
 				break;
-			case trace:
+			case "trace":
 				Ti.API.trace(_text);
 				break;
-			case warn:
+			case "warn":
 				Ti.API.warn(_text);
 				break;
 		}
+		
+		var db		= Ti.Database.open("ChariTi");
 		
 		var time	= UTIL.escapeString(new Date().getTime());
 		var type	= UTIL.escapeString(_severity);
 		var message	= UTIL.escapeString(_text);
 		
 		db.execute("INSERT INTO log (time, type, message) VALUES (" + time + ", " + type + ", " + message + ");");
+		db.close();
 	},
 	/**
 	 * Global network event handler
 	 * @param {Object} _event Standard Ti callback
 	 */
 	networkObserverUpdate: function(_event) {
-		Ti.API.debug("APP.networkObserverUpdate");
+		APP.log("debug", "APP.networkObserverUpdate");
 	},
 	/**
 	 * Exit event observer
 	 */
 	exit: function() {
-		Ti.API.debug("APP.exit");
+		APP.log("debug", "APP.exit");
 	},
 	/**
 	 * Resume event observer
 	 */
 	resume: function() {
-		Ti.API.debug("APP.resume");
+		APP.log("debug", "APP.resume");
 	}
 };
 

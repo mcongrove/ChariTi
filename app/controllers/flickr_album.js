@@ -4,8 +4,7 @@ var MODEL = require("models/flickr");
 var DATA = arguments[0] || {};
 
 $.init = function() {
-	Ti.API.debug("flickr_album.init");
-	Ti.API.trace(JSON.stringify(DATA));
+	APP.log("debug", "flickr_album.init | " + JSON.stringify(DATA));
 	
 	MODEL.retrieveSet({
 		id: DATA.id,
@@ -20,13 +19,13 @@ $.init = function() {
 };
 
 $.handleData = function() {
-	Ti.API.debug("flickr_album.handleData");
+	APP.log("debug", "flickr_album.handleData");
 	
-	var data = MODEL.getSet(DATA.id);
-	Ti.API.info(JSON.stringify(data));
-	var top = 10;
-	var left = -67;
-	var counter = 0;
+	var data	= MODEL.getSet(DATA.id);
+	
+	var top		= 10;
+	var left	= -67;
+	var counter	= 0;
 	
 	for(var i = 0, x = data.length; i < x; i++) {
 		if(counter == 4) {
@@ -54,13 +53,13 @@ $.handleData = function() {
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	Ti.API.debug("flickr_album @close");
+	APP.log("debug", "flickr_album @close");
 	
 	APP.closeAllDetailScreens();
 });
 
 $.content.addEventListener("click", function(_event) {
-	Ti.API.debug("flickr_album @click " + _event.source.id);
+	APP.log("debug", "flickr_album @click " + _event.source.id);
 	
 	APP.openDetailScreen("flickr_photo", {
 		id: _event.source.id
