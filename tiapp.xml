@@ -9,7 +9,7 @@
     </deployment-targets>
     <sdk-version>2.1.3.GA</sdk-version>
     <id>com.mcongrove.chariti</id>
-    <name>Chariti</name>
+    <name>ChariTi</name>
     <version>1.0</version>
     <publisher>Matthew Congrove</publisher>
     <url>http://mattcongrove.com</url>

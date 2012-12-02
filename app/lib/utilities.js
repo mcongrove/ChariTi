@@ -109,6 +109,8 @@ exports.htmlDecode = function(_string) {
 
 exports.htmlTranslationTable = function() {
 	var entities = {
+		"&#x2018;": "8216",
+		"&#x2019;": "8217",
 		"&amp;": "38",
 		"&bdquo;": "8222",
 		"&bull;": "8226",
@@ -349,6 +351,8 @@ exports.htmlTranslationTable = function() {
 		"&Uuml;": "220",
 		"&uuml;": "252",
 		"&weierp;": "8472",
+		"&#xA;": "10",
+		"&#xD;": "13",
 		"&Xi;": "926",
 		"&xi;": "958",
 		"&Yacute;": "221",
