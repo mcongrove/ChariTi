@@ -21,7 +21,7 @@
 			"text":	"#FFF"
 		}
 	},
-		"tabs": [
+	"tabs": [
 		{
 			"title": "Text",
 			"heading": "Open Source Mobile Framework for Charities",
@@ -57,7 +57,7 @@
 			"type": "youtube",
 			"image": "video2",
 			"cache": 60
-		},
+		}
 	],
 	"nontabs": [
 		{
