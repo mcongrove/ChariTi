@@ -21,20 +21,13 @@
 			"text":	"#FFF"
 		}
 	},
-	"tabs": [
+		"tabs": [
 		{
-			"title": "ChariTi",
+			"title": "Text",
 			"heading": "Open Source Mobile Framework for Charities",
 			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
 			"type": "text",
 			"image": "home"
-		},
-		{
-			"title": "News",
-			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "news",
-			"image": "news1",
-			"cache": 15
 		},
 		{
 			"title": "Blog",
@@ -44,7 +37,7 @@
 			"cache": 30
 		},
 		{
-			"title": "Photos",
+			"title": "Flickr",
 			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
@@ -52,33 +45,33 @@
 			"cache": 60
 		},
 		{
-			"title": "Tweets",
+			"title": "Twitter",
 			"username": "appcelerator",
 			"type": "twitter",
 			"image": "twitter2",
 			"cache": 5
-		}
+		},
+		{
+			"title": "YouTube",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video2",
+			"cache": 60
+		},
 	],
 	"nontabs": [
+		{
+			"title": "Donate",
+			"file": "donate.html",
+			"type": "donate",
+			"image": "donate1"
+		},
 		{
 			"title": "Facebook",
 			"userid": "20594753592",
 			"type": "facebook",
 			"image": "facebook",
 			"cache": 10
-		},
-		{
-			"title": "Finance",
-			"url": "http://m.appcelerator.com/?t=m",
-			"type": "web",
-			"image": "home"
-		},
-		{
-			"title": "Video",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video2",
-			"cache": 60
 		},
 		{
 			"title": "Map",
@@ -109,10 +102,23 @@
 			"image": "map1"
 		},
 		{
-			"title": "Case Study",
+			"title": "News",
+			"feed": "http://developer.appcelerator.com/blog/feed",
+			"type": "news",
+			"image": "news1",
+			"cache": 15
+		},
+		{
+			"title": "PDF",
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
 			"image": "social1"
+		},
+		{
+			"title": "Web",
+			"url": "https://github.com/mcongrove/ChariTi",
+			"type": "web",
+			"image": "home"
 		}
 	]
 }
