@@ -109,6 +109,8 @@ exports.htmlDecode = function(_string) {
 
 exports.htmlTranslationTable = function() {
 	var entities = {
+		"&#x2013;": "8211",
+		"&#x2014;": "8212",
 		"&#x2018;": "8216",
 		"&#x2019;": "8217",
 		"&amp;": "38",
