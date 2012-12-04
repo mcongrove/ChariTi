@@ -3,7 +3,6 @@ build.log
 build
 npm-debug.log
 tmp
-/Resources
 /build
 /.settings
 /app/lib/data_jobtrain
