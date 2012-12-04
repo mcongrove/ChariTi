@@ -62,11 +62,14 @@ exports.handleData = function(_data, _url, _passthrough) {
 		
 		for(var i = 0, x = nodes.length; i < x; i++) {
 			var title		= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("title").item(0).text);
-			var date		= UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
-			var description	= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("description").item(0).text);
-			var link		= UTIL.escapeString(nodes.item(i).getElementsByTagName("link").item(0).text);
 			
-			db.execute("INSERT INTO facebook (id, title, date, description, link) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ");");
+			if(title.length > 2) {
+				var date		= UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
+				var description	= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("description").item(0).text);
+				var link		= UTIL.escapeString(nodes.item(i).getElementsByTagName("link").item(0).text);
+				
+				db.execute("INSERT INTO facebook (id, title, date, description, link) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ");");
+			}
 		}
 		
 		db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
