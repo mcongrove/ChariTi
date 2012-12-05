@@ -53,6 +53,7 @@ var APP = {
 	 */
 	Loading: Alloy.createWidget("com.chariti.loading").getView(),
 	cancelLoading: false,
+	loadingOpen: false,
 	/**
 	 * Tabs Widget
 	 * @type {Object}
@@ -283,6 +284,8 @@ var APP = {
 		
 		setTimeout(function() {
 			if(!APP.cancelLoading) {
+				APP.loadingOpen = true;
+				
 				APP.GlobalWrapper.add(APP.Loading);
 			}
 		}, 100);
@@ -293,7 +296,11 @@ var APP = {
 	closeLoading: function() {
 		APP.cancelLoading = true;
 		
-		APP.GlobalWrapper.remove(APP.Loading);
+		if(APP.loadingOpen) {
+			APP.GlobalWrapper.remove(APP.Loading);
+			
+			APP.loadingOpen = false;
+		}
 	},
 	/**
 	 * Opens the settings window
