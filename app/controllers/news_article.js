@@ -24,8 +24,8 @@ $.handleData = function(_data) {
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	$.NavigationBar.back.visible			= true;
-	$.NavigationBar.custom.visible			= true;
-	$.NavigationBar.customImage.image		= "/images/action.png";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/action.png";
 };
 
 // Event listeners
@@ -35,7 +35,7 @@ $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.closeDetailScreen();
 });
 
-$.NavigationBar.custom.addEventListener("click", function(_event) {
+$.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.log("debug", "news_article @menu");
 	
 	var options = [];

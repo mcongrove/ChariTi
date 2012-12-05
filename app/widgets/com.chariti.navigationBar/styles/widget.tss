@@ -5,6 +5,18 @@
 	height: "46dp",
 	backgroundColor: "#000"
 },
+"#left": {
+	top: "0dp",
+	left: "0dp",
+	width: "46dp",
+	height: "46dp"
+},
+"#leftImage": {
+	top: "9dp",
+	left: "9dp",
+	width: "28dp",
+	height: "28dp"
+},
 "#back": {
 	top: "0dp",
 	left: "0dp",
@@ -17,13 +29,13 @@
 	width: "28dp",
 	height: "28dp"
 },
-"#custom": {
+"#right": {
 	top: "0dp",
 	right: "0dp",
 	width: "46dp",
 	height: "46dp"
 },
-"#customImage": {
+"#rightImage": {
 	top: "9dp",
 	left: "9dp",
 	width: "28dp",
