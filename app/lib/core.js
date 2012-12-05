@@ -173,8 +173,22 @@ var APP = {
 		var db = Ti.Database.open("ChariTi");
 		
 		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
-		db.execute("CREATE TABLE IF NOT EXISTS log (time TEXT, type TEXT, message TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS log (time INTEGER, type TEXT, message TEXT);");
 		
+		// Fill the log table with empty rows that we can 'update', providing a max row count
+		var data = db.execute("SELECT time FROM log;");
+		
+		if(data.rowCount == 0) {
+			db.execute("BEGIN TRANSACTION;");
+			
+			for(var i = 0; i < 100; i++) {
+				db.execute("INSERT INTO log VALUES (" + i + ", \"\", \"\");");
+			}
+			
+			db.execute("END TRANSACTION;");
+		}
+		
+		data.close();
 		db.close();
 	},
 	/**
@@ -356,11 +370,11 @@ var APP = {
 		
 		var db		= Ti.Database.open("ChariTi");
 		
-		var time	= UTIL.escapeString(new Date().getTime());
+		var time	= new Date().getTime();
 		var type	= UTIL.escapeString(_severity);
 		var message	= UTIL.escapeString(_text);
 		
-		db.execute("INSERT INTO log (time, type, message) VALUES (" + time + ", " + type + ", " + message + ");");
+		db.execute("UPDATE log SET time = " + time + ", type = " + type + ", message = " + message + " WHERE time = (SELECT min(time) FROM log);");
 		db.close();
 	},
 	/**
