@@ -43,6 +43,8 @@ $.acknowledgements.addEventListener("click", function(_event) {
 
 $.logs.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @logs");
+	
+	APP.logSend();
 });
 
 // Kick off the init

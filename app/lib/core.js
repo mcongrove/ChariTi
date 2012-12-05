@@ -409,6 +409,39 @@ var APP = {
 		db.close();
 	},
 	/**
+	 * Sends the log files via e-mail dialog
+	 */
+	logSend: function() {
+		var db	= Ti.Database.open("ChariTi");
+		var data = db.execute("SELECT * FROM log WHERE message != \"\" ORDER BY time DESC;");
+		
+		var log = APP.ID + " " + APP.VERSION + " (" + APP.CVERSION + ")\n"
+				+ Ti.Platform.locale + "\n"
+				+ Ti.Platform.osname + " " + Ti.Platform.version + " (" + Ti.Platform.model + ")\n\n"
+				+ "=====\n\n";
+		
+		while(data.isValidRow()) {
+			log += "[" + data.fieldByName("type") + "] (" + data.fieldByName("time") + ") " + data.fieldByName("message") + "\n";
+			
+			data.next();
+		}
+		
+		log += "\n=====";
+		
+		data.close();
+		db.close();
+		
+		var email = Ti.UI.createEmailDialog({
+			barColor: "#000",
+			subject: "Application Log",
+			messageBody: log
+		});
+		
+		if(email.isSupported) {
+			email.open();
+		}
+	},
+	/**
 	 * Global network event handler
 	 * @param {Object} _event Standard Ti callback
 	 */
