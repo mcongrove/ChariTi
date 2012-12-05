@@ -2,6 +2,10 @@
 	<View id="Wrapper">
 		<View id="Background" />
 		
-		<ImageView id="Loading" />
+		<View id="Modal">
+			<ImageView id="Loading" />
+			
+			<Label id="Label" text="Loading" />
+		</View>
 	</View>
 </Alloy>

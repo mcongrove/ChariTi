@@ -1,0 +1,11 @@
+<Alloy>
+	<View id="Wrapper">
+		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
+		
+		<View id="content">
+			<Label id="heading" text="ChariTi thanks the following for their help and inspiration throughout this project:" />
+			
+			<Label id="text" text="Rick Blalock, Tony Lukasavage, Dennis Ashby, Gregory DiPaolo, Mark Aronica, Elyse Phillips, Sandeep Johri, Jeff Haynie and the rest of the team at Appcelerator. Ray Miranda, Ivan Mathy, Oleg Polyakov, and the entire crowd of developers at Appcelerator's 2012 Hack-to-Help, especially Mads Møller.\n\nChariTi is built on Appcelerator's Titanium Mobile and utilizes the Alloy framework." />
+		</View>
+	</View>
+</Alloy>

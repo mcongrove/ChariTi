@@ -10,6 +10,8 @@ $.init = function() {
 	APP.openLoading();
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
 	MODEL.setUsername({
 		username: CONFIG.username,
@@ -49,6 +51,10 @@ $.handleVideos = function(_data) {
 };
 
 // Event listeners
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
+
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @click " + _event.row.url);
 	
