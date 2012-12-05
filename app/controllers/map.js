@@ -6,6 +6,8 @@ $.init = function() {
 	APP.log("debug", "map.init | " + JSON.stringify(CONFIG));
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
 	var annotations = [];
 	
@@ -32,6 +34,11 @@ $.init = function() {
 	
 	$.content.selectAnnotation(annotations[0]);
 };
+
+// Event listeners
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
 
 // Kick off the init
 $.init();

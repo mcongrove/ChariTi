@@ -9,6 +9,8 @@ $.init = function() {
 	APP.openLoading();
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
 	MODEL.setApiKey(CONFIG.apiKey);
 	
@@ -49,6 +51,10 @@ $.handleSets = function(_data) {
 };
 
 // Event listeners
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
+
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @click " + _event.row.id);
 	

@@ -10,6 +10,8 @@ $.init = function() {
 	APP.openLoading();
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
 	MODEL.fetch({
 		url: "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&exclude_replies=true&count=50&screen_name=" + CONFIG.username,
@@ -40,6 +42,11 @@ $.handleData = function(_data) {
 	
 	APP.closeLoading();
 };
+
+// Event listeners
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
 
 // Kick off the init
 $.init();

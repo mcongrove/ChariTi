@@ -9,3 +9,9 @@ $.heading.color = APP.Settings.colors.primary || "#666";
 $.text.text		= CONFIG.text;
 
 $.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+$.NavigationBar.right.visible			= true;
+$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});

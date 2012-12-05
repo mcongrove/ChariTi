@@ -296,6 +296,12 @@ var APP = {
 		APP.GlobalWrapper.remove(APP.Loading);
 	},
 	/**
+	 * Opens the settings window
+	 */
+	openSettings: function() {
+		APP.log("debug", "APP.openSettings");
+	},
+	/**
 	 * Registers the app for push notifications
 	 */
 	registerPush: function() {
