@@ -1,6 +1,41 @@
 "#content": {
 	top: "46dp",
 	backgroundColor: "#EEE",
-	rowHeight: "48dp",
-	separatorColor: "#DDD"
+	contentWidth: "auto",
+	contentHeight: "auto",
+	layout: "vertical"
+},
+"TableView": {
+	right: "10dp",
+	left: "10dp",
+	top: "10dp",
+	borderRadius: "10dp",
+	borderColor: "#DDD",
+	separatorColor: "#DDD",
+	rowHeight: "45dp",
+	backgroundColor: "#FFF",
+	scrollable: false
+},
+"TableViewRow": {
+	selectedBackgroundColor: "#DDD",
+	font: {
+		fontSize: "16dp",
+		fontWeight: "bold"
+	},
+	color: "#666"
+},
+"Label": {
+	color: "#AAA",
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	top: "5dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	textAlign: "center"
+},
+"#version": {
+	top: "10dp"
 }

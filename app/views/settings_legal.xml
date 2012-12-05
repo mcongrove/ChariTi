@@ -1,0 +1,7 @@
+<Alloy>
+	<View id="Wrapper">
+		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
+		
+		<WebView id="content" />
+	</View>
+</Alloy>

@@ -13,6 +13,12 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
+	CVERSION: "1.0.0.1204122340",
+	LEGAL: {
+		COPYRIGHT: null,
+		TOS: null,
+		PRIVACY: null
+	},
 	Nodes: [],
 	Plugins: null,
 	Settings: null,
@@ -106,6 +112,12 @@ var APP = {
 		
 		APP.ID = data.id;
 		APP.VERSION = data.version;
+		APP.LEGAL = {
+			COPYRIGHT: data.legal.copyright,
+			TOS: data.legal.terms,
+			PRIVACY: data.legal.privacy
+		};
+		
 		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 7 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
 		APP.Plugins = data.plugins;
@@ -260,6 +272,10 @@ var APP = {
 			
 			APP.currentDetailController = null;
 		}
+		
+		if(APP.detailControllers.length > 0) {
+			APP.currentDetailController = APP.detailControllers[APP.detailControllers.length - 1];
+		}
 
 		if(typeof(_callback) !== "undefined") {
 			_callback();
@@ -307,6 +323,8 @@ var APP = {
 	 */
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
+		
+		APP.openDetailScreen("settings");
 	},
 	/**
 	 * Registers the app for push notifications
