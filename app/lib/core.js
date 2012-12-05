@@ -13,6 +13,12 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
+	CVERSION: "1.0.0.1204122340",
+	LEGAL: {
+		COPYRIGHT: null,
+		TOS: null,
+		PRIVACY: null
+	},
 	Nodes: [],
 	Plugins: null,
 	Settings: null,
@@ -53,6 +59,7 @@ var APP = {
 	 */
 	Loading: Alloy.createWidget("com.chariti.loading").getView(),
 	cancelLoading: false,
+	loadingOpen: false,
 	/**
 	 * Tabs Widget
 	 * @type {Object}
@@ -105,6 +112,12 @@ var APP = {
 		
 		APP.ID = data.id;
 		APP.VERSION = data.version;
+		APP.LEGAL = {
+			COPYRIGHT: data.legal.copyright,
+			TOS: data.legal.terms,
+			PRIVACY: data.legal.privacy
+		};
+		
 		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 7 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
 		APP.Plugins = data.plugins;
@@ -259,6 +272,10 @@ var APP = {
 			
 			APP.currentDetailController = null;
 		}
+		
+		if(APP.detailControllers.length > 0) {
+			APP.currentDetailController = APP.detailControllers[APP.detailControllers.length - 1];
+		}
 
 		if(typeof(_callback) !== "undefined") {
 			_callback();
@@ -283,6 +300,8 @@ var APP = {
 		
 		setTimeout(function() {
 			if(!APP.cancelLoading) {
+				APP.loadingOpen = true;
+				
 				APP.GlobalWrapper.add(APP.Loading);
 			}
 		}, 100);
@@ -293,7 +312,19 @@ var APP = {
 	closeLoading: function() {
 		APP.cancelLoading = true;
 		
-		APP.GlobalWrapper.remove(APP.Loading);
+		if(APP.loadingOpen) {
+			APP.GlobalWrapper.remove(APP.Loading);
+			
+			APP.loadingOpen = false;
+		}
+	},
+	/**
+	 * Opens the settings window
+	 */
+	openSettings: function() {
+		APP.log("debug", "APP.openSettings");
+		
+		APP.openDetailScreen("settings");
 	},
 	/**
 	 * Registers the app for push notifications
@@ -376,6 +407,39 @@ var APP = {
 		
 		db.execute("UPDATE log SET time = " + time + ", type = " + type + ", message = " + message + " WHERE time = (SELECT min(time) FROM log);");
 		db.close();
+	},
+	/**
+	 * Sends the log files via e-mail dialog
+	 */
+	logSend: function() {
+		var db	= Ti.Database.open("ChariTi");
+		var data = db.execute("SELECT * FROM log WHERE message != \"\" ORDER BY time DESC;");
+		
+		var log = APP.ID + " " + APP.VERSION + " (" + APP.CVERSION + ")\n"
+				+ Ti.Platform.locale + "\n"
+				+ Ti.Platform.osname + " " + Ti.Platform.version + " (" + Ti.Platform.model + ")\n\n"
+				+ "=====\n\n";
+		
+		while(data.isValidRow()) {
+			log += "[" + data.fieldByName("type") + "] (" + data.fieldByName("time") + ") " + data.fieldByName("message") + "\n";
+			
+			data.next();
+		}
+		
+		log += "\n=====";
+		
+		data.close();
+		db.close();
+		
+		var email = Ti.UI.createEmailDialog({
+			barColor: "#000",
+			subject: "Application Log",
+			messageBody: log
+		});
+		
+		if(email.isSupported) {
+			email.open();
+		}
 	},
 	/**
 	 * Global network event handler
