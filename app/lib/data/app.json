@@ -42,6 +42,13 @@
 			"cache": 30
 		},
 		{
+			"title": "Events",
+			"userid": "7304307941",
+			"type": "events",
+			"image": "event",
+			"cache": 1440
+		},
+		{
 			"title": "Flickr",
 			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
@@ -55,13 +62,6 @@
 			"type": "twitter",
 			"image": "twitter2",
 			"cache": 5
-		},
-		{
-			"title": "YouTube",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video2",
-			"cache": 60
 		}
 	],
 	"nontabs": [
@@ -124,6 +124,13 @@
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "web",
 			"image": "home"
+		},
+		{
+			"title": "YouTube",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video2",
+			"cache": 60
 		}
 	]
 }

@@ -1,0 +1,55 @@
+"#Wrapper": {
+	backgroundColor: "#EEE"
+},
+"#content": {
+	layout: "vertical",
+	top: "46dp",
+	showVerticalScrollIndicator: true
+},
+"#heading": {
+	top: "15dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "18dp",
+		fontWeight: "bold"
+	},
+	color: "#666"
+},
+"#location": {
+	top: "5dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	color: "#666"
+},
+"#date": {
+	top: "5dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	color: "#000"
+},
+"#text": {
+	top: "10dp",
+	left: "5dp",
+	right: "5dp",
+	bottom: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "14dp",
+		fontWeight: "normal"
+	},
+	color: "#333",
+	backgroundColor: "transparent",
+	editable: false
+}
