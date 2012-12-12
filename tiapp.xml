@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <deployment-targets>
+	<deployment-targets>
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>
@@ -37,89 +37,59 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-    	<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.mcongrove.chariti" android:versionCode="1"
-	android:versionName="1">
-	<uses-sdk android:minSdkVersion="8" />
-
-	<permission android:name="com.mcongrove.chariti.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-
-
-	<application android:icon="@drawable/appicon"
-		android:label="ChariTi" android:name="CharitiApplication"
-		android:debuggable="false">
-
-		<receiver android:name="com.urbanairship.CoreReceiver">
-                    <!-- REQUIRED IntentFilter - For Helium and Hybrid -->
+        <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.mcongrove.chariti" android:versionCode="1" android:versionName="1">
+            <uses-sdk android:minSdkVersion="8" />
+            <permission android:name="com.mcongrove.chariti.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+            <application android:icon="@drawable/appicon" android:label="ChariTi" android:name="CharitiApplication" android:debuggable="false">
+                <receiver android:name="com.urbanairship.CoreReceiver">
                     <intent-filter>
-                        <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                        <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
+                        <action android:name="android.intent.action.BOOT_COMPLETED" />
+                        <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                     </intent-filter>
-                </receiver><receiver android:name="com.urbanairship.push.c2dm.C2DMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-                    <!-- Receive the actual message -->
+                </receiver>
+                <receiver android:name="com.urbanairship.push.c2dm.C2DMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
                     <intent-filter>
-                        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                        <category android:name="com.mcongrove.chariti"/>
+                        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                        <category android:name="com.mcongrove.chariti" />
                     </intent-filter>
-                    <!-- Receive the registration id -->
                     <intent-filter>
-                        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-                        <category android:name="com.mcongrove.chariti"/>
+                        <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                        <category android:name="com.mcongrove.chariti" />
                     </intent-filter>
-                </receiver><service android:name="com.urbanairship.push.PushService"/><receiver android:name="ti.modules.titanium.urbanairship.IntentReceiver"/>
-
-		<activity android:name=".CharitiActivity"
-			android:label="ChariTi" android:theme="@style/Theme.Titanium"
-			android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-
-		<activity
-    		android:name="ti.modules.titanium.map.TiMapActivity"
-    		android:configChanges="keyboardHidden|orientation"
-    		android:launchMode="singleTask" android:screenOrientation="portrait"
-    	/>
-	<uses-library android:name="com.google.android.maps" />
-
-		<activity android:name="org.appcelerator.titanium.TiActivity"
-			android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"/>
-		<activity android:name="org.appcelerator.titanium.TiTranslucentActivity"
-			android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"
-			android:theme="@android:style/Theme.Translucent" />
-		<activity android:name="org.appcelerator.titanium.TiModalActivity"
-			android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"
-			android:theme="@android:style/Theme.Translucent" />
-		<activity android:name="ti.modules.titanium.ui.TiTabActivity"
-			android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"/>
-		<activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" />
-
-		<service android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"
-			android:exported="false" />
-		
-
-	</application>
-
-	<uses-permission android:name="android.permission.VIBRATE"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
-	<uses-permission android:name="com.mcongrove.chariti.permission.C2D_MESSAGE"/>
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	
-
-</manifest>
+                </receiver>
+                <service android:name="com.urbanairship.push.PushService" />
+                <receiver android:name="ti.modules.titanium.urbanairship.IntentReceiver" />
+                <activity android:name=".CharitiActivity" android:label="ChariTi" android:theme="@style/Theme.Titanium" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN" />
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+                </activity>
+                <activity android:name="ti.modules.titanium.map.TiMapActivity" android:configChanges="keyboardHidden|orientation" android:launchMode="singleTask" android:screenOrientation="portrait" />
+                <uses-library android:name="com.google.android.maps" />
+                <activity android:name="org.appcelerator.titanium.TiActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" />
+                <activity android:name="org.appcelerator.titanium.TiTranslucentActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent" />
+                <activity android:name="org.appcelerator.titanium.TiModalActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent" />
+                <activity android:name="ti.modules.titanium.ui.TiTabActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" />
+                <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" />
+                <service android:name="org.appcelerator.titanium.analytics.TiAnalyticsService" android:exported="false" />
+            </application>
+            <uses-permission android:name="android.permission.VIBRATE" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+            <uses-permission android:name="com.mcongrove.chariti.permission.C2D_MESSAGE" />
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        </manifest>
     </android>
     <mobileweb>
-        <precache/>
+        <precache />
         <splash>
             <enabled>true</enabled>
             <inline-css-images>true</inline-css-images>
