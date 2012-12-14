@@ -8,6 +8,7 @@
 },
 "#indicator": {
 	top: "3dp",
+	left: "3dp",
 	bottom: "3dp",
 	zIndex: 99,
 	borderRadius: "3dp"

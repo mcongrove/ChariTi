@@ -135,8 +135,9 @@ var APP = {
 	},
 	/**
 	 * Builds out the tab group
+	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
-	build: function() {
+	build: function(_rebuild) {
 		APP.log("debug", "APP.build");
 		
 		var tabs = [];
@@ -160,10 +161,12 @@ var APP = {
 			}
 		});
 
-		// Add a handler for the spinner (drop-down selection)
-		APP.Tabs.Wrapper.addEventListener("click", function(_event) {
-			APP.handleNavigation(_event.source.id);
-		});
+		if(!_rebuild) {
+			// Add a handler for the spinner (drop-down selection)
+			APP.Tabs.Wrapper.addEventListener("click", function(_event) {
+				APP.handleNavigation(_event.source.id);
+			});
+		}
 	},
 	/**
 	 * Updates the app.json from a remote source
@@ -180,12 +183,69 @@ var APP = {
 				success: function(_data) {
 					APP.log("debug", "APP.update @loaded");
 					
+					// Determine if this is the same version as we already have
+					var data = JSON.parse(_data);
+					
+					if(data.version == APP.VERSION) {
+						// We already have it
+						APP.log("info", "Application is up-to-date");
+						
+						return;
+					}
+					
 					var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
 					
 					file.write(_data);
+					
+					var dialog = Ti.UI.createAlertDialog({
+						title: "Update Available",
+						message: "New content has been downloaded. Would you like to refresh the application now?",
+						buttonNames: [ "No", "Yes" ],
+						cancel: 0
+					});
+					
+					dialog.addEventListener("click", function(_event) {
+						if(_event.index != _event.source.cancel) {
+							APP.log("info", "Update accepted");
+							
+							APP.rebuild();
+						} else {
+							APP.log("info", "Update declined");
+							
+							dialog = Ti.UI.createAlertDialog({
+								title: "Update Declined",
+								message: "The updates will take effect the next time you restart the application."
+							});
+							
+							dialog.show();
+						}
+					});
+					
+					dialog.show();
 				}
 			});
 		}
+	},
+	/**
+	 * Re-builds the app with newly downloaded JSON configration file
+	 */
+	rebuild: function() {
+		APP.log("debug", "APP.rebuild");
+		
+		APP.Tabs.clear();
+		APP.removeScreen(APP.currentController);
+		
+		APP.currentControllerId		= null;
+		APP.currentController		= null;
+		APP.previousController		= null;
+		APP.currentDetailController	= null;
+		APP.detailControllers		= [];
+		
+		APP.loadContent();
+		
+		APP.build(true);
+		
+		APP.handleNavigation(0);
 	},
 	/**
 	 * Setup the database bindings

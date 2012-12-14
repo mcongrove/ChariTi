@@ -15,4 +15,3 @@ APP.init();
 
 // The initial screen to show
 APP.handleNavigation(0);
-APP.Tabs.setIndex(0);

@@ -47,6 +47,12 @@ $.init = function(_params) {
 	}
 };
 
+$.clear = function() {
+	for(var i = 0; i < $.tabs.length; i++) {
+		$.TabContainer.remove($.tabs[i]);
+	}
+};
+
 $.setIndex = function(_index) {
 	if(OS_IOS) {
 		var animation = Ti.UI.createAnimation({
