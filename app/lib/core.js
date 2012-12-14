@@ -13,7 +13,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.0.0.1204122340",
+	CVERSION: "1.0.0.1213122040",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
@@ -96,7 +96,7 @@ var APP = {
 		}
 	},
 	/**
-	 * Loads in the appropriate controllers
+	 * Loads in the appropriate controller and config data
 	 */
 	loadContent: function() {
 		APP.log("debug", "APP.loadContent");
@@ -128,7 +128,7 @@ var APP = {
 			PRIVACY: data.legal.privacy
 		};
 		
-		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 7 ? data.configurationUrl : false;
+		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 10 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
 		APP.Plugins = data.plugins;
 		APP.Nodes = data.tabs;
@@ -198,7 +198,7 @@ var APP = {
 		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
 		db.execute("CREATE TABLE IF NOT EXISTS log (time INTEGER, type TEXT, message TEXT);");
 		
-		// Fill the log table with empty rows that we can 'update', providing a max row count
+		// Fill the log table with empty rows that we can 'update', providing a max row limit
 		var data = db.execute("SELECT time FROM log;");
 		
 		if(data.rowCount == 0) {
@@ -431,7 +431,7 @@ var APP = {
 				+ "=====\n\n";
 		
 		while(data.isValidRow()) {
-			log += "[" + data.fieldByName("type") + "] (" + data.fieldByName("time") + ") " + data.fieldByName("message") + "\n";
+			log += "[" + data.fieldByName("type") + "] " + data.fieldByName("message") + "\n";
 			
 			data.next();
 		}

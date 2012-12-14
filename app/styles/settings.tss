@@ -36,6 +36,6 @@
 	height: Ti.UI.SIZE,
 	textAlign: "center"
 },
-"#version": {
+"#copyright": {
 	top: "10dp"
 }

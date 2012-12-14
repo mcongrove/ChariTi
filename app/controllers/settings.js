@@ -6,8 +6,22 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	$.NavigationBar.back.visible			= true;
 	
-	$.version.text = "Version " + APP.VERSION + ", ChariTi " + APP.CVERSION;
+	if(!APP.LEGAL.TOS && !APP.LEGAL.PRIVACY) {
+		$.content.remove($.legal_table);
+	} else if(!APP.LEGAL.TOS || !APP.LEGAL.PRIVACY) {
+		if(!APP.LEGAL.TOS) {
+			$.legal_table.deleteRow($.terms);
+		}
+	
+		if(!APP.LEGAL.PRIVACY) {
+			$.legal_table.deleteRow($.privacy);
+		}
+		
+		$.legal_table.height	= "45dp";
+	}
+	
 	$.copyright.text = APP.LEGAL.COPYRIGHT;
+	$.version.text = "Version " + APP.VERSION + ", ChariTi " + APP.CVERSION;
 };
 
 // Event listeners
