@@ -10,6 +10,8 @@ $.init = function() {
 		$.content.willHandleTouches = false;
 		
 		$.initToolbar();
+	} else if(CONFIG.file) {
+		$.content.url = "/data/" + CONFIG.file;
 	} else {
 		$.content.html = CONFIG.html;
 	}

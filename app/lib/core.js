@@ -108,7 +108,17 @@ var APP = {
 		}
 		
 		var content = contentFile.read();
-		var data = JSON.parse(content.text);
+		var data;
+		
+		try {
+			data = JSON.parse(content.text);
+		} catch(_error) {
+			APP.log("error", "Unable to parse downloaded JSON, reverting to packaged JSON");
+			
+			contentFile = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "data/app.json");
+			content = contentFile.read();
+			data = JSON.parse(content.text);
+		}
 		
 		APP.ID = data.id;
 		APP.VERSION = data.version;
