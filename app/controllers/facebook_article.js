@@ -38,46 +38,7 @@ $.NavigationBar.back.addEventListener("click", function(_event) {
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook_article @menu");
 	
-	var options = [];
-	var mapping = [];
-	
-	if(SOCIAL.facebookSupported) { options.push("Share via Facebook"); mapping.push("facebook"); }
-	if(SOCIAL.twitterSupported) { options.push("Share via Twitter"); mapping.push("twitter"); }
-	if(SOCIAL.emailSupported) { options.push("Share via E-Mail"); mapping.push("email"); }
-	options.push("Open in Safari"); mapping.push("safari");
-	options.push("Cancel"); mapping.push("cancel");
-	
-	var dialog = Ti.UI.createOptionDialog({
-		options: options,
-		cancel: options.length - 1,
-		selectedIndex: options.length - 1
-	});
-	
-	dialog.addEventListener("click", function(_event) {
-		switch(mapping[_event.index]) {
-			case "facebook":
-				APP.log("trace", "facebook_article @menu_facebook")
-				SOCIAL.facebook(ACTION.url);
-				break;
-			case "twitter":
-				APP.log("trace", "facebook_article @menu_twitter")
-				SOCIAL.twitter(ACTION.url);
-				break;
-			case "email":
-				APP.log("trace", "facebook_article @menu_email")
-				SOCIAL.email(ACTION.url);
-				break;
-			case "safari":
-				APP.log("trace", "facebook_article @menu_safari")
-				Ti.Platform.openURL(ACTION.url);
-				break;
-			case "safari":
-				APP.log("trace", "facebook_article @menu_cancel")
-				break;
-		}
-	});
-	
-	dialog.show();
+	SOCIAL.share(ACTION.url);
 });
 
 // Kick off the init
