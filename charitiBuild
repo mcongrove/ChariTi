@@ -1,0 +1,122 @@
+#!/bin/bash
+
+##################################################
+# Example way to run the script
+#
+# -a Application Name
+# -d Whether to auto-deploy to TestFlight
+# -n Whether to notify those on TestFlight distribution list
+# -w Workspace (directory of ChariTi Titanium project)
+# -t Target for generated IPA file
+# -i The application ID
+# -c The distribution certificate name
+# -p The provisioning profile UUID
+# -k TestFlight API token
+# -z TestFlight team token
+#
+# ./charitiBuild -a "chariti" -i "com.appcelerator.chariti" -d true -n true -w "/Users/{USER}/Documents/Titanium_Studio_Workspace/Chariti" -t /Users/{USER}/Desktop/ChariTiBuild/ -c "{CERTIFICATE}" -p "{UUID}" -k "{TOKEN}" -z "{TOKEN}"
+##################################################
+
+
+##################################################
+# Define Variables
+##################################################
+
+WORKSPACE=~/Documents/Titanium_Studio_Workspace/Chariti
+LIB=$WORKSPACE/app/lib
+ASSETS=$WORKSPACE/app/assets
+TARGET=~/Desktop/ChariTiBuild/
+DEPLOY=true
+NOTIFY=true
+
+##################################################
+# Retrieve arguments
+##################################################
+
+while getopts a:i:d:n:w:t:c:p:k:z: option
+do
+        case "${option}"
+        in
+        	a) APPLICATION=${OPTARG};;
+        	i) ID=${OPTARG};;
+        	d) DEPLOY=${OPTARG};;
+        	n) NOTIFY=${OPTARG};;
+        	w) WORKSPACE=${OPTARG};;
+        	t) TARGET=${OPTARG};;
+        	c) CERTIFICATE=${OPTARG};;
+        	p) PROFILE=${OPTARG};;
+        	k) TFAPI=${OPTARG};;
+        	z) TFTEAM=${OPTARG};;
+        esac
+done
+
+##################################################
+# Validate parameters
+##################################################
+
+if [ -z "$APPLICATION" ]
+then
+	echo "No application specified"
+	exit
+fi
+
+if [ -z "$ID" ]
+then
+	echo "No application ID specified"
+	exit
+fi
+
+##################################################
+# Clean Titanium project
+##################################################
+
+echo "Building $APPLICATION"
+cd $WORKSPACE
+echo "Cleaning..."
+titanium clean --platform ios
+
+##################################################
+# Move and edit files as appropriate
+##################################################
+
+echo "Updating files..."
+cp -r $LIB/data/iphone/* $ASSETS/iphone/
+sed -i "" "s/\<id\>.*/\<id\>$ID\<\/id\>/" $WORKSPACE/tiapp.xml
+sed -i "" "s/#appid.*/#appid:$ID/" $WORKSPACE/manifest
+
+##################################################
+# Compile Alloy project
+##################################################
+
+echo "Updated. Compiling Alloy..."
+alloy compile
+
+##################################################
+# Build Titanium project
+##################################################
+
+echo "Compiled. Building..."
+titanium build --platform ios --force --device-family iphone --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
+
+echo "$i Complete"
+terminal-notifier -message "$APPLICATION has been compiled" -title "ChariTi Compile Completed"
+
+##################################################
+# Deploy to TestFlight
+##################################################
+
+if $DEPLOY
+then
+	echo "Uploading $APPLICATION to TestFlight..."
+	
+	chmod +x "$TARGET/ChariTi.ipa"
+	
+	/usr/bin/curl "http://testflightapp.com/api/builds.json" \
+		-F file=@"$TARGET/ChariTi.ipa" \
+		-F api_token="$TFAPI" \
+		-F team_token="$TFTEAM" \
+		-F notes="Build uploaded automatically from ChariTi Builder." \
+		-F notify=$NOTIFY
+	
+	terminal-notifier -message "$APPLICATION has been uploaded" -title "TestFlight Upload Completed"
+fi
