@@ -96,7 +96,12 @@ alloy compile
 ##################################################
 
 echo "Compiled. Building..."
-titanium build --platform ios --force --device-family iphone --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
+if $DEPLOY
+then
+	titanium build --platform ios --force --device-family iphone --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
+else
+	titanium build --platform ios --force --device-family iphone
+fi
 
 echo "$i Complete"
 terminal-notifier -message "$APPLICATION has been compiled" -title "ChariTi Compile Completed"
