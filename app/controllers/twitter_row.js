@@ -29,4 +29,6 @@ if(SOCIAL.twitterSupported) {
 		
 		dialog.show();
 	});
+} else {
+	$.arrow.visible = false;
 }
