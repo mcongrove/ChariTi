@@ -14,7 +14,7 @@
 # -k TestFlight API token
 # -z TestFlight team token
 #
-# ./charitiBuild -a "chariti" -n "ChariTi" -i "com.appcelerator.chariti" -d true -w "/Users/{USER}/Documents/Titanium_Studio_Workspace/Chariti" -t /Users/{USER}/Desktop/ChariTiBuild/ -c "{CERTIFICATE}" -p "{UUID}" -k "{TOKEN}" -z "{TOKEN}"
+# ./CBUILD -a "chariti" -n "ChariTi" -i "com.appcelerator.chariti" -d true -w "/Users/{USER}/Documents/Titanium_Studio_Workspace/Chariti" -t /Users/{USER}/Desktop/ChariTiBuild/ -c "{CERTIFICATE}" -p "{UUID}" -k "{TOKEN}" -z "{TOKEN}"
 ##################################################
 
 

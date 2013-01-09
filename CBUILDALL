@@ -1,0 +1,42 @@
+#!/bin/bash
+
+Applications[0]="chariti"
+Applications[1]="mercycorps"
+Applications[2]="mjff"
+Applications[3]="mmrf"
+Applications[4]="roomtoread"
+Applications[5]="specialolympics"
+Applications[6]="stophungernow"
+Applications[7]="jobtrain"
+#Applications[8]="avril"
+
+Names[0]="ChariTi"
+Names[1]="Mercy Corps"
+Names[2]="MJFF"
+Names[3]="MMRF"
+Names[4]="RoomToRead"
+Names[5]="Special Olympics"
+Names[6]="Stop Hunger Now"
+Names[7]="JobTrain"
+#Names[8]="Avril Fnd"
+
+q=0;
+
+mv /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data_chariti
+
+for i in "${Applications[@]}"
+do
+	cd /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti
+	
+	mv /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data_$i /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data
+	
+	./CBUILD -a "$i" -n "${Names[$q]}" -i "com.appcelerator.chariti.$i" -d false -w "/Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti" -t /Users/matthewcongrove/Desktop/ChariTiBuild/$i/ -c "Appcelerator, Inc." -p "BA63D44B-9B41-4EC6-AD97-7EC42D24FC19" -k "5a05890bd323125f34fac89b7610f055_ODM4NjA" -z "03cbaba5355c500b8bfafb838b18c925_NzA3ODMyMDEyLTAzLTE0IDExOjM5OjEwLjI3ODY5NQ"
+	
+	mv /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data_$i
+	
+	q=`expr $q + 1`
+done
+
+mv /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data_chariti /Users/matthewcongrove/Documents/Titanium_Studio_Workspace/Chariti/app/lib/data
+
+terminal-notifier -message "ChariTi has finished building all applications" -title "All Builds Completed"
