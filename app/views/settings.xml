@@ -19,7 +19,7 @@
 				<TableViewRow id="acknowledgements" title="Acknowledgements" hasChild="true" />
 			</TableView>
 			
-			<Label text="This application was created using the open source ChariTi framework, freely available at:\nhttp://github.com/mcongrove/ChariTi\nChariTi ‌© 2012 Matthew Congrove" />
+			<Label text="This application was created using the open source ChariTi framework, freely available at:\nhttp://github.com/mcongrove/ChariTi\nChariTi ‌© 2013 Matthew Congrove" />
 		</ScrollView>
 	</View>
 </Alloy>

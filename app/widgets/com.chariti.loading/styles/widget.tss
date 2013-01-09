@@ -10,16 +10,16 @@
 	height: Ti.UI.FILL
 },
 "#Modal": {
-	width: "100dp",
-	height: "100dp",
+	width: "92dp",
+	height: "92dp",
 	borderRadius: 10,
 	backgroundColor: "#000"
 },
 "#Loading": {
-	height: "20dp",
-	width: "20dp",
-	top: "30dp",
-	left: "40dp",
+	height: "33dp",
+	width: "33dp",
+	top: "17dp",
+	left: "29dp",
 	images: [
 		"/com.chariti.loading/00.png",
 		"/com.chariti.loading/01.png",
@@ -38,7 +38,7 @@
 "#Label": {
 	top: "60dp",
 	left: "0dp",
-	width: "100dp",
+	width: "92dp",
 	height: "20dp",
 	color: "#FFF",
 	textAlign: "center",
