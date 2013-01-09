@@ -12,8 +12,9 @@
 # -p The provisioning profile UUID
 # -k TestFlight API token
 # -z TestFlight team token
+# -l TestFlight distribution list name
 #
-# ./CBUILD -a "ChariTi" -i "com.appcelerator.chariti" -w "/Users/{USER}/Documents/Titanium_Studio_Workspace/Chariti" -d true -t /Users/{USER}/Desktop/ChariTiBuild/ -c "{CERTIFICATE}" -p "{UUID}" -k "{TOKEN}" -z "{TOKEN}"
+# ./CBUILD -a "ChariTi" -i "com.appcelerator.chariti" -w "/Users/{USER}/Documents/Titanium_Studio_Workspace/Chariti" -d true -t /Users/{USER}/Desktop/ChariTiBuild/ -c "{CERTIFICATE}" -p "{UUID}" -k "{TOKEN}" -z "{TOKEN}" -l "MyTeam"
 ##################################################
 
 
@@ -30,7 +31,7 @@ TARGET=~/Desktop/ChariTiBuild/
 # Retrieve arguments
 ##################################################
 
-while getopts a:i:d:w:t:c:p:k:z: option
+while getopts a:i:d:w:t:c:p:k:z:l: option
 do
         case "${option}"
         in
@@ -43,6 +44,7 @@ do
         	p) PROFILE=${OPTARG};;
         	k) TFAPI=${OPTARG};;
         	z) TFTEAM=${OPTARG};;
+        	l) LIST=${OPTARG};;
         esac
 done
 
@@ -112,14 +114,15 @@ if $DEPLOY
 then
 	echo "Uploading $APPLICATION to TestFlight..."
 	
-	chmod +x "$TARGET/ChariTi.ipa"
+	chmod +x "$TARGET/$APPLICATION.ipa"
 	
 	/usr/bin/curl "http://testflightapp.com/api/builds.json" \
-		-F file=@"$TARGET/ChariTi.ipa" \
+		-F file=@"$TARGET/$APPLICATION.ipa" \
 		-F api_token="$TFAPI" \
 		-F team_token="$TFTEAM" \
 		-F notes="Build uploaded automatically from ChariTi Builder." \
-		-F notify=True
+		-F notify=False \
+		-F distribution_lists="$LIST"
 	
 	terminal-notifier -message "$APPLICATION has been uploaded" -title "TestFlight Upload Completed"
 fi
