@@ -1,6 +1,8 @@
 var APP = require("core");
 var CONFIG = arguments[0];
 
+var currentUrl = '';
+
 $.init = function() {
 	APP.log("debug", "web.init | " + JSON.stringify(CONFIG));
 	
@@ -58,6 +60,8 @@ if(CONFIG.url) {
 	$.content.addEventListener("beforeload", function(_event) {
 		$.containerRefresh.visible	= false;
 		$.containerStop.visible		= true;
+
+		currentUrl = _event.url;
 	});
 	
 	$.containerBack.addEventListener("click", function(_event) {
@@ -85,7 +89,7 @@ if(CONFIG.url) {
 	$.containerSafari.addEventListener("click", function(_event) {
 		APP.log("debug", "web @open");
 		
-		Ti.Platform.openURL(CONFIG.url);
+		Ti.Platform.openURL(currentUrl);
 	});
 } else {
 	Ti.App.addEventListener("APP:openTab", function(_event) {
