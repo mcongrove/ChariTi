@@ -39,7 +39,7 @@
 			"feed": "http://feeds.feedburner.com/thinkmobile-blog",
 			"type": "blog",
 			"image": "news2",
-			"cache": 30
+			"cache": 120
 		},
 		{
 			"title": "Events",
@@ -54,14 +54,14 @@
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
 			"image": "photo",
-			"cache": 60
+			"cache": 1440
 		},
 		{
 			"title": "Twitter",
 			"username": "appcelerator",
 			"type": "twitter",
 			"image": "twitter2",
-			"cache": 5
+			"cache": 10
 		}
 	],
 	"nontabs": [
@@ -111,7 +111,7 @@
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "news",
 			"image": "news1",
-			"cache": 15
+			"cache": 120
 		},
 		{
 			"title": "PDF",
@@ -130,7 +130,7 @@
 			"username": "appcelerator",
 			"type": "youtube",
 			"image": "video2",
-			"cache": 60
+			"cache": 1440
 		}
 	]
 }
