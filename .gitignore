@@ -5,6 +5,7 @@ npm-debug.log
 tmp
 /build
 /.settings
+/Resources
 /app/lib/data_jobtrain
 /app/lib/data_mercycorps
 /app/lib/data_mmrf
