@@ -49,8 +49,18 @@ exports.twitter = function(_url) {
  */
 exports.twitterRetweet = function(_text, _username) {
 	if(exports.twitterSupported) {
+		var text = "RT @" + _username + ": " + _text;
+		
+		if(text.length > 140) {
+			if(_text.length < 138) {
+				text = "RT " + _text;
+			} else {
+				text = _text;
+			}
+		}
+		
 		SOCIAL.twitter({
-			text: "RT @" + _username + ": " + _text
+			text: text
 		});
 	}
 };
