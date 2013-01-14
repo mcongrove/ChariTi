@@ -1,27 +1,53 @@
 "#Wrapper": {
 	height: Ti.UI.SIZE,
 	selectedBackgroundColor: "#DDD",
-	layout: "vertical"
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#F8F8F8",
+			"#ECECEC"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
+	}
+},
+"#content": {
+	height: Ti.UI.SIZE,
+	layout: "vertical",
+	top: "0dp",
+	left: "0dp"
 },
 "#heading": {
 	top: "10dp",
 	left: "10dp",
-	right: "10dp",
+	right: "47dp",
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "16dp",
-		fontWeight: "normal"
+		fontWeight: "bold"
 	},
-	color: "#666"
+	color: "#333"
 },
 "#subHeading": {
 	left: "10dp",
-	right: "10dp",
+	right: "47dp",
 	bottom: "10dp",
-	top: "2dp",
 	height: "14dp",
 	font: {
 		fontSize: "12dp",
 		fontWeight: "bold"
-	}
+	},
+	color: "#777"
+},
+"#arrow": {
+	width: "27dp",
+	height: "27dp",
+	right: "10dp"
 }

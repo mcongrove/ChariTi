@@ -1,7 +1,11 @@
 <Alloy>
 	<TableViewRow id="Wrapper">
-		<Label id="heading" />
+		<View id="content">
+			<Label id="heading" />
+			
+			<Label id="subHeading" />
+		</View>
 		
-		<Label id="subHeading" />
+		<ImageView id="arrow" image="/images/arrow.png" />
 	</TableViewRow>
 </Alloy>
