@@ -12,6 +12,10 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	MODEL.setUsername({
 		username: CONFIG.username,
@@ -51,6 +55,12 @@ $.handleVideos = function(_data) {
 };
 
 // Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "youtube @close");
+	
+	APP.closeDetailScreen();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });

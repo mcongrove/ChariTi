@@ -1,0 +1,6 @@
+"#content": {
+	top: "46dp",
+	backgroundColor: "#EEE",
+	rowHeight: "48dp",
+	separatorColor: "#DDD"
+}
