@@ -42,18 +42,21 @@ $.init = function(_params) {
 			textAlign: "center",
 			touchEnabled: false
 		});
-		
-		var border = Ti.UI.createImageView({
-			width: "1dp",
-			height: "59dp",
-			top: "1dp",
-			right: "0dp",
-			backgroundImage: "/com.chariti.tabs/border.png"
-		});
 
 		tab.add(icon);
 		tab.add(label);
-		tab.add(border);
+		
+		if((i + 1) != _params.tabs.length) {
+			var border = Ti.UI.createImageView({
+				width: "1dp",
+				height: "59dp",
+				top: "1dp",
+				right: "0dp",
+				backgroundImage: "/com.chariti.tabs/border.png"
+			});
+			
+			tab.add(border);
+		}
 		
 		$.tabs.push(tab);
 		
