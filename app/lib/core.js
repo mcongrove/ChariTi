@@ -441,7 +441,8 @@ var APP = {
 				UA.handleNotification(_event.data);
 				
 				if(_event.data.tab) {
-					var tabIndex = parseInt(_event.data.tab);
+					var tabIndex = parseInt(_event.data.tab) - 1;
+					
 					if(APP.Nodes[tabIndex]) {
 						APP.handleNavigation(tabIndex);
 					}
