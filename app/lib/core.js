@@ -439,6 +439,13 @@ var APP = {
 				APP.log("trace", JSON.stringify(_event));
 				
 				UA.handleNotification(_event.data);
+				
+				if(_event.data.tab) {
+					var tabIndex = parseInt(_event.data.tab);
+					if(APP.Nodes[tabIndex]) {
+						APP.handleNavigation(tabIndex);
+					}
+				}
 			}
 		});
 	},
