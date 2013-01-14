@@ -49,6 +49,7 @@
 	color: "#333"
 },
 "#location": {
+	top: "5dp",
 	bottom: "10dp",
 	left: "10dp",
 	right: "10dp",
