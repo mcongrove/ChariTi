@@ -30,14 +30,21 @@
 "#button": {
 	top: "10dp",
 	left: "15dp",
-	right: "15dp",
-	bottom: "15dp",
-	height: "34dp",
+	height: "36dp",
+	borderRadius: "3dp",
+	width: Ti.UI.SIZE
+},
+"#buttonText": {
+	top: "10dp",
+	left: "10dp",
+	right: "10dp",
+	bottom: "10dp",
+	height: "16dp",
+	width: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
 		fontWeight: "bold"
 	},
-	color: "#666",
-	borderRadius: "5dp",
+	color: "#FFF",
 	textAlign: "center"
 }

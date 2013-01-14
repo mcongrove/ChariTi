@@ -24,7 +24,12 @@
 		fontSize: "14dp",
 		fontWeight: "bold"
 	},
-	color: "#FFF"
+	color: "#FFF",
+	shadowColor: "#000",
+	shadowOffset: {
+		x: "0dp",
+		y: "1dp"
+	}
 },
 "#description": {
 	top: "5dp",
@@ -36,5 +41,10 @@
 		fontSize: "12dp",
 		fontWeight: "regular"
 	},
-	color: "#FFF"
+	color: "#FFF",
+	shadowColor: "#000",
+	shadowOffset: {
+		x: "0dp",
+		y: "1dp"
+	}
 }

@@ -7,7 +7,9 @@
 			
 			<Label id="text" />
 			
-			<Label id="button" text="Click to Donate" />
+			<View id="button">
+				<Label id="buttonText" text="Donate Now" />
+			</View>
 		</ScrollView>
 	</View>
 </Alloy>
