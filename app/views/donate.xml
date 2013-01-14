@@ -2,6 +2,12 @@
 	<View id="Wrapper">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
 		
-		<WebView id="content" />
+		<ScrollView id="content">
+			<Label id="heading" />
+			
+			<Label id="text" />
+			
+			<Label id="button" text="Click to Donate" />
+		</ScrollView>
 	</View>
 </Alloy>

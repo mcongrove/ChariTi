@@ -8,13 +8,13 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>3.0.0.GA</sdk-version>
-    <id>com.appcelerator.chariti</id>
+    <id>com.chariti.mobile</id>
     <name>ChariTi</name>
     <version>1.0</version>
     <publisher>Matthew Congrove</publisher>
-    <url>http://mattcongrove.com</url>
-    <description>An open-source Titanium project that allows charities to quickly build mobile applications.</description>
-    <copyright>2012 by Matthew Congrove</copyright>
+    <url>http://chariti.mobi</url>
+    <description>ChariTi is a framework built to allow charities to quickly and easily create mobile applications.</description>
+    <copyright>2013 by Matthew Congrove</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>

@@ -57,19 +57,21 @@
 			"cache": 1440
 		},
 		{
+			"title": "Donate",
+			"heading": "Donate to ChariTi",
+			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
+			"url": "https://github.com/mcongrove/ChariTi",
+			"type": "donate",
+			"image": "donate1"
+		}
+	],
+	"nontabs": [
+		{
 			"title": "Twitter",
 			"username": "appcelerator",
 			"type": "twitter",
 			"image": "twitter2",
 			"cache": 10
-		}
-	],
-	"nontabs": [
-		{
-			"title": "Donate",
-			"file": "donate.html",
-			"type": "donate",
-			"image": "donate1"
 		},
 		{
 			"title": "Facebook",
