@@ -24,22 +24,36 @@ $.init = function(_params) {
 		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
-			top: "42dp",
-			left: "0dp",
-			right: "0dp",
-			width: $.width + "dp",
+			top: "43dp",
+			left: "5dp",
+			right: "5dp",
+			width: Ti.UI.FILL,
 			height: "13dp",
 			font: {
 				fontSize: "11dp",
 				fontWeight: "bold"
 			},
+			shadowColor: "#000",
+			shadowOffset: {
+				x: "0dp",
+				y: "1dp"
+			},
 			color: _params.colors.text,
 			textAlign: "center",
 			touchEnabled: false
 		});
+		
+		var border = Ti.UI.createImageView({
+			width: "1dp",
+			height: "59dp",
+			top: "1dp",
+			right: "0dp",
+			backgroundImage: "/com.chariti.tabs/border.png"
+		});
 
 		tab.add(icon);
 		tab.add(label);
+		tab.add(border);
 		
 		$.tabs.push(tab);
 		
@@ -54,20 +68,8 @@ $.clear = function() {
 };
 
 $.setIndex = function(_index) {
-	if(OS_IOS) {
-		var animation = Ti.UI.createAnimation({
-			left: (_index * $.width) + 3 + "dp",
-			duration: 250
-		});
-		
-		animation.addEventListener("complete", function(_event) {
-			$.indicator.left = (_index * $.width) + 3 + "dp";
-		});
-		
-		$.indicator.animate(animation);
-	} else {
-		$.indicator.left = (_index * $.width) + 3 + "dp";
-	}
+	$.indicator.left	= (_index * $.width) + "dp";
+	$.indicator.width	= ($.width - 1) + "dp";
 };
 
 $.Wrapper.addEventListener("click", function(_event) {
