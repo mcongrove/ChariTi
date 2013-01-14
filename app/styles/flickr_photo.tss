@@ -2,7 +2,7 @@
 	backgroundColor: "#000"
 },
 "#content": {
-	top: "46dp"
+	top: "47dp"
 },
 "#image": {
 	width: Ti.UI.FILL,
