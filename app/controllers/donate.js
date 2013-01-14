@@ -9,10 +9,20 @@ $.init = function() {
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
+
 	$.content.url = "/data/" + CONFIG.file;
 };
 
 // Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "donate @close");
+	
+	APP.closeDetailScreen();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });

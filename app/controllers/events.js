@@ -12,6 +12,10 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	MODEL.fetch({
 		url: "https://graph.facebook.com/" + CONFIG.userid + "/events?fields=id,name,start_time,end_time,location,description&since=now&access_token=AAAEdFU8bj50BAL7MQcSHuIDf1KzST7gZAAubz49tio8yLM8Lb7o29IxtxZALrogeimSAsTkYXJRzzqrRqSniABwtDRPONoQxsdNy6XQjIaRR9sedAM",
@@ -43,6 +47,12 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "events @close");
+	
+	APP.closeDetailScreen();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });
