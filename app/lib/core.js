@@ -37,6 +37,8 @@ var APP = {
 	 * @type {Object}
 	 */
 	currentDetailController: null,
+	currentStack: -1,
+	controllerStacks: [],
 	detailControllers: [],
 	/**
 	 * The main app window
@@ -261,7 +263,7 @@ var APP = {
 		// Fill the log table with empty rows that we can 'update', providing a max row limit
 		var data = db.execute("SELECT time FROM log;");
 		
-		if(data.rowCount == 0) {
+		if(data.rowCount === 0) {
 			db.execute("BEGIN TRANSACTION;");
 			
 			for(var i = 0; i < 100; i++) {
@@ -280,37 +282,61 @@ var APP = {
 	 */
 	handleNavigation: function(_id) {
 		APP.log("debug", "APP.handleNavigation");
-		
-		// Requesting same screen as we"re on
-		if(_id == APP.currentControllerId) {
+
+		// Requesting same screen as we're on
+		if(_id == APP.currentStack) {
 			// Do nothing
 		} else {
 			// Move the tab selection indicator
 			APP.Tabs.setIndex(_id);
+
+			if(typeof(APP.controllerStacks[_id]) === 'undefined') {
+				APP.controllerStacks[_id] = [];
+			}
+
+			var controllerStack = APP.controllerStacks[_id];
 			
 			// Save the current controller for removal
-			APP.previousController = APP.currentController;
+			if (!APP.previousController) {
+				APP.previousController = APP.currentController;
+			}
+
+			APP.currentStack = _id;
+
+			// var stack = APP.detailControllers[APP.currentStack];
 			
 			// Closes any loading screens
 			APP.closeLoading();
-			
-			// Create a new screen
-			APP.currentControllerId = _id;
-			APP.currentController = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
-			
-			// Add the new screen to the window
-			APP.ContentWrapper.add(APP.currentController);
 
-			// Remove previouw controller view
+			// APP.currentControllerId = _id;
+
+			if (controllerStack.length > 0) {
+				APP.currentController = controllerStack[controllerStack.length - 1];
+				APP.ContentWrapper.add(APP.currentController);
+			} else {
+				// Create a new screen
+				APP.currentController = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+				
+				// Add the new screen to the window
+				APP.addScreen(APP.currentController);
+
+				controllerStack.push(APP.currentController);
+			}
+
+			// Remove previous controller view
 			APP.removeScreen(APP.previousController);
+
 		}
+
+		console.log(APP.ContentWrapper.children.length);
+
 	},
 	/**
 	 * Global function to remove screens
 	 * @param {Function} _callback
 	 */
 	removeScreen: function(_controller) {
-		APP.closeAllDetailScreens();
+		// APP.closeAllDetailScreens();
 		
 		if(_controller) {
 			APP.ContentWrapper.remove(_controller);
@@ -319,37 +345,69 @@ var APP = {
 		}
 	},
 	/**
+	 * Global function to add screens
+	 * @param {Function} _callback
+	 */
+	addScreen: function(_controller) {
+		// APP.closeAllDetailScreens();
+		
+		if(_controller) {
+
+			// Save the current controller for removal
+			APP.previousController = APP.currentController;
+			APP.removeScreen(APP.previousController);
+
+			APP.ContentWrapper.add(_controller);
+
+			APP.currentController = _controller;
+		}
+
+		console.log(APP.ContentWrapper.children.length);
+	},
+	/**
 	 * Open the detail screen
 	 * @param {String} _controller The name of the controller to open
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
 	openDetailScreen: function(_controller, _params) {
+		var controllerStack = APP.controllerStacks[APP.currentStack];
+
 		// Create the new screen controller
-		APP.currentDetailController = Alloy.createController(_controller, _params).getView();
-		
-		APP.detailControllers.push(APP.currentDetailController);
-		
-		APP.ContentWrapper.add(APP.currentDetailController);
+		APP.currentController = Alloy.createController(_controller, _params).getView();
+
+		// Remove previous controller view
+		APP.removeScreen(APP.previousController);
+
+		controllerStack.push(APP.currentController);
+
+		APP.addScreen(APP.currentController);
+
 	},
 	/**
 	 * Removes the detail screen
 	 * @param {Function} _callback
 	 */
 	closeDetailScreen: function(_callback) {
-		if(APP.currentDetailController) {
-			APP.ContentWrapper.remove(APP.currentDetailController);
-			APP.detailControllers.pop();
-			
-			APP.currentDetailController = null;
+		console.log(APP.currentStack);
+		var controllerStack = APP.controllerStacks[APP.currentStack];
+
+		if(APP.currentController) {
+			APP.removeScreen(APP.currentController);
+			controllerStack.pop();
 		}
-		
-		if(APP.detailControllers.length > 0) {
-			APP.currentDetailController = APP.detailControllers[APP.detailControllers.length - 1];
+
+		if(controllerStack.length > 0) {
+			APP.previousController = APP.currentController;
+			APP.currentController = controllerStack[controllerStack.length - 1];
+			APP.addScreen(APP.currentController);
+		} else {
+			APP.previousController = null;
 		}
 
 		if(typeof(_callback) !== "undefined") {
 			_callback();
 		}
+
 	},
 	/**
 	 * Removes ALL detail screens
