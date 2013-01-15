@@ -284,13 +284,13 @@ var APP = {
 		APP.log("debug", "APP.handleNavigation");
 
 		// Requesting same screen as we're on
-		if(_id == APP.currentStack) {
+		if (_id == APP.currentStack) {
 			// Do nothing
 		} else {
 			// Move the tab selection indicator
 			APP.Tabs.setIndex(_id);
 
-			if(typeof(APP.controllerStacks[_id]) === 'undefined') {
+			if (typeof(APP.controllerStacks[_id]) === 'undefined') {
 				APP.controllerStacks[_id] = [];
 			}
 
@@ -302,13 +302,9 @@ var APP = {
 			}
 
 			APP.currentStack = _id;
-
-			// var stack = APP.detailControllers[APP.currentStack];
 			
 			// Closes any loading screens
 			APP.closeLoading();
-
-			// APP.currentControllerId = _id;
 
 			if (controllerStack.length > 0) {
 				APP.currentController = controllerStack[controllerStack.length - 1];
@@ -319,7 +315,6 @@ var APP = {
 				
 				// Add the new screen to the window
 				APP.addScreen(APP.currentController);
-
 				controllerStack.push(APP.currentController);
 			}
 
