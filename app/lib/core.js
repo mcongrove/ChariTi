@@ -296,30 +296,26 @@ var APP = {
 
 			var controllerStack = APP.controllerStacks[_id];
 			
-			// Save the current controller for removal
-			if (!APP.previousController) {
-				APP.previousController = APP.currentController;
-			}
-
 			APP.currentStack = _id;
 			
 			// Closes any loading screens
 			APP.closeLoading();
 
+			var controller;
 			if (controllerStack.length > 0) {
-				APP.currentController = controllerStack[controllerStack.length - 1];
-				APP.ContentWrapper.add(APP.currentController);
+				controller = controllerStack[controllerStack.length - 1];
+				APP.addScreen(controller);
 			} else {
 				// Create a new screen
-				APP.currentController = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+				controller = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
 				
 				// Add the new screen to the window
-				APP.addScreen(APP.currentController);
-				controllerStack.push(APP.currentController);
+				APP.addScreen(controller);
+				controllerStack.push(controller);
 			}
 
-			// Remove previous controller view
-			APP.removeScreen(APP.previousController);
+			// // Remove previous controller view
+			// APP.removeScreen(APP.previousController);
 
 		}
 	},
@@ -342,16 +338,19 @@ var APP = {
 	 */
 	addScreen: function(_controller) {
 		// APP.closeAllDetailScreens();
+
+		console.log(APP.ContentWrapper.children.length);
 		
 		if(_controller) {
 
-			// Save the current controller for removal
-			APP.previousController = APP.currentController;
-			APP.removeScreen(APP.previousController);
-
 			APP.ContentWrapper.add(_controller);
 
-			APP.currentController = _controller;
+			// Save the current controller for removal
+			if (APP.previousController) {
+				APP.removeScreen(APP.previousController);
+			}
+			
+			APP.previousController = _controller;
 		}
 	},
 	/**
@@ -363,15 +362,10 @@ var APP = {
 		var controllerStack = APP.controllerStacks[APP.currentStack];
 
 		// Create the new screen controller
-		APP.currentController = Alloy.createController(_controller, _params).getView();
+		var controller = Alloy.createController(_controller, _params).getView();
 
-		// Remove previous controller view
-		APP.removeScreen(APP.previousController);
-
-		controllerStack.push(APP.currentController);
-
-		APP.addScreen(APP.currentController);
-
+		APP.addScreen(controller);
+		controllerStack.push(controller);
 	},
 	/**
 	 * Removes the detail screen
@@ -379,16 +373,11 @@ var APP = {
 	 */
 	closeDetailScreen: function(_callback) {
 		var controllerStack = APP.controllerStacks[APP.currentStack];
-
-		if(APP.currentController) {
-			APP.removeScreen(APP.currentController);
-			controllerStack.pop();
-		}
+		controllerStack.pop();
 
 		if(controllerStack.length > 0) {
-			APP.previousController = APP.currentController;
-			APP.currentController = controllerStack[controllerStack.length - 1];
-			APP.addScreen(APP.currentController);
+			var controllercontroller = controllerStack[controllerStack.length - 1];
+			APP.addScreen(controller);
 		} else {
 			APP.previousController = null;
 		}
@@ -396,7 +385,6 @@ var APP = {
 		if(typeof(_callback) !== "undefined") {
 			_callback();
 		}
-
 	},
 	/**
 	 * Removes ALL detail screens
