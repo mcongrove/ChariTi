@@ -327,9 +327,6 @@ var APP = {
 			APP.removeScreen(APP.previousController);
 
 		}
-
-		console.log(APP.ContentWrapper.children.length);
-
 	},
 	/**
 	 * Global function to remove screens
@@ -361,8 +358,6 @@ var APP = {
 
 			APP.currentController = _controller;
 		}
-
-		console.log(APP.ContentWrapper.children.length);
 	},
 	/**
 	 * Open the detail screen
@@ -388,7 +383,6 @@ var APP = {
 	 * @param {Function} _callback
 	 */
 	closeDetailScreen: function(_callback) {
-		console.log(APP.currentStack);
 		var controllerStack = APP.controllerStacks[APP.currentStack];
 
 		if(APP.currentController) {
