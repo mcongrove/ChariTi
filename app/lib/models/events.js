@@ -87,7 +87,7 @@ exports.getAllEvents = function() {
 	APP.log("debug", "EVENTS.getAllEvents");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM events ORDER BY date_start ASC LIMIT 25;");
+	var data	= db.execute("SELECT * FROM events ORDER BY date_start ASC;");
 	var temp	= [];
 
 	while(data.isValidRow()) {
@@ -110,7 +110,7 @@ exports.getAllEvents = function() {
 };
 
 exports.getEvent = function(_id) {
-	APP.log("debug", "EVENTS.getArticle");
+	APP.log("debug", "EVENTS.getEvent");
 	
 	var db		= Ti.Database.open("ChariTi");
 	var data	= db.execute("SELECT * FROM events WHERE id = " + UTIL.cleanEscapeString(_id) + ";");
@@ -124,6 +124,48 @@ exports.getEvent = function(_id) {
 			date_end: data.fieldByName("date_end"),
 			location: data.fieldByName("location"),
 			description: data.fieldByName("description")
+		};
+
+		data.next();
+	}
+
+	data.close();
+	db.close();
+
+	return temp;
+};
+
+exports.getNextEvent = function(_date) {
+	APP.log("debug", "EVENTS.getNextEvent");
+	
+	var db		= Ti.Database.open("ChariTi");
+	var data	= db.execute("SELECT id FROM events WHERE date_start > " + UTIL.cleanEscapeString(_date) + " ORDER BY date_start ASC LIMIT 1;");
+	var temp;
+
+	while(data.isValidRow()) {
+		temp = {
+			id: data.fieldByName("id")
+		};
+
+		data.next();
+	}
+
+	data.close();
+	db.close();
+
+	return temp;
+};
+
+exports.getPreviousEvent = function(_date) {
+	APP.log("debug", "EVENTS.getPreviousEvent");
+	
+	var db		= Ti.Database.open("ChariTi");
+	var data	= db.execute("SELECT id FROM events WHERE date_start < " + UTIL.cleanEscapeString(_date) + " ORDER BY date_start DESC LIMIT 1;");
+	var temp;
+
+	while(data.isValidRow()) {
+		temp = {
+			id: data.fieldByName("id")
 		};
 
 		data.next();

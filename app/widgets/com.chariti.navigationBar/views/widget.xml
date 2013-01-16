@@ -1,12 +1,12 @@
 <Alloy>
 	<View id="Wrapper">
 		<View id="overlay">
-			<View id="left" visible="false">
-				<ImageView id="leftImage" />
-			</View>
-			
 			<View id="back" visible="false">
 				<ImageView id="backImage" image="/com.chariti.navigationBar/back.png" />
+			</View>
+			
+			<View id="left" visible="false">
+				<ImageView id="leftImage" />
 			</View>
 			
 			<View id="right" visible="false">

@@ -86,7 +86,7 @@ exports.getAllArticles = function() {
 	APP.log("debug", "FACEBOOK.getAllArticles");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM facebook ORDER BY date DESC LIMIT 25;");
+	var data	= db.execute("SELECT * FROM facebook ORDER BY id ASC LIMIT 25;");
 	var temp	= [];
 
 	while(data.isValidRow()) {
@@ -121,6 +121,48 @@ exports.getArticle = function(_id) {
 			date: data.fieldByName("date"),
 			description: data.fieldByName("description"),
 			link: data.fieldByName("link")
+		};
+
+		data.next();
+	}
+
+	data.close();
+	db.close();
+
+	return temp;
+};
+
+exports.getNextArticle = function(_id) {
+	APP.log("debug", "FACEBOOK.getNextArticle");
+	
+	var db		= Ti.Database.open("ChariTi");
+	var data	= db.execute("SELECT id FROM facebook WHERE id > " + UTIL.cleanEscapeString(_id) + " ORDER BY id ASC LIMIT 1;");
+	var temp;
+
+	while(data.isValidRow()) {
+		temp = {
+			id: data.fieldByName("id")
+		};
+
+		data.next();
+	}
+
+	data.close();
+	db.close();
+
+	return temp;
+};
+
+exports.getPreviousArticle = function(_id) {
+	APP.log("debug", "FACEBOOK.getPreviousArticle");
+	
+	var db		= Ti.Database.open("ChariTi");
+	var data	= db.execute("SELECT id FROM facebook WHERE id < " + UTIL.cleanEscapeString(_id) + " ORDER BY id DESC LIMIT 1;");
+	var temp;
+
+	while(data.isValidRow()) {
+		temp = {
+			id: data.fieldByName("id")
 		};
 
 		data.next();
