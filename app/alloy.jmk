@@ -1,0 +1,10 @@
+task("post:compile",function(event, logger){
+    var fs = require('fs');
+    fs.writeFile(event.dir.resources + '/.gitignore', "*\n\n!.gitignore", function(err) {
+        if(err) {
+            logger.error(err);
+        } else {
+            logger.info(".gitignore file was generated!");
+        }
+    }); 
+});
