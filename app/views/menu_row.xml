@@ -1,0 +1,6 @@
+<Alloy>
+	<TableViewRow id="Wrapper">
+		<!-- <ImageView id="icon" /> -->
+		<Label id="title" />
+	</TableViewRow>
+</Alloy>

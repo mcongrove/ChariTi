@@ -57,14 +57,177 @@
 			"cache": 1440
 		},
 		{
+			"title": "Menu",
+			"type": "menu",
+			"image": "home",
+			"items": [
+				{
+					"title": "Twitter",
+					"username": "appcelerator",
+					"type": "twitter",
+					"image": "twitter2",
+					"cache": 10
+				},	
+				{
+					"title": "Donate",
+					"file": "donate.html",
+					"type": "donate",
+					"image": "donate1"
+				},
+				{
+					"title": "Facebook",
+					"userid": "20594753592",
+					"type": "facebook",
+					"image": "facebook",
+					"cache": 10
+				},
+				{
+					"title": "Map",
+					"points": [
+						{
+							"latitude": "28.24560022171899",
+							"longitude": "-80.72571516036987",
+							"pinColor": "Ti.Map.ANNOTATION_RED",
+							"title": "Place A",
+							"subTitle": "This is a subtitle"
+						},
+						{
+							"latitude": "28.24704626421908",
+							"longitude": "-80.73882579803467",
+							"pinColor": "Ti.Map.ANNOTATION_RED",
+							"title": "Place B",
+							"subTitle": ""
+						},
+						{
+							"latitude": "28.228406881099808",
+							"longitude": "-80.73399782180786",
+							"pinColor": "Ti.Map.ANNOTATION_RED",
+							"title": "Place C",
+							"subTitle": "This is a subtitle"
+						}
+					],
+					"type": "map",
+					"image": "map1"
+				},
+				{
+					"title": "News",
+					"feed": "http://developer.appcelerator.com/blog/feed",
+					"type": "news",
+					"image": "news1",
+					"cache": 120
+				},
+				{
+					"title": "PDF",
+					"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
+					"type": "pdf",
+					"image": "social1"
+				},
+				{
+					"title": "Web",
+					"url": "https://github.com/mcongrove/ChariTi",
+					"type": "web",
+					"image": "home"
+				},
+				{
+					"title": "YouTube",
+					"username": "appcelerator",
+					"type": "youtube",
+					"image": "video2",
+					"cache": 1440
+				},
+				{
+					"title": "Menu",
+					"type": "menu",
+					"image": "home",
+					"items": [
+						{
+							"title": "Twitter",
+							"username": "appcelerator",
+							"type": "twitter",
+							"image": "twitter2",
+							"cache": 10
+						},	
+						{
+							"title": "Donate",
+							"file": "donate.html",
+							"type": "donate",
+							"image": "donate1"
+						},
+						{
+							"title": "Facebook",
+							"userid": "20594753592",
+							"type": "facebook",
+							"image": "facebook",
+							"cache": 10
+						},
+						{
+							"title": "Map",
+							"points": [
+								{
+									"latitude": "28.24560022171899",
+									"longitude": "-80.72571516036987",
+									"pinColor": "Ti.Map.ANNOTATION_RED",
+									"title": "Place A",
+									"subTitle": "This is a subtitle"
+								},
+								{
+									"latitude": "28.24704626421908",
+									"longitude": "-80.73882579803467",
+									"pinColor": "Ti.Map.ANNOTATION_RED",
+									"title": "Place B",
+									"subTitle": ""
+								},
+								{
+									"latitude": "28.228406881099808",
+									"longitude": "-80.73399782180786",
+									"pinColor": "Ti.Map.ANNOTATION_RED",
+									"title": "Place C",
+									"subTitle": "This is a subtitle"
+								}
+							],
+							"type": "map",
+							"image": "map1"
+						},
+						{
+							"title": "News",
+							"feed": "http://developer.appcelerator.com/blog/feed",
+							"type": "news",
+							"image": "news1",
+							"cache": 120
+						},
+						{
+							"title": "PDF",
+							"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
+							"type": "pdf",
+							"image": "social1"
+						},
+						{
+							"title": "Web",
+							"url": "https://github.com/mcongrove/ChariTi",
+							"type": "web",
+							"image": "home"
+						},
+						{
+							"title": "YouTube",
+							"username": "appcelerator",
+							"type": "youtube",
+							"image": "video2",
+							"cache": 1440
+						}
+					]
+				}
+
+			]
+		}
+	],
+	"nontabs": [
+		{
 			"title": "Twitter",
 			"username": "appcelerator",
 			"type": "twitter",
 			"image": "twitter2",
 			"cache": 10
-		}
-	],
-	"nontabs": [
+		},	
 		{
 			"title": "Donate",
 			"file": "donate.html",
