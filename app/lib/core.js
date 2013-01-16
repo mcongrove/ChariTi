@@ -39,7 +39,7 @@ var APP = {
 	currentDetailController: null,
 	currentStack: -1,
 	controllerStacks: [],
-	nonTabStacks: [],
+	nonTabStacks: {},
 	detailControllers: [],
 	/**
 	 * The main app window
@@ -315,6 +315,8 @@ var APP = {
 				controllerStack.push(controller);
 			}
 		}
+
+		APP.nonTabStacks = {};
 	},
 	/**
 	 * Global function to remove screens
@@ -331,8 +333,6 @@ var APP = {
 	 * @param {Function} _callback
 	 */
 	addScreen: function(_controller) {
-		console.log(APP.ContentWrapper.children.length);
-		
 		if(_controller) {
 
 			APP.ContentWrapper.add(_controller);
@@ -350,9 +350,18 @@ var APP = {
 	 * @param {String} _controller The name of the controller to open
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
-	openDetailScreen: function(_controller, _params) {
-		var controllerStack = APP.controllerStacks[APP.currentStack];
+	openDetailScreen: function(_controller, _params, _tabStack) {
+		var controllerStack;
 
+		if (typeof(_tabStack) === 'string') {
+			if (typeof(APP.nonTabStacks[_tabStack]) === 'undefined') {
+				APP.nonTabStacks[_tabStack] = [];
+			}
+			controllerStack = APP.nonTabStacks[_tabStack];
+		} else {
+			controllerStack = APP.controllerStacks[APP.currentStack];
+		}
+		 
 		// Create the new screen controller
 		var controller = Alloy.createController(_controller, _params).getView();
 
@@ -363,18 +372,29 @@ var APP = {
 	 * Removes the detail screen
 	 * @param {Function} _callback
 	 */
-	closeDetailScreen: function(_callback) {
-		var controllerStack = APP.controllerStacks[APP.currentStack];
-		controllerStack.pop();
+	closeDetailScreen: function(_callback, _stackName) {
+		var getTabStack = function(_stackName) {
+			return (typeof(_stackName) !== 'undefined') ? APP.nonTabStacks[_stackName] : APP.controllerStacks[APP.currentStack];
+		};
 
-		if(controllerStack.length > 0) {
-			var controller = controllerStack[controllerStack.length - 1];
-			APP.addScreen(controller);
-		} else {
-			APP.previousController = null;
-		}
+		var processTabStack = function(_stack, _endOfStack) {
+			if (_endOfStack !== true) {_stack.pop();}
+			
+			if (_stack.length > 0) {
+				var controller = _stack[_stack.length - 1];
+				APP.addScreen(controller);
+			} else {
+				if (_endOfStack !== true) {
+					processTabStack(getTabStack(), true);
+				} else {
+					APP.previousController = null;
+				}
+			}
+		};
 
-		if(typeof(_callback) !== "undefined") {
+		processTabStack(getTabStack(_stackName));
+
+		if (typeof(_callback) !== "undefined" && _callback !== null) {
 			_callback();
 		}
 	},
@@ -421,7 +441,7 @@ var APP = {
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
 		
-		APP.openDetailScreen("settings");
+		APP.openDetailScreen("settings", {}, 'settings');
 	},
 	/**
 	 * Registers the app for push notifications
