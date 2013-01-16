@@ -39,6 +39,7 @@ var APP = {
 	currentDetailController: null,
 	currentStack: -1,
 	controllerStacks: [],
+	nonTabStacks: [],
 	detailControllers: [],
 	/**
 	 * The main app window
@@ -313,10 +314,6 @@ var APP = {
 				APP.addScreen(controller);
 				controllerStack.push(controller);
 			}
-
-			// // Remove previous controller view
-			// APP.removeScreen(APP.previousController);
-
 		}
 	},
 	/**
@@ -324,11 +321,8 @@ var APP = {
 	 * @param {Function} _callback
 	 */
 	removeScreen: function(_controller) {
-		// APP.closeAllDetailScreens();
-		
 		if(_controller) {
 			APP.ContentWrapper.remove(_controller);
-			
 			APP.previousController = null;
 		}
 	},
@@ -337,8 +331,6 @@ var APP = {
 	 * @param {Function} _callback
 	 */
 	addScreen: function(_controller) {
-		// APP.closeAllDetailScreens();
-
 		console.log(APP.ContentWrapper.children.length);
 		
 		if(_controller) {
@@ -376,7 +368,7 @@ var APP = {
 		controllerStack.pop();
 
 		if(controllerStack.length > 0) {
-			var controllercontroller = controllerStack[controllerStack.length - 1];
+			var controller = controllerStack[controllerStack.length - 1];
 			APP.addScreen(controller);
 		} else {
 			APP.previousController = null;
