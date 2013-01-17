@@ -21,6 +21,21 @@ $.handleData = function(_data) {
 	$.date.text		= UTIL.toDateRelative(_data.date);
 	$.date.color	= APP.Settings.colors.primary;
 	
+	if(_data.image) {
+		var width	= Ti.Platform.displayCaps.platformWidth - 60;
+		
+		var image	= Ti.UI.createImageView({
+			image: _data.image,
+			width: width + "dp",
+			height: Ti.UI.SIZE,
+			preventDefaultImage: true
+		});
+		
+		$.image.add(image);
+	} else {
+		$.content.remove($.image)
+	}
+	
 	ACTION.url		= _data.link;
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";

@@ -27,6 +27,32 @@ exports.isStale = function(_url, _time) {
 };
 
 /**
+ * Adds a column to a table if it doesn't exist (for migrating tables)
+ */
+exports.updateTable = function(_table, _column, _type) {
+	var db = Ti.Database.open("ChariTi");
+	
+	var fieldExists	= false;
+	var result		= db.execute("PRAGMA TABLE_INFO(" + _table + ")");
+	
+	while(result.isValidRow()) {
+		if(result.field(1) == _column) {
+			fieldExists = true;
+		}
+		
+		result.next();
+	}
+	
+	result.close();
+	
+	if(!fieldExists) {
+		db.execute("ALTER TABLE " + _table + " ADD COLUMN " + _column + " " + _type);
+	}
+	
+	db.close();
+};
+
+/**
  * Escapes a string for SQL insertion
  */
 exports.escapeString = function(_string) {

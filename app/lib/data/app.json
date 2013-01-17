@@ -36,8 +36,8 @@
 		},
 		{
 			"title": "News",
-			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "news",
+			"feed": "http://news.yahoo.com/rss/",
+			"type": "blog",
 			"image": "news1",
 			"cache": 120
 		},

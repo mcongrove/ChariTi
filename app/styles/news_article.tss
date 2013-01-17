@@ -49,6 +49,11 @@
 	},
 	color: "#333"
 },
+"#image": {
+	top: "15dp",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},
 "#text": {
 	top: "15dp",
 	left: "15dp",

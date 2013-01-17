@@ -93,9 +93,7 @@ exports.getAllArticles = function() {
 		temp.push({
 			id: data.fieldByName("id"),
 			title: data.fieldByName("title"),
-			date: data.fieldByName("date"),
-			description: data.fieldByName("description"),
-			link: data.fieldByName("link")
+			date: data.fieldByName("date")
 		});
 
 		data.next();

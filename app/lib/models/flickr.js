@@ -199,9 +199,6 @@ exports.getSets = function() {
 		temp.push({
 			id: data.fieldByName("id"),
 			title: data.fieldByName("title"),
-			date_create: data.fieldByName("date_create"),
-			date_update: data.fieldByName("date_update"),
-			description: data.fieldByName("description"),
 			photo_count: data.fieldByName("photo_count")
 		});
 
@@ -226,8 +223,6 @@ exports.getSet = function(_id) {
 			id: data.fieldByName("id"),
 			set_id: data.fieldByName("set_id"),
 			index: data.fieldByName("indx"),
-			title: data.fieldByName("title"),
-			url_m: data.fieldByName("url_m"),
 			url_sq: data.fieldByName("url_sq")
 		});
 		

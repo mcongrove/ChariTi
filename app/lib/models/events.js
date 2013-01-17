@@ -94,10 +94,7 @@ exports.getAllEvents = function() {
 		temp.push({
 			id: data.fieldByName("id"),
 			title: data.fieldByName("title"),
-			date_start: data.fieldByName("date_start"),
-			date_end: data.fieldByName("date_end"),
-			location: data.fieldByName("location"),
-			description: data.fieldByName("description")
+			date_start: data.fieldByName("date_start")
 		});
 
 		data.next();

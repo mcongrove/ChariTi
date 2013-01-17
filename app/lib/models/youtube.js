@@ -110,11 +110,8 @@ exports.getVideos = function() {
 		temp.push({
 			id: data.fieldByName("id"),
 			title: data.fieldByName("title"),
-			description: data.fieldByName("description"),
 			date: data.fieldByName("date"),
-			views: data.fieldByName("views"),
-			link: data.fieldByName("link"),
-			image: data.fieldByName("image")
+			link: data.fieldByName("link")
 		});
 
 		data.next();

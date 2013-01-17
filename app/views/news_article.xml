@@ -9,6 +9,8 @@
 				<Label id="heading" />
 			</View>
 			
+			<View id="image" />
+			
 			<TextArea id="text" />
 		</ScrollView>
 	</View>
