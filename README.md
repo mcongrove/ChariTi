@@ -17,7 +17,7 @@ Code Contribution Practices
 
 Where do I start?
 -----------------
-You can either visit the [Issues](https://github.com/mcongrove/ChariTi/issues) page and pick an un-assigned issue from an upcoming branch, or you can submit a new issue with any features you'd like to see added. We're certainly open to ideas from the community!
+You can either visit the [Issues](http://github.com/mcongrove/ChariTi/issues) page and pick an un-assigned issue from an upcoming branch, or you can submit a new issue with any features you'd like to see added. We're certainly open to ideas from the community!
 
 If you choose to create your own issue with a new feature, please be sure it isn't already listed. Also, please do not add any tags (priority or issue type). We'll review the issue and tag it appropriately; it's sort of our way of signing off on your idea.
 
@@ -28,3 +28,7 @@ After you've submitted a couple of pull requests you can ask to be added as a co
 What if I want to help with the ChariTi website?
 ------------------------------------------------
 We have a private repository for the ChariTi website. Contact us with more information on how you'd like to help and we can discuss this option.
+
+What if I want to help with the ChariTi Desktop application?
+------------------------------------------------
+The ChariTi Desktop application is open source and can be found on the [ChariTi Desktop](http://github.com/mcongrove/ChariTi-Desktop) GitHub page.
