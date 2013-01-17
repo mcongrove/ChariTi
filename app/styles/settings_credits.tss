@@ -3,19 +3,8 @@
 	backgroundColor: "#EEE",
 	layout: "vertical"
 },
-"#heading": {
-	top: "15dp",
-	left: "15dp",
-	right: "15dp",
-	height: Ti.UI.SIZE,
-	font: {
-		fontSize: "14dp",
-		fontWeight: "bold"
-	},
-	color: "#666"
-},
 "#text": {
-	top: "10dp",
+	top: "15dp",
 	left: "15dp",
 	right: "15dp",
 	bottom: "15dp",
