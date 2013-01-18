@@ -1,6 +1,7 @@
 var Alloy	= require("alloy");
 var HTTP	= require("http");
 var UTIL	= require("utilities");
+var MIGRATE	= require("migrate");
 var UA;
 
 /**
@@ -77,6 +78,9 @@ var APP = {
 		Ti.App.addEventListener("pause", APP.exit);
 		Ti.App.addEventListener("close", APP.exit);
 		Ti.App.addEventListener("resumed", APP.resume);
+		
+		// Migrate to newer ChariTi version
+		MIGRATE.init(APP.CVERSION);
 		
 		// Create a database
 		APP.setupDatabase();

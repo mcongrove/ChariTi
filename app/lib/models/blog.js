@@ -10,9 +10,6 @@ var init = function() {
 	db.execute("CREATE TABLE IF NOT EXISTS blog (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT, link TEXT, image TEXT);");
 	
 	db.close();
-	
-	// v1.0 > v1.1
-	UTIL.updateTable("blog", "image", "TEXT");
 };
 
 exports.fetch = function(_params) {
