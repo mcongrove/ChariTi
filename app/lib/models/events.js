@@ -59,14 +59,23 @@ exports.handleData = function(_data, _url, _callback) {
 		
 		for(var i = 0, x = _data.data.length; i < x; i++) {
 			var event		= _data.data[i];
+			var date_start	= "";
+			var date_end	= "";
 			
-			var date_start	= event.start_time.split("T")[0].replace(/-/g, "/") + " " + event.start_time.split("T")[1].split("-")[0];
-			var date_end	= event.end_time.split("T")[0].replace(/-/g, "/") + " " + event.end_time.split("T")[1].split("-")[0];
+			if(event.start_time) {
+				date_start	= event.start_time.split("T")[0].replace(/-/g, "/") + " " + event.start_time.split("T")[1].split("-")[0];
+				date_start	= new Date(date_start).getTime();
+			}
+			
+			if(event.end_time) {
+				date_end	= event.end_time.split("T")[0].replace(/-/g, "/") + " " + event.end_time.split("T")[1].split("-")[0];
+				date_end	= new Date(date_end).getTime();
+			}
 			
 			var id			= UTIL.escapeString(event.id);
 			var title		= UTIL.cleanEscapeString(event.name);
-				date_start	= UTIL.escapeString(new Date(date_start).getTime());
-				date_end	= UTIL.escapeString(new Date(date_end).getTime());
+				date_start	= UTIL.escapeString(date_start);
+				date_end	= UTIL.escapeString(date_end);
 			var location	= UTIL.cleanEscapeString(event.location);
 			var description	= UTIL.cleanEscapeString(event.description);
 			

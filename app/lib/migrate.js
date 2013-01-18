@@ -42,8 +42,8 @@ exports.migrate = function() {
 		case "1.0.1":
 			switch(exports.previous) {
 				case "1.0.0":
-					exports.updateTable("news", "image", "TEXT");
-					exports.updateTable("blog", "image", "TEXT");
+					exports.addColumn("news", "image", "TEXT");
+					exports.addColumn("blog", "image", "TEXT");
 					break;
 			}
 			break;
@@ -53,7 +53,7 @@ exports.migrate = function() {
 /**
  * Adds a column to a table if it doesn't exist (for migrating tables)
  */
-exports.updateTable = function(_table, _column, _type) {
+exports.addColumn = function(_table, _column, _type) {
 	var db = Ti.Database.open("ChariTi");
 	
 	var fieldExists	= false;
