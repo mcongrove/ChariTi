@@ -2,10 +2,10 @@ $.tabs = [];
 $.width = 0;
 
 $.init = function(_params) {
-	$.width = Math.floor(Ti.Platform.displayCaps.platformWidth / _params.tabs.length);
+	$.width	= (Ti.Platform.displayCaps.platformWidth / _params.tabs.length);
 	
 	$.Wrapper.backgroundColor	= _params.colors.primary;
-	$.indicator.width			= $.width - 6 + "dp";
+	$.indicator.width			= $.width + "dp";
 	$.indicator.backgroundColor	= _params.colors.secondary;
 	
 	for(var i = 0; i < _params.tabs.length; i++) {
@@ -72,7 +72,7 @@ $.clear = function() {
 
 $.setIndex = function(_index) {
 	$.indicator.left	= (_index * $.width) + "dp";
-	$.indicator.width	= ($.width - 1) + "dp";
+	$.indicator.width	= $.width + "dp";
 };
 
 $.Wrapper.addEventListener("click", function(_event) {
