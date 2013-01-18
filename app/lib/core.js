@@ -166,9 +166,11 @@ var APP = {
 		});
 
 		if(!_rebuild) {
-			// Add a handler for the spinner (drop-down selection)
+			// Add a handler for the TabGroup
 			APP.Tabs.Wrapper.addEventListener("click", function(_event) {
-				APP.handleNavigation(_event.source.id);
+				if(typeof _event.source.id == "number") {
+					APP.handleNavigation(_event.source.id);
+				}
 			});
 		}
 	},
