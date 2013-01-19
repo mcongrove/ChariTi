@@ -18,6 +18,7 @@
 	height: "59dp",
 	zIndex: 98,
 	top: "1dp",
+	left: "0dp",
 	backgroundGradient: {
 		type: "linear",
 		colors: [

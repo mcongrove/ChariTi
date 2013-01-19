@@ -94,8 +94,11 @@ $.init = function(_params) {
 			}
 		
 			$.tabs.push(tab);
-			$.TabContainer.add(tab);
 		}
+	}
+	
+	for(var i = 0, z = $.tabs.length; i < z; i++) {
+		$.TabContainer.add($.tabs[i]);
 	}
 };
 
@@ -139,8 +142,6 @@ $.addMoreTab = function(_params) {
 	tab.addEventListener("click", $.moreEvent);
 	
 	$.tabs.push(tab);
-	
-	$.TabContainer.add(tab);
 };
 
 $.clear = function() {

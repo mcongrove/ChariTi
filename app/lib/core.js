@@ -91,6 +91,12 @@ var APP = {
 		// Builds out the tab group
 		APP.build();
 		
+		// Open the main window
+		APP.MainWindow.open();
+		
+		// The initial screen to show
+		APP.handleNavigation(0);
+		
 		// Updates the app.json file from a remote source
 		APP.update();
 		
