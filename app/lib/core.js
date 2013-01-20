@@ -24,24 +24,13 @@ var APP = {
 	Plugins: null,
 	Settings: null,
 	/**
-	 * Keeps track of the current screen controller
-	 * @type {Object}
-	 */
-	currentController: null,
-	currentControllerId: null,
-	/**
-	 * Temporary holder for the previous screen controller
-	 */
-	previousController: null,
-	/**
 	 * The detail/stack controller
 	 * @type {Object}
 	 */
-	currentDetailController: null,
 	currentStack: -1,
+	previousScreen: null,
 	controllerStacks: [],
 	nonTabStacks: {},
-	detailControllers: [],
 	/**
 	 * The main app window
 	 * @type {Object}
@@ -248,14 +237,9 @@ var APP = {
 		APP.log("debug", "APP.rebuild");
 		
 		APP.Tabs.clear();
-		APP.removeScreen(APP.currentController);
 		
-		APP.currentControllerId		= null;
-		APP.currentController		= null;
-		APP.previousController		= null;
-		APP.currentDetailController	= null;
-		APP.detailControllers		= [];
 		APP.currentStack			= -1;
+		APP.previousScreen			= null;
 		APP.controllerStacks		= [];
 		APP.nonTabStacks			= {};
 		
@@ -305,62 +289,63 @@ var APP = {
 		} else {
 			// Move the tab selection indicator
 			APP.Tabs.setIndex(_id);
-
-			if(typeof(APP.controllerStacks[_id]) === "undefined") {
-				APP.controllerStacks[_id] = [];
-			}
-
-			var controllerStack = APP.controllerStacks[_id];
-			
-			APP.currentStack = _id;
 			
 			// Closes any loading screens
 			APP.closeLoading();
-
-			var controller;
+			
+			// Set current stack
+			APP.currentStack = _id;
+			
+			// Create new controller stack if it doesn't exist
+			if(typeof(APP.controllerStacks[_id]) === "undefined") {
+				APP.controllerStacks[_id] = [];
+			}
+			
+			// Set current controller stack
+			var controllerStack = APP.controllerStacks[_id];
+			
+			// If we're opening for the first time, create new screen
+			// Otherwise, add the last screen in the stack (screen we navigated away from earlier on)
+			var screen;
 			
 			if(controllerStack.length > 0) {
-				controller = controllerStack[controllerStack.length - 1];
-				
-				APP.addScreen(controller);
+				screen = controllerStack[controllerStack.length - 1];
 			} else {
 				// Create a new screen
-				controller = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+				screen = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
 				
-				// Add the new screen to the window
-				APP.addScreen(controller);
-				
-				controllerStack.push(controller);
+				controllerStack.push(screen);
 			}
+			
+			// Add the screen to the window
+			APP.addScreen(screen);
 		}
-
+		
 		APP.nonTabStacks = {};
-	},
-	/**
-	 * Global function to remove screens
-	 * @param {Function} _callback
-	 */
-	removeScreen: function(_controller) {
-		if(_controller) {
-			APP.ContentWrapper.remove(_controller);
-			APP.previousController = null;
-		}
 	},
 	/**
 	 * Global function to add screens
 	 * @param {Function} _callback
 	 */
-	addScreen: function(_controller) {
-		if(_controller) {
-
-			APP.ContentWrapper.add(_controller);
-
-			// Save the current controller for removal
-			if(APP.previousController) {
-				APP.removeScreen(APP.previousController);
+	addScreen: function(_screen) {
+		if(_screen) {
+			if(APP.previousScreen) {
+				APP.removeScreen(APP.previousScreen);
 			}
 			
-			APP.previousController = _controller;
+			APP.ContentWrapper.add(_screen);
+			APP.previousScreen = _screen;
+		}
+	},
+	/**
+	 * Global function to remove screens
+	 * @param {Function} _callback
+	 */
+	removeScreen: function(_screen) {
+		if(_screen) {
+			APP.ContentWrapper.remove(_screen);
+			
+			APP.previousScreen = null;
 		}
 	},
 	/**
@@ -370,7 +355,8 @@ var APP = {
 	 */
 	openDetailScreen: function(_controller, _params, _stack) {
 		var controllerStack;
-
+		
+		// Determine if stack is associated with a tab
 		if(typeof(_stack) === "string") {
 			if(typeof(APP.nonTabStacks[_stack]) === "undefined") {
 				APP.nonTabStacks[_stack] = [];
@@ -382,55 +368,46 @@ var APP = {
 		}
 		 
 		// Create the new screen controller
-		var controller = Alloy.createController(_controller, _params).getView();
+		var screen = Alloy.createController(_controller, _params).getView();
 
-		APP.addScreen(controller);
+		// Add the screen to the window
+		APP.addScreen(screen);
 		
-		controllerStack.push(controller);
+		controllerStack.push(screen);
 	},
 	/**
 	 * Removes the detail screen
 	 * @param {Function} _callback
 	 */
-	closeDetailScreen: function(_callback, _stack) {
-		var getTabStack = function(_stack) {
-			return (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
-		};
-
-		var processTabStack = function(_stacks, _endOfStack) {
-			if(_endOfStack !== true) {
-				_stacks.pop();
-			}
+	closeDetailScreen: function(_stack) {
+		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		
+		APP.removeScreen(stack[stack.length - 1]);
+		
+		stack.pop();
+		
+		if(stack.length === 0) {
+			var previousStack = APP.controllerStacks[APP.currentStack];
 			
-			if(_stacks.length > 0) {
-				var controller = _stacks[_stacks.length - 1];
-				
-				APP.addScreen(controller);
-			} else {
-				if(_endOfStack !== true) {
-					processTabStack(getTabStack(), true);
-				} else {
-					APP.previousController = null;
-				}
-			}
-		};
-
-		processTabStack(getTabStack(_stack));
-
-		if(typeof(_callback) !== "undefined" && _callback !== null) {
-			_callback();
+			APP.addScreen(previousStack[previousStack.length - 1]);
+		} else {
+			APP.addScreen(stack[stack.length - 1]);
 		}
 	},
 	/**
 	 * Removes ALL detail screens
 	 * @param {Function} _callback
 	 */
-	closeAllDetailScreens: function(_callback) {
-		for(var i = 0, x = APP.detailControllers.length; i < x; i++) {
-			APP.ContentWrapper.remove(APP.detailControllers[i]);
+	closeAllDetailScreens: function(_stack) {
+		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		
+		for(var i = stack.length - 1; i > 0; i--) {
+			APP.removeScreen(stack[i]);
+			
+			stack.pop();
 		}
 		
-		APP.detailControllers = [];
+		APP.addScreen(stack[0]);
 	},
 	/**
 	 * Shows the loading screen
