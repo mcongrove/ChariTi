@@ -24,7 +24,7 @@ $.handleData = function(_data) {
 	$.date.color	= APP.Settings.colors.primary;
 	
 	if(_data.image) {
-		var width	= Ti.Platform.displayCaps.platformWidth - 60;
+		var width	= APP.Device.width - 60;
 		
 		var image	= Ti.UI.createImageView({
 			image: _data.image,

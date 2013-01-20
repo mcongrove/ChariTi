@@ -1,0 +1,6 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="Master" />
+		<View id="Detail" />
+	</View>
+</Alloy>

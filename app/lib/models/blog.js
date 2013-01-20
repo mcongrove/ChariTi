@@ -89,7 +89,7 @@ exports.getAllArticles = function() {
 	APP.log("debug", "BLOG.getAllArticles");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM blog ORDER BY id ASC LIMIT 25;");
+	var data	= db.execute("SELECT id, title, date FROM blog ORDER BY id ASC LIMIT 25;");
 	var temp	= [];
 
 	while(data.isValidRow()) {
@@ -98,6 +98,36 @@ exports.getAllArticles = function() {
 			title: data.fieldByName("title"),
 			date: data.fieldByName("date")
 		});
+
+		data.next();
+	}
+
+	data.close();
+	db.close();
+
+	return temp;
+};
+
+exports.getLatestArticle = function() {
+	APP.log("debug", "BLOG.getLatestArticle");
+	
+	var db		= Ti.Database.open("ChariTi");
+	var data	= db.execute("SELECT * FROM blog ORDER BY id ASC LIMIT 1;");
+	var temp;
+
+	while(data.isValidRow()) {
+		temp = {
+			id: data.fieldByName("id"),
+			title: data.fieldByName("title"),
+			date: data.fieldByName("date"),
+			description: data.fieldByName("description"),
+			link: data.fieldByName("link"),
+			image: null
+		};
+		
+		if(data.fieldByName("image")) {
+			temp.image	= data.fieldByName("image");
+		}
 
 		data.next();
 	}
