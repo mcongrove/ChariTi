@@ -27,7 +27,6 @@ $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.closeDetailScreen();
 });
 
->>>>>>> joshjensen-master
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });

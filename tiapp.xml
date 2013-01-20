@@ -118,10 +118,10 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone" version="1.4">dk.napp.social</module>
-        <module platform="android" version="1.0">ti.physicalSizeCategory</module>
-        <module platform="android" version="2.3.0">ti.urbanairship</module>
-        <module platform="iphone" version="1.3.0">ti.urbanairship</module>
+        <module platform="iphone">dk.napp.social</module>
+        <module platform="android">ti.physicalSizeCategory</module>
+        <module platform="android">ti.urbanairship</module>
+        <module platform="iphone">ti.urbanairship</module>
     </modules>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
