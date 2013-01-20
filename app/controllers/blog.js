@@ -17,6 +17,10 @@ $.init = function() {
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
+
 	MODEL.fetch({
 		url: CONFIG.feed,
 		cache: CONFIG.cache,
@@ -55,6 +59,12 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "blog @close");
+	
+	APP.closeDetailScreen();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });

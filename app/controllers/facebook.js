@@ -16,6 +16,10 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	MODEL.fetch({
 		url: "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid,
@@ -55,6 +59,12 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "facebook @close");
+	
+	APP.closeDetailScreen();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });

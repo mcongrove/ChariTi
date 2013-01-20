@@ -28,7 +28,7 @@ $.init = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @close");
 	
-	APP.closeDetailScreen();
+	APP.closeDetailScreen(null, "settings");
 });
 
 $.terms.addEventListener("click", function(_event) {
@@ -37,7 +37,7 @@ $.terms.addEventListener("click", function(_event) {
 	APP.openDetailScreen("settings_legal", {
 		title: "Terms of Service",
 		url: APP.LEGAL.TOS
-	});
+	}, "settings");
 });
 
 $.privacy.addEventListener("click", function(_event) {
@@ -46,13 +46,13 @@ $.privacy.addEventListener("click", function(_event) {
 	APP.openDetailScreen("settings_legal", {
 		title: "Privacy Policy",
 		url: APP.LEGAL.PRIVACY
-	});
+	}, "settings");
 });
 
 $.acknowledgements.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @credits");
 	
-	APP.openDetailScreen("settings_credits");
+	APP.openDetailScreen("settings_credits", {}, "settings");
 });
 
 $.logs.addEventListener("click", function(_event) {

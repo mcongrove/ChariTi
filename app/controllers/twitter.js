@@ -16,6 +16,10 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	MODEL.fetch({
 		url: "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&exclude_replies=true&count=50&screen_name=" + CONFIG.username,
@@ -56,6 +60,13 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "twitter @close");
+	
+	APP.closeDetailScreen();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });

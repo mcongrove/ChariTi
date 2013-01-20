@@ -1,5 +1,6 @@
-"#Wrapper": {
+"#content": {
 	scalesPageToFit: true,
 	willHandleTouches: false,
+	top: "46dp",
 	backgroundColor: "#000"
 }
