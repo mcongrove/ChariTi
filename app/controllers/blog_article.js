@@ -1,15 +1,23 @@
-var APP = require("core");
-var UTIL = require("utilities");
-var SOCIAL = require("social");
-var MODEL = require("models/blog");
+var APP		= require("core");
+var UTIL	= require("utilities");
+var SOCIAL	= require("social");
+var MODEL	= require("models/blog");
 
-var DATA = arguments[0] || {};
-var ACTION = {};
+var DATA	= arguments[0] || {};
+var ACTION	= {};
 
 $.init = function() {
 	APP.log("debug", "blog_article.init | " + JSON.stringify(DATA));
 	
-	$.handleData(MODEL.getArticle(DATA.id));
+	var article;
+	
+	if(DATA.id) {
+		article = MODEL.getArticle(DATA.id);
+	} else {
+		article = MODEL.getLatestArticle();
+	}
+	
+	$.handleData(article);
 	$.handleNavigation();
 };
 
@@ -22,7 +30,7 @@ $.handleData = function(_data) {
 	$.date.color	= APP.Settings.colors.primary;
 	
 	if(_data.image) {
-		var width	= Ti.Platform.displayCaps.platformWidth - 60;
+		var width	= APP.Device.width - 60;
 		
 		var image	= Ti.UI.createImageView({
 			image: _data.image,
@@ -39,7 +47,7 @@ $.handleData = function(_data) {
 	ACTION.url		= _data.link;
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible			= true;
+	$.NavigationBar.back.visible			= APP.Device.isHandheld;
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };

@@ -14,7 +14,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.0.1.0116131842",
+	CVERSION: "1.1.0.0120131716",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
@@ -23,6 +23,30 @@ var APP = {
 	Nodes: [],
 	Plugins: null,
 	Settings: null,
+	/**
+	 * Device information
+	 */
+	Device: {
+		isHandheld: Alloy.isHandheld,
+		isTablet: Alloy.isTablet,
+		type: Alloy.isHandheld ? "handheld" : "tablet",
+		os: null,
+		name: null,
+		version: Titanium.Platform.version,
+		versionMajor: null,
+		versionMinor: null,
+		width: Ti.Platform.displayCaps.platformWidth,
+		height: Ti.Platform.displayCaps.platformHeight,
+		orientation: Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT ? "LANDSCAPE" : "PORTRAIT",
+		statusBarOrientation: null
+	},
+	/**
+	 * Network connectivity information
+	 */
+	Network: {
+		type: Ti.Network.networkTypeName,
+		online: Ti.Network.online
+	},
 	/**
 	 * The stack controller
 	 * @type {Object}
@@ -47,6 +71,11 @@ var APP = {
 	 */
 	ContentWrapper: null,
 	/**
+	 * The global view for split window
+	 */
+	Master: null,
+	Detail: null,
+	/**
 	 * The loading view
 	 * @type {Object}
 	 */
@@ -66,10 +95,14 @@ var APP = {
 		Ti.API.debug("APP.init");
 		
 		// Global system Events
-		Ti.Network.addEventListener("change", APP.networkObserverUpdate);
-		Ti.App.addEventListener("pause", APP.exit);
-		Ti.App.addEventListener("close", APP.exit);
-		Ti.App.addEventListener("resumed", APP.resume);
+		Ti.Network.addEventListener("change", APP.networkObserver);
+		Ti.Gesture.addEventListener("orientationchange", APP.orientationObserver);
+		Ti.App.addEventListener("pause", APP.exitObserver);
+		Ti.App.addEventListener("close", APP.exitObserver);
+		Ti.App.addEventListener("resumed", APP.resumeObserver);
+		
+		// Determine device characteristics
+		APP.determineDevice();
 		
 		// Migrate to newer ChariTi version
 		MIGRATE.init(APP.CVERSION);
@@ -96,6 +129,55 @@ var APP = {
 		if(APP.Settings.notifications.enabled) {
 			APP.registerPush();
 		}
+	},
+	/**
+	 * Determines the device characteristics
+	 */
+	determineDevice: function() {
+		APP.Device.versionMajor	= parseInt(APP.Device.version.split(".")[0], 10);
+		APP.Device.versionMinor	= parseInt(APP.Device.version.split(".")[1], 10);
+		
+		if(Ti.Platform.name.toUpperCase() == "IPHONE OS") {
+			APP.Device.os = "IOS";
+			
+			if(Ti.Platform.osname.toUpperCase() == "IPHONE") {
+				APP.Device.name = "IPHONE";
+			} else if(Ti.Platform.osname.toUpperCase() == "IPAD") {
+				APP.Device.name = "IPAD";
+			}
+		} else if(Ti.Platform.name.toUpperCase() == "ANDROID") {
+			APP.Device.os = "ANDROID";
+			
+			// TODO: Need to define a way to determine exactly what device we're on for Androids
+			APP.Device.name = Ti.Platform.model.toUpperCase();
+		}
+	},
+	/**
+	 * Setup the database bindings
+	 */
+	setupDatabase: function() {
+		Ti.API.debug("APP.setupDatabase");
+		
+		var db = Ti.Database.open("ChariTi");
+		
+		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS log (time INTEGER, type TEXT, message TEXT);");
+		
+		// Fill the log table with empty rows that we can 'update', providing a max row limit
+		var data = db.execute("SELECT time FROM log;");
+		
+		if(data.rowCount === 0) {
+			db.execute("BEGIN TRANSACTION;");
+			
+			for(var i = 0; i < 100; i++) {
+				db.execute("INSERT INTO log VALUES (" + i + ", \"\", \"\");");
+			}
+			
+			db.execute("END TRANSACTION;");
+		}
+		
+		data.close();
+		db.close();
 	},
 	/**
 	 * Loads in the appropriate controller and config data
@@ -248,33 +330,6 @@ var APP = {
 		APP.build(true);
 		
 		APP.handleNavigation(0);
-	},
-	/**
-	 * Setup the database bindings
-	 */
-	setupDatabase: function() {
-		Ti.API.debug("APP.setupDatabase");
-		
-		var db = Ti.Database.open("ChariTi");
-		
-		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
-		db.execute("CREATE TABLE IF NOT EXISTS log (time INTEGER, type TEXT, message TEXT);");
-		
-		// Fill the log table with empty rows that we can 'update', providing a max row limit
-		var data = db.execute("SELECT time FROM log;");
-		
-		if(data.rowCount === 0) {
-			db.execute("BEGIN TRANSACTION;");
-			
-			for(var i = 0; i < 100; i++) {
-				db.execute("INSERT INTO log VALUES (" + i + ", \"\", \"\");");
-			}
-			
-			db.execute("END TRANSACTION;");
-		}
-		
-		data.close();
-		db.close();
 	},
 	/**
 	 * Global event handler to change screens
@@ -546,8 +601,7 @@ var APP = {
 		var data = db.execute("SELECT * FROM log WHERE message != \"\" ORDER BY time DESC;");
 		
 		var log = APP.ID + " " + APP.VERSION + " (" + APP.CVERSION + ")\n"
-				+ Ti.Platform.locale + "\n"
-				+ Ti.Platform.osname + " " + Ti.Platform.version + " (" + Ti.Platform.model + ")\n\n"
+				+ APP.Device.os + " " + APP.Device.version + " (" + APP.Device.name + ") " + Ti.Platform.locale + "\n\n"
 				+ "=====\n\n";
 		
 		while(data.isValidRow()) {
@@ -572,23 +626,45 @@ var APP = {
 		}
 	},
 	/**
+	 * Global orientation event handler
+	 * @param {Object} _event Standard Ti callback
+	 */
+	orientationObserver: function(_event) {
+		APP.log("debug", "APP.orientationObserver");
+		
+		if(APP.Device.statusBarOrientation && APP.Device.statusBarOrientation == _event.orientation) {
+			return;
+		}
+		
+		APP.Device.statusBarOrientation = _event.orientation;
+		
+		APP.Device.orientation = (_event.orientation == Ti.UI.LANDSCAPE_LEFT || _event.orientation == Ti.UI.LANDSCAPE_RIGHT) ? "LANDSCAPE" : "PORTRAIT";
+
+		Ti.App.fireEvent("APP:orientationChange");
+	},
+	/**
 	 * Global network event handler
 	 * @param {Object} _event Standard Ti callback
 	 */
-	networkObserverUpdate: function(_event) {
-		APP.log("debug", "APP.networkObserverUpdate");
+	networkObserver: function(_event) {
+		APP.log("debug", "APP.networkObserver");
+		
+		APP.Network.type	= _event.networkTypeName;
+		APP.Network.online	= _event.online;
+		
+		Ti.App.fireEvent("APP:networkChange");
 	},
 	/**
 	 * Exit event observer
 	 */
-	exit: function() {
-		APP.log("debug", "APP.exit");
+	exitObserver: function() {
+		APP.log("debug", "APP.exitObserver");
 	},
 	/**
 	 * Resume event observer
 	 */
-	resume: function() {
-		APP.log("debug", "APP.resume");
+	resumeObserver: function() {
+		APP.log("debug", "APP.resumeObserver");
 	}
 };
 
