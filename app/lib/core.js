@@ -33,7 +33,7 @@ var APP = {
 	 */
 	previousController: null,
 	/**
-	 * The detail controller
+	 * The detail/stack controller
 	 * @type {Object}
 	 */
 	currentDetailController: null,
@@ -243,6 +243,9 @@ var APP = {
 		APP.previousController		= null;
 		APP.currentDetailController	= null;
 		APP.detailControllers		= [];
+		APP.currentStack			= -1;
+		APP.controllerStacks		= [];
+		APP.nonTabStacks			= {};
 		
 		APP.loadContent();
 		
@@ -285,13 +288,13 @@ var APP = {
 		APP.log("debug", "APP.handleNavigation");
 
 		// Requesting same screen as we're on
-		if (_id == APP.currentStack) {
+		if(_id == APP.currentStack) {
 			// Do nothing
 		} else {
 			// Move the tab selection indicator
 			APP.Tabs.setIndex(_id);
 
-			if (typeof(APP.controllerStacks[_id]) === 'undefined') {
+			if(typeof(APP.controllerStacks[_id]) === "undefined") {
 				APP.controllerStacks[_id] = [];
 			}
 
@@ -303,8 +306,10 @@ var APP = {
 			APP.closeLoading();
 
 			var controller;
-			if (controllerStack.length > 0) {
+			
+			if(controllerStack.length > 0) {
 				controller = controllerStack[controllerStack.length - 1];
+				
 				APP.addScreen(controller);
 			} else {
 				// Create a new screen
@@ -312,6 +317,7 @@ var APP = {
 				
 				// Add the new screen to the window
 				APP.addScreen(controller);
+				
 				controllerStack.push(controller);
 			}
 		}
@@ -338,7 +344,7 @@ var APP = {
 			APP.ContentWrapper.add(_controller);
 
 			// Save the current controller for removal
-			if (APP.previousController) {
+			if(APP.previousController) {
 				APP.removeScreen(APP.previousController);
 			}
 			
@@ -350,14 +356,15 @@ var APP = {
 	 * @param {String} _controller The name of the controller to open
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
-	openDetailScreen: function(_controller, _params, _tabStack) {
+	openDetailScreen: function(_controller, _params, _stack) {
 		var controllerStack;
 
-		if (typeof(_tabStack) === 'string') {
-			if (typeof(APP.nonTabStacks[_tabStack]) === 'undefined') {
-				APP.nonTabStacks[_tabStack] = [];
+		if(typeof(_stack) === "string") {
+			if(typeof(APP.nonTabStacks[_stack]) === "undefined") {
+				APP.nonTabStacks[_stack] = [];
 			}
-			controllerStack = APP.nonTabStacks[_tabStack];
+			
+			controllerStack = APP.nonTabStacks[_stack];
 		} else {
 			controllerStack = APP.controllerStacks[APP.currentStack];
 		}
@@ -366,25 +373,29 @@ var APP = {
 		var controller = Alloy.createController(_controller, _params).getView();
 
 		APP.addScreen(controller);
+		
 		controllerStack.push(controller);
 	},
 	/**
 	 * Removes the detail screen
 	 * @param {Function} _callback
 	 */
-	closeDetailScreen: function(_callback, _stackName) {
-		var getTabStack = function(_stackName) {
-			return (typeof(_stackName) !== 'undefined') ? APP.nonTabStacks[_stackName] : APP.controllerStacks[APP.currentStack];
+	closeDetailScreen: function(_callback, _stack) {
+		var getTabStack = function(_stack) {
+			return (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		};
 
-		var processTabStack = function(_stack, _endOfStack) {
-			if (_endOfStack !== true) {_stack.pop();}
+		var processTabStack = function(_stacks, _endOfStack) {
+			if(_endOfStack !== true) {
+				_stacks.pop();
+			}
 			
-			if (_stack.length > 0) {
-				var controller = _stack[_stack.length - 1];
+			if(_stacks.length > 0) {
+				var controller = _stacks[_stacks.length - 1];
+				
 				APP.addScreen(controller);
 			} else {
-				if (_endOfStack !== true) {
+				if(_endOfStack !== true) {
 					processTabStack(getTabStack(), true);
 				} else {
 					APP.previousController = null;
@@ -392,9 +403,9 @@ var APP = {
 			}
 		};
 
-		processTabStack(getTabStack(_stackName));
+		processTabStack(getTabStack(_stack));
 
-		if (typeof(_callback) !== "undefined" && _callback !== null) {
+		if(typeof(_callback) !== "undefined" && _callback !== null) {
 			_callback();
 		}
 	},
@@ -441,7 +452,7 @@ var APP = {
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
 		
-		APP.openDetailScreen("settings", {}, 'settings');
+		APP.openDetailScreen("settings", {}, "settings");
 	},
 	/**
 	 * Registers the app for push notifications

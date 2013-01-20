@@ -18,7 +18,7 @@ $.init = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "settings_legal @close");
 	
-	APP.closeDetailScreen(null, 'settings');
+	APP.closeDetailScreen(null, "settings");
 });
 
 // Kick off the init
