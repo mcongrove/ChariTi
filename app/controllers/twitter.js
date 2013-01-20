@@ -11,18 +11,20 @@ var refreshEngaged	= false;
 $.init = function() {
 	APP.log("debug", "twitter.init | " + JSON.stringify(CONFIG));
 	
+	CONFIG.feed = "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&exclude_replies=true&count=50&screen_name=" + CONFIG.username;
+	
 	APP.openLoading();
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 
-	if (CONFIG.isChild === true) {
+	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
 	
 	MODEL.fetch({
-		url: "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&exclude_replies=true&count=50&screen_name=" + CONFIG.username,
+		url: CONFIG.feed,
 		cache: CONFIG.cache,
 		callback: function() {
 			$.handleData(MODEL.getTweets());
@@ -92,6 +94,10 @@ $.container.addEventListener("scroll", function(_event) {
 					refreshEngaged = true;
 				}
 			} else {
+				if(offset < 60) {
+					$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+				}
+				
 				if(refreshEngaged == true) {
 					$.refreshLabel.text = "Pull down to update...";
 					
@@ -118,7 +124,7 @@ $.container.addEventListener("dragend", function(_event) {
 		$.refreshLoading.start();
 		
 		MODEL.fetch({
-			url: "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&exclude_replies=true&count=50&screen_name=" + CONFIG.username,
+			url: CONFIG.feed,
 			cache: 0,
 			callback: function() {
 				$.handleData(MODEL.getTweets());

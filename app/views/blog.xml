@@ -8,6 +8,8 @@
 				<ImageView id="refreshLoading" />
 				
 				<Label id="refreshLabel" text="Pull down to update..." />
+				
+				<Label id="refreshUpdateLabel" />
 			</View>
 			
 			<TableView id="content" />

@@ -17,7 +17,7 @@ $.init = function() {
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
-	if (CONFIG.isChild === true) {
+	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
 
@@ -90,6 +90,10 @@ $.container.addEventListener("scroll", function(_event) {
 					refreshEngaged = true;
 				}
 			} else {
+				if(offset < 60) {
+					$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+				}
+				
 				if(refreshEngaged == true) {
 					$.refreshLabel.text = "Pull down to update...";
 					

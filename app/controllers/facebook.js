@@ -11,18 +11,20 @@ var refreshEngaged	= false;
 $.init = function() {
 	APP.log("debug", "facebook.init | " + JSON.stringify(CONFIG));
 	
+	CONFIG.feed = "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid;
+	
 	APP.openLoading();
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 
-	if (CONFIG.isChild === true) {
+	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
 	
 	MODEL.fetch({
-		url: "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid,
+		url: CONFIG.feed,
 		cache: CONFIG.cache,
 		callback: function() {
 			$.handleData(MODEL.getAllArticles());
@@ -90,6 +92,10 @@ $.container.addEventListener("scroll", function(_event) {
 					refreshEngaged = true;
 				}
 			} else {
+				if(offset < 60) {
+					$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+				}
+				
 				if(refreshEngaged == true) {
 					$.refreshLabel.text = "Pull down to update...";
 					
@@ -116,7 +122,7 @@ $.container.addEventListener("dragend", function(_event) {
 		$.refreshLoading.start();
 		
 		MODEL.fetch({
-			url: "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid,
+			url: CONFIG.feed,
 			cache: 0,
 			callback: function() {
 				$.handleData(MODEL.getAllArticles());

@@ -8,7 +8,7 @@ $.heading.text	= CONFIG.heading;
 $.heading.color = APP.Settings.colors.primary || "#666";
 $.text.text		= CONFIG.text;
 
-if (CONFIG.isChild === true) {
+if(CONFIG.isChild === true) {
 	$.NavigationBar.back.visible		= true;
 }
 

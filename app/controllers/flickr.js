@@ -12,7 +12,7 @@ $.init = function() {
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 
-	if (CONFIG.isChild === true) {
+	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
 	

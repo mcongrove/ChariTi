@@ -11,31 +11,40 @@
 "#refreshArrow": {
 	width: "23dp",
 	height: "25dp",
-	left: "50dp"
+	left: "40dp"
 },
 "#refreshLoading": {
-	width: "50dp",
-	height: "20dp",
-	left: "37dp",
+	width: "31dp",
+	height: "13dp",
+	left: "36dp",
 	visible: false,
 	images: [
 		"/images/ptrLoading1.png",
-		"/images/ptrLoading2.png",
-		"/images/ptrLoading3.png"
+		"/images/ptrLoading2.png"
 	],
 	duration: 250
 },
 "#refreshLabel": {
-	textAlign: "center",
-	top: "0dp",
-	height: "60dp",
+	top: "12dp",
+	height: "15dp",
 	color: "#AAA",
 	font: {
 		fontSize: "12dp",
 		fontWeight: "bold"
 	},
-	left: "10dp",
-	right: "0dp"
+	left: "90dp",
+	right: "20dp"
+},
+"#refreshUpdateLabel": {
+	bottom: "12dp",
+	height: "15dp",
+	color: "#AAA",
+	font: {
+		fontSize: "11dp",
+		fontWeight: "normal"
+	},
+	left: "90dp",
+	right: "20dp"
 },
 "#content": {
 	backgroundColor: "#EEE",

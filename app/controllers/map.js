@@ -34,7 +34,7 @@ $.init = function() {
 	
 	$.content.selectAnnotation(annotations[0]);
 
-	if (CONFIG.isChild === true) {
+	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
 };

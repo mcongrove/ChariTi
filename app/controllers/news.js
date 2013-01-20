@@ -90,6 +90,10 @@ $.container.addEventListener("scroll", function(_event) {
 					refreshEngaged = true;
 				}
 			} else {
+				if(offset < 60) {
+					$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+				}
+				
 				if(refreshEngaged == true) {
 					$.refreshLabel.text = "Pull down to update...";
 					
