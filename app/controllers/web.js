@@ -107,12 +107,16 @@ if(CONFIG.url) {
 	});
 }
 
+// Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "web @close");
 	
 	APP.closeDetailScreen();
 });
 
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
 
 // Kick off the init
 $.init();

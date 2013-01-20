@@ -35,8 +35,8 @@
 			"image": "home"
 		},
 		{
-			"title": "News",
-			"feed": "http://news.yahoo.com/rss/",
+			"title": "Blog",
+			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "blog",
 			"image": "news1",
 			"cache": 120
@@ -57,9 +57,9 @@
 			"cache": 1440
 		},
 		{
-			"title": "Menu",
+			"title": "More",
 			"type": "menu",
-			"image": "home",
+			"image": "more",
 			"items": [
 				{
 					"title": "Twitter",
@@ -67,6 +67,12 @@
 					"type": "twitter",
 					"image": "twitter2",
 					"cache": 10
+				},
+				{
+					"title": "PDF",
+					"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
+					"type": "pdf",
+					"image": "social1"
 				},
 				{
 					"title": "Donate",
@@ -82,26 +88,11 @@
 					"type": "facebook",
 					"image": "facebook",
 					"cache": 10
-				},
+				}
 			]
 		}
 	],
 	"nontabs": [
-		{
-			"title": "Donate",
-			"heading": "Donate to ChariTi",
-			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
-			"url": "https://github.com/mcongrove/ChariTi",
-			"type": "donate",
-			"image": "donate1"
-		},
-		{
-			"title": "Facebook",
-			"userid": "20594753592",
-			"type": "facebook",
-			"image": "facebook",
-			"cache": 10
-		},
 		{
 			"title": "Map",
 			"points": [
@@ -136,12 +127,6 @@
 			"type": "news",
 			"image": "news1",
 			"cache": 120
-		},
-		{
-			"title": "PDF",
-			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
-			"type": "pdf",
-			"image": "social1"
 		},
 		{
 			"title": "Web",

@@ -15,7 +15,7 @@ $.init = function() {
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
 	
-	if (CONFIG.isChild === true) {
+	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
 };
@@ -34,5 +34,8 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 $.button.addEventListener("click", function(_event) {
 	APP.log("debug", "donate @openLink");
 	
-	Ti.Platform.openURL(_event.url);
+	Ti.Platform.openURL(CONFIG.url);
 });
+
+// Kick off the init
+$.init();

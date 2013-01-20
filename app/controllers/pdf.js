@@ -9,6 +9,10 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if (CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	if(!$.fileExists(CONFIG.url)) {
 		HTTP.request({
@@ -60,6 +64,17 @@ $.fileExists = function(_url) {
 		return false;
 	}
 };
+
+// Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "pdf @close");
+	
+	APP.closeDetailScreen();
+});
+
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
 
 // Kick off the init
 $.init();
