@@ -38,7 +38,7 @@
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "blog",
-			"image": "news1",
+			"image": "news2",
 			"cache": 120
 		},
 		{
@@ -67,12 +67,6 @@
 					"type": "twitter",
 					"image": "twitter2",
 					"cache": 10
-				},
-				{
-					"title": "PDF",
-					"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
-					"type": "pdf",
-					"image": "social1"
 				},
 				{
 					"title": "Donate",
@@ -127,6 +121,12 @@
 			"type": "news",
 			"image": "news1",
 			"cache": 120
+		},
+		{
+			"title": "PDF",
+			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
+			"type": "pdf",
+			"image": "social1"
 		},
 		{
 			"title": "Web",
