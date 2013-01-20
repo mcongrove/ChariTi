@@ -35,10 +35,10 @@
 			"image": "home"
 		},
 		{
-			"title": "News",
-			"feed": "http://news.yahoo.com/rss/",
+			"title": "Blog",
+			"feed": "http://feeds.feedburner.com/thinkmobile-blog",
 			"type": "blog",
-			"image": "news1",
+			"image": "news2",
 			"cache": 120
 		},
 		{
