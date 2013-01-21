@@ -18,11 +18,12 @@ $.init = function() {
 	}
 	
 	$.handleData(article);
-	$.handleNavigation();
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "blog_article.handleData");
+	
+	$.handleNavigation(_data.id);
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;
@@ -52,9 +53,9 @@ $.handleData = function(_data) {
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };
 
-$.handleNavigation = function () {
-	ACTION.next		= MODEL.getNextArticle(DATA.id);
-	ACTION.previous	= MODEL.getPreviousArticle(DATA.id);
+$.handleNavigation = function (_id) {
+	ACTION.next		= MODEL.getNextArticle(_id);
+	ACTION.previous	= MODEL.getPreviousArticle(_id);
 	
 	var navigation = Ti.UI.createView({
 		width: "96dp",

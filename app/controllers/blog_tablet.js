@@ -1,7 +1,7 @@
 var APP		= require("core");
 
-APP.Master	= $.Master;
-APP.Detail	= $.Detail;
+var master = Alloy.createController("blog", arguments[0]).getView();
+var detail = Alloy.createController("blog_article").getView();
 
-APP.openMasterScreen("blog", arguments[0]);
-APP.openDetailScreen("blog_article");
+APP.addMasterScreen(master, $.Master);
+APP.addDetailScreen(detail, $.Detail);
