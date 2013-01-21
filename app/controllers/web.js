@@ -33,7 +33,7 @@ $.initToolbar = function() {
 	$.toolbar.visible = true;
 	$.content.bottom = "48dp";
 	
-	var width = Math.floor(Ti.Platform.displayCaps.platformWidth / 4);
+	var width = Math.floor(APP.Device.width / 4);
 	
 	$.containerBack.width		= width + "dp";
 	$.containerBack.visible		= false;

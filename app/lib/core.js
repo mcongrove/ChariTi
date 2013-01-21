@@ -14,7 +14,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.0.1.0116131842",
+	CVERSION: "1.1.0.0120131716",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
@@ -24,6 +24,30 @@ var APP = {
 	Plugins: null,
 	Settings: null,
 	/**
+	 * Device information
+	 */
+	Device: {
+		isHandheld: Alloy.isHandheld,
+		isTablet: Alloy.isTablet,
+		type: Alloy.isHandheld ? "handheld" : "tablet",
+		os: null,
+		name: null,
+		version: Titanium.Platform.version,
+		versionMajor: null,
+		versionMinor: null,
+		width: Ti.Platform.displayCaps.platformWidth,
+		height: Ti.Platform.displayCaps.platformHeight,
+		orientation: Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT ? "LANDSCAPE" : "PORTRAIT",
+		statusBarOrientation: null
+	},
+	/**
+	 * Network connectivity information
+	 */
+	Network: {
+		type: Ti.Network.networkTypeName,
+		online: Ti.Network.online
+	},
+	/**
 	 * The stack controller
 	 * @type {Object}
 	 */
@@ -31,6 +55,12 @@ var APP = {
 	previousScreen: null,
 	controllerStacks: [],
 	nonTabStacks: {},
+	hasDetail: false,
+	currentDetailStack: -1,
+	previousDetailScreen: null,
+	detailStacks: [],
+	Master: [],
+	Detail: [],
 	/**
 	 * The main app window
 	 * @type {Object}
@@ -66,10 +96,14 @@ var APP = {
 		Ti.API.debug("APP.init");
 		
 		// Global system Events
-		Ti.Network.addEventListener("change", APP.networkObserverUpdate);
-		Ti.App.addEventListener("pause", APP.exit);
-		Ti.App.addEventListener("close", APP.exit);
-		Ti.App.addEventListener("resumed", APP.resume);
+		Ti.Network.addEventListener("change", APP.networkObserver);
+		Ti.Gesture.addEventListener("orientationchange", APP.orientationObserver);
+		Ti.App.addEventListener("pause", APP.exitObserver);
+		Ti.App.addEventListener("close", APP.exitObserver);
+		Ti.App.addEventListener("resumed", APP.resumeObserver);
+		
+		// Determine device characteristics
+		APP.determineDevice();
 		
 		// Migrate to newer ChariTi version
 		MIGRATE.init(APP.CVERSION);
@@ -96,6 +130,55 @@ var APP = {
 		if(APP.Settings.notifications.enabled) {
 			APP.registerPush();
 		}
+	},
+	/**
+	 * Determines the device characteristics
+	 */
+	determineDevice: function() {
+		APP.Device.versionMajor	= parseInt(APP.Device.version.split(".")[0], 10);
+		APP.Device.versionMinor	= parseInt(APP.Device.version.split(".")[1], 10);
+		
+		if(Ti.Platform.name.toUpperCase() == "IPHONE OS") {
+			APP.Device.os = "IOS";
+			
+			if(Ti.Platform.osname.toUpperCase() == "IPHONE") {
+				APP.Device.name = "IPHONE";
+			} else if(Ti.Platform.osname.toUpperCase() == "IPAD") {
+				APP.Device.name = "IPAD";
+			}
+		} else if(Ti.Platform.name.toUpperCase() == "ANDROID") {
+			APP.Device.os = "ANDROID";
+			
+			// TODO: Need to define a way to determine exactly what device we're on for Androids
+			APP.Device.name = Ti.Platform.model.toUpperCase();
+		}
+	},
+	/**
+	 * Setup the database bindings
+	 */
+	setupDatabase: function() {
+		Ti.API.debug("APP.setupDatabase");
+		
+		var db = Ti.Database.open("ChariTi");
+		
+		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS log (time INTEGER, type TEXT, message TEXT);");
+		
+		// Fill the log table with empty rows that we can 'update', providing a max row limit
+		var data = db.execute("SELECT time FROM log;");
+		
+		if(data.rowCount === 0) {
+			db.execute("BEGIN TRANSACTION;");
+			
+			for(var i = 0; i < 100; i++) {
+				db.execute("INSERT INTO log VALUES (" + i + ", \"\", \"\");");
+			}
+			
+			db.execute("END TRANSACTION;");
+		}
+		
+		data.close();
+		db.close();
 	},
 	/**
 	 * Loads in the appropriate controller and config data
@@ -250,33 +333,6 @@ var APP = {
 		APP.handleNavigation(0);
 	},
 	/**
-	 * Setup the database bindings
-	 */
-	setupDatabase: function() {
-		Ti.API.debug("APP.setupDatabase");
-		
-		var db = Ti.Database.open("ChariTi");
-		
-		db.execute("CREATE TABLE IF NOT EXISTS updates (url TEXT PRIMARY KEY, time TEXT);");
-		db.execute("CREATE TABLE IF NOT EXISTS log (time INTEGER, type TEXT, message TEXT);");
-		
-		// Fill the log table with empty rows that we can 'update', providing a max row limit
-		var data = db.execute("SELECT time FROM log;");
-		
-		if(data.rowCount === 0) {
-			db.execute("BEGIN TRANSACTION;");
-			
-			for(var i = 0; i < 100; i++) {
-				db.execute("INSERT INTO log VALUES (" + i + ", \"\", \"\");");
-			}
-			
-			db.execute("END TRANSACTION;");
-		}
-		
-		data.close();
-		db.close();
-	},
-	/**
 	 * Global event handler to change screens
 	 * @param  {String} _id The ID of the tab being opened
 	 */
@@ -297,8 +353,16 @@ var APP = {
 			APP.currentStack = _id;
 			
 			// Create new controller stack if it doesn't exist
-			if(typeof(APP.controllerStacks[_id]) === "undefined") {
+			if(typeof APP.controllerStacks[_id] === "undefined") {
 				APP.controllerStacks[_id] = [];
+			}
+			
+			if(APP.Device.isTablet) {
+				APP.currentDetailStack = _id;
+				
+				if(typeof APP.detailStacks[_id] === "undefined") {
+					APP.detailStacks[_id] = [];
+				}
 			}
 			
 			// Set current controller stack
@@ -308,12 +372,35 @@ var APP = {
 			// Otherwise, add the last screen in the stack (screen we navigated away from earlier on)
 			var screen;
 			
+			APP.hasDetail = false;
+			APP.previousDetailScreen = null;
+			
 			if(controllerStack.length > 0) {
 				// Retrieve the last screen
-				screen = controllerStack[controllerStack.length - 1];
+				if(APP.Device.isTablet) {
+					screen = controllerStack[0];
+					
+					if(screen.type == "tablet") {
+						APP.hasDetail = true;
+					}
+				} else {
+					screen = controllerStack[controllerStack.length - 1];
+				}
 			} else {
 				// Create a new screen
-				screen = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+				var type = APP.Nodes[_id].type.toLowerCase();
+				
+				if(APP.Device.isTablet) {
+					var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "alloy", "controllers", type + "_tablet.js");
+					
+					if(file.exists()) {
+						type = type + "_tablet";
+						
+						APP.hasDetail = true;
+					}
+				}
+				
+				screen = Alloy.createController(type, APP.Nodes[_id]).getView();
 				
 				// Add screen to the controller stack
 				controllerStack.push(screen);
@@ -326,8 +413,7 @@ var APP = {
 		APP.nonTabStacks = {};
 	},
 	/**
-	 * Global function to add screens
-	 * @param {Function} _callback
+	 * Global function to add a screen
 	 */
 	addScreen: function(_screen) {
 		if(_screen) {
@@ -341,8 +427,7 @@ var APP = {
 		}
 	},
 	/**
-	 * Global function to remove screens
-	 * @param {Function} _callback
+	 * Global function to remove a screen
 	 */
 	removeScreen: function(_screen) {
 		if(_screen) {
@@ -357,60 +442,134 @@ var APP = {
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
 	addChild: function(_controller, _params, _stack) {
-		var controllerStack;
+		var stack;
 		
 		// Determine if stack is associated with a tab
-		if(typeof(_stack) === "string") {
-			if(typeof(APP.nonTabStacks[_stack]) === "undefined") {
+		if(typeof _stack !== "undefined") {
+			if(typeof APP.nonTabStacks[_stack] === "undefined") {
 				APP.nonTabStacks[_stack] = [];
 			}
 			
-			controllerStack = APP.nonTabStacks[_stack];
+			stack = APP.nonTabStacks[_stack];
 		} else {
-			controllerStack = APP.controllerStacks[APP.currentStack];
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				stack = APP.controllerStacks[APP.currentStack];
+			} else {
+				stack = APP.detailStacks[APP.currentDetailStack];
+			}
 		}
 		 
 		// Create the new screen controller
 		var screen = Alloy.createController(_controller, _params).getView();
 		
 		// Add screen to the controller stack
-		controllerStack.push(screen);
-
+		stack.push(screen);
+		
 		// Add the screen to the window
-		APP.addScreen(screen);
+		if(APP.Device.isHandheld || !APP.hasDetail || typeof _stack !== "undefined") {
+			APP.addScreen(screen);
+		} else {
+			APP.addDetailScreen(screen);
+		}
 	},
 	/**
 	 * Removes a child screen
-	 * @param {Function} _callback
 	 */
 	removeChild: function(_stack) {
-		var stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var stack	= (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		
+		if(APP.Device.isTablet && APP.hasDetail) {
+			stack	= (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.detailStacks[APP.currentDetailStack];
+		}
+		
 		var screen	= stack[stack.length - 1];
+		var previousStack;
+		var previousScreen;
 		
 		stack.pop();
 		
 		if(stack.length === 0) {
-			var previousStack = APP.controllerStacks[APP.currentStack];
+			previousStack = APP.controllerStacks[APP.currentStack];
 			
-			APP.addScreen(previousStack[previousStack.length - 1]);
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				previousScreen	= previousStack[previousStack.length - 1];
+				
+				APP.addScreen(previousScreen);
+			} else {
+				previousScreen	= previousStack[0];
+				
+				if(typeof _stack !== "undefined") {
+					APP.addScreen(previousScreen);
+				} else {
+					APP.addDetailScreen(previousScreen);
+				}
+			}
 		} else {
-			APP.addScreen(stack[stack.length - 1]);
+			previousScreen = stack[stack.length - 1];
+			
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				APP.addScreen(previousScreen);
+			} else {
+				if(typeof _stack !== "undefined") {
+					APP.addScreen(previousScreen);
+				} else {
+					APP.addDetailScreen(previousScreen);
+				}
+			}
 		}
-		
-		APP.ContentWrapper.remove(screen);
 	},
 	/**
 	 * Removes all children screens
-	 * @param {Function} _callback
 	 */
 	removeAllChildren: function(_stack) {
-		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		
 		for(var i = stack.length - 1; i > 0; i--) {
 			stack.pop();
 		}
 		
 		APP.addScreen(stack[0]);
+	},
+	/**
+	 * Adds a screen to the Master window
+	 */
+	addMasterScreen: function(_screen) {
+		if(_screen) {
+			APP.Master[APP.currentStack].add(_screen);
+		}
+	},
+	/**
+	 * Adds a screen to the Detail window
+	 */
+	addDetailScreen: function(_screen) {
+		if(_screen) {
+			APP.Detail[APP.currentStack].add(_screen);
+			
+			if(APP.previousDetailScreen && APP.previousDetailScreen != _screen) {
+				var pop = true;
+				
+				if(APP.detailStacks[APP.currentDetailStack][0].type == "PARENT" && _screen.type != "PARENT") {
+					pop = false;
+				}
+				
+				APP.removeDetailScreen(APP.previousDetailScreen, pop);
+			}
+			
+			APP.previousDetailScreen = _screen;
+		}
+	},
+	removeDetailScreen: function(_screen, _pop) {
+		if(_screen) {
+			APP.Detail[APP.currentStack].remove(_screen);
+			
+			APP.previousDetailScreen = null;
+			
+			if(_pop) {
+				var stack = APP.detailStacks[APP.currentDetailStack];
+				
+				stack.splice(0, stack.length - 1);
+			}
+		}
 	},
 	/**
 	 * Shows the loading screen
@@ -544,8 +703,7 @@ var APP = {
 		var data = db.execute("SELECT * FROM log WHERE message != \"\" ORDER BY time DESC;");
 		
 		var log = APP.ID + " " + APP.VERSION + " (" + APP.CVERSION + ")\n"
-				+ Ti.Platform.locale + "\n"
-				+ Ti.Platform.osname + " " + Ti.Platform.version + " (" + Ti.Platform.model + ")\n\n"
+				+ APP.Device.os + " " + APP.Device.version + " (" + APP.Device.name + ") " + Ti.Platform.locale + "\n\n"
 				+ "=====\n\n";
 		
 		while(data.isValidRow()) {
@@ -570,23 +728,45 @@ var APP = {
 		}
 	},
 	/**
+	 * Global orientation event handler
+	 * @param {Object} _event Standard Ti callback
+	 */
+	orientationObserver: function(_event) {
+		APP.log("debug", "APP.orientationObserver");
+		
+		if(APP.Device.statusBarOrientation && APP.Device.statusBarOrientation == _event.orientation) {
+			return;
+		}
+		
+		APP.Device.statusBarOrientation = _event.orientation;
+		
+		APP.Device.orientation = (_event.orientation == Ti.UI.LANDSCAPE_LEFT || _event.orientation == Ti.UI.LANDSCAPE_RIGHT) ? "LANDSCAPE" : "PORTRAIT";
+
+		Ti.App.fireEvent("APP:orientationChange");
+	},
+	/**
 	 * Global network event handler
 	 * @param {Object} _event Standard Ti callback
 	 */
-	networkObserverUpdate: function(_event) {
-		APP.log("debug", "APP.networkObserverUpdate");
+	networkObserver: function(_event) {
+		APP.log("debug", "APP.networkObserver");
+		
+		APP.Network.type	= _event.networkTypeName;
+		APP.Network.online	= _event.online;
+		
+		Ti.App.fireEvent("APP:networkChange");
 	},
 	/**
 	 * Exit event observer
 	 */
-	exit: function() {
-		APP.log("debug", "APP.exit");
+	exitObserver: function() {
+		APP.log("debug", "APP.exitObserver");
 	},
 	/**
 	 * Resume event observer
 	 */
-	resume: function() {
-		APP.log("debug", "APP.resume");
+	resumeObserver: function() {
+		APP.log("debug", "APP.resumeObserver");
 	}
 };
 

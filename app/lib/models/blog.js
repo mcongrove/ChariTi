@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var init = function() {
 	APP.log("debug", "BLOG.init");
@@ -89,7 +89,7 @@ exports.getAllArticles = function() {
 	APP.log("debug", "BLOG.getAllArticles");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM blog ORDER BY id ASC LIMIT 25;");
+	var data	= db.execute("SELECT id, title, date FROM blog ORDER BY id ASC LIMIT 25;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

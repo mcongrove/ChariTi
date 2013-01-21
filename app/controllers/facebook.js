@@ -3,6 +3,7 @@ var UTIL	= require("utilities");
 var MODEL	= require("models/facebook");
 
 var CONFIG	= arguments[0];
+var SELECTED;
 
 var offset			= 0;
 var refreshLoading	= false;
@@ -58,6 +59,12 @@ $.handleData = function(_data) {
 	$.content.setData(rows);
 	
 	APP.closeLoading();
+	
+	if(APP.Device.isTablet) {
+		SELECTED = _data[0].id;
+		
+		APP.addChild("facebook_article", { id: _data[0].id });
+	}
 };
 
 // Event listeners
@@ -142,6 +149,14 @@ $.container.addEventListener("dragend", function(_event) {
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook @click " + _event.row.id);
+	
+	if(APP.Device.isTablet) {
+		if(_event.row.id == SELECTED) {
+			return;
+		} else {
+			SELECTED = _event.row.id;
+		}
+	}
 	
 	APP.addChild("facebook_article", {
 		id: _event.row.id

@@ -10,11 +10,14 @@ $.init = function() {
 	APP.log("debug", "facebook_article.init | " + JSON.stringify(DATA));
 	
 	$.handleData(MODEL.getArticle(DATA.id));
-	$.handleNavigation();
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "facebook_article.handleData");
+	
+	if(!APP.Device.isTablet) {
+		$.handleNavigation();
+	}
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;
@@ -24,7 +27,7 @@ $.handleData = function(_data) {
 	ACTION.url		= _data.link
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible			= true;
+	$.NavigationBar.back.visible			= APP.Device.isHandheld;
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };

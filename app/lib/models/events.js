@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var init = function() {
 	APP.log("debug", "EVENTS.init");
@@ -96,7 +96,7 @@ exports.getAllEvents = function() {
 	APP.log("debug", "EVENTS.getAllEvents");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM events ORDER BY date_start ASC;");
+	var data	= db.execute("SELECT id, title, date_start FROM events ORDER BY date_start ASC;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

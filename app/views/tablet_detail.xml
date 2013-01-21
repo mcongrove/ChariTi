@@ -1,7 +1,5 @@
 <Alloy>
-	<View id="Wrapper" type="PARENT">
+	<View id="Wrapper">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
-		
-		<ScrollView id="content" />
 	</View>
 </Alloy>

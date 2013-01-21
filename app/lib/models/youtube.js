@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var ApiBase = null;
 var Username = null;
@@ -103,7 +103,7 @@ exports.getVideos = function() {
 	APP.log("debug", "YOUTUBE.getVideos");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM youtube ORDER BY date DESC;");
+	var data	= db.execute("SELECT id, title, date, link FROM youtube ORDER BY date DESC;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

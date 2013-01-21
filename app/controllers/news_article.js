@@ -10,13 +10,14 @@ $.init = function() {
 	APP.log("debug", "news_article.init | " + JSON.stringify(DATA));
 	
 	$.handleData(MODEL.getArticle(DATA.id));
-	$.handleNavigation();
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "news_article.handleData");
 	
-	console.log(JSON.stringify(_data));
+	if(!APP.Device.isTablet) {
+		$.handleNavigation();
+	}
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;
@@ -24,7 +25,7 @@ $.handleData = function(_data) {
 	$.date.color	= APP.Settings.colors.primary;
 	
 	if(_data.image) {
-		var width	= Ti.Platform.displayCaps.platformWidth - 60;
+		var width	= APP.Device.width - 60;
 		
 		var image	= Ti.UI.createImageView({
 			image: _data.image,
@@ -41,7 +42,7 @@ $.handleData = function(_data) {
 	ACTION.url		= _data.link
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible			= true;
+	$.NavigationBar.back.visible			= APP.Device.isHandheld;
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };

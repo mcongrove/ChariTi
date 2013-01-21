@@ -3,6 +3,7 @@ var UTIL = require("utilities");
 var MODEL = require("models/events");
 
 var CONFIG = arguments[0];
+var SELECTED;
 
 $.init = function() {
 	APP.log("debug", "events.init | " + JSON.stringify(CONFIG));
@@ -46,6 +47,12 @@ $.handleData = function(_data) {
 	$.content.setData(rows);
 	
 	APP.closeLoading();
+	
+	if(APP.Device.isTablet) {
+		SELECTED = _data[0].id;
+		
+		APP.addChild("events_event", { id: _data[0].id });
+	}
 };
 
 // Event listeners
@@ -61,6 +68,14 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "events @click " + _event.row.id);
+	
+	if(APP.Device.isTablet) {
+		if(_event.row.id == SELECTED) {
+			return;
+		} else {
+			SELECTED = _event.row.id;
+		}
+	}
 	
 	APP.addChild("events_event", {
 		id: _event.row.id

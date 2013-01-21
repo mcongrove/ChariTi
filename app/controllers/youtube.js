@@ -3,6 +3,7 @@ var UTIL = require("utilities");
 var MODEL = require("models/youtube");
 
 var CONFIG = arguments[0];
+var SELECTED;
 
 $.init = function() {
 	APP.log("debug", "youtube.init | " + JSON.stringify(CONFIG));
@@ -32,7 +33,7 @@ $.handleUsername = function() {
 	});
 };
 
-$.handleVideos = function(_data) {
+$.handleVideos = function() {
 	APP.log("debug", "youtube.handleVideos");
 	
 	var data = MODEL.getVideos();
@@ -52,6 +53,12 @@ $.handleVideos = function(_data) {
 	$.content.setData(rows);
 	
 	APP.closeLoading();
+	
+	if(APP.Device.isTablet) {
+		SELECTED = data[0].id;
+		
+		APP.addChild("youtube_video", { url: data[0].link, title: data[0].title });
+	}
 };
 
 // Event listeners
@@ -67,6 +74,14 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @click " + _event.row.url);
+	
+	if(APP.Device.isTablet) {
+		if(_event.row.id == SELECTED) {
+			return;
+		} else {
+			SELECTED = _event.row.id;
+		}
+	}
 	
 	APP.addChild("youtube_video", {
 		url: _event.row.url,
