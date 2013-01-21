@@ -353,14 +353,14 @@ var APP = {
 			APP.currentStack = _id;
 			
 			// Create new controller stack if it doesn't exist
-			if(typeof(APP.controllerStacks[_id]) === "undefined") {
+			if(typeof APP.controllerStacks[_id] === "undefined") {
 				APP.controllerStacks[_id] = [];
 			}
 			
 			if(APP.Device.isTablet) {
 				APP.currentDetailStack = _id;
 				
-				if(typeof(APP.detailStacks[_id]) === "undefined") {
+				if(typeof APP.detailStacks[_id] === "undefined") {
 					APP.detailStacks[_id] = [];
 				}
 			}
@@ -372,10 +372,16 @@ var APP = {
 			// Otherwise, add the last screen in the stack (screen we navigated away from earlier on)
 			var screen;
 			
+			APP.hasDetail = false;
+			
 			if(controllerStack.length > 0) {
 				// Retrieve the last screen
 				if(APP.Device.isTablet) {
 					screen = controllerStack[0];
+					
+					if(screen.type == "tablet") {
+						APP.hasDetail = true;
+					}
 				} else {
 					screen = controllerStack[controllerStack.length - 1];
 				}
@@ -388,6 +394,8 @@ var APP = {
 					
 					if(file.exists()) {
 						type = type + "_tablet";
+						
+						APP.hasDetail = true;
 					}
 				}
 				
@@ -395,14 +403,6 @@ var APP = {
 				
 				// Add screen to the controller stack
 				controllerStack.push(screen);
-			}
-			
-			if(APP.Device.isTablet) {
-				if(screen.type == "tablet") {
-					APP.hasDetail = true;
-				} else {
-					APP.hasDetail = false;
-				}
 			}
 			
 			// Add the screen to the window
@@ -447,24 +447,30 @@ var APP = {
 	addChild: function(_controller, _params, _stack) {
 		console.log("addChild");
 		
-		var controllerStack;
+		var stack;
 		
 		// Determine if stack is associated with a tab
 		if(typeof _stack !== "undefined") {
-			if(typeof(APP.nonTabStacks[_stack]) === "undefined") {
+			if(typeof APP.nonTabStacks[_stack] === "undefined") {
 				APP.nonTabStacks[_stack] = [];
 			}
 			
-			controllerStack = APP.nonTabStacks[_stack];
+			stack = APP.nonTabStacks[_stack];
 		} else {
-			controllerStack = APP.controllerStacks[APP.currentStack];
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				console.log("STACK: Controller | " + _controller);
+				stack = APP.controllerStacks[APP.currentStack];
+			} else {
+				console.log("STACK: Detail | " + _controller);
+				stack = APP.detailStacks[APP.currentDetailStack];
+			}
 		}
 		 
 		// Create the new screen controller
 		var screen = Alloy.createController(_controller, _params).getView();
 		
 		// Add screen to the controller stack
-		controllerStack.push(screen);
+		stack.push(screen);
 		
 		// Add the screen to the window
 		if(APP.Device.isHandheld || !APP.hasDetail || typeof _stack !== "undefined") {
@@ -480,6 +486,11 @@ var APP = {
 		console.log("removeChild");
 		
 		var stack	= (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		
+		if(APP.Device.isTablet && APP.hasDetail) {
+			stack	= (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.detailStacks[APP.currentDetailStack];
+		}
+		
 		var screen	= stack[stack.length - 1];
 		var previousStack;
 		var previousScreen;
@@ -491,18 +502,30 @@ var APP = {
 			
 			if(APP.Device.isHandheld || !APP.hasDetail) {
 				previousScreen	= previousStack[previousStack.length - 1];
+				
+				APP.addScreen(previousScreen);
 			} else {
 				previousScreen	= previousStack[0];
-			}
 				
-			APP.addScreen(previousScreen);
+				if(typeof _stack !== "undefined") {
+					APP.addScreen(previousScreen);
+				} else {
+					APP.addDetailScreen(previousScreen);
+				}
+			}
 		} else {
 			previousScreen = stack[stack.length - 1];
 			
-			APP.addScreen(previousScreen);
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				APP.addScreen(previousScreen);
+			} else {
+				if(typeof _stack !== "undefined") {
+					APP.addScreen(previousScreen);
+				} else {
+					APP.addDetailScreen(previousScreen);
+				}
+			}
 		}
-		
-		APP.ContentWrapper.remove(screen);
 	},
 	/**
 	 * Removes all children screens
@@ -534,22 +557,26 @@ var APP = {
 	addDetailScreen: function(_screen) {
 		console.log("addDetailScreen");
 		
+		console.log(JSON.stringify(APP.detailStacks[APP.currentDetailStack]));
+		
 		if(_screen) {
+			console.log("ADD: " + JSON.stringify(_screen));
+			
 			APP.Detail[APP.currentStack].add(_screen);
 			
 			if(APP.previousDetailScreen && APP.previousDetailScreen != _screen) {
 				APP.removeDetailScreen(APP.previousDetailScreen);
-			
-				APP.previousDetailScreen = _screen;
-				
-				APP.detailStacks[APP.currentDetailStack].push(_screen);
 			}
+			
+			APP.previousDetailScreen = _screen;
 		}
 	},
 	removeDetailScreen: function(_screen) {
 		console.log("removeDetailScreen");
 		
 		if(_screen) {
+			console.log("REMOVE: " + JSON.stringify(_screen));
+			
 			APP.Detail[APP.currentStack].remove(_screen);
 		}
 	},
