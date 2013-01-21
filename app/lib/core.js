@@ -55,6 +55,10 @@ var APP = {
 	previousScreen: null,
 	controllerStacks: [],
 	nonTabStacks: {},
+	hasDetail: false,
+	currentDetailStack: -1,
+	previousDetailScreen: null,
+	detailStacks: [],
 	/**
 	 * The main app window
 	 * @type {Object}
@@ -356,6 +360,14 @@ var APP = {
 				APP.controllerStacks[_id] = [];
 			}
 			
+			if(APP.Device.isTablet) {
+				APP.currentDetailStack = _id;
+				
+				if(typeof(APP.detailStacks[_id]) === "undefined") {
+					APP.detailStacks[_id] = [];
+				}
+			}
+			
 			// Set current controller stack
 			var controllerStack = APP.controllerStacks[_id];
 			
@@ -365,13 +377,35 @@ var APP = {
 			
 			if(controllerStack.length > 0) {
 				// Retrieve the last screen
-				screen = controllerStack[controllerStack.length - 1];
+				if(APP.Device.isTablet) {
+					screen = controllerStack[0];
+				} else {
+					screen = controllerStack[controllerStack.length - 1];
+				}
 			} else {
 				// Create a new screen
-				screen = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+				var type = APP.Nodes[_id].type.toLowerCase();
+				
+				if(APP.Device.isTablet) {
+					var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "alloy", "controllers", type + "_tablet.js");
+					
+					if(file.exists()) {
+						type = type + "_tablet";
+					}
+				}
+				
+				screen = Alloy.createController(type, APP.Nodes[_id]).getView();
 				
 				// Add screen to the controller stack
 				controllerStack.push(screen);
+			}
+			
+			if(APP.Device.isTablet) {
+				if(screen.type == "tablet") {
+					APP.hasDetail = true;
+				} else {
+					APP.hasDetail = false;
+				}
 			}
 			
 			// Add the screen to the window
@@ -383,10 +417,11 @@ var APP = {
 		APP.nonTabStacks = {};
 	},
 	/**
-	 * Global function to add screens
-	 * @param {Function} _callback
+	 * Global function to add a screen
 	 */
 	addScreen: function(_screen) {
+		console.log("addScreen");
+		
 		if(_screen) {
 			APP.ContentWrapper.add(_screen);
 			
@@ -398,10 +433,11 @@ var APP = {
 		}
 	},
 	/**
-	 * Global function to remove screens
-	 * @param {Function} _callback
+	 * Global function to remove a screen
 	 */
 	removeScreen: function(_screen) {
+		console.log("removeScreen");
+		
 		if(_screen) {
 			APP.ContentWrapper.remove(_screen);
 			
@@ -414,6 +450,8 @@ var APP = {
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
 	addChild: function(_controller, _params, _stack) {
+		console.log("addChild");
+		
 		var controllerStack;
 		
 		// Determine if stack is associated with a tab
@@ -432,35 +470,68 @@ var APP = {
 		
 		// Add screen to the controller stack
 		controllerStack.push(screen);
-
+		
 		// Add the screen to the window
-		APP.addScreen(screen);
+		if(APP.Device.isHandheld || !APP.hasDetail) {
+			APP.addScreen(screen);
+		} else {
+			APP.addDetailScreen(screen);
+		}
 	},
 	/**
 	 * Removes a child screen
-	 * @param {Function} _callback
 	 */
 	removeChild: function(_stack) {
-		var stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		console.log("removeChild");
+		
+		var stack;
+		
+		if(APP.Device.isHandheld || !APP.hasDetail) {
+			stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		} else {
+			stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.detailStacks[APP.currentDetailStack];
+		}
+		
 		var screen	= stack[stack.length - 1];
+		var previousStack;
+		var previousScreen;
 		
 		stack.pop();
 		
 		if(stack.length === 0) {
-			var previousStack = APP.controllerStacks[APP.currentStack];
-			
-			APP.addScreen(previousStack[previousStack.length - 1]);
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				previousStack	= APP.controllerStacks[APP.currentStack];
+				previousScreen	= previousStack[previousStack.length - 1];
+					
+				APP.addScreen(previousScreen);
+			} else {
+				previousStack	= APP.detailStacks[APP.currentDetailStack];
+				previousScreen	= previousStack[previousStack.length - 1];
+				
+				APP.addDetailScreen(previousScreen);
+			}
 		} else {
-			APP.addScreen(stack[stack.length - 1]);
+			previousScreen = stack[stack.length - 1];
+			
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				APP.addScreen(previousScreen);
+			} else {
+				APP.addDetailScreen(previousScreen);
+			}
 		}
 		
-		APP.ContentWrapper.remove(screen);
+		if(APP.Device.isHandheld || !APP.hasDetail) {
+			APP.ContentWrapper.remove(screen);
+		} else {
+			APP.removeDetailScreen(screen);
+		}
 	},
 	/**
 	 * Removes all children screens
-	 * @param {Function} _callback
 	 */
 	removeAllChildren: function(_stack) {
+		console.log("removeAllChildren");
+		
 		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		
 		for(var i = stack.length - 1; i > 0; i--) {
@@ -468,6 +539,49 @@ var APP = {
 		}
 		
 		APP.addScreen(stack[0]);
+	},
+	/**
+	 * Adds a screen to the Master window
+	 */
+	addMasterScreen: function(_screen, _parent) {
+		console.log("addMasterScreen");
+		
+		if(typeof(_parent) !== "undefined") {
+			APP.Master = _parent;
+		}
+		
+		if(_screen) {
+			APP.Master.add(_screen);
+		}
+	},
+	/**
+	 * Adds a screen to the Detail window
+	 */
+	addDetailScreen: function(_screen, _parent) {
+		console.log("addDetailScreen");
+		
+		if(typeof(_parent) !== "undefined") {
+			APP.Detail = _parent;
+		}
+		
+		if(_screen) {
+			APP.Detail.add(_screen);
+			
+			if(APP.previousDetailScreen && APP.previousDetailScreen != _screen) {
+				APP.removeDetailScreen(APP.previousDetailScreen);
+			
+				APP.previousDetailScreen = _screen;
+				
+				APP.detailStacks[APP.currentDetailStack].push(_screen);
+			}
+		}
+	},
+	removeDetailScreen: function(_screen) {
+		console.log("removeDetailScreen");
+		
+		if(_screen) {
+			APP.Detail.remove(_screen);
+		}
 	},
 	/**
 	 * Shows the loading screen
