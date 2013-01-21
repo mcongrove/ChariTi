@@ -15,9 +15,9 @@ $.init = function() {
 $.handleData = function(_data) {
 	APP.log("debug", "blog_article.handleData");
 	
-	if(!APP.Device.isTablet) {
+	//if(!APP.Device.isTablet) {
 		$.handleNavigation(_data.id);
-	}
+	//}
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;

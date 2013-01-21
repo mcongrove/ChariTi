@@ -163,9 +163,6 @@ $.content.addEventListener("click", function(_event) {
 			return;
 		} else {
 			SELECTED = _event.row.id;
-			
-			var stack = APP.detailStacks[APP.currentDetailStack];
-			stack.splice(0, stack.length - 1);
 		}
 	}
 	
