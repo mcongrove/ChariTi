@@ -8,7 +8,7 @@ $.width			= 0;
 
 $.init = function(_params) {
 	if(Alloy.isTablet) {
-		$.excessLength = Math.floor(Ti.Platform.displayCaps.platformWidth / 120);
+		$.excessLength = Math.floor(Ti.Platform.displayCaps.platformWidth / 70);
 	}
 	
 	if(_params.tabs.length > $.excessLength) {
