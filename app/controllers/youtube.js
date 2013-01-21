@@ -32,7 +32,7 @@ $.handleUsername = function() {
 	});
 };
 
-$.handleVideos = function(_data) {
+$.handleVideos = function() {
 	APP.log("debug", "youtube.handleVideos");
 	
 	var data = MODEL.getVideos();
@@ -52,6 +52,12 @@ $.handleVideos = function(_data) {
 	$.content.setData(rows);
 	
 	APP.closeLoading();
+	
+	if(APP.Device.isTablet) {
+		var detail = Alloy.createController("youtube_video", { url: data[0].link, title: data[0].title }).getView();
+		
+		APP.addDetailScreen(detail);
+	}
 };
 
 // Event listeners

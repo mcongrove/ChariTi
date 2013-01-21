@@ -1,15 +1,23 @@
-var APP = require("core");
-var UTIL = require("utilities");
-var SOCIAL = require("social");
-var MODEL = require("models/events");
+var APP		= require("core");
+var UTIL	= require("utilities");
+var SOCIAL	= require("social");
+var MODEL	= require("models/events");
 
-var DATA = arguments[0] || {};
-var ACTION = {};
+var DATA	= arguments[0] || {};
+var ACTION	= {};
 
 $.init = function() {
 	APP.log("debug", "events_event.init | " + JSON.stringify(DATA));
 	
-	$.handleData(MODEL.getEvent(DATA.id));
+	var data;
+	
+	if(DATA.id) {
+		data = MODEL.getEvent(DATA.id);
+	} else {
+		data = MODEL.getLatestEvent();
+	}
+	
+	$.handleData(data);
 };
 
 $.handleData = function(_data) {
@@ -26,7 +34,7 @@ $.handleData = function(_data) {
 	ACTION.url		= "http://www.facebook.com/events/" + _data.id;
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible			= true;
+	$.NavigationBar.back.visible			= APP.Device.isHandheld;
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };

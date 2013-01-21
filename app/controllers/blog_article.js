@@ -9,15 +9,15 @@ var ACTION	= {};
 $.init = function() {
 	APP.log("debug", "blog_article.init | " + JSON.stringify(DATA));
 	
-	var article;
+	var data;
 	
 	if(DATA.id) {
-		article = MODEL.getArticle(DATA.id);
+		data = MODEL.getArticle(DATA.id);
 	} else {
-		article = MODEL.getLatestArticle();
+		data = MODEL.getLatestArticle();
 	}
 	
-	$.handleData(article);
+	$.handleData(data);
 };
 
 $.handleData = function(_data) {

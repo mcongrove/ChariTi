@@ -70,7 +70,7 @@ $.content.addEventListener("swipe", function(_event) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr_photo @close");
 	
-	APP.removeChild();
+	APP.removeChild("flickr");
 });
 
 // Kick off the init
