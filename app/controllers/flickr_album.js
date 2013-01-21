@@ -15,7 +15,7 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 	$.NavigationBar.title.text				= DATA.title;
 	$.NavigationBar.title.color				= APP.Settings.colors.text || "#FFF";
-	$.NavigationBar.back.visible			= true;
+	$.NavigationBar.back.visible			= APP.Device.isHandheld;
 };
 
 $.handleData = function() {
@@ -55,15 +55,17 @@ $.handleData = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr_album @close");
 	
-	APP.removeChild();
+	APP.removeChild("flickr");
 });
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr_album @click " + _event.source.id);
 	
-	APP.addChild("flickr_photo", {
-		id: _event.source.id
-	});
+	if(_event.source.id !== "content") {
+		APP.addChild("flickr_photo", {
+			id: _event.source.id
+		}, "flickr");
+	}
 });
 
 // Kick off the init

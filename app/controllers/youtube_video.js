@@ -5,7 +5,7 @@ var DATA = arguments[0] || {};
 APP.log("debug", "youtube_video | " + JSON.stringify(DATA));
 
 $.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-$.NavigationBar.back.visible			= true;
+$.NavigationBar.back.visible			= APP.Device.isHandheld;
 
 $.content.url = DATA.url || "";
 

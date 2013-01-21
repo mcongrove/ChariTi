@@ -50,6 +50,12 @@ $.handleData = function(_data) {
 	$.content.setData(rows);
 	
 	APP.closeLoading();
+	
+	if(APP.Device.isTablet) {
+		var detail = Alloy.createController("facebook_article", { id: _data[0].id }).getView();
+		
+		APP.addDetailScreen(detail);
+	}
 };
 
 // Event listeners

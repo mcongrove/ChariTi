@@ -28,7 +28,7 @@ $.handleNsid = function() {
 	});
 };
 
-$.handleSets = function(_data) {
+$.handleSets = function() {
 	APP.log("debug", "flickr.handleSets");
 	
 	var data = MODEL.getSets();
@@ -47,6 +47,12 @@ $.handleSets = function(_data) {
 	$.content.setData(rows);
 	
 	APP.closeLoading();
+	
+	if(APP.Device.isTablet) {
+		var detail = Alloy.createController("flickr_album", { id: data[0].id, title: data[0].title, cache: CONFIG.cache }).getView();
+		
+		APP.addDetailScreen(detail);
+	}
 };
 
 // Event listeners

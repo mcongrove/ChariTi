@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var init = function() {
 	APP.log("debug", "FACEBOOK.init");
@@ -92,7 +92,7 @@ exports.getAllArticles = function() {
 	APP.log("debug", "FACEBOOK.getAllArticles");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM facebook ORDER BY id ASC LIMIT 25;");
+	var data	= db.execute("SELECT id, title, date FROM facebook ORDER BY id ASC LIMIT 25;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

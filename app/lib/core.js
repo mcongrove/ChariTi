@@ -59,6 +59,8 @@ var APP = {
 	currentDetailStack: -1,
 	previousDetailScreen: null,
 	detailStacks: [],
+	Master: [],
+	Detail: [],
 	/**
 	 * The main app window
 	 * @type {Object}
@@ -74,11 +76,6 @@ var APP = {
 	 * @type {Object}
 	 */
 	ContentWrapper: null,
-	/**
-	 * The global view for split window
-	 */
-	Master: null,
-	Detail: null,
 	/**
 	 * The loading view
 	 * @type {Object}
@@ -455,7 +452,7 @@ var APP = {
 		var controllerStack;
 		
 		// Determine if stack is associated with a tab
-		if(typeof(_stack) === "string") {
+		if(typeof _stack !== "undefined") {
 			if(typeof(APP.nonTabStacks[_stack]) === "undefined") {
 				APP.nonTabStacks[_stack] = [];
 			}
@@ -472,7 +469,7 @@ var APP = {
 		controllerStack.push(screen);
 		
 		// Add the screen to the window
-		if(APP.Device.isHandheld || !APP.hasDetail) {
+		if(APP.Device.isHandheld || !APP.hasDetail || typeof _stack !== "undefined") {
 			APP.addScreen(screen);
 		} else {
 			APP.addDetailScreen(screen);
@@ -484,14 +481,7 @@ var APP = {
 	removeChild: function(_stack) {
 		console.log("removeChild");
 		
-		var stack;
-		
-		if(APP.Device.isHandheld || !APP.hasDetail) {
-			stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
-		} else {
-			stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.detailStacks[APP.currentDetailStack];
-		}
-		
+		var stack	= (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		var screen	= stack[stack.length - 1];
 		var previousStack;
 		var previousScreen;
@@ -499,32 +489,22 @@ var APP = {
 		stack.pop();
 		
 		if(stack.length === 0) {
+			previousStack	= APP.controllerStacks[APP.currentStack];
+			
 			if(APP.Device.isHandheld || !APP.hasDetail) {
-				previousStack	= APP.controllerStacks[APP.currentStack];
 				previousScreen	= previousStack[previousStack.length - 1];
-					
-				APP.addScreen(previousScreen);
 			} else {
-				previousStack	= APP.detailStacks[APP.currentDetailStack];
-				previousScreen	= previousStack[previousStack.length - 1];
-				
-				APP.addDetailScreen(previousScreen);
+				previousScreen	= previousStack[0];
 			}
+				
+			APP.addScreen(previousScreen);
 		} else {
 			previousScreen = stack[stack.length - 1];
 			
-			if(APP.Device.isHandheld || !APP.hasDetail) {
-				APP.addScreen(previousScreen);
-			} else {
-				APP.addDetailScreen(previousScreen);
-			}
+			APP.addScreen(previousScreen);
 		}
 		
-		if(APP.Device.isHandheld || !APP.hasDetail) {
-			APP.ContentWrapper.remove(screen);
-		} else {
-			APP.removeDetailScreen(screen);
-		}
+		APP.ContentWrapper.remove(screen);
 	},
 	/**
 	 * Removes all children screens
@@ -532,7 +512,7 @@ var APP = {
 	removeAllChildren: function(_stack) {
 		console.log("removeAllChildren");
 		
-		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		
 		for(var i = stack.length - 1; i > 0; i--) {
 			stack.pop();
@@ -543,29 +523,21 @@ var APP = {
 	/**
 	 * Adds a screen to the Master window
 	 */
-	addMasterScreen: function(_screen, _parent) {
+	addMasterScreen: function(_screen) {
 		console.log("addMasterScreen");
 		
-		if(typeof(_parent) !== "undefined") {
-			APP.Master = _parent;
-		}
-		
 		if(_screen) {
-			APP.Master.add(_screen);
+			APP.Master[APP.currentStack].add(_screen);
 		}
 	},
 	/**
 	 * Adds a screen to the Detail window
 	 */
-	addDetailScreen: function(_screen, _parent) {
+	addDetailScreen: function(_screen) {
 		console.log("addDetailScreen");
 		
-		if(typeof(_parent) !== "undefined") {
-			APP.Detail = _parent;
-		}
-		
 		if(_screen) {
-			APP.Detail.add(_screen);
+			APP.Detail[APP.currentStack].add(_screen);
 			
 			if(APP.previousDetailScreen && APP.previousDetailScreen != _screen) {
 				APP.removeDetailScreen(APP.previousDetailScreen);
@@ -580,7 +552,7 @@ var APP = {
 		console.log("removeDetailScreen");
 		
 		if(_screen) {
-			APP.Detail.remove(_screen);
+			APP.Detail[APP.currentStack].remove(_screen);
 		}
 	},
 	/**

@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var init = function() {
 	APP.log("debug", "TWITTER.init");
@@ -87,7 +87,7 @@ exports.getTweets = function() {
 	APP.log("debug", "TWITTER.getVideos");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM twitter ORDER BY date DESC;");
+	var data	= db.execute("SELECT id, text, date FROM twitter ORDER BY date DESC;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

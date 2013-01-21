@@ -41,7 +41,7 @@ $.handleData = function(_data) {
 	ACTION.url		= _data.link
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible			= true;
+	$.NavigationBar.back.visible			= APP.Device.isHandheld;
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };

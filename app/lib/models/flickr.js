@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var ApiBase = null;
 
@@ -198,7 +198,7 @@ exports.getSets = function() {
 	APP.log("debug", "FLICKR.getSets");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM flickr_sets ORDER BY date_update DESC;");
+	var data	= db.execute("SELECT id, title, photo_count FROM flickr_sets ORDER BY date_update DESC;");
 	var temp	= [];
 
 	while(data.isValidRow()) {

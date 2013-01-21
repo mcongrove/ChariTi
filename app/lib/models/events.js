@@ -1,6 +1,6 @@
-var APP = require("core");
-var HTTP = require("http");
-var UTIL = require("utilities");
+var APP		= require("core");
+var HTTP	= require("http");
+var UTIL	= require("utilities");
 
 var init = function() {
 	APP.log("debug", "EVENTS.init");
@@ -102,7 +102,7 @@ exports.getAllEvents = function() {
 	APP.log("debug", "EVENTS.getAllEvents");
 	
 	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM events ORDER BY date_start ASC;");
+	var data	= db.execute("SELECT id, title, date_start FROM events ORDER BY date_start ASC;");
 	var temp	= [];
 
 	while(data.isValidRow()) {
@@ -111,6 +111,32 @@ exports.getAllEvents = function() {
 			title: data.fieldByName("title"),
 			date_start: data.fieldByName("date_start")
 		});
+
+		data.next();
+	}
+
+	data.close();
+	db.close();
+
+	return temp;
+};
+
+exports.getLatestEvent = function() {
+	APP.log("debug", "EVENTS.getLatestEvent");
+	
+	var db		= Ti.Database.open("ChariTi");
+	var data	= db.execute("SELECT * FROM events ORDER BY date_start ASC LIMIT 1;");
+	var temp;
+
+	while(data.isValidRow()) {
+		temp = {
+			id: data.fieldByName("id"),
+			title: data.fieldByName("title"),
+			date_start: data.fieldByName("date_start"),
+			date_end: data.fieldByName("date_end"),
+			location: data.fieldByName("location"),
+			description: data.fieldByName("description")
+		};
 
 		data.next();
 	}
