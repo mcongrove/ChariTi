@@ -416,8 +416,6 @@ var APP = {
 	 * Global function to add a screen
 	 */
 	addScreen: function(_screen) {
-		console.log("addScreen");
-		
 		if(_screen) {
 			APP.ContentWrapper.add(_screen);
 			
@@ -432,8 +430,6 @@ var APP = {
 	 * Global function to remove a screen
 	 */
 	removeScreen: function(_screen) {
-		console.log("removeScreen");
-		
 		if(_screen) {
 			APP.ContentWrapper.remove(_screen);
 			
@@ -446,8 +442,6 @@ var APP = {
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
 	addChild: function(_controller, _params, _stack) {
-		console.log("addChild");
-		
 		var stack;
 		
 		// Determine if stack is associated with a tab
@@ -459,10 +453,8 @@ var APP = {
 			stack = APP.nonTabStacks[_stack];
 		} else {
 			if(APP.Device.isHandheld || !APP.hasDetail) {
-				console.log("STACK: Controller | " + _controller);
 				stack = APP.controllerStacks[APP.currentStack];
 			} else {
-				console.log("STACK: Detail | " + _controller);
 				stack = APP.detailStacks[APP.currentDetailStack];
 			}
 		}
@@ -484,8 +476,6 @@ var APP = {
 	 * Removes a child screen
 	 */
 	removeChild: function(_stack) {
-		console.log("removeChild");
-		
 		var stack	= (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		
 		if(APP.Device.isTablet && APP.hasDetail) {
@@ -532,8 +522,6 @@ var APP = {
 	 * Removes all children screens
 	 */
 	removeAllChildren: function(_stack) {
-		console.log("removeAllChildren");
-		
 		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		
 		for(var i = stack.length - 1; i > 0; i--) {
@@ -546,8 +534,6 @@ var APP = {
 	 * Adds a screen to the Master window
 	 */
 	addMasterScreen: function(_screen) {
-		console.log("addMasterScreen");
-		
 		if(_screen) {
 			APP.Master[APP.currentStack].add(_screen);
 		}
@@ -556,29 +542,37 @@ var APP = {
 	 * Adds a screen to the Detail window
 	 */
 	addDetailScreen: function(_screen) {
-		console.log("addDetailScreen");
-		
-		console.log(JSON.stringify(APP.detailStacks[APP.currentDetailStack]));
+		console.log(APP.detailStacks[APP.currentDetailStack].length);
 		
 		if(_screen) {
-			console.log("ADD: " + JSON.stringify(_screen));
-			
 			APP.Detail[APP.currentStack].add(_screen);
 			
 			if(APP.previousDetailScreen && APP.previousDetailScreen != _screen) {
-				APP.removeDetailScreen(APP.previousDetailScreen);
+				var pop = true;
+				
+				if(APP.detailStacks[APP.currentDetailStack][0].type == "PARENT" && _screen.type != "PARENT") {
+					pop = false;
+				}
+				
+				APP.removeDetailScreen(APP.previousDetailScreen, pop);
 			}
 			
 			APP.previousDetailScreen = _screen;
 		}
-	},
-	removeDetailScreen: function(_screen) {
-		console.log("removeDetailScreen");
 		
+		console.log(APP.detailStacks[APP.currentDetailStack].length);
+	},
+	removeDetailScreen: function(_screen, _pop) {
 		if(_screen) {
-			console.log("REMOVE: " + JSON.stringify(_screen));
-			
 			APP.Detail[APP.currentStack].remove(_screen);
+			
+			APP.previousDetailScreen = null;
+			
+			if(_pop) {
+				var stack = APP.detailStacks[APP.currentDetailStack];
+				
+				stack.splice(0, stack.length - 1);
+			}
 		}
 	},
 	/**

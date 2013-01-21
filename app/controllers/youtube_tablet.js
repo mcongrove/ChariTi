@@ -3,8 +3,7 @@ var APP		= require("core");
 APP.Master[APP.currentStack] = $.Master;
 APP.Detail[APP.currentStack] = $.Detail;
 
-var detail	= Alloy.createController("tablet_detail").getView();
-APP.addDetailScreen(detail);
+APP.addChild("tablet_detail");
 
 var master	= Alloy.createController("youtube", arguments[0]).getView();
 APP.addMasterScreen(master);
