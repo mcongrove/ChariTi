@@ -49,9 +49,7 @@ $.handleSets = function() {
 	APP.closeLoading();
 	
 	if(APP.Device.isTablet) {
-		var detail = Alloy.createController("flickr_album", { id: data[0].id, title: data[0].title, cache: CONFIG.cache }).getView();
-		
-		APP.addDetailScreen(detail);
+		APP.addChild("flickr_album", { id: data[0].id, title: data[0].title, cache: CONFIG.cache });
 	}
 };
 

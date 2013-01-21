@@ -55,7 +55,7 @@ $.handleData = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr_album @close");
 	
-	APP.removeChild("flickr");
+	APP.removeChild();
 });
 
 $.content.addEventListener("click", function(_event) {
@@ -64,7 +64,7 @@ $.content.addEventListener("click", function(_event) {
 	if(_event.source.id !== "content") {
 		APP.addChild("flickr_photo", {
 			id: _event.source.id
-		}, "flickr");
+		});
 	}
 });
 
