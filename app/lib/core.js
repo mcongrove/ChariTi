@@ -24,7 +24,7 @@ var APP = {
 	Plugins: null,
 	Settings: null,
 	/**
-	 * The detail/stack controller
+	 * The stack controller
 	 * @type {Object}
 	 */
 	currentStack: -1,
@@ -281,7 +281,7 @@ var APP = {
 	 * @param  {String} _id The ID of the tab being opened
 	 */
 	handleNavigation: function(_id) {
-		APP.log("debug", "APP.handleNavigation");
+		APP.log("debug", "APP.handleNavigation | " + APP.Nodes[_id].type);
 
 		// Requesting same screen as we're on
 		if(_id == APP.currentStack) {
@@ -309,11 +309,13 @@ var APP = {
 			var screen;
 			
 			if(controllerStack.length > 0) {
+				// Retrieve the last screen
 				screen = controllerStack[controllerStack.length - 1];
 			} else {
 				// Create a new screen
 				screen = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
 				
+				// Add screen to the controller stack
 				controllerStack.push(screen);
 			}
 			
@@ -329,11 +331,12 @@ var APP = {
 	 */
 	addScreen: function(_screen) {
 		if(_screen) {
+			APP.ContentWrapper.add(_screen);
+			
 			if(APP.previousScreen) {
 				APP.removeScreen(APP.previousScreen);
 			}
 			
-			APP.ContentWrapper.add(_screen);
 			APP.previousScreen = _screen;
 		}
 	},
@@ -349,11 +352,11 @@ var APP = {
 		}
 	},
 	/**
-	 * Open the detail screen
+	 * Open a child screen
 	 * @param {String} _controller The name of the controller to open
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
-	openDetailScreen: function(_controller, _params, _stack) {
+	addChild: function(_controller, _params, _stack) {
 		var controllerStack;
 		
 		// Determine if stack is associated with a tab
@@ -369,20 +372,20 @@ var APP = {
 		 
 		// Create the new screen controller
 		var screen = Alloy.createController(_controller, _params).getView();
+		
+		// Add screen to the controller stack
+		controllerStack.push(screen);
 
 		// Add the screen to the window
 		APP.addScreen(screen);
-		
-		controllerStack.push(screen);
 	},
 	/**
-	 * Removes the detail screen
+	 * Removes a child screen
 	 * @param {Function} _callback
 	 */
-	closeDetailScreen: function(_stack) {
-		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
-		
-		APP.removeScreen(stack[stack.length - 1]);
+	removeChild: function(_stack) {
+		var stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var screen	= stack[stack.length - 1];
 		
 		stack.pop();
 		
@@ -393,17 +396,17 @@ var APP = {
 		} else {
 			APP.addScreen(stack[stack.length - 1]);
 		}
+		
+		APP.ContentWrapper.remove(screen);
 	},
 	/**
-	 * Removes ALL detail screens
+	 * Removes all children screens
 	 * @param {Function} _callback
 	 */
-	closeAllDetailScreens: function(_stack) {
+	removeAllChildren: function(_stack) {
 		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
 		
 		for(var i = stack.length - 1; i > 0; i--) {
-			APP.removeScreen(stack[i]);
-			
 			stack.pop();
 		}
 		
@@ -441,7 +444,7 @@ var APP = {
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
 		
-		APP.openDetailScreen("settings", {}, "settings");
+		APP.addChild("settings", {}, "settings");
 	},
 	/**
 	 * Registers the app for push notifications

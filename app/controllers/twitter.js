@@ -66,7 +66,7 @@ $.handleData = function(_data) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "twitter @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

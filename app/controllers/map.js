@@ -43,7 +43,7 @@ $.init = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "map @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

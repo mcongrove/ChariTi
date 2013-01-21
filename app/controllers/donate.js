@@ -24,7 +24,7 @@ $.init = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "donate @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

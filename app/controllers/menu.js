@@ -46,7 +46,7 @@ $.handleData = function(_data) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
     APP.log("debug", "menu @close");
     
-    APP.closeDetailScreen();
+    APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
@@ -54,7 +54,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 });
 
 $.content.addEventListener("click", function(_event) {
-    APP.openDetailScreen(_event.row.rowData.type, _event.row.rowData);
+    APP.addChild(_event.row.rowData.type, _event.row.rowData);
 });
 
 // Kick off the init

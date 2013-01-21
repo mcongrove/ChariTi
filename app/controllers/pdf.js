@@ -69,7 +69,7 @@ $.fileExists = function(_url) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "pdf @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

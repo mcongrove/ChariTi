@@ -77,7 +77,7 @@ $.handleNavigation = function () {
 		arrowNext.addEventListener("click", function(_event) {
 			APP.log("debug", "news_article @next");
 			
-			APP.openDetailScreen("news_article", {
+			APP.addChild("news_article", {
 				id: ACTION.next.id
 			});
 		});
@@ -89,7 +89,7 @@ $.handleNavigation = function () {
 		arrowPrevious.addEventListener("click", function(_event) {
 			APP.log("debug", "news_article @previous");
 			
-			APP.openDetailScreen("news_article", {
+			APP.addChild("news_article", {
 				id: ACTION.previous.id
 			});
 		});
@@ -106,7 +106,7 @@ $.handleNavigation = function () {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "news_article @close");
 	
-	APP.closeAllDetailScreens();
+	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

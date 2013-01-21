@@ -58,7 +58,7 @@ $.handleVideos = function(_data) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
@@ -68,7 +68,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @click " + _event.row.url);
 	
-	APP.openDetailScreen("youtube_video", {
+	APP.addChild("youtube_video", {
 		url: _event.row.url,
 		title: _event.row.setTitle
 	});

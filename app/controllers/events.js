@@ -52,7 +52,7 @@ $.handleData = function(_data) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "events @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
@@ -62,7 +62,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "events @click " + _event.row.id);
 	
-	APP.openDetailScreen("events_event", {
+	APP.addChild("events_event", {
 		id: _event.row.id
 	});
 });

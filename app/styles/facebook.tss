@@ -2,7 +2,8 @@
 	top: "47dp",
 	showVerticalScrollIndicator: false,
 	contentHeight: "auto",
-	layout: "vertical"
+	layout: "vertical",
+	backgroundColor: "#EEE"
 },
 "#refresh": {
 	height: "60dp",

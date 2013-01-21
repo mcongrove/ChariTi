@@ -62,7 +62,7 @@ $.handleNavigation = function (_date) {
 		arrowNext.addEventListener("click", function(_event) {
 			APP.log("debug", "events_event @next");
 			
-			APP.openDetailScreen("events_event", {
+			APP.addChild("events_event", {
 				id: ACTION.next.id
 			});
 		});
@@ -74,7 +74,7 @@ $.handleNavigation = function (_date) {
 		arrowPrevious.addEventListener("click", function(_event) {
 			APP.log("debug", "events_event @previous");
 			
-			APP.openDetailScreen("events_event", {
+			APP.addChild("events_event", {
 				id: ACTION.previous.id
 			});
 		});
@@ -91,7 +91,7 @@ $.handleNavigation = function (_date) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "events_event @close");
 	
-	APP.closeAllDetailScreens();
+	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

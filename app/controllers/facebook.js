@@ -64,7 +64,7 @@ $.handleData = function(_data) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
@@ -143,7 +143,7 @@ $.container.addEventListener("dragend", function(_event) {
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook @click " + _event.row.id);
 	
-	APP.openDetailScreen("facebook_article", {
+	APP.addChild("facebook_article", {
 		id: _event.row.id
 	});
 });

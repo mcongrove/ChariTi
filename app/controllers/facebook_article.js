@@ -60,7 +60,7 @@ $.handleNavigation = function () {
 		arrowNext.addEventListener("click", function(_event) {
 			APP.log("debug", "facebook_article @next");
 			
-			APP.openDetailScreen("facebook_article", {
+			APP.addChild("facebook_article", {
 				id: ACTION.next.id
 			});
 		});
@@ -72,7 +72,7 @@ $.handleNavigation = function () {
 		arrowPrevious.addEventListener("click", function(_event) {
 			APP.log("debug", "facebook_article @previous");
 			
-			APP.openDetailScreen("facebook_article", {
+			APP.addChild("facebook_article", {
 				id: ACTION.previous.id
 			});
 		});
@@ -89,7 +89,7 @@ $.handleNavigation = function () {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook_article @close");
 	
-	APP.closeAllDetailScreens();
+	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

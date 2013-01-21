@@ -23,5 +23,5 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "text @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
