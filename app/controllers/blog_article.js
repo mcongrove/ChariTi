@@ -9,21 +9,15 @@ var ACTION	= {};
 $.init = function() {
 	APP.log("debug", "blog_article.init | " + JSON.stringify(DATA));
 	
-	var data;
-	
-	if(DATA.id) {
-		data = MODEL.getArticle(DATA.id);
-	} else {
-		data = MODEL.getLatestArticle();
-	}
-	
-	$.handleData(data);
+	$.handleData(MODEL.getArticle(DATA.id));
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "blog_article.handleData");
 	
-	$.handleNavigation(_data.id);
+	if(!APP.Device.isTablet) {
+		$.handleNavigation(_data.id);
+	}
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;

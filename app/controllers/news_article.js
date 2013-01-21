@@ -10,13 +10,14 @@ $.init = function() {
 	APP.log("debug", "news_article.init | " + JSON.stringify(DATA));
 	
 	$.handleData(MODEL.getArticle(DATA.id));
-	$.handleNavigation();
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "news_article.handleData");
 	
-	console.log(JSON.stringify(_data));
+	if(!APP.Device.isTablet) {
+		$.handleNavigation();
+	}
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;

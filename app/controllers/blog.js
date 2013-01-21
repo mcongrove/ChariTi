@@ -3,6 +3,7 @@ var UTIL	= require("utilities");
 var MODEL	= require("models/blog");
 
 var CONFIG	= arguments[0];
+var SELECTED;
 
 var offset			= 0;
 var refreshLoading	= false;
@@ -58,9 +59,9 @@ $.handleData = function(_data) {
 	APP.closeLoading();
 	
 	if(APP.Device.isTablet) {
-		var detail = Alloy.createController("blog_article", { id: _data[0].id }).getView();
+		SELECTED = _data[0].id;
 		
-		APP.addDetailScreen(detail);
+		APP.addChild("blog_article", { id: _data[0].id });
 	}
 };
 
@@ -146,6 +147,17 @@ $.container.addEventListener("dragend", function(_event) {
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "blog @click " + _event.row.id);
+	
+	if(APP.Device.isTablet) {
+		if(_event.row.id == SELECTED) {
+			return;
+		} else {
+			SELECTED = _event.row.id;
+			
+			var stack = APP.detailStacks[APP.currentDetailStack];
+			stack.splice(0, stack.length - 1);
+		}
+	}
 	
 	APP.addChild("blog_article", {
 		id: _event.row.id

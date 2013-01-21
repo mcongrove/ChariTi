@@ -115,32 +115,6 @@ exports.getAllEvents = function() {
 	return temp;
 };
 
-exports.getLatestEvent = function() {
-	APP.log("debug", "EVENTS.getLatestEvent");
-	
-	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM events ORDER BY date_start ASC LIMIT 1;");
-	var temp;
-
-	while(data.isValidRow()) {
-		temp = {
-			id: data.fieldByName("id"),
-			title: data.fieldByName("title"),
-			date_start: data.fieldByName("date_start"),
-			date_end: data.fieldByName("date_end"),
-			location: data.fieldByName("location"),
-			description: data.fieldByName("description")
-		};
-
-		data.next();
-	}
-
-	data.close();
-	db.close();
-
-	return temp;
-};
-
 exports.getEvent = function(_id) {
 	APP.log("debug", "EVENTS.getEvent");
 	

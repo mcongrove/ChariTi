@@ -373,6 +373,7 @@ var APP = {
 			var screen;
 			
 			APP.hasDetail = false;
+			APP.previousDetailScreen = null;
 			
 			if(controllerStack.length > 0) {
 				// Retrieve the last screen
@@ -498,7 +499,7 @@ var APP = {
 		stack.pop();
 		
 		if(stack.length === 0) {
-			previousStack	= APP.controllerStacks[APP.currentStack];
+			previousStack = APP.controllerStacks[APP.currentStack];
 			
 			if(APP.Device.isHandheld || !APP.hasDetail) {
 				previousScreen	= previousStack[previousStack.length - 1];
