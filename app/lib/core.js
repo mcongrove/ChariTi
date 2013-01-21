@@ -544,8 +544,6 @@ var APP = {
 	 * Adds a screen to the Detail window
 	 */
 	addDetailScreen: function(_screen) {
-		console.log(APP.detailStacks[APP.currentDetailStack].length);
-		
 		if(_screen) {
 			APP.Detail[APP.currentStack].add(_screen);
 			
@@ -561,8 +559,6 @@ var APP = {
 			
 			APP.previousDetailScreen = _screen;
 		}
-		
-		console.log(APP.detailStacks[APP.currentDetailStack].length);
 	},
 	removeDetailScreen: function(_screen, _pop) {
 		if(_screen) {
