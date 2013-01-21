@@ -114,36 +114,6 @@ exports.getAllArticles = function() {
 	return temp;
 };
 
-exports.getLatestArticle = function() {
-	APP.log("debug", "BLOG.getLatestArticle");
-	
-	var db		= Ti.Database.open("ChariTi");
-	var data	= db.execute("SELECT * FROM blog ORDER BY id ASC LIMIT 1;");
-	var temp;
-
-	while(data.isValidRow()) {
-		temp = {
-			id: data.fieldByName("id"),
-			title: data.fieldByName("title"),
-			date: data.fieldByName("date"),
-			description: data.fieldByName("description"),
-			link: data.fieldByName("link"),
-			image: null
-		};
-		
-		if(data.fieldByName("image")) {
-			temp.image	= data.fieldByName("image");
-		}
-
-		data.next();
-	}
-
-	data.close();
-	db.close();
-
-	return temp;
-};
-
 exports.getArticle = function(_id) {
 	APP.log("debug", "BLOG.getArticle");
 	

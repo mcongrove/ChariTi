@@ -9,21 +9,15 @@ var ACTION	= {};
 $.init = function() {
 	APP.log("debug", "events_event.init | " + JSON.stringify(DATA));
 	
-	var data;
-	
-	if(DATA.id) {
-		data = MODEL.getEvent(DATA.id);
-	} else {
-		data = MODEL.getLatestEvent();
-	}
-	
-	$.handleData(data);
+	$.handleData(MODEL.getEvent(DATA.id));
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "events_event.handleData");
 	
-	$.handleNavigation(_data.date_start);
+	if(!APP.Device.isTablet) {
+		$.handleNavigation(_data.date_start);
+	}
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;

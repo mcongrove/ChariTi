@@ -2,6 +2,7 @@ var APP = require("core");
 var MODEL = require("models/flickr");
 
 var CONFIG = arguments[0];
+var SELECTED;
 
 $.init = function() {
 	APP.log("debug", "flickr.init | " + JSON.stringify(CONFIG));
@@ -49,6 +50,8 @@ $.handleSets = function() {
 	APP.closeLoading();
 	
 	if(APP.Device.isTablet) {
+		SELECTED = data[0].id;
+		
 		APP.addChild("flickr_album", { id: data[0].id, title: data[0].title, cache: CONFIG.cache });
 	}
 };
@@ -73,6 +76,17 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @click " + _event.row.id);
+	
+	if(APP.Device.isTablet) {
+		if(_event.row.id == SELECTED) {
+			return;
+		} else {
+			SELECTED = _event.row.id;
+			
+			var stack = APP.detailStacks[APP.currentDetailStack];
+			stack.splice(0, stack.length - 1);
+		}
+	}
 	
 	APP.addChild("flickr_album", {
 		id: _event.row.id,

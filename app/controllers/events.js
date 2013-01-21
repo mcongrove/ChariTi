@@ -3,6 +3,7 @@ var UTIL = require("utilities");
 var MODEL = require("models/events");
 
 var CONFIG = arguments[0];
+var SELECTED;
 
 $.init = function() {
 	APP.log("debug", "events.init | " + JSON.stringify(CONFIG));
@@ -40,9 +41,9 @@ $.handleData = function(_data) {
 	APP.closeLoading();
 	
 	if(APP.Device.isTablet) {
-		var detail = Alloy.createController("events_event", { id: _data[0].id }).getView();
+		SELECTED = _data[0].id;
 		
-		APP.addDetailScreen(detail);
+		APP.addChild("events_event", { id: _data[0].id });
 	}
 };
 
@@ -69,6 +70,17 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "events @click " + _event.row.id);
+	
+	if(APP.Device.isTablet) {
+		if(_event.row.id == SELECTED) {
+			return;
+		} else {
+			SELECTED = _event.row.id;
+			
+			var stack = APP.detailStacks[APP.currentDetailStack];
+			stack.splice(0, stack.length - 1);
+		}
+	}
 	
 	APP.addChild("events_event", {
 		id: _event.row.id
