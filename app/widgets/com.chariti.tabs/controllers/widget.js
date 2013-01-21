@@ -1,25 +1,36 @@
+var Alloy		= require("alloy");
+
 $.tabs			= [];
 $.excess		= false;
+$.excessLength	= 5;
 $.moreOpen		= false;
 $.width			= 0;
 
 $.init = function(_params) {
-	if(_params.tabs.length > 5) {
-		$.excess		= true;
+	if(Alloy.isTablet) {
+		$.excessLength = Math.floor(Ti.Platform.displayCaps.platformWidth / 120);
 	}
 	
-	$.width	= $.excess ? (Ti.Platform.displayCaps.platformWidth / 5) : (Ti.Platform.displayCaps.platformWidth / _params.tabs.length);
+	if(_params.tabs.length > $.excessLength) {
+		$.excess = true;
+	}
 	
-	$.TabGroup.backgroundColor		= _params.colors.primary;
-	$.TabGroupMore.backgroundColor	= _params.colors.primary;
-	$.TabGroupMore.width			= ($.width + 1) + "dp";
+	$.width	= $.excess ? (Ti.Platform.displayCaps.platformWidth / $.excessLength) : (Ti.Platform.displayCaps.platformWidth / _params.tabs.length);
+	
+	$.TabGroup.backgroundColor			= _params.colors.primary;
+	$.TabContainerMore.backgroundColor	= _params.colors.primary;
+	$.Indicator.backgroundColor			= _params.colors.secondary;
+	$.IndicatorMore.backgroundColor		= _params.colors.secondary;
+	
+	$.IndicatorContainer.width		= Ti.Platform.displayCaps.platformWidth + "dp";
 	$.Indicator.width				= ($.width - 1) + "dp";
 	$.IndicatorMore.width			= $.width + "dp";
-	$.Indicator.backgroundColor		= _params.colors.secondary;
-	$.IndicatorMore.backgroundColor	= _params.colors.secondary;
+	$.TabContainer.width			= Ti.Platform.displayCaps.platformWidth + "dp";
+	$.TabGroupMore.width			= Ti.Platform.displayCaps.platformWidth + "dp";
+	$.TabContainerMore.width		= ($.width + 1) + "dp";
 	
 	for(var i = 0; i < _params.tabs.length; i++) {
-		if($.excess && i == 4) {
+		if($.excess && i == ($.excessLength - 1)) {
 			$.addMoreTab(_params);
 		}
 		
@@ -63,7 +74,7 @@ $.init = function(_params) {
 		tab.add(icon);
 		tab.add(label);
 		
-		if($.excess && i > 3) {
+		if($.excess && i > ($.excessLength - 2)) {
 			tab.backgroundImage = "/com.chariti.tabs/overlay.png";
 			tab.width = ($.width + 1) + "dp";
 			
@@ -79,7 +90,7 @@ $.init = function(_params) {
 			
 			$.tabs.push(tab);
 			
-			$.TabContainerMore.add(tab);
+			$.TabsMore.add(tab);
 		} else {
 			if((i + 1) < _params.tabs.length) {
 				var border = Ti.UI.createImageView({
@@ -98,7 +109,7 @@ $.init = function(_params) {
 	}
 	
 	for(var i = 0, z = $.tabs.length; i < z; i++) {
-		$.TabContainer.add($.tabs[i]);
+		$.Tabs.add($.tabs[i]);
 	}
 };
 
@@ -146,17 +157,17 @@ $.addMoreTab = function(_params) {
 
 $.clear = function() {
 	for(var i = 0; i < $.tabs.length; i++) {
-		$.TabContainer.remove($.tabs[i]);
+		$.Tabs.remove($.tabs[i]);
 	}
 };
 
 $.setIndex = function(_index) {
-	if($.excess && _index > 3) {
-		_moreIndex	= _index - 4;
-		_index		= 4;
+	if($.excess && _index > ($.excessLength - 2)) {
+		_moreIndex	= _index - ($.excessLength - 1);
+		_index		= ($.excessLength - 1);
 		
 		$.IndicatorMore.visible = true;
-		$.IndicatorMore.top		= (_moreIndex * 60) + "dp";
+		$.IndicatorMore.top		= ((_moreIndex * 60)) + "dp";
 	} else {
 		$.IndicatorMore.visible = false;
 	}
