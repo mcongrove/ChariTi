@@ -76,7 +76,8 @@ $.init = function(_params) {
 		
 		if($.excess && i > ($.excessLength - 2)) {
 			tab.backgroundImage = "/com.chariti.tabs/overlay.png";
-			tab.width = ($.width + 1) + "dp";
+			tab.width	= ($.width + 1) + "dp";
+			label.left	= "6dp";
 			
 			var border = Ti.UI.createImageView({
 				width: "1dp",
