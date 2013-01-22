@@ -18,14 +18,6 @@ $.init = function() {
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
-	
-	MODEL.fetch({
-		url: CONFIG.feed,
-		cache: CONFIG.cache,
-		callback: function() {
-			$.handleData(MODEL.getAllEvents());
-		}
-	});
 };
 
 $.handleData = function(_data) {
@@ -49,6 +41,16 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener('screen:added', function() {
+	MODEL.fetch({
+		url: CONFIG.feed,
+		cache: CONFIG.cache,
+		callback: function() {
+			$.handleData(MODEL.getAllEvents());
+		}
+	});
+});
+
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "events @close");
 	
