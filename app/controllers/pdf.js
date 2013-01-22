@@ -5,6 +5,14 @@ var CONFIG = arguments[0];
 
 $.init = function() {
 	APP.log("debug", "pdf.init | " + JSON.stringify(CONFIG));
+
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if(CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	if(!$.fileExists(CONFIG.url)) {
 		HTTP.request({
@@ -15,7 +23,7 @@ $.init = function() {
 			success: $.handlePdf
 		});
 	} else {
-		$.Wrapper.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(CONFIG.url);
+		$.content.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(CONFIG.url);
 	}
 };
 
@@ -27,7 +35,7 @@ $.handlePdf = function(_data, _url) {
 	file.createFile();
 	file.write(_data);
 	
-	$.Wrapper.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(_url);
+	$.content.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(_url);
 };
 
 $.getFileName = function(_url) {
@@ -56,6 +64,17 @@ $.fileExists = function(_url) {
 		return false;
 	}
 };
+
+// Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "pdf @close");
+	
+	APP.removeChild();
+});
+
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
 
 // Kick off the init
 $.init();

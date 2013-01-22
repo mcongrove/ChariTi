@@ -4,7 +4,7 @@
 exports.isStale = function(_url, _time) {
 	var db = Ti.Database.open("ChariTi");
 	var time = new Date().getTime();
-	var cacheTime = _time ? _time : 5;
+	var cacheTime = typeof _time !== "undefined" ? _time : 5;
 	var freshTime = time - (cacheTime * 60 * 1000);
 	var lastUpdate = 0;
 	
@@ -19,11 +19,34 @@ exports.isStale = function(_url, _time) {
 	data.close();
 	db.close();
 	
-	if(lastUpdate > freshTime) {
+	if(lastUpdate === 0) {
+		return 'new';
+	} else if (lastUpdate > freshTime) {
 		return false;
 	} else {
 		return true;
 	}
+};
+
+/**
+ * Returns last updated time for an item in the cache
+ */
+exports.lastUpdate = function(_url) {
+	var db = Ti.Database.open("ChariTi");
+	var lastUpdate = 0;
+	
+	var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
+	
+	while(data.isValidRow()) {
+		lastUpdate = data.fieldByName("time");
+
+		data.next();
+	}
+	
+	data.close();
+	db.close();
+	
+	return lastUpdate;
 };
 
 /**

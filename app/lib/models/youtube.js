@@ -33,8 +33,14 @@ exports.setUsername = function(_params) {
 
 exports.fetch = function(_params) {
 	APP.log("debug", "YOUTUBE.retrieveVideos");
+
+	var isStale = UTIL.isStale(ApiBase + "max-results=20", _params.cache);
 	
-	if(UTIL.isStale(ApiBase + "max-results=20", _params.cache)) {
+	if(isStale) {
+		if(_params.cache !== 0 && isStale !== "new") {
+			_params.callback();
+		}
+
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
@@ -110,11 +116,8 @@ exports.getVideos = function() {
 		temp.push({
 			id: data.fieldByName("id"),
 			title: data.fieldByName("title"),
-			description: data.fieldByName("description"),
 			date: data.fieldByName("date"),
-			views: data.fieldByName("views"),
-			link: data.fieldByName("link"),
-			image: data.fieldByName("image")
+			link: data.fieldByName("link")
 		});
 
 		data.next();

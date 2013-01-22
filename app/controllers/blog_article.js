@@ -10,6 +10,7 @@ $.init = function() {
 	APP.log("debug", "blog_article.init | " + JSON.stringify(DATA));
 	
 	$.handleData(MODEL.getArticle(DATA.id));
+	$.handleNavigation();
 };
 
 $.handleData = function(_data) {
@@ -20,6 +21,21 @@ $.handleData = function(_data) {
 	$.date.text		= UTIL.toDateRelative(_data.date);
 	$.date.color	= APP.Settings.colors.primary;
 	
+	if(_data.image) {
+		var width	= Ti.Platform.displayCaps.platformWidth - 60;
+		
+		var image	= Ti.UI.createImageView({
+			image: _data.image,
+			width: width + "dp",
+			height: Ti.UI.SIZE,
+			preventDefaultImage: true
+		});
+		
+		$.image.add(image);
+	} else {
+		$.content.remove($.image)
+	}
+	
 	ACTION.url		= _data.link;
 	
 	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
@@ -28,11 +44,67 @@ $.handleData = function(_data) {
 	$.NavigationBar.rightImage.image		= "/images/action.png";
 };
 
+$.handleNavigation = function () {
+	ACTION.next		= MODEL.getNextArticle(DATA.id);
+	ACTION.previous	= MODEL.getPreviousArticle(DATA.id);
+	
+	var navigation = Ti.UI.createView({
+		width: "96dp",
+		height: "37dp",
+		top: "5dp",
+		backgroundImage: "/images/navigation.png"
+	});
+	
+	var arrowNext = Ti.UI.createImageView({
+		image: "/images/arrowDown.png",
+		width: "47dp",
+		height: "37dp",
+		top: "0dp",
+		right: "0dp"
+	});
+	
+	var arrowPrevious = Ti.UI.createImageView({
+		image: "/images/arrowUp.png",
+		width: "47dp",
+		height: "37dp",
+		top: "0dp",
+		left: "0dp"
+	});
+	
+	if(ACTION.next) {
+		arrowNext.addEventListener("click", function(_event) {
+			APP.log("debug", "blog_article @next");
+			
+			APP.addChild("blog_article", {
+				id: ACTION.next.id
+			});
+		});
+	} else {
+		arrowNext.opacity = 0.4;
+	}
+	
+	if(ACTION.previous) {
+		arrowPrevious.addEventListener("click", function(_event) {
+			APP.log("debug", "blog_article @previous");
+			
+			APP.addChild("blog_article", {
+				id: ACTION.previous.id
+			});
+		});
+	} else {
+		arrowPrevious.opacity = 0.4;
+	}
+	
+	navigation.add(arrowNext);
+	navigation.add(arrowPrevious);
+	$.NavigationBar.Wrapper.add(navigation);
+};
+
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "blog_article @close");
 	
-	APP.closeDetailScreen();
+	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {

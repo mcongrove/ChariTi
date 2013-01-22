@@ -28,31 +28,31 @@ $.init = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild("settings");
 });
 
 $.terms.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @terms");
 	
-	APP.openDetailScreen("settings_legal", {
+	APP.addChild("settings_legal", {
 		title: "Terms of Service",
 		url: APP.LEGAL.TOS
-	});
+	}, "settings");
 });
 
 $.privacy.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @privacy");
 	
-	APP.openDetailScreen("settings_legal", {
+	APP.addChild("settings_legal", {
 		title: "Privacy Policy",
 		url: APP.LEGAL.PRIVACY
-	});
+	}, "settings");
 });
 
 $.acknowledgements.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @credits");
 	
-	APP.openDetailScreen("settings_credits");
+	APP.addChild("settings_credits", {}, "settings");
 });
 
 $.logs.addEventListener("click", function(_event) {

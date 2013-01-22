@@ -5,6 +5,14 @@ var currentUrl = '';
 
 $.init = function() {
 	APP.log("debug", "web.init | " + JSON.stringify(CONFIG));
+
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.right.visible			= true;
+	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if(CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	if(CONFIG.url) {
 		$.content.url = CONFIG.url;
@@ -98,6 +106,17 @@ if(CONFIG.url) {
 		APP.handleNavigation(_event.index);
 	});
 }
+
+// Event listeners
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "web @close");
+	
+	APP.removeChild();
+});
+
+$.NavigationBar.right.addEventListener("click", function(_event) {
+	APP.openSettings();
+});
 
 // Kick off the init
 $.init();

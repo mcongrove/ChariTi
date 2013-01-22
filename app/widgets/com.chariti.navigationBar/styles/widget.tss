@@ -2,14 +2,22 @@
 	top: "0dp",
 	left: "0dp",
 	width: Ti.UI.FILL,
-	height: "46dp",
+	height: "47dp",
 	backgroundColor: "#000"
+},
+"#overlay": {
+	backgroundImage: "/com.chariti.navigationBar/overlay.png",
+	height: Ti.UI.FILL,
+	width: Ti.UI.FILL,
+	left: "0dp",
+	top: "0dp"
 },
 "#left": {
 	top: "0dp",
 	left: "0dp",
-	width: "46dp",
-	height: "46dp"
+	width: "48dp",
+	height: "47dp",
+	backgroundImage: "/com.chariti.navigationBar/overlay_left.png"
 },
 "#leftImage": {
 	top: "9dp",
@@ -20,8 +28,9 @@
 "#back": {
 	top: "0dp",
 	left: "0dp",
-	width: "46dp",
-	height: "46dp"
+	width: "48dp",
+	height: "47dp",
+	backgroundImage: "/com.chariti.navigationBar/overlay_left.png"
 },
 "#backImage": {
 	top: "9dp",
@@ -32,12 +41,13 @@
 "#right": {
 	top: "0dp",
 	right: "0dp",
-	width: "46dp",
-	height: "46dp"
+	width: "48dp",
+	height: "47dp",
+	backgroundImage: "/com.chariti.navigationBar/overlay_right.png"
 },
 "#rightImage": {
 	top: "9dp",
-	left: "9dp",
+	left: "10dp",
 	width: "28dp",
 	height: "28dp"
 }

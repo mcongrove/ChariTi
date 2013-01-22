@@ -11,7 +11,7 @@ $.init = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "settings_credits @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild("settings");
 });
 
 // Kick off the init

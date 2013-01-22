@@ -1,5 +1,53 @@
+"#container": {
+	top: "47dp",
+	showVerticalScrollIndicator: false,
+	contentHeight: "auto",
+	layout: "vertical",
+	backgroundColor: "#EEE"
+},
+"#refresh": {
+	height: "60dp",
+	width: Ti.UI.FILL	
+},
+"#refreshArrow": {
+	width: "23dp",
+	height: "25dp",
+	left: "40dp"
+},
+"#refreshLoading": {
+	width: "31dp",
+	height: "13dp",
+	left: "36dp",
+	visible: false,
+	images: [
+		"/images/ptrLoading1.png",
+		"/images/ptrLoading2.png"
+	],
+	duration: 250
+},
+"#refreshLabel": {
+	top: "12dp",
+	height: "15dp",
+	color: "#AAA",
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	left: "90dp",
+	right: "20dp"
+},
+"#refreshUpdateLabel": {
+	bottom: "12dp",
+	height: "15dp",
+	color: "#AAA",
+	font: {
+		fontSize: "11dp",
+		fontWeight: "normal"
+	},
+	left: "90dp",
+	right: "20dp"
+},
 "#content": {
-	top: "46dp",
 	backgroundColor: "#EEE",
 	rowHeight: "48dp",
 	separatorColor: "#DDD"

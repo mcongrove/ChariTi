@@ -1,0 +1,15 @@
+"#Wrapper": {
+	selectedBackgroundColor: "#DDD",
+	layout: "horizontal"
+},
+"#title": {
+	top: "10dp",
+	left: "10dp",
+	right: "10dp",
+	height: "28dp",
+	font: {
+		fontSize: "18dp",
+		fontWeight: "normal"
+	},
+	color: "#666"
+}

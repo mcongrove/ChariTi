@@ -20,6 +20,11 @@ if(CONFIG.image) {
 		},
 		color: "#FFF",
 		textAlign: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			x: "0dp",
+			y: "1dp"
+		},
 		text: CONFIG.text ? CONFIG.text : ""
 	});
 }
