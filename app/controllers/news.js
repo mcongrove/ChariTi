@@ -59,7 +59,7 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.Wrapper.addEventListener('screen:added', function() {
+$.Wrapper.addEventListener("APP:screenAdded", function() {
 	MODEL.fetch({
 		url: CONFIG.feed,
 		cache: CONFIG.cache,

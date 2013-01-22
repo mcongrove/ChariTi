@@ -19,7 +19,7 @@ exports.fetch = function(_params) {
 	var isStale = UTIL.isStale(_params.url, _params.cache);
 
 	if(isStale) {
-		if (_params.cache !== 0 && isStale !== 'new') {
+		if(_params.cache !== 0 && isStale !== "new") {
 			_params.callback();
 		}
 		

@@ -321,7 +321,8 @@ var APP = {
 			
 			// Add the screen to the window
 			APP.addScreen(screen);
-			screen.fireEvent('screen:added');
+			
+			screen.fireEvent("APP:screenAdded");
 		}
 		
 		APP.nonTabStacks = {};

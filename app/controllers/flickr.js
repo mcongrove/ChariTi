@@ -50,7 +50,7 @@ $.handleSets = function(_data) {
 };
 
 // Event listeners
-$.Wrapper.addEventListener('screen:added', function() {
+$.Wrapper.addEventListener("APP:screenAdded", function() {
 	MODEL.generateNsid({
 		username: CONFIG.username,
 		callback: $.handleNsid

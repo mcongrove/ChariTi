@@ -64,7 +64,7 @@ exports.retrieveSets = function(_params) {
 	var isStale = UTIL.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"), _params.cache);
 	
 	if(isStale) {
-		if (_params.cache !== 0 && isStale !== 'new') {
+		if(_params.cache !== 0 && isStale !== "new") {
 			_params.callback();
 		}
 

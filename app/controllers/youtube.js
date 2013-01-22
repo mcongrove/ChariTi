@@ -51,7 +51,7 @@ $.handleVideos = function(_data) {
 };
 
 // Event listeners
-$.Wrapper.addEventListener('screen:added', function() {
+$.Wrapper.addEventListener("APP:screenAdded", function() {
 	MODEL.setUsername({
 		username: CONFIG.username,
 		callback: $.handleUsername
