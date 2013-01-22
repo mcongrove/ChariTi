@@ -15,8 +15,14 @@ var init = function() {
 exports.fetch = function(_params) {
 	APP.log("debug", "BLOG.fetch");
 	APP.log("trace", JSON.stringify(_params));
+
+	var isStale = UTIL.isStale(_params.url, _params.cache);
 	
-	if(UTIL.isStale(_params.url, _params.cache)) {
+	if(isStale) {
+		if (_params.cache !== 0 && isStale !== 'new') {
+			_params.callback();
+		}
+		
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",

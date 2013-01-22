@@ -16,11 +16,7 @@ $.init = function() {
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
-	
-	MODEL.setUsername({
-		username: CONFIG.username,
-		callback: $.handleUsername
-	});
+
 };
 
 $.handleUsername = function() {
@@ -55,6 +51,13 @@ $.handleVideos = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener('screen:added', function() {
+	MODEL.setUsername({
+		username: CONFIG.username,
+		callback: $.handleUsername
+	});
+});
+
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @close");
 	
