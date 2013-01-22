@@ -7,6 +7,8 @@ v 1.1
 -----
 *	Added initial Android support
 *	Added tablet support (iPad + Android Tablet)
+*	Converted Facebook model to utilize JSON instead of XML
+*	Fixed memory management for controller stacking
 
 v 1.0.1
 -------
