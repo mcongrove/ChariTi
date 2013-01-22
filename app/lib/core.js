@@ -1,6 +1,7 @@
 var Alloy	= require("alloy");
 var HTTP	= require("http");
 var UTIL	= require("utilities");
+var MIGRATE	= require("migrate");
 var UA;
 
 /**
@@ -13,7 +14,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.0.0.1213122040",
+	CVERSION: "1.0.1.0116131842",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
@@ -23,21 +24,13 @@ var APP = {
 	Plugins: null,
 	Settings: null,
 	/**
-	 * Keeps track of the current screen controller
+	 * The stack controller
 	 * @type {Object}
 	 */
-	currentController: null,
-	currentControllerId: null,
-	/**
-	 * Temporary holder for the previous screen controller
-	 */
-	previousController: null,
-	/**
-	 * The detail controller
-	 * @type {Object}
-	 */
-	currentDetailController: null,
-	detailControllers: [],
+	currentStack: -1,
+	previousScreen: null,
+	controllerStacks: [],
+	nonTabStacks: {},
 	/**
 	 * The main app window
 	 * @type {Object}
@@ -78,6 +71,9 @@ var APP = {
 		Ti.App.addEventListener("close", APP.exit);
 		Ti.App.addEventListener("resumed", APP.resume);
 		
+		// Migrate to newer ChariTi version
+		MIGRATE.init(APP.CVERSION);
+		
 		// Create a database
 		APP.setupDatabase();
 		
@@ -86,6 +82,12 @@ var APP = {
 		
 		// Builds out the tab group
 		APP.build();
+		
+		// Open the main window
+		APP.MainWindow.open();
+		
+		// The initial screen to show
+		APP.handleNavigation(0);
 		
 		// Updates the app.json file from a remote source
 		APP.update();
@@ -162,9 +164,11 @@ var APP = {
 		});
 
 		if(!_rebuild) {
-			// Add a handler for the spinner (drop-down selection)
+			// Add a handler for the TabGroup
 			APP.Tabs.Wrapper.addEventListener("click", function(_event) {
-				APP.handleNavigation(_event.source.id);
+				if(typeof _event.source.id == "number") {
+					APP.handleNavigation(_event.source.id);
+				}
 			});
 		}
 	},
@@ -233,13 +237,11 @@ var APP = {
 		APP.log("debug", "APP.rebuild");
 		
 		APP.Tabs.clear();
-		APP.removeScreen(APP.currentController);
 		
-		APP.currentControllerId		= null;
-		APP.currentController		= null;
-		APP.previousController		= null;
-		APP.currentDetailController	= null;
-		APP.detailControllers		= [];
+		APP.currentStack			= -1;
+		APP.previousScreen			= null;
+		APP.controllerStacks		= [];
+		APP.nonTabStacks			= {};
 		
 		APP.loadContent();
 		
@@ -261,7 +263,7 @@ var APP = {
 		// Fill the log table with empty rows that we can 'update', providing a max row limit
 		var data = db.execute("SELECT time FROM log;");
 		
-		if(data.rowCount == 0) {
+		if(data.rowCount === 0) {
 			db.execute("BEGIN TRANSACTION;");
 			
 			for(var i = 0; i < 100; i++) {
@@ -279,88 +281,138 @@ var APP = {
 	 * @param  {String} _id The ID of the tab being opened
 	 */
 	handleNavigation: function(_id) {
-		APP.log("debug", "APP.handleNavigation");
-		
-		// Requesting same screen as we"re on
-		if(_id == APP.currentControllerId) {
+		APP.log("debug", "APP.handleNavigation | " + APP.Nodes[_id].type);
+
+		// Requesting same screen as we're on
+		if(_id == APP.currentStack) {
 			// Do nothing
 		} else {
 			// Move the tab selection indicator
 			APP.Tabs.setIndex(_id);
 			
-			// Save the current controller for removal
-			APP.previousController = APP.currentController;
-			
 			// Closes any loading screens
 			APP.closeLoading();
 			
-			// Create a new screen
-			APP.currentControllerId = _id;
-			APP.currentController = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+			// Set current stack
+			APP.currentStack = _id;
 			
-			// Add the new screen to the window
-			APP.ContentWrapper.add(APP.currentController);
-
-			// Remove previouw controller view
-			APP.removeScreen(APP.previousController);
+			// Create new controller stack if it doesn't exist
+			if(typeof(APP.controllerStacks[_id]) === "undefined") {
+				APP.controllerStacks[_id] = [];
+			}
+			
+			// Set current controller stack
+			var controllerStack = APP.controllerStacks[_id];
+			
+			// If we're opening for the first time, create new screen
+			// Otherwise, add the last screen in the stack (screen we navigated away from earlier on)
+			var screen;
+			
+			if(controllerStack.length > 0) {
+				// Retrieve the last screen
+				screen = controllerStack[controllerStack.length - 1];
+			} else {
+				// Create a new screen
+				screen = Alloy.createController(APP.Nodes[_id].type.toLowerCase(), APP.Nodes[_id]).getView();
+				
+				// Add screen to the controller stack
+				controllerStack.push(screen);
+			}
+			
+			// Add the screen to the window
+			APP.addScreen(screen);
+			
+			screen.fireEvent("APP:screenAdded");
+		}
+		
+		APP.nonTabStacks = {};
+	},
+	/**
+	 * Global function to add screens
+	 * @param {Function} _callback
+	 */
+	addScreen: function(_screen) {
+		if(_screen) {
+			APP.ContentWrapper.add(_screen);
+			
+			if(APP.previousScreen) {
+				APP.removeScreen(APP.previousScreen);
+			}
+			
+			APP.previousScreen = _screen;
 		}
 	},
 	/**
 	 * Global function to remove screens
 	 * @param {Function} _callback
 	 */
-	removeScreen: function(_controller) {
-		APP.closeAllDetailScreens();
-		
-		if(_controller) {
-			APP.ContentWrapper.remove(_controller);
+	removeScreen: function(_screen) {
+		if(_screen) {
+			APP.ContentWrapper.remove(_screen);
 			
-			APP.previousController = null;
+			APP.previousScreen = null;
 		}
 	},
 	/**
-	 * Open the detail screen
+	 * Open a child screen
 	 * @param {String} _controller The name of the controller to open
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
 	 */
-	openDetailScreen: function(_controller, _params) {
-		// Create the new screen controller
-		APP.currentDetailController = Alloy.createController(_controller, _params).getView();
+	addChild: function(_controller, _params, _stack) {
+		var controllerStack;
 		
-		APP.detailControllers.push(APP.currentDetailController);
-		
-		APP.ContentWrapper.add(APP.currentDetailController);
-	},
-	/**
-	 * Removes the detail screen
-	 * @param {Function} _callback
-	 */
-	closeDetailScreen: function(_callback) {
-		if(APP.currentDetailController) {
-			APP.ContentWrapper.remove(APP.currentDetailController);
-			APP.detailControllers.pop();
+		// Determine if stack is associated with a tab
+		if(typeof(_stack) === "string") {
+			if(typeof(APP.nonTabStacks[_stack]) === "undefined") {
+				APP.nonTabStacks[_stack] = [];
+			}
 			
-			APP.currentDetailController = null;
+			controllerStack = APP.nonTabStacks[_stack];
+		} else {
+			controllerStack = APP.controllerStacks[APP.currentStack];
 		}
+		 
+		// Create the new screen controller
+		var screen = Alloy.createController(_controller, _params).getView();
 		
-		if(APP.detailControllers.length > 0) {
-			APP.currentDetailController = APP.detailControllers[APP.detailControllers.length - 1];
-		}
+		// Add screen to the controller stack
+		controllerStack.push(screen);
 
-		if(typeof(_callback) !== "undefined") {
-			_callback();
-		}
+		// Add the screen to the window
+		APP.addScreen(screen);
 	},
 	/**
-	 * Removes ALL detail screens
+	 * Removes a child screen
 	 * @param {Function} _callback
 	 */
-	closeAllDetailScreens: function(_callback) {
-		for(var i = 0, x = APP.detailControllers.length; i < x; i++) {
-			APP.ContentWrapper.remove(APP.detailControllers[i]);
+	removeChild: function(_stack) {
+		var stack	= (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var screen	= stack[stack.length - 1];
+		
+		stack.pop();
+		
+		if(stack.length === 0) {
+			var previousStack = APP.controllerStacks[APP.currentStack];
+			
+			APP.addScreen(previousStack[previousStack.length - 1]);
+		} else {
+			APP.addScreen(stack[stack.length - 1]);
 		}
 		
-		APP.detailControllers = [];
+		APP.ContentWrapper.remove(screen);
+	},
+	/**
+	 * Removes all children screens
+	 * @param {Function} _callback
+	 */
+	removeAllChildren: function(_stack) {
+		var stack = (typeof(_stack) !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		
+		for(var i = stack.length - 1; i > 0; i--) {
+			stack.pop();
+		}
+		
+		APP.addScreen(stack[0]);
 	},
 	/**
 	 * Shows the loading screen
@@ -394,7 +446,7 @@ var APP = {
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
 		
-		APP.openDetailScreen("settings");
+		APP.addChild("settings", {}, "settings");
 	},
 	/**
 	 * Registers the app for push notifications
@@ -439,6 +491,14 @@ var APP = {
 				APP.log("trace", JSON.stringify(_event));
 				
 				UA.handleNotification(_event.data);
+				
+				if(_event.data.tab) {
+					var tabIndex = parseInt(_event.data.tab) - 1;
+					
+					if(APP.Nodes[tabIndex]) {
+						APP.handleNavigation(tabIndex);
+					}
+				}
 			}
 		});
 	},

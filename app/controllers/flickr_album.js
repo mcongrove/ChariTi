@@ -55,13 +55,13 @@ $.handleData = function() {
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr_album @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });
 
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr_album @click " + _event.source.id);
 	
-	APP.openDetailScreen("flickr_photo", {
+	APP.addChild("flickr_photo", {
 		id: _event.source.id
 	});
 });

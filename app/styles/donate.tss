@@ -1,4 +1,50 @@
 "#content": {
-	top: "46dp",
-	backgroundColor: "#000"
+	top: "47dp",
+	backgroundColor: "#EEE",
+	layout: "vertical",
+	showVerticalScrollIndicator: true
+},
+"#heading": {
+	top: "15dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "18dp",
+		fontWeight: "bold"
+	},
+	color: "#666"
+},
+"#text": {
+	top: "10dp",
+	left: "15dp",
+	right: "15dp",
+	bottom: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "14dp",
+		fontWeight: "normal"
+	},
+	color: "#666"
+},
+"#button": {
+	top: "10dp",
+	left: "15dp",
+	height: "36dp",
+	borderRadius: "3dp",
+	width: Ti.UI.SIZE
+},
+"#buttonText": {
+	top: "10dp",
+	left: "10dp",
+	right: "10dp",
+	bottom: "10dp",
+	height: "16dp",
+	width: Ti.UI.SIZE,
+	font: {
+		fontSize: "14dp",
+		fontWeight: "bold"
+	},
+	color: "#FFF",
+	textAlign: "center"
 }

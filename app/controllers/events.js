@@ -7,19 +7,17 @@ var CONFIG = arguments[0];
 $.init = function() {
 	APP.log("debug", "events.init | " + JSON.stringify(CONFIG));
 	
+	CONFIG.feed = "https://graph.facebook.com/" + CONFIG.userid + "/events?fields=id,name,start_time,end_time,location,description&since=now&access_token=AAAEdFU8bj50BAL7MQcSHuIDf1KzST7gZAAubz49tio8yLM8Lb7o29IxtxZALrogeimSAsTkYXJRzzqrRqSniABwtDRPONoQxsdNy6XQjIaRR9sedAM";
+	
 	APP.openLoading();
 	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
-	
-	MODEL.fetch({
-		url: "https://graph.facebook.com/" + CONFIG.userid + "/events?fields=id,name,start_time,end_time,location,description&since=now&access_token=AAAEdFU8bj50BAL7MQcSHuIDf1KzST7gZAAubz49tio8yLM8Lb7o29IxtxZALrogeimSAsTkYXJRzzqrRqSniABwtDRPONoQxsdNy6XQjIaRR9sedAM",
-		cache: CONFIG.cache,
-		callback: function() {
-			$.handleData(MODEL.getAllEvents());
-		}
-	});
+
+	if(CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 };
 
 $.handleData = function(_data) {
@@ -43,6 +41,22 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener("APP:screenAdded", function() {
+	MODEL.fetch({
+		url: CONFIG.feed,
+		cache: CONFIG.cache,
+		callback: function() {
+			$.handleData(MODEL.getAllEvents());
+		}
+	});
+});
+
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "events @close");
+	
+	APP.removeChild();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });
@@ -50,7 +64,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "events @click " + _event.row.id);
 	
-	APP.openDetailScreen("events_event", {
+	APP.addChild("events_event", {
 		id: _event.row.id
 	});
 });

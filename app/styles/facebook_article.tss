@@ -1,44 +1,65 @@
 "#Wrapper": {
-	backgroundColor: "#EEE"
+	backgroundColor: "#FFF"
 },
 "#content": {
 	layout: "vertical",
-	top: "46dp",
+	top: "47dp",
 	showVerticalScrollIndicator: true
 },
-"#heading": {
-	top: "15dp",
-	left: "15dp",
-	right: "15dp",
-	height: Ti.UI.SIZE,
-	font: {
-		fontSize: "18dp",
-		fontWeight: "bold"
+"#header": {
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#F8F8F8",
+			"#ECECEC"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
 	},
-	color: "#666"
+	height: Ti.UI.SIZE,
+	width: Ti.UI.FILL,
+	layout: "vertical"
 },
 "#date": {
-	top: "5dp",
-	left: "15dp",
-	right: "15dp",
-	height: Ti.UI.SIZE,
+	top: "10dp",
+	left: "10dp",
+	right: "10dp",
+	height: "14dp",
 	font: {
 		fontSize: "12dp",
 		fontWeight: "bold"
 	},
-	color: "#000"
+	color: "#777"
+},
+"#heading": {
+	left: "10dp",
+	right: "10dp",
+	bottom: "10dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "16dp",
+		fontWeight: "bold"
+	},
+	color: "#333"
 },
 "#text": {
-	top: "10dp",
-	left: "5dp",
-	right: "5dp",
+	top: "15dp",
+	left: "15dp",
+	right: "15dp",
 	bottom: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
 		fontWeight: "normal"
 	},
-	color: "#333",
+	color: "#777",
 	backgroundColor: "transparent",
 	editable: false
 }

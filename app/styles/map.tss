@@ -1,6 +1,7 @@
 "#content": {
-	top: "46dp",
+	top: "47dp",
 	userLocation: true,
 	regionFit: true,
-	mapType: Ti.Map.STANDARD_TYPE
+	mapType: Ti.Map.STANDARD_TYPE,
+	backgroundColor: "#EEE"
 }

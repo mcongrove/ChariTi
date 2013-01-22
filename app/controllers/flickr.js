@@ -11,13 +11,12 @@ $.init = function() {
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
+
+	if(CONFIG.isChild === true) {
+		$.NavigationBar.back.visible		= true;
+	}
 	
 	MODEL.setApiKey(CONFIG.apiKey);
-	
-	MODEL.generateNsid({
-		username: CONFIG.username,
-		callback: $.handleNsid
-	});
 };
 
 $.handleNsid = function() {
@@ -51,6 +50,19 @@ $.handleSets = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener("APP:screenAdded", function() {
+	MODEL.generateNsid({
+		username: CONFIG.username,
+		callback: $.handleNsid
+	});
+});
+
+$.NavigationBar.back.addEventListener("click", function(_event) {
+	APP.log("debug", "flickr @close");
+	
+	APP.removeChild();
+});
+
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });
@@ -58,7 +70,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @click " + _event.row.id);
 	
-	APP.openDetailScreen("flickr_album", {
+	APP.addChild("flickr_album", {
 		id: _event.row.id,
 		cache: CONFIG.cache,
 		title: _event.row.setTitle

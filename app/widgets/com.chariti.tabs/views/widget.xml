@@ -1,7 +1,13 @@
 <Alloy>
 	<View id="Wrapper">
-		<View id="TabContainer" />
+		<View id="TabGroup">
+			<View id="TabContainer" />
+			<View id="Indicator" />
+		</View>
 		
-		<View id="indicator" />
+		<View id="TabGroupMore">
+			<View id="TabContainerMore" />
+			<View id="IndicatorMore" />
+		</View>
 	</View>
 </Alloy>

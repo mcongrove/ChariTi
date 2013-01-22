@@ -13,5 +13,5 @@ $.content.url = DATA.url || "";
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube_video @close");
 	
-	APP.closeDetailScreen();
+	APP.removeChild();
 });

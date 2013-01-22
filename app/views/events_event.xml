@@ -3,11 +3,13 @@
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
 		<ScrollView id="content">
-			<Label id="heading" />
-			
-			<Label id="location" />
-			
-			<Label id="date" />
+			<View id="header">
+				<Label id="date" />
+				
+				<Label id="heading" />
+				
+				<Label id="location" />
+			</View>
 			
 			<TextArea id="text" />
 		</ScrollView>

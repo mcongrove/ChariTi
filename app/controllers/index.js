@@ -7,11 +7,5 @@ APP.GlobalWrapper = $.GlobalWrapper;
 APP.ContentWrapper = $.ContentWrapper;
 APP.Tabs = $.Tabs;
 
-// Open the main window
-APP.MainWindow.open();
-
 // Start the APP
 APP.init();
-
-// The initial screen to show
-APP.handleNavigation(0);

@@ -1,8 +1,8 @@
 #appname:ChariTi
 #publisher:Matthew Congrove
-#url:http://mattcongrove.com
+#url:http://chariti.mobi
 #image:appicon.png
-#appid:com.appcelerator.chariti
-#desc:An open-source Titanium project that allows charities to quickly build mobile applications.
+#appid:com.chariti.mobile
+#desc:ChariTi is a framework built to allow charities to quickly and easily create mobile applications.
 #type:ipad
 #guid:66774a0a-ba43-45f5-9686-f2de98701f32

@@ -36,7 +36,7 @@
 		},
 		{
 			"title": "Blog",
-			"feed": "http://feeds.feedburner.com/thinkmobile-blog",
+			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "blog",
 			"image": "news2",
 			"cache": 120
@@ -62,12 +62,12 @@
 			"type": "twitter",
 			"image": "twitter2",
 			"cache": 10
-		}
-	],
-	"nontabs": [
+		},
 		{
 			"title": "Donate",
-			"file": "donate.html",
+			"heading": "Donate to ChariTi",
+			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
+			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "donate",
 			"image": "donate1"
 		},
@@ -77,7 +77,9 @@
 			"type": "facebook",
 			"image": "facebook",
 			"cache": 10
-		},
+		}
+	],
+	"nontabs": [
 		{
 			"title": "Map",
 			"points": [
