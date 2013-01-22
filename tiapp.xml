@@ -24,7 +24,7 @@
     <navbar-hidden>false</navbar-hidden>
     <analytics>false</analytics>
     <guid>66774a0a-ba43-45f5-9686-f2de98701f32</guid>
-    <property name="ti.ui.defaultunit">system</property>
+    <property name="ti.ui.defaultunit">dip</property>
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>

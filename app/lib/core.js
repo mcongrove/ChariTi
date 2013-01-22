@@ -35,8 +35,9 @@ var APP = {
 		version: Titanium.Platform.version,
 		versionMajor: null,
 		versionMinor: null,
-		width: Ti.Platform.displayCaps.platformWidth,
-		height: Ti.Platform.displayCaps.platformHeight,
+		width: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
+		height: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
+		dpi: Ti.Platform.displayCaps.dpi,
 		orientation: Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT ? "LANDSCAPE" : "PORTRAIT",
 		statusBarOrientation: null
 	},
@@ -127,8 +128,10 @@ var APP = {
 		APP.update();
 		
 		// Set up push notifications
-		if(APP.Settings.notifications.enabled) {
-			APP.registerPush();
+		if(OS_IOS) {
+			if(APP.Settings.notifications.enabled) {
+				APP.registerPush();
+			}
 		}
 	},
 	/**
@@ -138,7 +141,7 @@ var APP = {
 		APP.Device.versionMajor	= parseInt(APP.Device.version.split(".")[0], 10);
 		APP.Device.versionMinor	= parseInt(APP.Device.version.split(".")[1], 10);
 		
-		if(Ti.Platform.name.toUpperCase() == "IPHONE OS") {
+		if(OS_IOS) {
 			APP.Device.os = "IOS";
 			
 			if(Ti.Platform.osname.toUpperCase() == "IPHONE") {
@@ -146,11 +149,14 @@ var APP = {
 			} else if(Ti.Platform.osname.toUpperCase() == "IPAD") {
 				APP.Device.name = "IPAD";
 			}
-		} else if(Ti.Platform.name.toUpperCase() == "ANDROID") {
+		} else if(OS_ANDROID) {
 			APP.Device.os = "ANDROID";
 			
-			// TODO: Need to define a way to determine exactly what device we're on for Androids
 			APP.Device.name = Ti.Platform.model.toUpperCase();
+			
+			// Fix the display values
+			APP.Device.width	= (APP.Device.width / (APP.Device.dpi / 160));
+			APP.Device.height	= (APP.Device.height / (APP.Device.dpi / 160));
 		}
 	},
 	/**
@@ -609,55 +615,57 @@ var APP = {
 	 * Registers the app for push notifications
 	 */
 	registerPush: function() {
-		APP.log("debug", "APP.registerPush");
-		
-		UA = require("ti.urbanairship");
-		
-		UA.options = {
-			APP_STORE_OR_AD_HOC_BUILD: true,
-			PRODUCTION_APP_KEY: APP.Settings.notifications.key,
-			PRODUCTION_APP_SECRET: APP.Settings.notifications.secret,
-			LOGGING_ENABLED: false
-		};
-		
-		Ti.Network.registerForPushNotifications({
-			types: [
-				Ti.Network.NOTIFICATION_TYPE_BADGE,
-				Ti.Network.NOTIFICATION_TYPE_ALERT,
-				Ti.Network.NOTIFICATION_TYPE_SOUND
-			],
-			success: function(_event) {
-				APP.log("debug", "APP.registerPush @success");
-				APP.log("trace", _event.deviceToken);
-				
-				UA.registerDevice(_event.deviceToken, {
-					tags: [
-						APP.ID,
-						APP.Version,
-						Ti.Platform.osname,
-						Ti.Platform.locale
-					]
-				});
-			},
-			error: function(_event) {
-				APP.log("debug", "APP.registerPush @error");
-				APP.log("trace", JSON.stringify(_event));
-			},
-			callback: function(_event) {
-				APP.log("debug", "APP.registerPush @callback");
-				APP.log("trace", JSON.stringify(_event));
-				
-				UA.handleNotification(_event.data);
-				
-				if(_event.data.tab) {
-					var tabIndex = parseInt(_event.data.tab) - 1;
+		if(OS_IOS) {
+			APP.log("debug", "APP.registerPush");
+			
+			UA = require("ti.urbanairship");
+			
+			UA.options = {
+				APP_STORE_OR_AD_HOC_BUILD: true,
+				PRODUCTION_APP_KEY: APP.Settings.notifications.key,
+				PRODUCTION_APP_SECRET: APP.Settings.notifications.secret,
+				LOGGING_ENABLED: false
+			};
+			
+			Ti.Network.registerForPushNotifications({
+				types: [
+					Ti.Network.NOTIFICATION_TYPE_BADGE,
+					Ti.Network.NOTIFICATION_TYPE_ALERT,
+					Ti.Network.NOTIFICATION_TYPE_SOUND
+				],
+				success: function(_event) {
+					APP.log("debug", "APP.registerPush @success");
+					APP.log("trace", _event.deviceToken);
 					
-					if(APP.Nodes[tabIndex]) {
-						APP.handleNavigation(tabIndex);
+					UA.registerDevice(_event.deviceToken, {
+						tags: [
+							APP.ID,
+							APP.Version,
+							Ti.Platform.osname,
+							Ti.Platform.locale
+						]
+					});
+				},
+				error: function(_event) {
+					APP.log("debug", "APP.registerPush @error");
+					APP.log("trace", JSON.stringify(_event));
+				},
+				callback: function(_event) {
+					APP.log("debug", "APP.registerPush @callback");
+					APP.log("trace", JSON.stringify(_event));
+					
+					UA.handleNotification(_event.data);
+					
+					if(_event.data.tab) {
+						var tabIndex = parseInt(_event.data.tab) - 1;
+						
+						if(APP.Nodes[tabIndex]) {
+							APP.handleNavigation(tabIndex);
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 	},
 	/**
 	 * Logs all console data

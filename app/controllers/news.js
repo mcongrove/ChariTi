@@ -30,13 +30,15 @@ $.init = function() {
 		}
 	});
 	
-	var initRefresh = setInterval(function(_event) {
-		if(offset > 30) {
-			clearInterval(initRefresh);
-		}
-		
-		$.container.scrollTo(0, 60);
-	}, 100);
+	if(OS_IOS) {
+		var initRefresh = setInterval(function(_event) {
+			if(offset > 30) {
+				clearInterval(initRefresh);
+			}
+			
+			$.container.scrollTo(0, 60);
+		}, 100);
+	}
 };
 
 $.handleData = function(_data) {
@@ -76,75 +78,6 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.openSettings();
 });
 
-$.container.addEventListener("scroll", function(_event) {
-	if(_event.y !== null) {
-		offset = _event.y;
-		
-		if(!refreshLoading) {
-			var transform	= Ti.UI.create2DMatrix();
-			
-			if(offset < 0) {
-				if(refreshEngaged == false) {
-					$.refreshLabel.text = "Release to reload...";
-					
-					transform = transform.rotate(-180);
-				
-					$.refreshArrow.animate({
-						transform: transform,
-						duration: 100
-					});
-					
-					refreshEngaged = true;
-				}
-			} else {
-				if(offset < 60) {
-					$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
-				}
-				
-				if(refreshEngaged == true) {
-					$.refreshLabel.text = "Pull down to update...";
-					
-					$.refreshArrow.animate({
-						transform: transform,
-						duration: 100
-					});
-					
-					refreshEngaged = false;
-				}
-			}
-		}
-	}
-});
-
-$.container.addEventListener("dragend", function(_event) {
-	if(offset < 0) {
-		refreshLoading = true;
-		
-		$.refreshLabel.text			= "Loading new content...";
-		$.refreshArrow.visible		= false;
-		$.refreshLoading.visible	= true;
-		
-		$.refreshLoading.start();
-		
-		MODEL.fetch({
-			url: CONFIG.feed,
-			cache: 0,
-			callback: function() {
-				$.handleData(MODEL.getAllArticles());
-				
-				refreshLoading = false;
-				
-				$.container.scrollTo(0, 60);
-				
-				$.refreshArrow.visible		= true;
-				$.refreshLoading.visible	= false;
-			}
-		});
-	} else if(offset < 60 && !refreshLoading) {
-		$.container.scrollTo(0, 60);	
-	}
-});
-
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "news @click " + _event.row.id);
 	
@@ -160,6 +93,77 @@ $.content.addEventListener("click", function(_event) {
 		id: _event.row.id
 	});
 });
+
+if(OS_IOS) {
+	$.container.addEventListener("scroll", function(_event) {
+		if(_event.y !== null) {
+			offset = _event.y;
+			
+			if(!refreshLoading) {
+				var transform	= Ti.UI.create2DMatrix();
+				
+				if(offset < 0) {
+					if(refreshEngaged == false) {
+						$.refreshLabel.text = "Release to reload...";
+						
+						transform = transform.rotate(-180);
+					
+						$.refreshArrow.animate({
+							transform: transform,
+							duration: 100
+						});
+						
+						refreshEngaged = true;
+					}
+				} else {
+					if(offset < 60) {
+						$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+					}
+					
+					if(refreshEngaged == true) {
+						$.refreshLabel.text = "Pull down to update...";
+						
+						$.refreshArrow.animate({
+							transform: transform,
+							duration: 100
+						});
+						
+						refreshEngaged = false;
+					}
+				}
+			}
+		}
+	});
+	
+	$.container.addEventListener("dragend", function(_event) {
+		if(offset < 0) {
+			refreshLoading = true;
+			
+			$.refreshLabel.text			= "Loading new content...";
+			$.refreshArrow.visible		= false;
+			$.refreshLoading.visible	= true;
+			
+			$.refreshLoading.start();
+			
+			MODEL.fetch({
+				url: CONFIG.feed,
+				cache: 0,
+				callback: function() {
+					$.handleData(MODEL.getAllArticles());
+					
+					refreshLoading = false;
+					
+					$.container.scrollTo(0, 60);
+					
+					$.refreshArrow.visible		= true;
+					$.refreshLoading.visible	= false;
+				}
+			});
+		} else if(offset < 60 && !refreshLoading) {
+			$.container.scrollTo(0, 60);	
+		}
+	});
+}
 
 // Kick off the init
 $.init();

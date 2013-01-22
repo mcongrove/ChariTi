@@ -15,9 +15,7 @@ $.init = function() {
 $.handleData = function(_data) {
 	APP.log("debug", "facebook_article.handleData");
 	
-	if(!APP.Device.isTablet) {
-		$.handleNavigation();
-	}
+	$.handleNavigation();
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;

@@ -5,28 +5,38 @@ $.excess		= false;
 $.excessLength	= 5;
 $.moreOpen		= false;
 $.width			= 0;
+$.display		= {
+	width:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
+	height:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
+	dpi:	Ti.Platform.displayCaps.dpi
+};
+
+if(OS_ANDROID) {
+	$.display.width		= ($.display.width / ($.display.dpi / 160));
+	$.display.height	= ($.display.height / ($.display.dpi / 160));
+}
 
 $.init = function(_params) {
 	if(Alloy.isTablet) {
-		$.excessLength = Math.floor(Ti.Platform.displayCaps.platformWidth / 70);
+		$.excessLength = Math.floor($.display.width / 70);
 	}
 	
 	if(_params.tabs.length > $.excessLength) {
 		$.excess = true;
 	}
 	
-	$.width	= $.excess ? (Ti.Platform.displayCaps.platformWidth / $.excessLength) : (Ti.Platform.displayCaps.platformWidth / _params.tabs.length);
+	$.width	= $.excess ? ($.display.width / $.excessLength) : ($.display.width / _params.tabs.length);
 	
 	$.TabGroup.backgroundColor			= _params.colors.primary;
 	$.TabContainerMore.backgroundColor	= _params.colors.primary;
 	$.Indicator.backgroundColor			= _params.colors.secondary;
 	$.IndicatorMore.backgroundColor		= _params.colors.secondary;
 	
-	$.IndicatorContainer.width		= Ti.Platform.displayCaps.platformWidth + "dp";
+	$.IndicatorContainer.width		= $.display.width + "dp";
 	$.Indicator.width				= ($.width - 1) + "dp";
 	$.IndicatorMore.width			= $.width + "dp";
-	$.TabContainer.width			= Ti.Platform.displayCaps.platformWidth + "dp";
-	$.TabGroupMore.width			= Ti.Platform.displayCaps.platformWidth + "dp";
+	$.TabContainer.width			= $.display.width + "dp";
+	$.TabGroupMore.width			= $.display.width + "dp";
 	$.TabContainerMore.width		= ($.width + 1) + "dp";
 	
 	for(var i = 0; i < _params.tabs.length; i++) {
@@ -52,11 +62,11 @@ $.init = function(_params) {
 		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
-			top: "43dp",
+			top: "42dp",
 			left: "5dp",
 			right: "5dp",
 			width: Ti.UI.FILL,
-			height: "13dp",
+			height: "15dp",
 			font: {
 				fontSize: "11dp",
 				fontWeight: "bold"
@@ -109,8 +119,10 @@ $.init = function(_params) {
 		}
 	}
 	
-	for(var i = 0, z = $.tabs.length; i < z; i++) {
-		$.Tabs.add($.tabs[i]);
+	for(var i = 0, z = $.excessLength; i < z; i++) {
+		if($.tabs[i]) {
+			$.Tabs.add($.tabs[i]);
+		}
 	}
 };
 
@@ -157,8 +169,12 @@ $.addMoreTab = function(_params) {
 };
 
 $.clear = function() {
-	for(var i = 0; i < $.tabs.length; i++) {
+	for(var i = 0; i < $.excessLength; i++) {
 		$.Tabs.remove($.tabs[i]);
+	}
+	
+	for(var i = $.excessLength; i < $.tabs.length; i++) {
+		$.TabsMore.remove($.tabs[i]);
 	}
 };
 

@@ -8,6 +8,8 @@ $.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
 $.NavigationBar.back.visible			= APP.Device.isHandheld;
 
 $.content.url = DATA.url || "";
+$.content.scalesPageToFit = true;
+$.content.willHandleTouches = false;
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
