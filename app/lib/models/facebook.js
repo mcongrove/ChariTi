@@ -16,11 +16,11 @@ exports.fetch = function(_params) {
 	APP.log("debug", "FACEBOOK.fetch");
 	APP.log("trace", JSON.stringify(_params));
 	
-	if(UTIL.isStale(_params.url, _params.cache)) {
+	if(1 == 1) {//UTIL.isStale(_params.url, _params.cache)) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
-			format: "TEXT",
+			format: "JSON",
 			url: _params.url,
 			passthrough: _params.callback,
 			success: exports.handleData,
@@ -51,25 +51,25 @@ exports.fetch = function(_params) {
 exports.handleData = function(_data, _url, _passthrough) {
 	APP.log("debug", "FACEBOOK.handleData");
 	
-	var xml		= Ti.XML.parseString(UTIL.xmlNormalize(_data));
-	var nodes	= xml.documentElement.getElementsByTagName("item");
-	
-	if(nodes.length > 0) {
+	if(_data.entries.length > 0) {
 		var db	= Ti.Database.open("ChariTi");
 		
 		db.execute("DELETE FROM facebook;");
 		db.execute("BEGIN TRANSACTION;");
 		
-		for(var i = 0, x = nodes.length; i < x; i++) {
-			var title		= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("title").item(0).text);
+		for(var i = 0, x = _data.entries.length; i < x; i++) {
+			var article	= _data.entries[i];
+			
+			var title	= UTIL.cleanEscapeString(article.title);
 			
 			if(title.length > 2) {
-				var date		= UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
-				var description	= UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("description").item(0).text);
-				var link		= UTIL.escapeString(nodes.item(i).getElementsByTagName("link").item(0).text);
+				var date		= article.published.split("T")[0].replace(/-/g, "/") + " " + article.published.split("T")[1].split("+")[0].split("-")[0];
+					date		= UTIL.escapeString(new Date(date).getTime());
+				var description	= UTIL.cleanEscapeString(article.content);
+				var link		= UTIL.cleanEscapeString(article.alternate);
 				
 				db.execute("INSERT INTO facebook (id, title, date, description, link) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ");");
-			}
+			} 
 		}
 		
 		db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");

@@ -12,7 +12,7 @@ var refreshEngaged	= false;
 $.init = function() {
 	APP.log("debug", "facebook.init | " + JSON.stringify(CONFIG));
 	
-	CONFIG.feed = "http://www.facebook.com/feeds/page.php?format=rss20&id=" + CONFIG.userid;
+	CONFIG.feed = "http://www.facebook.com/feeds/page.php?format=json&id=" + CONFIG.userid;
 	
 	APP.openLoading();
 	
