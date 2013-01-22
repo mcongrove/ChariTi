@@ -33,8 +33,14 @@ exports.setUsername = function(_params) {
 
 exports.fetch = function(_params) {
 	APP.log("debug", "YOUTUBE.retrieveVideos");
+
+	var isStale = UTIL.isStale(ApiBase + "max-results=20", _params.cache);
 	
-	if(UTIL.isStale(ApiBase + "max-results=20", _params.cache)) {
+	if(isStale) {
+		if (_params.cache !== 0 && isStale !== 'new') {
+			_params.callback();
+		}
+
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",

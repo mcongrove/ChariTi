@@ -17,11 +17,6 @@ $.init = function() {
 	}
 	
 	MODEL.setApiKey(CONFIG.apiKey);
-	
-	MODEL.generateNsid({
-		username: CONFIG.username,
-		callback: $.handleNsid
-	});
 };
 
 $.handleNsid = function() {
@@ -55,6 +50,13 @@ $.handleSets = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener('screen:added', function() {
+	MODEL.generateNsid({
+		username: CONFIG.username,
+		callback: $.handleNsid
+	});
+});
+
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @close");
 	

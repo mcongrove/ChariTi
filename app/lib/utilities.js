@@ -19,7 +19,9 @@ exports.isStale = function(_url, _time) {
 	data.close();
 	db.close();
 	
-	if(lastUpdate > freshTime) {
+	if(lastUpdate === 0) {
+		return 'new';
+	} else if (lastUpdate > freshTime) {
 		return false;
 	} else {
 		return true;
