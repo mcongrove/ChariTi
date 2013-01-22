@@ -1,10 +1,10 @@
-var APP = require("core");
-var UTIL = require("utilities");
-var SOCIAL = require("social");
-var MODEL = require("models/facebook");
+var APP		= require("core");
+var UTIL	= require("utilities");
+var SOCIAL	= require("social");
+var MODEL	= require("models/facebook");
 
-var DATA = arguments[0] || {};
-var ACTION = {};
+var DATA	= arguments[0] || {};
+var ACTION	= {};
 
 $.init = function() {
 	APP.log("debug", "facebook_article.init | " + JSON.stringify(DATA));

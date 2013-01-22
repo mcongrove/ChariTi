@@ -1,4 +1,4 @@
-var APP = require("core");
+var APP	= require("core");
 
 var DATA = arguments[0] || {};
 

@@ -1,7 +1,8 @@
 var APP = require("core");
+
 var CONFIG = arguments[0];
 
-var currentUrl = '';
+var currentUrl = "";
 
 $.init = function() {
 	APP.log("debug", "web.init | " + JSON.stringify(CONFIG));

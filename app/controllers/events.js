@@ -1,6 +1,6 @@
-var APP = require("core");
-var UTIL = require("utilities");
-var MODEL = require("models/events");
+var APP		= require("core");
+var UTIL	= require("utilities");
+var MODEL	= require("models/events");
 
 var CONFIG = arguments[0];
 var SELECTED;

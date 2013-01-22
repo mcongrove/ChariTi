@@ -1,4 +1,4 @@
-var APP		= require("core");
+var APP = require("core");
 
 APP.Master[APP.currentStack] = $.Master;
 APP.Detail[APP.currentStack] = $.Detail;

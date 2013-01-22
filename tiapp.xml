@@ -67,7 +67,7 @@
                     android:configChanges="keyboardHidden|orientation"
                     android:label="ChariTi"
                     android:name=".CharitiActivity"
-                    android:screenOrientation="portrait" android:theme="@style/Theme.Titanium">
+                    android:theme="@style/Theme.Titanium">
                     <intent-filter>
                         <action android:name="android.intent.action.MAIN"/>
                         <category android:name="android.intent.category.LAUNCHER"/>
@@ -76,22 +76,22 @@
                 <activity
                     android:configChanges="keyboardHidden|orientation"
                     android:launchMode="singleTask"
-                    android:name="ti.modules.titanium.map.TiMapActivity" android:screenOrientation="portrait"/>
+                    android:name="ti.modules.titanium.map.TiMapActivity"/>
                 <uses-library android:name="com.google.android.maps"/>
                 <activity
                     android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
+                    android:name="org.appcelerator.titanium.TiActivity"/>
                 <activity
                     android:configChanges="keyboardHidden|orientation"
                     android:name="org.appcelerator.titanium.TiTranslucentActivity"
-                    android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
+                    android:theme="@android:style/Theme.Translucent"/>
                 <activity
                     android:configChanges="keyboardHidden|orientation"
                     android:name="org.appcelerator.titanium.TiModalActivity"
-                    android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
+                    android:theme="@android:style/Theme.Translucent"/>
                 <activity
                     android:configChanges="keyboardHidden|orientation"
-                    android:name="ti.modules.titanium.ui.TiTabActivity" android:screenOrientation="portrait"/>
+                    android:name="ti.modules.titanium.ui.TiTabActivity"/>
                 <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
                 <service android:exported="false" android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"/>
             </application>

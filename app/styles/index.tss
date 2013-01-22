@@ -1,17 +1,19 @@
 "#MainWindow": {
 	backgroundColor: "#EEE"
 },
+"#MainWindow[platform=android]": {
+	navBarHidden: true,
+	exitOnClose: true
+},
 "#MainWindow[platform=android formFactor=tablet]": {
 	orientationModes: [
 		Titanium.UI.LANDSCAPE_LEFT
-	],
-	navBarHidden: true
+	]
 },
 "#MainWindow[platform=android formFactor=handheld]": {
 	orientationModes: [
 		Titanium.UI.PORTRAIT
-	],
-	navBarHidden: true
+	]
 },
 "#ContentWrapper": {
 	top: "0dp",
