@@ -1,9 +1,13 @@
 var APP = require("core");
-var SOCIAL = require("dk.napp.social");
 
 exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();
-exports.facebookSupported	= SOCIAL.isFacebookSupported();
-exports.twitterSupported	= SOCIAL.isTwitterSupported();
+
+if(OS_IOS) {
+	var SOCIAL = require("dk.napp.social");
+	
+	exports.facebookSupported	= SOCIAL.isFacebookSupported();
+	exports.twitterSupported	= SOCIAL.isTwitterSupported();
+}
 
 /**
  * Shares information via e-mail
@@ -24,11 +28,13 @@ exports.email = function(_url) {
  * Shares information via Facebook
  */
 exports.facebook = function(_url) {
-	if(exports.facebookSupported) {
-		SOCIAL.facebook({
-			text: APP.Settings.facebook,
-			url: _url
-		});
+	if(OS_IOS) {
+		if(exports.facebookSupported) {
+			SOCIAL.facebook({
+				text: APP.Settings.facebook,
+				url: _url
+			});
+		}
 	}
 };
 
@@ -36,11 +42,13 @@ exports.facebook = function(_url) {
  * Shares information via Twitter
  */
 exports.twitter = function(_url) {
-	if(exports.twitterSupported) {
-		SOCIAL.twitter({
-			text: APP.Settings.twitter,
-			url: _url
-		});
+	if(OS_IOS) {
+		if(exports.twitterSupported) {
+			SOCIAL.twitter({
+				text: APP.Settings.twitter,
+				url: _url
+			});
+		}
 	}
 };
 
@@ -48,20 +56,22 @@ exports.twitter = function(_url) {
  * Retweets a tweet
  */
 exports.twitterRetweet = function(_text, _username) {
-	if(exports.twitterSupported) {
-		var text = "RT @" + _username + ": " + _text;
-		
-		if(text.length > 140) {
-			if(_text.length < 138) {
-				text = "RT " + _text;
-			} else {
-				text = _text;
+	if(OS_IOS) {
+		if(exports.twitterSupported) {
+			var text = "RT @" + _username + ": " + _text;
+			
+			if(text.length > 140) {
+				if(_text.length < 138) {
+					text = "RT " + _text;
+				} else {
+					text = _text;
+				}
 			}
+			
+			SOCIAL.twitter({
+				text: text
+			});
 		}
-		
-		SOCIAL.twitter({
-			text: text
-		});
 	}
 };
 
@@ -69,10 +79,12 @@ exports.twitterRetweet = function(_text, _username) {
  * Replies to a tweet
  */
 exports.twitterReply = function(_username) {
-	if(exports.twitterSupported) {
-		SOCIAL.twitter({
-			text: "@" + _username + " "
-		});
+	if(OS_IOS) {
+		if(exports.twitterSupported) {
+			SOCIAL.twitter({
+				text: "@" + _username + " "
+			});
+		}
 	}
 };
 
@@ -83,14 +95,16 @@ exports.share = function(_url) {
 	var options = [];
 	var mapping = [];
 	
-	if(exports.facebookSupported) {
-		options.push("Share via Facebook");
-		mapping.push("facebook");
-	}
-	
-	if(exports.twitterSupported) {
-		options.push("Share via Twitter");
-		mapping.push("twitter");
+	if(OS_IOS) {
+		if(exports.facebookSupported) {
+			options.push("Share via Facebook");
+			mapping.push("facebook");
+		}
+		
+		if(exports.twitterSupported) {
+			options.push("Share via Twitter");
+			mapping.push("twitter");
+		}
 	}
 	
 	if(exports.emailSupported) {
@@ -98,10 +112,15 @@ exports.share = function(_url) {
 		mapping.push("email");
 	}
 	
-	options.push("Open in Safari");
-	options.push("Cancel");
+	if(OS_IOS) {
+		options.push("Open in Safari");
+	} else {
+		options.push("Open in Browser");
+	}
 	
-	mapping.push("safari");
+	mapping.push("browser");
+	
+	options.push("Cancel");
 	mapping.push("cancel");
 	
 	var dialog = Ti.UI.createOptionDialog({
@@ -121,7 +140,7 @@ exports.share = function(_url) {
 			case "email":
 				exports.email(_url);
 				break;
-			case "safari":
+			case "browser":
 				Ti.Platform.openURL(_url);
 				break;
 		}

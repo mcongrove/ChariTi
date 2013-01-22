@@ -15,9 +15,7 @@ $.init = function() {
 $.handleData = function(_data) {
 	APP.log("debug", "events_event.handleData");
 	
-	if(!APP.Device.isTablet) {
-		$.handleNavigation(_data.date_start);
-	}
+	$.handleNavigation(_data.date_start);
 	
 	$.heading.text	= _data.title;
 	$.text.value	= _data.description;

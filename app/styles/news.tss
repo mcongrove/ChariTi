@@ -1,20 +1,20 @@
-"#container": {
+"#container[platform=ios]": {
 	top: "47dp",
 	showVerticalScrollIndicator: false,
 	contentHeight: "auto",
 	layout: "vertical",
 	backgroundColor: "#EEE"
 },
-"#refresh": {
+"#refresh[platform=ios]": {
 	height: "60dp",
 	width: Ti.UI.FILL	
 },
-"#refreshArrow": {
+"#refreshArrow[platform=ios]": {
 	width: "23dp",
 	height: "25dp",
 	left: "40dp"
 },
-"#refreshLoading": {
+"#refreshLoading[platform=ios]": {
 	width: "31dp",
 	height: "13dp",
 	left: "36dp",
@@ -25,7 +25,7 @@
 	],
 	duration: 250
 },
-"#refreshLabel": {
+"#refreshLabel[platform=ios]": {
 	top: "12dp",
 	height: "15dp",
 	color: "#AAA",
@@ -36,7 +36,7 @@
 	left: "90dp",
 	right: "20dp"
 },
-"#refreshUpdateLabel": {
+"#refreshUpdateLabel[platform=ios]": {
 	bottom: "12dp",
 	height: "15dp",
 	color: "#AAA",
@@ -51,4 +51,7 @@
 	backgroundColor: "#EEE",
 	rowHeight: "48dp",
 	separatorColor: "#DDD"
+},
+"#content[platform=android]": {
+	top: "47dp"
 }
