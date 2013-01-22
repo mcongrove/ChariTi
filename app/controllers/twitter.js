@@ -39,6 +39,12 @@ $.init = function() {
 			
 			$.container.scrollTo(0, 60);
 		}, 100);
+		
+		$.container.addEventListener("postlayout", function(_event) {
+			if(offset <= 60) {
+				$.container.scrollTo(0, 60);
+			}
+		});
 	}
 };
 
