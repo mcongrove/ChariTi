@@ -1,5 +1,5 @@
-var APP = require("core");
-var SOCIAL = require("social");
+var APP		= require("core");
+var SOCIAL	= require("social");
 
 var DATA = arguments[0] || {};
 

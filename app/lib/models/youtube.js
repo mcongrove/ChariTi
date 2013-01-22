@@ -2,8 +2,8 @@ var APP		= require("core");
 var HTTP	= require("http");
 var UTIL	= require("utilities");
 
-var ApiBase = null;
-var Username = null;
+var ApiBase		= null;
+var Username	= null;
 
 var init = function() {
 	APP.log("debug", "YOUTUBE.init");

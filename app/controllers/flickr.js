@@ -1,5 +1,5 @@
-var APP = require("core");
-var MODEL = require("models/flickr");
+var APP		= require("core");
+var MODEL	= require("models/flickr");
 
 var CONFIG = arguments[0];
 var SELECTED;
