@@ -59,6 +59,17 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener('screen:added', function() {
+	MODEL.fetch({
+		url: CONFIG.feed,
+		cache: CONFIG.cache,
+		callback: function() {
+			$.handleData(MODEL.getAllArticles());
+		}
+	});
+});
+
+
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "news @close");
 	

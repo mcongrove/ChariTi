@@ -61,7 +61,13 @@ exports.handleNsid = function(_data, _url, _passthrough) {
 exports.retrieveSets = function(_params) {
 	APP.log("debug", "FLICKR.retrieveSets");
 	
-	if(UTIL.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"), _params.cache)) {
+	var isStale = UTIL.isStale(ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"), _params.cache);
+	
+	if(isStale) {
+		if (_params.cache !== 0 && isStale !== 'new') {
+			_params.callback();
+		}
+
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",

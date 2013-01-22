@@ -22,15 +22,7 @@ $.init = function() {
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
-	
-	MODEL.fetch({
-		url: CONFIG.feed,
-		cache: CONFIG.cache,
-		callback: function() {
-			$.handleData(MODEL.getAllArticles());
-		}
-	});
-	
+		
 	var initRefresh = setInterval(function(_event) {
 		if(offset > 30) {
 			clearInterval(initRefresh);
@@ -61,6 +53,16 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
+$.Wrapper.addEventListener('screen:added', function() {
+	MODEL.fetch({
+		url: CONFIG.feed,
+		cache: CONFIG.cache,
+		callback: function() {
+			$.handleData(MODEL.getAllArticles());
+		}
+	});
+});
+
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook @close");
 	
