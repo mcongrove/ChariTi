@@ -423,7 +423,13 @@ var APP = {
 			// Add the screen to the window
 			APP.addScreen(screen);
 			
-			screen.fireEvent("APP:screenAdded");
+			// TODO: Fix this for tablets
+			// Tell the screen it was added to the window
+			/*
+			if(!APP.hasDetail) {
+				screen.fireEvent("APP:screenAdded");
+			}
+			*/
 		}
 		
 		APP.nonTabStacks = {};
@@ -787,9 +793,5 @@ var APP = {
 		APP.log("debug", "APP.resumeObserver");
 	}
 };
-
-Ti.Gesture.addEventListener("shake", function(_event) {
-	APP.Tabs.clear();
-});
 
 module.exports = APP;

@@ -7,6 +7,8 @@ $.init = function() {
     APP.log("debug", "menu.init | " + JSON.stringify(CONFIG));
     
     APP.openLoading();
+
+    $.handleData(CONFIG.items);
     
     $.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
     $.NavigationBar.right.visible           = true;
@@ -15,8 +17,6 @@ $.init = function() {
     if(CONFIG.isChild === true) {
         $.NavigationBar.back.visible        = true;
     }
-
-    $.handleData(CONFIG.items);
 };
 
 $.handleData = function(_data) {

@@ -10,6 +10,8 @@ $.init = function() {
 	
 	APP.openLoading();
 	
+	$.retrieveData();
+	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
@@ -17,7 +19,13 @@ $.init = function() {
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
+};
 
+$.retrieveData = function() {
+	MODEL.setUsername({
+		username: CONFIG.username,
+		callback: $.handleUsername
+	});
 };
 
 $.handleUsername = function() {
@@ -58,13 +66,6 @@ $.handleVideos = function() {
 };
 
 // Event listeners
-$.Wrapper.addEventListener("APP:screenAdded", function() {
-	MODEL.setUsername({
-		username: CONFIG.username,
-		callback: $.handleUsername
-	});
-});
-
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @close");
 	

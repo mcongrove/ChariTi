@@ -12,6 +12,8 @@ $.init = function() {
 	
 	APP.openLoading();
 	
+	$.retrieveData();
+	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
@@ -19,6 +21,20 @@ $.init = function() {
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
+};
+
+$.retrieveData = function(_force, _callback) {
+	MODEL.fetch({
+		url: CONFIG.feed,
+		cache: _force ? 0 : CONFIG.cache,
+		callback: function() {
+			$.handleData(MODEL.getAllEvents());
+			
+			if(typeof _callback !== "undefined") {
+				_callback();
+			}
+		}
+	});
 };
 
 $.handleData = function(_data) {
@@ -48,16 +64,6 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.Wrapper.addEventListener("APP:screenAdded", function() {
-	MODEL.fetch({
-		url: CONFIG.feed,
-		cache: CONFIG.cache,
-		callback: function() {
-			$.handleData(MODEL.getAllEvents());
-		}
-	});
-});
-
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "events @close");
 	

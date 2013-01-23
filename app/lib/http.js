@@ -81,7 +81,7 @@ exports.request = function(_params) {
 		xhr.open(_params.type, _params.url, _params.async);
 
 		if(_params.headers) {
-			for (var i = 0, j = _params.headers.length; i < j; i++) {
+			for(var i = 0, j = _params.headers.length; i < j; i++) {
 				xhr.setRequestHeader(_params.headers[i].name, _params.headers[i].value);
 			}
 		}

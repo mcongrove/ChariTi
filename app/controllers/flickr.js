@@ -9,6 +9,10 @@ $.init = function() {
 	
 	APP.openLoading();
 	
+	MODEL.setApiKey(CONFIG.apiKey);
+	
+	$.retrieveData();
+	
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible			= true;
 	$.NavigationBar.rightImage.image		= "/images/settings.png";
@@ -16,8 +20,13 @@ $.init = function() {
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.back.visible		= true;
 	}
-	
-	MODEL.setApiKey(CONFIG.apiKey);
+};
+
+$.retrieveData = function() {
+	MODEL.generateNsid({
+		username: CONFIG.username,
+		callback: $.handleNsid
+	});
 };
 
 $.handleNsid = function() {
@@ -57,13 +66,6 @@ $.handleSets = function() {
 };
 
 // Event listeners
-$.Wrapper.addEventListener("APP:screenAdded", function() {
-	MODEL.generateNsid({
-		username: CONFIG.username,
-		callback: $.handleNsid
-	});
-});
-
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @close");
 	
