@@ -64,10 +64,6 @@ $.createGrid = function(_data) {
 	var counter		= 1;
 	var row;
 	
-	console.log(rowLength);
-	console.log(padding);
-	console.log(width);
-	
 	for(var i = 0, z = _data.length; i < z; i++) {
 		if(counter == 1) {
 			row = Ti.UI.createView({

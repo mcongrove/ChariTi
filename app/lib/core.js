@@ -242,8 +242,6 @@ var APP = {
 			});
 		}
 		
-		console.log(JSON.stringify(tabs));
-		
 		// Create a tab group
 		APP.Tabs.init({
 			tabs: tabs,
