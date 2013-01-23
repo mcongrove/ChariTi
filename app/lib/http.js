@@ -85,6 +85,8 @@ exports.request = function(_params) {
 				xhr.setRequestHeader(_params.headers[i].name, _params.headers[i].value);
 			}
 		}
+		
+		xhr.setRequestHeader("User-Agent", "Appcelerator Titanium/" + Ti.version + " (" + Ti.Platform.osname + "/" + Ti.Platform.version + "; " + Ti.Platform.name + "; " + Ti.Locale.currentLocale + ";)");
 
 		if(_params.data) {
 			// send the data

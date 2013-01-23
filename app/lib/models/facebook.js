@@ -16,7 +16,7 @@ exports.fetch = function(_params) {
 	APP.log("debug", "FACEBOOK.fetch");
 	APP.log("trace", JSON.stringify(_params));
 	
-	if(1 == 1) {//UTIL.isStale(_params.url, _params.cache)) {
+	if(UTIL.isStale(_params.url, _params.cache)) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
