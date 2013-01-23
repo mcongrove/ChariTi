@@ -206,23 +206,23 @@ var APP = {
 		} catch(_error) {
 			APP.log("error", "Unable to parse downloaded JSON, reverting to packaged JSON");
 			
-			contentFile = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "data/app.json");
-			content = contentFile.read();
-			data = JSON.parse(content.text);
+			contentFile	= Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "data/app.json");
+			content		= contentFile.read();
+			data		= JSON.parse(content.text);
 		}
 		
-		APP.ID = data.id;
-		APP.VERSION = data.version;
-		APP.LEGAL = {
+		APP.ID		= data.id;
+		APP.VERSION	= data.version;
+		APP.LEGAL	= {
 			COPYRIGHT: data.legal.copyright,
 			TOS: data.legal.terms,
 			PRIVACY: data.legal.privacy
 		};
 		
-		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 10 ? data.configurationUrl : false;
-		APP.Settings = data.settings;
-		APP.Plugins = data.plugins;
-		APP.Nodes = data.tabs;
+		APP.ConfigurationURL	= data.configurationUrl && data.configurationUrl.length > 10 ? data.configurationUrl : false;
+		APP.Settings			= data.settings;
+		APP.Plugins				= data.plugins;
+		APP.Nodes				= data.tabs;
 	},
 	/**
 	 * Builds out the tab group
@@ -241,6 +241,8 @@ var APP = {
 				controller: APP.Nodes[i].type.toLowerCase()
 			});
 		}
+		
+		console.log(JSON.stringify(tabs));
 		
 		// Create a tab group
 		APP.Tabs.init({
@@ -331,6 +333,14 @@ var APP = {
 		APP.previousScreen			= null;
 		APP.controllerStacks		= [];
 		APP.nonTabStacks			= {};
+		APP.hasDetail				= false;
+		APP.currentDetailStack		= -1;
+		APP.previousDetailScreen	= null;
+		APP.detailStacks			= [];
+		APP.Master					= [];
+		APP.Detail					= [];
+		APP.cancelLoading			= false;
+		APP.loadingOpen				= false;
 		
 		APP.loadContent();
 		
@@ -777,5 +787,9 @@ var APP = {
 		APP.log("debug", "APP.resumeObserver");
 	}
 };
+
+Ti.Gesture.addEventListener("shake", function(_event) {
+	APP.Tabs.clear();
+});
 
 module.exports = APP;
