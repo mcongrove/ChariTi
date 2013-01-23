@@ -1,22 +1,22 @@
 var Alloy		= require("alloy");
 
-$.tabs			= [];
-$.excess		= false;
-$.excessLength	= 5;
-$.moreOpen		= false;
-$.width			= 0;
-$.display		= {
-	width:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
-	height:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
-	dpi:	Ti.Platform.displayCaps.dpi
-};
-
-if(OS_ANDROID) {
-	$.display.width		= ($.display.width / ($.display.dpi / 160));
-	$.display.height	= ($.display.height / ($.display.dpi / 160));
-}
-
 $.init = function(_params) {
+	$.tabs			= [];
+	$.excess		= false;
+	$.excessLength	= 5;
+	$.moreOpen		= false;
+	$.width			= 0;
+	$.display		= {
+		width:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
+		height:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
+		dpi:	Ti.Platform.displayCaps.dpi
+	};
+	
+	if(OS_ANDROID) {
+		$.display.width		= ($.display.width / ($.display.dpi / 160));
+		$.display.height	= ($.display.height / ($.display.dpi / 160));
+	}
+	
 	if(Alloy.isTablet) {
 		$.excessLength = Math.floor($.display.width / 70);
 	}
@@ -169,12 +169,15 @@ $.addMoreTab = function(_params) {
 };
 
 $.clear = function() {
-	for(var i = 0; i < $.excessLength; i++) {
-		$.Tabs.remove($.tabs[i]);
+	var children		= $.Tabs.children;
+	var childrenMore	= $.TabsMore.children;
+	
+	for(var i = 0; i < children.length; i++) {
+		$.Tabs.remove(children[i]);
 	}
 	
-	for(var i = $.excessLength; i < $.tabs.length; i++) {
-		$.TabsMore.remove($.tabs[i]);
+	for(var i = 0; i < childrenMore.length; i++) {
+		$.TabsMore.remove(childrenMore[i]);
 	}
 };
 

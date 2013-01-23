@@ -1,7 +1,7 @@
 {
 	"id": "ChariTi.001",
 	"version": "1.0",
-	"_configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
+	"_configurationUrl": "http://chariti.mobi/app/dev.php?v=1.0.1",
 	"legal": {
 		"copyright": "Copyright ‌© 2012 ChariTi",
 		"terms": "http://m.appcelerator.com/legal/terms-conditions",
