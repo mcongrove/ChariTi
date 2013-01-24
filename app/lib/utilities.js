@@ -72,6 +72,7 @@ exports.cleanString = function(_string) {
 	_string = exports.htmlDecode(_string);
 	_string = _string.replace(/\s*<br[^>]*>\s*/ig, "\n");
 	_string = _string.replace(/\s*<\/p>*\s*/ig, "\n\n");
+	_string = _string.replace(/<a[^h]*href=["']{1}([^'"]*)["']{1}>([^<]*)<\/a>/ig, "$2 [$1]");
 	_string = _string.replace(/<[^>]*>/g, "");
 	_string = _string.replace(/\s*\n{3,}\s*/g, "\n\n");
 	_string = _string.replace(/[^\S\n]{2,}/g, " ");

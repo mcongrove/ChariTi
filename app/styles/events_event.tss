@@ -72,5 +72,6 @@
 	},
 	color: "#777",
 	backgroundColor: "transparent",
-	editable: false
+	editable: false,
+	autoLink: Ti.UI.AUTOLINK_URLS
 }
