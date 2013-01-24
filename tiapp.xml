@@ -37,21 +37,17 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="1" android:versionName="1"
-            package="com.chariti.mobile" xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:versionCode="1" android:versionName="1" package="com.chariti.mobile" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-sdk android:minSdkVersion="8"/>
-            <permission
-                android:name="com.chariti.mobile.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-            <application android:debuggable="false"
-                android:icon="@drawable/appicon" android:label="ChariTi" android:name="CharitiApplication">
+            <permission android:name="com.chariti.mobile.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+            <application android:debuggable="false" android:icon="@drawable/appicon" android:label="ChariTi" android:name="CharitiApplication">
                 <receiver android:name="com.urbanairship.CoreReceiver">
                     <intent-filter>
                         <action android:name="android.intent.action.BOOT_COMPLETED"/>
                         <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
                     </intent-filter>
                 </receiver>
-                <receiver
-                    android:name="com.urbanairship.push.c2dm.C2DMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+                <receiver android:name="com.urbanairship.push.c2dm.C2DMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
                     <intent-filter>
                         <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                         <category android:name="com.chariti.mobile"/>
@@ -63,35 +59,18 @@
                 </receiver>
                 <service android:name="com.urbanairship.push.PushService"/>
                 <receiver android:name="ti.modules.titanium.urbanairship.IntentReceiver"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:label="ChariTi"
-                    android:name=".CharitiActivity"
-                    android:theme="@style/Theme.Titanium">
+                <activity android:configChanges="keyboardHidden|orientation" android:label="ChariTi" android:name=".CharitiActivity" android:theme="@style/Theme.Titanium">
                     <intent-filter>
                         <action android:name="android.intent.action.MAIN"/>
                         <category android:name="android.intent.category.LAUNCHER"/>
                     </intent-filter>
                 </activity>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:launchMode="singleTask"
-                    android:name="ti.modules.titanium.map.TiMapActivity"/>
+                <activity android:configChanges="keyboardHidden|orientation" android:launchMode="singleTask" android:name="ti.modules.titanium.map.TiMapActivity"/>
                 <uses-library android:name="com.google.android.maps"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiActivity"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiTranslucentActivity"
-                    android:theme="@android:style/Theme.Translucent"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiModalActivity"
-                    android:theme="@android:style/Theme.Translucent"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="ti.modules.titanium.ui.TiTabActivity"/>
+                <activity android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiActivity"/>
+				<activity android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiTranslucentActivity" android:theme="@android:style/Theme.Translucent"/>
+				<activity android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiModalActivity" android:theme="@android:style/Theme.Translucent"/>
+				<activity android:configChanges="keyboardHidden|orientation" android:name="ti.modules.titanium.ui.TiTabActivity"/>
                 <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
                 <service android:exported="false" android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"/>
             </application>

@@ -1,62 +1,55 @@
 var APP = require("core");
 
-exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();
-
 if(OS_IOS) {
 	var SOCIAL = require("dk.napp.social");
 	
 	exports.facebookSupported	= SOCIAL.isFacebookSupported();
 	exports.twitterSupported	= SOCIAL.isTwitterSupported();
-}
-
-/**
- * Shares information via e-mail
- */
-exports.email = function(_url) {
-	var email = Ti.UI.createEmailDialog();
+	exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();
 	
-	if(email.isSupported()) {
-		email.html			= true;
-		email.subject		= APP.Settings.email.subject;
-		email.messageBody	= APP.Settings.email.body + "<br /><br /><a href='" + _url + "'>" + _url + "</a><br /><br />" + APP.Settings.email.footer;
+	/**
+	 * Shares information via e-mail
+	 */
+	exports.email = function(_url) {
+		var email = Ti.UI.createEmailDialog();
 		
-		email.open();
-	}
-};
-
-/**
- * Shares information via Facebook
- */
-exports.facebook = function(_url) {
-	if(OS_IOS) {
+		if(email.isSupported()) {
+			email.html			= true;
+			email.subject		= APP.Settings.email.subject;
+			email.messageBody	= APP.Settings.email.body + "<br /><br /><a href='" + _url + "'>" + _url + "</a><br /><br />" + APP.Settings.email.footer;
+			
+			email.open();
+		}
+	};
+	
+	/**
+	 * Shares information via Facebook
+	 */
+	exports.facebook = function(_url) {
 		if(exports.facebookSupported) {
 			SOCIAL.facebook({
-				text: APP.Settings.facebook,
+				text: APP.Settings.social,
 				url: _url
 			});
 		}
-	}
-};
-
-/**
- * Shares information via Twitter
- */
-exports.twitter = function(_url) {
-	if(OS_IOS) {
+	};
+	
+	/**
+	 * Shares information via Twitter
+	 */
+	exports.twitter = function(_url) {
 		if(exports.twitterSupported) {
 			SOCIAL.twitter({
-				text: APP.Settings.twitter,
+				text: APP.Settings.social,
 				url: _url
 			});
 		}
-	}
-};
-
-/**
- * Retweets a tweet
- */
-exports.twitterRetweet = function(_text, _username) {
-	if(OS_IOS) {
+	};
+	
+	/**
+	 * Retweets a tweet
+	 */
+	exports.twitterRetweet = function(_text, _username) {
 		if(exports.twitterSupported) {
 			var text = "RT @" + _username + ": " + _text;
 			
@@ -72,30 +65,26 @@ exports.twitterRetweet = function(_text, _username) {
 				text: text
 			});
 		}
-	}
-};
-
-/**
- * Replies to a tweet
- */
-exports.twitterReply = function(_username) {
-	if(OS_IOS) {
+	};
+	
+	/**
+	 * Replies to a tweet
+	 */
+	exports.twitterReply = function(_username) {
 		if(exports.twitterSupported) {
 			SOCIAL.twitter({
 				text: "@" + _username + " "
 			});
 		}
-	}
-};
-
-/**
- * Opens the sharing menu 
- */
-exports.share = function(_url) {
-	var options = [];
-	var mapping = [];
+	};
 	
-	if(OS_IOS) {
+	/**
+	 * Opens the sharing menu 
+	 */
+	exports.share = function(_url) {
+		var options = [];
+		var mapping = [];
+		
 		if(exports.facebookSupported) {
 			options.push("Share via Facebook");
 			mapping.push("facebook");
@@ -105,46 +94,52 @@ exports.share = function(_url) {
 			options.push("Share via Twitter");
 			mapping.push("twitter");
 		}
-	}
-	
-	if(exports.emailSupported) {
-		options.push("Share via E-Mail");
-		mapping.push("email");
-	}
-	
-	if(OS_IOS) {
-		options.push("Open in Safari");
-	} else {
-		options.push("Open in Browser");
-	}
-	
-	mapping.push("browser");
-	
-	options.push("Cancel");
-	mapping.push("cancel");
-	
-	var dialog = Ti.UI.createOptionDialog({
-		options: options,
-		cancel: options.length - 1,
-		selectedIndex: options.length - 1
-	});
-	
-	dialog.addEventListener("click", function(_event) {
-		switch(mapping[_event.index]) {
-			case "facebook":
-				exports.facebook(_url);
-				break;
-			case "twitter":
-				exports.twitter(_url);
-				break;
-			case "email":
-				exports.email(_url);
-				break;
-			case "browser":
-				Ti.Platform.openURL(_url);
-				break;
+		
+		if(exports.emailSupported) {
+			options.push("Share via E-Mail");
+			mapping.push("email");
 		}
-	});
-	
-	dialog.show();
-};
+		
+		options.push("Open in Safari");
+		mapping.push("browser");
+		
+		options.push("Cancel");
+		mapping.push("cancel");
+		
+		var dialog = Ti.UI.createOptionDialog({
+			options: options,
+			cancel: options.length - 1,
+			selectedIndex: options.length - 1
+		});
+		
+		dialog.addEventListener("click", function(_event) {
+			switch(mapping[_event.index]) {
+				case "facebook":
+					exports.facebook(_url);
+					break;
+				case "twitter":
+					exports.twitter(_url);
+					break;
+				case "email":
+					exports.email(_url);
+					break;
+				case "browser":
+					Ti.Platform.openURL(_url);
+					break;
+			}
+		});
+		
+		dialog.show();
+	};
+} else if(OS_ANDROID) {
+	exports.share = function(_url) {
+		var intent = Ti.Android.createIntent({
+			action: Ti.Android.ACTION_SEND,
+			type: "text/plain"
+		});
+		
+		intent.putExtra(Ti.Android.EXTRA_TEXT, APP.Settings.social + " " + _url);
+		
+		Ti.Android.currentActivity.startActivity(intent);
+	};
+}
