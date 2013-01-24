@@ -10,7 +10,7 @@
 		Titanium.UI.LANDSCAPE_LEFT
 	]
 },
-"#MainWindow[platform=android formFactor=handheld]": {
+"#MainWindow[formFactor=handheld]": {
 	orientationModes: [
 		Titanium.UI.PORTRAIT
 	]

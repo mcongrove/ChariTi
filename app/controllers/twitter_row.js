@@ -11,6 +11,8 @@ $.arrow.visible		= false;
 
 if(OS_IOS) {
 	if(SOCIAL.twitterSupported) {
+		$.arrow.visible = true;
+		
 		$.Wrapper.addEventListener("click", function(_event) {
 			var dialog = Ti.UI.createOptionDialog({
 				options: [ "Retweet", "Reply", "Cancel" ],

@@ -1,36 +1,23 @@
 var APP = require("core");
 
 if(OS_IOS) {
-	var SOCIAL = require("dk.napp.social");
+	var SOCIAL	= require("dk.napp.social");
 	
-	exports.facebookSupported	= SOCIAL.isFacebookSupported();
 	exports.twitterSupported	= SOCIAL.isTwitterSupported();
 	exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();
+	exports.activitySupported	= SOCIAL.isActivityViewSupported();
 	
 	/**
 	 * Shares information via e-mail
 	 */
 	exports.email = function(_url) {
-		var email = Ti.UI.createEmailDialog();
-		
-		if(email.isSupported()) {
+		if(exports.emailSupported) {
+			var email = Ti.UI.createEmailDialog();
+			
 			email.html			= true;
-			email.subject		= APP.Settings.email.subject;
-			email.messageBody	= APP.Settings.email.body + "<br /><br /><a href='" + _url + "'>" + _url + "</a><br /><br />" + APP.Settings.email.footer;
+			email.messageBody	= APP.Settings.share + "<br /><br /><a href='" + _url + "'>" + _url + "</a>";
 			
 			email.open();
-		}
-	};
-	
-	/**
-	 * Shares information via Facebook
-	 */
-	exports.facebook = function(_url) {
-		if(exports.facebookSupported) {
-			SOCIAL.facebook({
-				text: APP.Settings.social,
-				url: _url
-			});
 		}
 	};
 	
@@ -40,7 +27,7 @@ if(OS_IOS) {
 	exports.twitter = function(_url) {
 		if(exports.twitterSupported) {
 			SOCIAL.twitter({
-				text: APP.Settings.social,
+				text: APP.Settings.share,
 				url: _url
 			});
 		}
@@ -79,57 +66,57 @@ if(OS_IOS) {
 	};
 	
 	/**
-	 * Opens the sharing menu 
+	 * Opens the sharing menu
+	 * NOTE: Min iOS 6 for ActivityView, otherwise fall back to Twitter and e-mail 
 	 */
 	exports.share = function(_url) {
-		var options = [];
-		var mapping = [];
-		
-		if(exports.facebookSupported) {
-			options.push("Share via Facebook");
-			mapping.push("facebook");
-		}
-		
-		if(exports.twitterSupported) {
-			options.push("Share via Twitter");
-			mapping.push("twitter");
-		}
-		
-		if(exports.emailSupported) {
-			options.push("Share via E-Mail");
-			mapping.push("email");
-		}
-		
-		options.push("Open in Safari");
-		mapping.push("browser");
-		
-		options.push("Cancel");
-		mapping.push("cancel");
-		
-		var dialog = Ti.UI.createOptionDialog({
-			options: options,
-			cancel: options.length - 1,
-			selectedIndex: options.length - 1
-		});
-		
-		dialog.addEventListener("click", function(_event) {
-			switch(mapping[_event.index]) {
-				case "facebook":
-					exports.facebook(_url);
-					break;
-				case "twitter":
-					exports.twitter(_url);
-					break;
-				case "email":
-					exports.email(_url);
-					break;
-				case "browser":
-					Ti.Platform.openURL(_url);
-					break;
+		if(exports.activitySupported) {
+			SOCIAL.activityView({
+				text: APP.Settings.share + " " + _url,
+				removeIcons: "print,copy,contact,camera,weibo"
+			});
+		} else {
+			var options = [];
+			var mapping = [];
+			
+			if(exports.twitterSupported) {
+				options.push("Share via Twitter");
+				mapping.push("twitter");
 			}
-		});
-		
-		dialog.show();
+			
+			if(exports.emailSupported) {
+				options.push("Share via E-Mail");
+				mapping.push("email");
+			}
+			
+			options.push("Open in Safari");
+			mapping.push("browser");
+			
+			options.push("Cancel");
+			mapping.push("cancel");
+			
+			var dialog = Ti.UI.createOptionDialog({
+				options: options,
+				cancel: options.length - 1,
+				selectedIndex: options.length - 1
+			});
+			
+			dialog.addEventListener("click", function(_event) {
+				switch(mapping[_event.index]) {
+					case "twitter":
+						exports.twitter(_url);
+						break;
+					case "email":
+						exports.email(_url);
+						break;
+					case "browser":
+						Ti.Platform.openURL(_url);
+						break;
+				}
+			});
+			
+			dialog.show();
+		}
 	};
 } else if(OS_ANDROID) {
 	exports.share = function(_url) {
@@ -138,7 +125,7 @@ if(OS_IOS) {
 			type: "text/plain"
 		});
 		
-		intent.putExtra(Ti.Android.EXTRA_TEXT, APP.Settings.social + " " + _url);
+		intent.putExtra(Ti.Android.EXTRA_TEXT, APP.Settings.share + " " + _url);
 		
 		Ti.Android.currentActivity.startActivity(intent);
 	};
