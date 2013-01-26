@@ -435,30 +435,6 @@ var APP = {
 		APP.nonTabStacks = {};
 	},
 	/**
-	 * Global function to add a screen
-	 */
-	addScreen: function(_screen) {
-		if(_screen) {
-			APP.ContentWrapper.add(_screen);
-			
-			if(APP.previousScreen) {
-				APP.removeScreen(APP.previousScreen);
-			}
-			
-			APP.previousScreen = _screen;
-		}
-	},
-	/**
-	 * Global function to remove a screen
-	 */
-	removeScreen: function(_screen) {
-		if(_screen) {
-			APP.ContentWrapper.remove(_screen);
-			
-			APP.previousScreen = null;
-		}
-	},
-	/**
 	 * Open a child screen
 	 * @param {String} _controller The name of the controller to open
 	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
@@ -553,6 +529,30 @@ var APP = {
 		APP.addScreen(stack[0]);
 	},
 	/**
+	 * Global function to add a screen
+	 */
+	addScreen: function(_screen) {
+		if(_screen) {
+			APP.ContentWrapper.add(_screen);
+			
+			if(APP.previousScreen) {
+				APP.removeScreen(APP.previousScreen);
+			}
+			
+			APP.previousScreen = _screen;
+		}
+	},
+	/**
+	 * Global function to remove a screen
+	 */
+	removeScreen: function(_screen) {
+		if(_screen) {
+			APP.ContentWrapper.remove(_screen);
+			
+			APP.previousScreen = null;
+		}
+	},
+	/**
 	 * Adds a screen to the Master window
 	 */
 	addMasterScreen: function(_screen) {
@@ -580,6 +580,9 @@ var APP = {
 			APP.previousDetailScreen = _screen;
 		}
 	},
+	/**
+	 * Removes a screen from the Detail window
+	 */
 	removeDetailScreen: function(_screen, _pop) {
 		if(_screen) {
 			APP.Detail[APP.currentStack].remove(_screen);
