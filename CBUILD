@@ -98,7 +98,7 @@ alloy compile
 echo "Compiled. Building..."
 if $DEPLOY
 then
-	titanium build --platform ios --force --device-family iphone --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
+	titanium build --platform ios --force --device-family universal --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
 else
 	titanium build --platform ios --force --device-family iphone
 fi

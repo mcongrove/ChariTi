@@ -37,13 +37,23 @@ exports.init = function(_current) {
 exports.migrate = function() {
 	switch(exports.current) {
 		case "1.0.0":
-			return; // Initial version
+			return;
 			break;
 		case "1.0.1":
 			switch(exports.previous) {
 				case "1.0.0":
 					exports.addColumn("news", "image", "TEXT");
 					exports.addColumn("blog", "image", "TEXT");
+					break;
+			}
+			break;
+		case "1.1.0":
+			switch(exports.previous) {
+				case "1.0.0":
+					exports.addColumn("news", "image", "TEXT");
+					exports.addColumn("blog", "image", "TEXT");
+					break;
+				case "1.0.1":
 					break;
 			}
 			break;
