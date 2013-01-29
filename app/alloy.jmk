@@ -1,5 +1,5 @@
 task("pre:compile", function(event, logger) {
-	var beautify	= require("js-beautify").js_beautify;
+	var beautify	= require(event.dir.project + "/package/beautify").js_beautify;
 	var fs			= require("fs");
 	
 	fs.readdir(event.dir.controllers, function(err, files) {
