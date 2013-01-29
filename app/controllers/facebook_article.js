@@ -1,46 +1,46 @@
-var APP		= require("core");
-var UTIL	= require("utilities");
-var SOCIAL	= require("social");
-var MODEL	= require("models/facebook");
+var APP = require("core");
+var UTIL = require("utilities");
+var SOCIAL = require("social");
+var MODEL = require("models/facebook");
 
-var DATA	= arguments[0] || {};
-var ACTION	= {};
+var DATA = arguments[0] || {};
+var ACTION = {};
 
 $.init = function() {
 	APP.log("debug", "facebook_article.init | " + JSON.stringify(DATA));
-	
+
 	$.handleData(MODEL.getArticle(DATA.id));
 };
 
 $.handleData = function(_data) {
 	APP.log("debug", "facebook_article.handleData");
-	
+
 	$.handleNavigation();
-	
-	$.heading.text	= _data.title;
-	$.text.value	= _data.description;
-	$.date.text		= UTIL.toDateRelative(_data.date);
-	$.date.color	= APP.Settings.colors.primary;
-	
-	ACTION.url		= _data.link
-	
-	$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible			= APP.Device.isHandheld;
-	$.NavigationBar.right.visible			= true;
-	$.NavigationBar.rightImage.image		= "/images/action.png";
+
+	$.heading.text = _data.title;
+	$.text.value = _data.description;
+	$.date.text = UTIL.toDateRelative(_data.date);
+	$.date.color = APP.Settings.colors.primary;
+
+	ACTION.url = _data.link
+
+	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.NavigationBar.back.visible = APP.Device.isHandheld;
+	$.NavigationBar.right.visible = true;
+	$.NavigationBar.rightImage.image = "/images/action.png";
 };
 
-$.handleNavigation = function () {
-	ACTION.next		= MODEL.getNextArticle(DATA.id);
-	ACTION.previous	= MODEL.getPreviousArticle(DATA.id);
-	
+$.handleNavigation = function() {
+	ACTION.next = MODEL.getNextArticle(DATA.id);
+	ACTION.previous = MODEL.getPreviousArticle(DATA.id);
+
 	var navigation = Ti.UI.createView({
 		width: "96dp",
 		height: "37dp",
 		top: "5dp",
 		backgroundImage: "/images/navigation.png"
 	});
-	
+
 	var arrowNext = Ti.UI.createImageView({
 		image: "/images/arrowDown.png",
 		width: "47dp",
@@ -48,7 +48,7 @@ $.handleNavigation = function () {
 		top: "0dp",
 		right: "0dp"
 	});
-	
+
 	var arrowPrevious = Ti.UI.createImageView({
 		image: "/images/arrowUp.png",
 		width: "47dp",
@@ -56,11 +56,11 @@ $.handleNavigation = function () {
 		top: "0dp",
 		left: "0dp"
 	});
-	
+
 	if(ACTION.next) {
 		arrowNext.addEventListener("click", function(_event) {
 			APP.log("debug", "facebook_article @next");
-			
+
 			APP.addChild("facebook_article", {
 				id: ACTION.next.id
 			});
@@ -68,11 +68,11 @@ $.handleNavigation = function () {
 	} else {
 		arrowNext.opacity = 0.4;
 	}
-	
+
 	if(ACTION.previous) {
 		arrowPrevious.addEventListener("click", function(_event) {
 			APP.log("debug", "facebook_article @previous");
-			
+
 			APP.addChild("facebook_article", {
 				id: ACTION.previous.id
 			});
@@ -80,7 +80,7 @@ $.handleNavigation = function () {
 	} else {
 		arrowPrevious.opacity = 0.4;
 	}
-	
+
 	navigation.add(arrowNext);
 	navigation.add(arrowPrevious);
 	$.NavigationBar.Wrapper.add(navigation);
@@ -89,13 +89,13 @@ $.handleNavigation = function () {
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook_article @close");
-	
+
 	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook_article @menu");
-	
+
 	SOCIAL.share(ACTION.url);
 });
 

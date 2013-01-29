@@ -1,26 +1,26 @@
 var APP = require("core");
 
 if(OS_IOS) {
-	var SOCIAL	= require("dk.napp.social");
-	
-	exports.twitterSupported	= SOCIAL.isTwitterSupported();
-	exports.emailSupported		= Ti.UI.createEmailDialog().isSupported();
-	exports.activitySupported	= SOCIAL.isActivityViewSupported();
-	
+	var SOCIAL = require("dk.napp.social");
+
+	exports.twitterSupported = SOCIAL.isTwitterSupported();
+	exports.emailSupported = Ti.UI.createEmailDialog().isSupported();
+	exports.activitySupported = SOCIAL.isActivityViewSupported();
+
 	/**
 	 * Shares information via e-mail
 	 */
 	exports.email = function(_url) {
 		if(exports.emailSupported) {
 			var email = Ti.UI.createEmailDialog();
-			
-			email.html			= true;
-			email.messageBody	= APP.Settings.share + "<br /><br /><a href='" + _url + "'>" + _url + "</a>";
-			
+
+			email.html = true;
+			email.messageBody = APP.Settings.share + "<br /><br /><a href='" + _url + "'>" + _url + "</a>";
+
 			email.open();
 		}
 	};
-	
+
 	/**
 	 * Shares information via Twitter
 	 */
@@ -32,14 +32,14 @@ if(OS_IOS) {
 			});
 		}
 	};
-	
+
 	/**
 	 * Retweets a tweet
 	 */
 	exports.twitterRetweet = function(_text, _username) {
 		if(exports.twitterSupported) {
 			var text = "RT @" + _username + ": " + _text;
-			
+
 			if(text.length > 140) {
 				if(_text.length < 138) {
 					text = "RT " + _text;
@@ -47,13 +47,13 @@ if(OS_IOS) {
 					text = _text;
 				}
 			}
-			
+
 			SOCIAL.twitter({
 				text: text
 			});
 		}
 	};
-	
+
 	/**
 	 * Replies to a tweet
 	 */
@@ -64,7 +64,7 @@ if(OS_IOS) {
 			});
 		}
 	};
-	
+
 	/**
 	 * Opens the sharing menu
 	 * NOTE: Min iOS 6 for ActivityView, otherwise fall back to Twitter and e-mail 
@@ -78,29 +78,29 @@ if(OS_IOS) {
 		} else {
 			var options = [];
 			var mapping = [];
-			
+
 			if(exports.twitterSupported) {
 				options.push("Share via Twitter");
 				mapping.push("twitter");
 			}
-			
+
 			if(exports.emailSupported) {
 				options.push("Share via E-Mail");
 				mapping.push("email");
 			}
-			
+
 			options.push("Open in Safari");
 			mapping.push("browser");
-			
+
 			options.push("Cancel");
 			mapping.push("cancel");
-			
+
 			var dialog = Ti.UI.createOptionDialog({
 				options: options,
 				cancel: options.length - 1,
 				selectedIndex: options.length - 1
 			});
-			
+
 			dialog.addEventListener("click", function(_event) {
 				switch(mapping[_event.index]) {
 					case "twitter":
@@ -114,7 +114,7 @@ if(OS_IOS) {
 						break;
 				}
 			});
-			
+
 			dialog.show();
 		}
 	};
@@ -124,9 +124,9 @@ if(OS_IOS) {
 			action: Ti.Android.ACTION_SEND,
 			type: "text/plain"
 		});
-		
+
 		intent.putExtra(Ti.Android.EXTRA_TEXT, APP.Settings.share + " " + _url);
-		
+
 		Ti.Android.currentActivity.startActivity(intent);
 	};
 }

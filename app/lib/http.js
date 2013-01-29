@@ -14,7 +14,7 @@
  */
 exports.request = function(_params) {
 	Ti.API.debug("HTTP.request " + _params.url);
-	
+
 	if(Ti.Network.online) {
 		// Setup the xhr object
 		var xhr = Ti.Network.createHTTPClient();
@@ -39,7 +39,7 @@ exports.request = function(_params) {
 						_data = this.responseText;
 						break;
 				}
-				
+
 				if(_params.success) {
 					if(_params.passthrough) {
 						_params.success(_data, _params.url, _params.passthrough);
@@ -75,8 +75,8 @@ exports.request = function(_params) {
 		};
 
 		// Open the remote connection
-		_params.type	= _params.type ? _params.type : "GET";
-		_params.async	= _params.async ? _params.async : true;
+		_params.type = _params.type ? _params.type : "GET";
+		_params.async = _params.async ? _params.async : true;
 
 		xhr.open(_params.type, _params.url, _params.async);
 
@@ -85,7 +85,7 @@ exports.request = function(_params) {
 				xhr.setRequestHeader(_params.headers[i].name, _params.headers[i].value);
 			}
 		}
-		
+
 		xhr.setRequestHeader("User-Agent", "Appcelerator Titanium/" + Ti.version + " (" + Ti.Platform.osname + "/" + Ti.Platform.version + "; " + Ti.Platform.name + "; " + Ti.Locale.currentLocale + ";)");
 
 		if(_params.data) {

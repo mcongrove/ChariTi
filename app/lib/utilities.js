@@ -7,18 +7,18 @@ exports.isStale = function(_url, _time) {
 	var cacheTime = typeof _time !== "undefined" ? _time : 5;
 	var freshTime = time - (cacheTime * 60 * 1000);
 	var lastUpdate = 0;
-	
+
 	var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
+
 	while(data.isValidRow()) {
 		lastUpdate = data.fieldByName("time");
 
 		data.next();
 	}
-	
+
 	data.close();
 	db.close();
-	
+
 	if(lastUpdate === 0) {
 		return "new";
 	} else if(lastUpdate > freshTime) {
@@ -34,18 +34,18 @@ exports.isStale = function(_url, _time) {
 exports.lastUpdate = function(_url) {
 	var db = Ti.Database.open("ChariTi");
 	var lastUpdate = 0;
-	
+
 	var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
+
 	while(data.isValidRow()) {
 		lastUpdate = data.fieldByName("time");
 
 		data.next();
 	}
-	
+
 	data.close();
 	db.close();
-	
+
 	return lastUpdate;
 };
 
@@ -56,7 +56,7 @@ exports.escapeString = function(_string) {
 	if(typeof _string !== "string") {
 		return "\"" + _string + "\"";
 	}
-	
+
 	return "\"" + _string.replace(/"/g, "'") + "\"";
 };
 
@@ -67,7 +67,7 @@ exports.cleanString = function(_string) {
 	if(typeof _string !== "string") {
 		return _string;
 	}
-	
+
 	_string = _string.replace(/&amp;*/ig, "&");
 	_string = exports.htmlDecode(_string);
 	_string = _string.replace(/\s*<br[^>]*>\s*/ig, "\n");
@@ -78,7 +78,7 @@ exports.cleanString = function(_string) {
 	_string = _string.replace(/[^\S\n]{2,}/g, " ");
 	_string = _string.replace(/\n[^\S\n]*/g, "\n");
 	_string = _string.replace(/^\s+|\s+$/g, "");
-	
+
 	return _string;
 };
 
@@ -87,7 +87,7 @@ exports.cleanString = function(_string) {
  */
 exports.cleanEscapeString = function(_string) {
 	_string = exports.cleanString(_string);
-	
+
 	return exports.escapeString(_string);
 };
 
@@ -102,7 +102,7 @@ exports.xmlNormalize = function(_string) {
 	_string = _string.replace(/<description>(?!<!\[CDATA\[)/ig, "<description><![CDATA[");
 	_string = _string.replace(/(\]\]>)?<\/title>/ig, "]]></title>");
 	_string = _string.replace(/(\]\]>)?<\/description>/ig, "]]></description>");
-	
+
 	return _string;
 };
 
@@ -113,21 +113,21 @@ exports.htmlDecode = function(_string) {
 	var tmp_str = _string.toString();
 	var hash_map = exports.htmlTranslationTable();
 	var results = tmp_str.match(/&#\d*;/ig);
-	
+
 	if(results) {
 		for(var i = 0, x = results.length; i < x; i++) {
 			var code = parseInt(results[i].replace("&#", "").replace(";", ""), 10);
-			
+
 			hash_map[results[i]] = code;
 		}
 	}
-	
+
 	for(var entity in hash_map) {
 		var symbol = String.fromCharCode(hash_map[entity]);
-		
+
 		tmp_str = tmp_str.split(entity).join(symbol);
 	}
-	
+
 	return tmp_str;
 };
 
@@ -402,17 +402,17 @@ exports.htmlTranslationTable = function() {
  */
 exports.formatNumber = function(_number) {
 	_number = _number + "";
-	
+
 	x = _number.split(".");
 	x1 = x[0];
 	x2 = x.length > 1 ? "." + x[1] : "";
-	
+
 	var expression = /(\d+)(\d{3})/;
-	
-	while (expression.test(x1)) {
+
+	while(expression.test(x1)) {
 		x1 = x1.replace(expression, "$1" + "," + "$2");
 	}
-	
+
 	return x1 + x2;
 };
 
@@ -426,8 +426,8 @@ exports.toDateAbsolute = function(_date) {
 	dateHour = dateHour == 0 ? 12 : dateHour;
 	var dateMinutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
 	var datePeriod = date.getHours() > 12 ? "PM" : "AM";
-	var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-	
+	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 	return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " " + dateHour + ":" + dateMinutes + datePeriod;
 };
 
@@ -438,7 +438,7 @@ exports.toDateRelative = function(_date) {
 	var date = new Date();
 	date.setTime(_date);
 	var now = new Date();
-	var days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+	var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	var dateMonth = date.getMonth();
 	var dateDate = date.getDate();
 	var dateDay = days[date.getDay()];
@@ -450,7 +450,7 @@ exports.toDateRelative = function(_date) {
 	var nowMonth = now.getMonth();
 	var nowDate = now.getDate();
 	var nowYear = now.getFullYear();
-	
+
 	if(dateYear == nowYear && dateMonth == nowMonth) {
 		if(dateDate == nowDate) {
 			return "Today " + dateHour + ":" + dateMinutes + datePeriod;

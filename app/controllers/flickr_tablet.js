@@ -5,5 +5,5 @@ APP.Detail[APP.currentStack] = $.Detail;
 
 APP.addChild("tablet_detail");
 
-var master	= Alloy.createController("flickr", arguments[0]).getView();
+var master = Alloy.createController("flickr", arguments[0]).getView();
 APP.addMasterScreen(master);

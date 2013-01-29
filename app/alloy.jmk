@@ -1,11 +1,66 @@
+task("pre:compile", function(event, logger) {
+	var beautify	= require("js-beautify").js_beautify;
+	var fs			= require("fs");
+	
+	fs.readdir(event.dir.controllers, function(err, files) {
+		for(var i in files) {
+			var bits = files[i].split(".");
+			
+			if(bits[bits.length - 1] == "js") {
+				var file	= event.dir.controllers + "/" + files[i];
+				
+				logger.debug("Beautifying \"app/controllers/" + files[i] + "\"");
+				
+				var data	= fs.readFileSync(file, "utf8");
+				var newData	= beautify(data, {
+					indent_char: "\t",
+					indent_size: 1,
+					preserve_newlines: true,
+					max_preserve_newlines: 1,
+					keep_array_indentation: true,
+					space_before_conditional: false,
+					brace_style: "collapse"
+				});
+				
+				fs.writeFile(file, newData);
+			}
+		}
+	});
+	
+	fs.readdir(event.dir.project + "/app/lib/", function(err, files) {
+		for(var i in files) {
+			var bits = files[i].split(".");
+			
+			if(bits[bits.length - 1] == "js") {
+				var file	= event.dir.project + "/app/lib/" + files[i];
+				
+				logger.debug("Beautifying \"app/lib/" + files[i] + "\"");
+				
+				var data	= fs.readFileSync(file, "utf8");
+				var newData	= beautify(data, {
+					indent_char: "\t",
+					indent_size: 1,
+					preserve_newlines: true,
+					max_preserve_newlines: 1,
+					keep_array_indentation: true,
+					space_before_conditional: false,
+					brace_style: "collapse"
+				});
+				
+				fs.writeFile(file, newData);
+			}
+		}
+	});
+});
+
 task("post:compile", function(event, logger) {
-    var fs = require("fs");
-    
-    fs.writeFile(event.dir.resources + "/.gitignore", "*\n\n!.gitignore", function(err) {
-        if(err) {
-            logger.error(err);
-        } else {
-            logger.info(".gitignore file was generated!");
-        }
-    }); 
+	var fs = require("fs");
+	
+	fs.writeFile(event.dir.resources + "/.gitignore", "*\n\n!.gitignore", function(err) {
+		if(err) {
+			logger.error(err);
+		} else {
+			logger.info(".gitignore file was generated!");
+		}
+	});
 });
