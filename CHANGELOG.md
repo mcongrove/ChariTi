@@ -9,8 +9,9 @@ v 1.1
 *	Added tablet support (iPad + Android Tablet)
 *	Converted Facebook model to utilize JSON instead of XML
 *	Fixed memory management for controller stacking
-*	Added more sharing options
+*	Adding support for file manifests in JSON configuration file
 *	Adding support for links in articles
+*	Added more sharing options
 
 v 1.0.1
 -------

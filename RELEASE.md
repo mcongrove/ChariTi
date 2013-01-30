@@ -7,6 +7,7 @@ This document describes the process for creating a new ChariTi release.
 2.	Verify migration scripts in `migration.js`
 3.	Add release information to `CHANGELOG.md`
 4.	Commit all changes
-5.	Test release (if applicable, commit all fixes)
+5.	Test release (if applicable, commit any fixes)
 6.	Push changes to Master
-7.	Tag new version from commit
+7.	Tag new version from Master commit
+8.	Delete development branch
