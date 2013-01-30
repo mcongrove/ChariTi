@@ -648,21 +648,21 @@ var APP = {
 
 			Ti.Network.registerForPushNotifications({
 				types: [
-                    Ti.Network.NOTIFICATION_TYPE_BADGE,
-                    Ti.Network.NOTIFICATION_TYPE_ALERT,
-                    Ti.Network.NOTIFICATION_TYPE_SOUND
-                ],
+					Ti.Network.NOTIFICATION_TYPE_BADGE,
+					Ti.Network.NOTIFICATION_TYPE_ALERT,
+					Ti.Network.NOTIFICATION_TYPE_SOUND
+				],
 				success: function(_event) {
 					APP.log("debug", "APP.registerPush @success");
 					APP.log("trace", _event.deviceToken);
 
 					UA.registerDevice(_event.deviceToken, {
 						tags: [
-                            APP.ID,
-                            APP.Version,
-                            Ti.Platform.osname,
-                            Ti.Platform.locale
-                        ]
+							APP.ID,
+							APP.Version,
+							Ti.Platform.osname,
+							Ti.Platform.locale
+						]
 					});
 				},
 				error: function(_event) {
