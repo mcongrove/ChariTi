@@ -1,6 +1,7 @@
 var APP = require("core");
-var UTIL = require("utilities");
 var MODEL = require("models/youtube");
+var DATE = require("alloy/moment");
+var STRING = require("alloy/string");
 
 var CONFIG = arguments[0];
 var SELECTED;
@@ -48,7 +49,7 @@ $.handleVideos = function() {
 			id: data[i].id,
 			url: data[i].link,
 			heading: data[i].title,
-			subHeading: UTIL.toDateRelative(new Date(data[i].date).getTime())
+			subHeading: STRING.ucfirst(DATE(data[i].date, "YYYY/MM/DD HH:mm:ss").fromNow())
 		}).getView();
 
 		rows.push(row);

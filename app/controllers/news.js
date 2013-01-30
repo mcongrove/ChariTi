@@ -1,6 +1,8 @@
 var APP = require("core");
 var UTIL = require("utilities");
 var MODEL = require("models/news");
+var DATE = require("alloy/moment");
+var STRING = require("alloy/string");
 
 var CONFIG = arguments[0];
 var SELECTED;
@@ -67,7 +69,7 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("news_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: UTIL.toDateRelative(_data[i].date)
+			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date)).fromNow())
 		}).getView();
 
 		rows.push(row);
@@ -140,7 +142,7 @@ if(OS_IOS) {
 					}
 				} else {
 					if(offset < 60) {
-						$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+						$.refreshUpdateLabel.text = "Last Updated: " + DATE(parseInt(UTIL.lastUpdate(CONFIG.feed))).fromNow();
 					}
 
 					if(refreshEngaged == true) {

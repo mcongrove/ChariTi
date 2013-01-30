@@ -370,15 +370,12 @@ function js_beautify(js_source_text, options) {
 
         if (keep_whitespace) {
 
-            var whitespace_count = 0;
-
             while (in_array(c, whitespace)) {
 
                 if (c === "\n") {
                     trim_output();
                     output.push("\n");
                     just_added_newline = true;
-                    whitespace_count = 0;
                 } else {
                     if (just_added_newline) {
                         if (c === indent_string) {

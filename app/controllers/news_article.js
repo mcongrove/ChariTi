@@ -1,7 +1,8 @@
 var APP = require("core");
-var UTIL = require("utilities");
 var SOCIAL = require("social");
 var MODEL = require("models/news");
+var DATE = require("alloy/moment");
+var STRING = require("alloy/string");
 
 var DATA = arguments[0] || {};
 var ACTION = {};
@@ -19,7 +20,7 @@ $.handleData = function(_data) {
 
 	$.heading.text = _data.title;
 	$.text.value = _data.description;
-	$.date.text = UTIL.toDateRelative(_data.date);
+	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date)).fromNow());
 	$.date.color = APP.Settings.colors.primary;
 
 	if(_data.image) {

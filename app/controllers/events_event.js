@@ -1,7 +1,7 @@
 var APP = require("core");
-var UTIL = require("utilities");
 var SOCIAL = require("social");
 var MODEL = require("models/events");
+var DATE = require("alloy/moment");
 
 var DATA = arguments[0] || {};
 var ACTION = {};
@@ -20,7 +20,7 @@ $.handleData = function(_data) {
 	$.heading.text = _data.title;
 	$.text.value = _data.description;
 	$.location.text = "@ " + _data.location;
-	$.date.text = UTIL.toDateAbsolute(_data.date_start);
+	$.date.text = DATE(parseInt(_data.date_start)).format("MMMM Do, YYYY h:mma");
 	$.date.color = APP.Settings.colors.primary;
 
 	ACTION.url = "http://www.facebook.com/events/" + _data.id;

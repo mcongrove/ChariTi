@@ -1,6 +1,6 @@
 var APP = require("core");
-var UTIL = require("utilities");
 var MODEL = require("models/events");
+var DATE = require("alloy/moment");
 
 var CONFIG = arguments[0];
 var SELECTED;
@@ -46,7 +46,7 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("events_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: UTIL.toDateAbsolute(_data[i].date_start)
+			subHeading: DATE(parseInt(_data[i].date_start)).format("MMMM Do, YYYY h:mma")
 		}).getView();
 
 		rows.push(row);

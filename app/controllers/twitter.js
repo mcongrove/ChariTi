@@ -1,6 +1,8 @@
 var APP = require("core");
 var UTIL = require("utilities");
 var MODEL = require("models/twitter");
+var DATE = require("alloy/moment");
+var STRING = require("alloy/string");
 
 var CONFIG = arguments[0];
 
@@ -68,7 +70,7 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("twitter_row", {
 			id: _data[i].id,
 			heading: _data[i].text,
-			subHeading: UTIL.toDateRelative(_data[i].date),
+			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date)).fromNow()),
 			username: CONFIG.username
 		}).getView();
 
@@ -118,7 +120,7 @@ if(OS_IOS) {
 					}
 				} else {
 					if(offset < 60) {
-						$.refreshUpdateLabel.text = "Last Updated: " + UTIL.toDateRelative(UTIL.lastUpdate(CONFIG.feed));
+						$.refreshUpdateLabel.text = "Last Updated: " + DATE(parseInt(UTIL.lastUpdate(CONFIG.feed))).fromNow();
 					}
 
 					if(refreshEngaged == true) {
