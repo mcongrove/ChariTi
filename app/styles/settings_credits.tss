@@ -1,6 +1,8 @@
 "#content": {
 	top: "47dp",
 	backgroundColor: "#EEE",
+	contentWidth: "auto",
+	contentHeight: "auto",
 	layout: "vertical"
 },
 "#text": {
