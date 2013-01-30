@@ -35,7 +35,9 @@ exports.handleUpdate = function(_data) {
 	}
 
 	// Grab the items from the manifest
-	exports.updateManifest(data.manifest);
+	if(data.manifest) {
+		exports.downloadManifest(data.manifest);
+	}
 
 	// Write JSON file
 	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
@@ -60,17 +62,17 @@ exports.handleUpdate = function(_data) {
 /**
  * Retrieves remote items
  */
-exports.updateManifest = function(_images) {
-	APP.log("debug", "UPDATE.updateManifest");
+exports.downloadManifest = function(_items) {
+	APP.log("debug", "UPDATE.downloadManifest");
 
 	// Write manifest files
-	for(var i = 0, x = _images.length; i < x; i++) {
+	for(var i = 0, x = _items.length; i < x; i++) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
 			format: "DATA",
-			url: _images[i],
-			success: exports.handleManifest
+			url: _items[i],
+			success: exports.handleManifestItem
 		});
 	}
 };
@@ -78,8 +80,8 @@ exports.updateManifest = function(_images) {
 /**
  * Stores remote items locally
  */
-exports.handleManifest = function(_data, _url) {
-	APP.log("debug", "UPDATE.handleManifest");
+exports.handleManifestItem = function(_data, _url) {
+	APP.log("debug", "UPDATE.handleManifestItem");
 
 	// Determine file name
 	var filename = _url.substring(_url.lastIndexOf("/") + 1);
