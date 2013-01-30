@@ -1,8 +1,16 @@
 var CONFIG = arguments[0] || {};
 
 if(CONFIG.image) {
+	var image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, CONFIG.image);
+	
+	if(image.exists()) {
+		image = image.nativePath;
+	} else {
+		image = "/data/" + CONFIG.image;
+	}
+	
 	$.title = Ti.UI.createImageView({
-		image: "/data/" + CONFIG.image,
+		image: image,
 		height: "26dp",
 		width: Ti.UI.SIZE,
 		top: "10dp",

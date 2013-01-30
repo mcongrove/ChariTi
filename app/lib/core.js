@@ -1,8 +1,6 @@
 var Alloy = require("alloy");
-var HTTP = require("http");
 var UTIL = require("utilities");
-var MIGRATE = require("migrate");
-var UA;
+var HTTP = require("http");
 
 /**
  * Main app singleton
@@ -20,6 +18,7 @@ var APP = {
 		TOS: null,
 		PRIVACY: null
 	},
+	ConfigurationURL: null,
 	Nodes: [],
 	Plugins: null,
 	Settings: null,
@@ -38,7 +37,7 @@ var APP = {
 		width: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
 		height: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
 		dpi: Ti.Platform.displayCaps.dpi,
-		orientation: Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT ? "LANDSCAPE" : "PORTRAIT",
+		orientation: Ti.Gesture.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.Gesture.orientation == Ti.UI.LANDSCAPE_RIGHT ? "LANDSCAPE" : "PORTRAIT",
 		statusBarOrientation: null
 	},
 	/**
@@ -107,7 +106,7 @@ var APP = {
 		APP.determineDevice();
 
 		// Migrate to newer ChariTi version
-		MIGRATE.init(APP.CVERSION);
+		require("migrate").init();
 
 		// Create a database
 		APP.setupDatabase();
@@ -124,13 +123,13 @@ var APP = {
 		// The initial screen to show
 		APP.handleNavigation(0);
 
-		// Updates the app.json file from a remote source
-		APP.update();
+		// Updates the app from a remote source
+		require("update").init();
 
 		// Set up push notifications
 		if(OS_IOS) {
 			if(APP.Settings.notifications.enabled) {
-				APP.registerPush();
+				require("push").init();
 			}
 		}
 	},
@@ -257,64 +256,6 @@ var APP = {
 			APP.Tabs.Wrapper.addEventListener("click", function(_event) {
 				if(typeof _event.source.id == "number") {
 					APP.handleNavigation(_event.source.id);
-				}
-			});
-		}
-	},
-	/**
-	 * Updates the app.json from a remote source
-	 */
-	update: function() {
-		APP.log("debug", "APP.update");
-
-		if(APP.ConfigurationURL) {
-			HTTP.request({
-				timeout: 10000,
-				type: "GET",
-				format: "DATA",
-				url: APP.ConfigurationURL,
-				success: function(_data) {
-					APP.log("debug", "APP.update @loaded");
-
-					// Determine if this is the same version as we already have
-					var data = JSON.parse(_data);
-
-					if(data.version == APP.VERSION) {
-						// We already have it
-						APP.log("info", "Application is up-to-date");
-
-						return;
-					}
-
-					var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "app.json");
-
-					file.write(_data);
-
-					var dialog = Ti.UI.createAlertDialog({
-						title: "Update Available",
-						message: "New content has been downloaded. Would you like to refresh the application now?",
-						buttonNames: ["No", "Yes"],
-						cancel: 0
-					});
-
-					dialog.addEventListener("click", function(_event) {
-						if(_event.index != _event.source.cancel) {
-							APP.log("info", "Update accepted");
-
-							APP.rebuild();
-						} else {
-							APP.log("info", "Update declined");
-
-							dialog = Ti.UI.createAlertDialog({
-								title: "Update Declined",
-								message: "The updates will take effect the next time you restart the application."
-							});
-
-							dialog.show();
-						}
-					});
-
-					dialog.show();
 				}
 			});
 		}
@@ -597,6 +538,14 @@ var APP = {
 		}
 	},
 	/**
+	 * Opens the settings window
+	 */
+	openSettings: function() {
+		APP.log("debug", "APP.openSettings");
+
+		APP.addChild("settings", {}, "settings");
+	},
+	/**
 	 * Shows the loading screen
 	 */
 	openLoading: function() {
@@ -620,70 +569,6 @@ var APP = {
 			APP.GlobalWrapper.remove(APP.Loading);
 
 			APP.loadingOpen = false;
-		}
-	},
-	/**
-	 * Opens the settings window
-	 */
-	openSettings: function() {
-		APP.log("debug", "APP.openSettings");
-
-		APP.addChild("settings", {}, "settings");
-	},
-	/**
-	 * Registers the app for push notifications
-	 */
-	registerPush: function() {
-		if(OS_IOS) {
-			APP.log("debug", "APP.registerPush");
-
-			UA = require("ti.urbanairship");
-
-			UA.options = {
-				APP_STORE_OR_AD_HOC_BUILD: true,
-				PRODUCTION_APP_KEY: APP.Settings.notifications.key,
-				PRODUCTION_APP_SECRET: APP.Settings.notifications.secret,
-				LOGGING_ENABLED: false
-			};
-
-			Ti.Network.registerForPushNotifications({
-				types: [
-					Ti.Network.NOTIFICATION_TYPE_BADGE,
-					Ti.Network.NOTIFICATION_TYPE_ALERT,
-					Ti.Network.NOTIFICATION_TYPE_SOUND
-				],
-				success: function(_event) {
-					APP.log("debug", "APP.registerPush @success");
-					APP.log("trace", _event.deviceToken);
-
-					UA.registerDevice(_event.deviceToken, {
-						tags: [
-							APP.ID,
-							APP.Version,
-							Ti.Platform.osname,
-							Ti.Platform.locale
-						]
-					});
-				},
-				error: function(_event) {
-					APP.log("debug", "APP.registerPush @error");
-					APP.log("trace", JSON.stringify(_event));
-				},
-				callback: function(_event) {
-					APP.log("debug", "APP.registerPush @callback");
-					APP.log("trace", JSON.stringify(_event));
-
-					UA.handleNotification(_event.data);
-
-					if(_event.data.tab) {
-						var tabIndex = parseInt(_event.data.tab) - 1;
-
-						if(APP.Nodes[tabIndex]) {
-							APP.handleNavigation(tabIndex);
-						}
-					}
-				}
-			});
 		}
 	},
 	/**

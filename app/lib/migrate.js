@@ -1,13 +1,17 @@
+var APP = require("core");
+
 exports.previous;
 exports.current;
 
 /**
  * Checks versions, need for migration
  */
-exports.init = function(_current) {
+exports.init = function() {
+	Ti.API.debug("MIGRATE.init");
+
 	var regexp = /(\d+\.?)*\./g;
 
-	var current = _current.match(regexp)[0];
+	var current = APP.CVERSION.match(regexp)[0];
 	current = current.substr(0, current.length - 1);
 
 	exports.current = current;
@@ -20,8 +24,7 @@ exports.init = function(_current) {
 	db.close();
 
 	if(previousInstall) {
-		var previous = Ti.App.Properties.getString("CVERSION", "1.0.0.A").match(regexp)[0];
-		previous = previous.substr(0, previous.length - 1);
+		var previous = Ti.App.Properties.getString("CVERSION", "1.0.0");
 
 		exports.previous = previous;
 
@@ -35,10 +38,9 @@ exports.init = function(_current) {
  * Performs the migration steps
  */
 exports.migrate = function() {
+	Ti.API.debug("MIGRATE.migrate (" + exports.previous + " => " + exports.current + ")");
+
 	switch(exports.current) {
-		case "1.0.0":
-			return;
-			break;
 		case "1.0.1":
 			switch(exports.previous) {
 				case "1.0.0":
@@ -52,8 +54,6 @@ exports.migrate = function() {
 				case "1.0.0":
 					exports.addColumn("news", "image", "TEXT");
 					exports.addColumn("blog", "image", "TEXT");
-					break;
-				case "1.0.1":
 					break;
 			}
 			break;

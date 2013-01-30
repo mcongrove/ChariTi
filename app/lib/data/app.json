@@ -1,7 +1,7 @@
 {
 	"id": "ChariTi.001",
 	"version": "1.0",
-	"_configurationUrl": "http://chariti.mobi/app/dev.php?v=1.0.1",
+	"_configurationUrl": "http://chariti.mobi/app/app.json",
 	"legal": {
 		"copyright": "Copyright ‌© 2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
@@ -20,6 +20,10 @@
 			"text":	"#FFF"
 		}
 	},
+	"manifest": [
+		"http://localhost/ChariTi/app/logo.png",
+		"http://localhost/ChariTi/app/logo@2x.png"
+	],
 	"tabs": [
 		{
 			"title": "Text",
@@ -80,7 +84,7 @@
 			"cache": 10
 		}
 	],
-	"nontabs": [
+	"examples": [
 		{
 			"title": "Map",
 			"points": [
