@@ -49,56 +49,24 @@ $.handleData = function(_data) {
 $.handleNavigation = function() {
 	ACTION.next = MODEL.getNextArticle(DATA.id);
 	ACTION.previous = MODEL.getPreviousArticle(DATA.id);
-
-	var navigation = Ti.UI.createView({
-		width: "96dp",
-		height: "37dp",
-		top: "5dp",
-		backgroundImage: "/images/navigation.png"
-	});
-
-	var arrowNext = Ti.UI.createImageView({
-		image: "/images/arrowDown.png",
-		width: "47dp",
-		height: "37dp",
-		top: "0dp",
-		right: "0dp"
-	});
-
-	var arrowPrevious = Ti.UI.createImageView({
-		image: "/images/arrowUp.png",
-		width: "47dp",
-		height: "37dp",
-		top: "0dp",
-		left: "0dp"
-	});
-
-	if(ACTION.next) {
-		arrowNext.addEventListener("click", function(_event) {
+	
+	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
+		down: function(_event) {
 			APP.log("debug", "news_article @next");
 
 			APP.addChild("news_article", {
 				id: ACTION.next.id
 			});
-		});
-	} else {
-		arrowNext.opacity = 0.4;
-	}
-
-	if(ACTION.previous) {
-		arrowPrevious.addEventListener("click", function(_event) {
+		},
+		up: function(_event) {
 			APP.log("debug", "news_article @previous");
 
 			APP.addChild("news_article", {
 				id: ACTION.previous.id
 			});
-		});
-	} else {
-		arrowPrevious.opacity = 0.4;
-	}
+		}
+	}).getView();
 
-	navigation.add(arrowNext);
-	navigation.add(arrowPrevious);
 	$.NavigationBar.Wrapper.add(navigation);
 };
 
