@@ -65,7 +65,7 @@ $.NavigationBar.back.addEventListener("click", function(_event) {
 $.NavigationBar.right.addEventListener("click", function(_event) {
 	APP.log("debug", "events_event @menu");
 
-	SOCIAL.share(ACTION.url);
+	SOCIAL.share(ACTION.url, $.NavigationBar.right);
 });
 
 // Kick off the init
