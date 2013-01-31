@@ -364,13 +364,16 @@ var APP = {
 			// Add the screen to the window
 			APP.addScreen(screen);
 
-			// TODO: Fix this for tablets
 			// Tell the screen it was added to the window
-			/*
-			if(!APP.hasDetail) {
-				screen.fireEvent("APP:screenAdded");
+			if(APP.hasDetail) {
+				if(screen.type == "tablet") {
+					screen.fireEvent("APP:tabletScreenAdded");
+				} else {
+					screen.fireEvent("APP:screenAdded");
+				}
+
 			}
-			*/
+
 		}
 
 		APP.nonTabStacks = {};
