@@ -8,7 +8,7 @@
 				<TableViewRow id="privacy" title="Privacy Policy" hasChild="true" />
 			</TableView>
 			
-			<TableView height="45dp">
+			<TableView id="logs_table" height="45dp">
 				<TableViewRow id="logs" title="Send Application Logs" hasChild="true" />
 			</TableView>
 			

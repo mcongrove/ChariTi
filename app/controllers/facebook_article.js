@@ -34,7 +34,7 @@ $.handleData = function(_data) {
 $.handleNavigation = function() {
 	ACTION.next = MODEL.getNextArticle(DATA.id);
 	ACTION.previous = MODEL.getPreviousArticle(DATA.id);
-	
+
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
 		down: function(_event) {
 			APP.log("debug", "facebook_article @next");

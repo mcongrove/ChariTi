@@ -346,12 +346,16 @@ var APP = {
 				var type = APP.Nodes[_id].type.toLowerCase();
 
 				if(APP.Device.isTablet) {
-					var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "alloy", "controllers", type + "_tablet.js");
-
-					if(file.exists()) {
-						type = type + "_tablet";
-
-						APP.hasDetail = true;
+					switch(type) {
+						case "blog":
+						case "events":
+						case "facebook":
+						case "flickr":
+						case "news":
+						case "youtube":
+							type += "_tablet";
+							APP.hasDetail = true;
+							break;
 					}
 				}
 
@@ -365,13 +369,10 @@ var APP = {
 			APP.addScreen(screen);
 
 			// Tell the screen it was added to the window
-			if(APP.hasDetail) {
-				if(screen.type == "tablet") {
-					screen.fireEvent("APP:tabletScreenAdded");
-				} else {
-					screen.fireEvent("APP:screenAdded");
-				}
-
+			if(screen.type == "tablet") {
+				screen.fireEvent("APP:tabletScreenAdded");
+			} else {
+				screen.fireEvent("APP:screenAdded");
 			}
 
 		}
@@ -408,9 +409,21 @@ var APP = {
 		stack.push(screen);
 
 		// Add the screen to the window
+		if(APP.Device.isHandheld) {
+			APP.log("error", "1");
+		}
+		if(!APP.hasDetail) {
+			APP.log("error", "2");
+		}
+		if(typeof _stack !== "undefined") {
+			APP.log("error", "3");
+		}
+
 		if(APP.Device.isHandheld || !APP.hasDetail || typeof _stack !== "undefined") {
+			APP.log("error", "!!GLOBAL");
 			APP.addScreen(screen);
 		} else {
+			APP.log("error", "!!DETAIL");
 			APP.addDetailScreen(screen);
 		}
 	},
@@ -617,7 +630,7 @@ var APP = {
 		var db = Ti.Database.open("ChariTi");
 		var data = db.execute("SELECT * FROM log WHERE message != \"\" ORDER BY time DESC;");
 
-		var log = APP.ID + " " + APP.VERSION + " (" + APP.CVERSION + ")\n" + APP.Device.os + " " + APP.Device.version + " (" + APP.Device.name + ") " + Ti.Platform.locale + "\n\n" + "=====\n\n";
+		var log = "\n\n=====\n\n" + APP.ID + " " + APP.VERSION + " (" + APP.CVERSION + ")\n" + APP.Device.os + " " + APP.Device.version + " (" + APP.Device.name + ") " + Ti.Platform.locale + "\n\n";
 
 		while(data.isValidRow()) {
 			log += "[" + data.fieldByName("type") + "] " + data.fieldByName("message") + "\n";

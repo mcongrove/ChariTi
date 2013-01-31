@@ -16,8 +16,6 @@ $.init = function() {
 
 	APP.openLoading();
 
-	$.retrieveData();
-
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible = true;
 	$.NavigationBar.rightImage.image = "/images/settings.png";

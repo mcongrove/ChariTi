@@ -20,7 +20,7 @@
 			"text":	"#FFF"
 		}
 	},
-	"manifest": [
+	"_manifest": [
 		"http://localhost/ChariTi/app/logo.png",
 		"http://localhost/ChariTi/app/logo@2x.png"
 	],

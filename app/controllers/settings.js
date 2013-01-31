@@ -20,6 +20,10 @@ $.init = function() {
 		$.legal_table.height = "45dp";
 	}
 
+	if(!Ti.UI.createEmailDialog().isSupported) {
+		$.content.remove($.logs_table);
+	}
+
 	$.copyright.text = APP.LEGAL.COPYRIGHT;
 	$.version.text = "Version " + APP.VERSION + ", ChariTi " + APP.CVERSION;
 };

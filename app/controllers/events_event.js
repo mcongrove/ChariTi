@@ -34,7 +34,7 @@ $.handleData = function(_data) {
 $.handleNavigation = function(_date) {
 	ACTION.next = MODEL.getNextEvent(_date);
 	ACTION.previous = MODEL.getPreviousEvent(_date);
-	
+
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
 		down: function(_event) {
 			APP.log("debug", "events_event @next");
