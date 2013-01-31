@@ -112,7 +112,7 @@ if(OS_IOS) {
 		fontColor: "#AAA",
 		indicator: "dark",
 		image: "/images/ptrArrow.png",
-		loader: function(_callback) {
+		refresh: function(_callback) {
 			$.retrieveData(true, function() {
 				_callback(true);
 			});
