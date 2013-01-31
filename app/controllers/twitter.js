@@ -27,21 +27,7 @@ $.init = function() {
 		$.NavigationBar.back.visible = true;
 	}
 
-	if(OS_IOS) {
-		var initRefresh = setInterval(function(_event) {
-			if(offset > 30) {
-				clearInterval(initRefresh);
-			}
-
-			$.container.scrollTo(0, 60);
-		}, 100);
-
-		$.container.addEventListener("postlayout", function(_event) {
-			if(offset <= 60) {
-				$.container.scrollTo(0, 60);
-			}
-		});
-	} else {
+	if(!OS_IOS) {
 		$.NavigationBar.left.visible = true;
 		$.NavigationBar.leftImage.image = "/images/refresh.png";
 	}
@@ -77,7 +63,7 @@ $.handleData = function(_data) {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
 	APP.closeLoading();
 };
@@ -98,68 +84,20 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 });
 
 if(OS_IOS) {
-	$.container.addEventListener("scroll", function(_event) {
-		if(_event.y !== null) {
-			offset = _event.y;
-
-			if(!refreshLoading) {
-				var transform = Ti.UI.create2DMatrix();
-
-				if(offset < 0) {
-					if(refreshEngaged == false) {
-						$.refreshLabel.text = "Release to reload...";
-
-						transform = transform.rotate(-180);
-
-						$.refreshArrow.animate({
-							transform: transform,
-							duration: 100
-						});
-
-						refreshEngaged = true;
-					}
-				} else {
-					if(offset < 60) {
-						$.refreshUpdateLabel.text = "Last Updated: " + DATE(parseInt(UTIL.lastUpdate(CONFIG.feed))).fromNow();
-					}
-
-					if(refreshEngaged == true) {
-						$.refreshLabel.text = "Pull down to update...";
-
-						$.refreshArrow.animate({
-							transform: transform,
-							duration: 100
-						});
-
-						refreshEngaged = false;
-					}
-				}
-			}
-		}
-	});
-
-	$.container.addEventListener("dragend", function(_event) {
-		if(offset < 0) {
-			refreshLoading = true;
-
-			$.refreshLabel.text = "Loading new content...";
-			$.refreshArrow.visible = false;
-			$.refreshLoading.visible = true;
-
-			$.refreshLoading.start();
-
+	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
+		table: $.container,
+		backgroundColor: "#EEE",
+		fontColor: "#AAA",
+		indicator: "dark",
+		image: "/images/ptrArrow.png",
+		loader: function(_callback) {
 			$.retrieveData(true, function() {
-				refreshLoading = false;
-
-				$.container.scrollTo(0, 60);
-
-				$.refreshArrow.visible = true;
-				$.refreshLoading.visible = false;
+				_callback(true);
 			});
-		} else if(offset < 60 && !refreshLoading) {
-			$.container.scrollTo(0, 60);
 		}
 	});
+
+	pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed))).toDate());
 } else {
 	$.NavigationBar.left.addEventListener("click", function(_event) {
 		$.retrieveData(true);

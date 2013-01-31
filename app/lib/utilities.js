@@ -46,7 +46,11 @@ exports.lastUpdate = function(_url) {
 	data.close();
 	db.close();
 
-	return lastUpdate;
+	if(lastUpdate === 0) {
+		return new Date().getTime();
+	} else {
+		return lastUpdate;
+	}
 };
 
 /**
