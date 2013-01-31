@@ -7,3 +7,7 @@ APP.addChild("tablet_detail");
 
 var master = Alloy.createController("facebook", arguments[0]).getView();
 APP.addMasterScreen(master);
+
+$.Wrapper.addEventListener("APP:tabletScreenAdded", function(_event) {
+	master.fireEvent("APP:screenAdded");
+});

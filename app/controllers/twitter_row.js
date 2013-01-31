@@ -33,7 +33,9 @@ if(OS_IOS) {
 				}
 			});
 
-			dialog.show();
+			dialog.show({
+				view: $.content
+			});
 		});
 	} else {
 
