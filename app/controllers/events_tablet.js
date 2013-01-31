@@ -8,3 +8,7 @@ APP.addDetailScreen(detail);
 
 var master = Alloy.createController("events", arguments[0]).getView();
 APP.addMasterScreen(master);
+
+$.Wrapper.addEventListener("APP:tabletScreenAdded", function(_event) {
+	master.fireEvent("APP:screenAdded");
+});
