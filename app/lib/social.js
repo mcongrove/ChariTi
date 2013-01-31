@@ -69,7 +69,7 @@ if(OS_IOS) {
 	 * Opens the sharing menu
 	 * NOTE: Min iOS 6 for ActivityView, otherwise fall back to Twitter and e-mail 
 	 */
-	exports.share = function(_url) {
+	exports.share = function(_url, view) {
 		if(exports.activitySupported) {
 			SOCIAL.activityView({
 				text: APP.Settings.share + " " + _url,
@@ -115,7 +115,14 @@ if(OS_IOS) {
 				}
 			});
 
-			dialog.show();
+			if(view === undefined) {
+				dialog.show();
+			} else {
+				dialog.show({
+					view: view
+				});
+			}
+
 		}
 	};
 } else if(OS_ANDROID) {
