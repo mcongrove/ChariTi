@@ -35,7 +35,7 @@
 "#Overlay": {
 	width: Ti.UI.FILL,
 	height: "60dp",
-	backgroundImage: "/com.chariti.tabs/overlay.png"
+	backgroundImage: WPATH("images/overlay.png")
 },
 "#TabContainer": {
 	height: "60dp"

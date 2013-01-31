@@ -1,7 +1,7 @@
 {
 	"id": "com.chariti.navigationBar",
 	"name": "com.chariti.navigationBar",
-	"description" : "",
+	"description" : "A navigation bar with a back button and support for other custom buttons.",
 	"author": "Matthew Congrove",
 	"version": "1.0",
 	"copyright":"Copyright 2013 Matthew Congrove",

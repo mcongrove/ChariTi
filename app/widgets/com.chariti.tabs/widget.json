@@ -1,7 +1,7 @@
 {
 	"id": "com.chariti.tabs",
 	"name": "com.chariti.tabs",
-	"description" : "",
+	"description" : "A custom tab group.",
 	"author": "Matthew Congrove",
 	"version": "1.1",
 	"copyright":"Copyright 2013 Matthew Congrove",
