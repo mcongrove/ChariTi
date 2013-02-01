@@ -55,13 +55,6 @@
 			"cache": 1440
 		},
 		{
-			"title": "Twitter",
-			"username": "appcelerator",
-			"type": "twitter",
-			"image": "twitter2",
-			"cache": 10
-		},
-		{
 			"title": "YouTube",
 			"username": "appcelerator",
 			"type": "youtube",

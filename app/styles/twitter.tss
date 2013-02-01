@@ -1,6 +1,0 @@
-"#container": {
-	backgroundColor: "#EEE",
-	rowHeight: "48dp",
-	separatorColor: "#DDD",
-	top: "47dp"
-}

@@ -34,38 +34,6 @@ if(OS_IOS) {
 	};
 
 	/**
-	 * Retweets a tweet
-	 */
-	exports.twitterRetweet = function(_text, _username) {
-		if(exports.twitterSupported) {
-			var text = "RT @" + _username + ": " + _text;
-
-			if(text.length > 140) {
-				if(_text.length < 138) {
-					text = "RT " + _text;
-				} else {
-					text = _text;
-				}
-			}
-
-			SOCIAL.twitter({
-				text: text
-			});
-		}
-	};
-
-	/**
-	 * Replies to a tweet
-	 */
-	exports.twitterReply = function(_username) {
-		if(exports.twitterSupported) {
-			SOCIAL.twitter({
-				text: "@" + _username + " "
-			});
-		}
-	};
-
-	/**
 	 * Opens the sharing menu
 	 * NOTE: Min iOS 6 for ActivityView, otherwise fall back to Twitter and e-mail 
 	 */
