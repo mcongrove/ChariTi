@@ -28,18 +28,10 @@ exports.init = function() {
 
 		exports.previous = previous;
 
-		exports.migrate();
+		APP.dropDatabase();
 	}
+	
+	Ti.API.info("Migrating" + exports.previous + " => " + exports.current);
 
 	Ti.App.Properties.setString("CVERSION", current);
-};
-
-/**
- * Performs the migration steps
- */
-exports.migrate = function() {
-	Ti.API.debug("MIGRATE.migrate " + exports.previous + " => " + exports.current);
-
-	var db = Ti.Database.open("ChariTi");
-	db.remove();
 };

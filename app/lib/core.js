@@ -186,6 +186,15 @@ var APP = {
 		db.close();
 	},
 	/**
+	 * Drops the entire database
+	 */
+	dropDatabase: function() {
+		Ti.API.debug("APP.dropDatabase");
+	
+		var db = Ti.Database.open("ChariTi");
+		db.remove();
+	},
+	/**
 	 * Loads in the appropriate controller and config data
 	 */
 	loadContent: function() {
@@ -281,10 +290,10 @@ var APP = {
 		APP.cancelLoading = false;
 		APP.loadingOpen = false;
 
+		APP.dropDatabase();
+		APP.setupDatabase();
 		APP.loadContent();
-
 		APP.build(true);
-
 		APP.handleNavigation(0);
 	},
 	/**
