@@ -10,7 +10,7 @@
 	"settings": {
 		"share": "Check out this great ChariTi content",
 		"notifications": {
-			"enabled": true,
+			"enabled": false,
 			"key": "AuKi5Qn3QKGTno3xX9ECYA",
 			"secret": "s-RDQejhRwmx-j4DCaXPMw"
 		},

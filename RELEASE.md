@@ -7,7 +7,7 @@ This document describes the process for creating a new ChariTi release.
 2.	Verify migration scripts in `migration.js`
 3.	Add release information to `CHANGELOG.md`
 4.	Commit all changes
-5.	Run Simian (java -jar ../simian-2.3.33.jar -threshold=25 -language=javascript -formatter=plain "**/*.js"), remove duplicate code
+5.	Run Simian (java -jar ../package/simian-2.3.33.jar -threshold=25 -language=javascript -formatter=plain "**/*.js"), remove duplicate code
 6.	Test release (if applicable, commit any fixes)
 7.	Push changes to Master
 8.	Tag new version from Master commit
