@@ -409,21 +409,9 @@ var APP = {
 		stack.push(screen);
 
 		// Add the screen to the window
-		if(APP.Device.isHandheld) {
-			APP.log("error", "1");
-		}
-		if(!APP.hasDetail) {
-			APP.log("error", "2");
-		}
-		if(typeof _stack !== "undefined") {
-			APP.log("error", "3");
-		}
-
 		if(APP.Device.isHandheld || !APP.hasDetail || typeof _stack !== "undefined") {
-			APP.log("error", "!!GLOBAL");
 			APP.addScreen(screen);
 		} else {
-			APP.log("error", "!!DETAIL");
 			APP.addDetailScreen(screen);
 		}
 	},
