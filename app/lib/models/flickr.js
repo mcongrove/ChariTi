@@ -84,22 +84,7 @@ function Model() {
 				passthrough: _params.callback,
 				success: this.handleSets,
 				failure: function(_error) {
-					var alert = Ti.UI.createAlertDialog({
-						title: "Connection Error",
-						message: "The request has timed out.",
-						buttonNames: ["Retry", "Cancel"],
-						cancel: 1
-					});
-
-					alert.addEventListener("click", function(_event) {
-						if(_event.index != _event.source.cancel) {
-							this.retrieveSets(_params);
-						} else {
-							_params.callback();
-						}
-					});
-
-					alert.show();
+					alert("Unable to connect. Please try again later.");
 				}
 			});
 		} else {
@@ -251,8 +236,6 @@ function Model() {
 
 	this.getPhoto = function(_id, _index, _setid) {
 		APP.log("debug", "FLICKR.getPhoto");
-		APP.log("error", _id);
-		APP.log("error", _index);
 
 		var db = Ti.Database.open("ChariTi");
 		var data = null;

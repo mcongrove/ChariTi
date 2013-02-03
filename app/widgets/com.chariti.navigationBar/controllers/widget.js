@@ -19,8 +19,8 @@ if(CONFIG.image) {
 } else {
 	$.title = Ti.UI.createLabel({
 		top: "0dp",
-		left: "49dp",
-		right: "49dp",
+		left: "58dp",
+		right: "58dp",
 		height: "46dp",
 		font: {
 			fontSize: "22dp",

@@ -53,22 +53,7 @@ function Model() {
 				passthrough: _params.callback,
 				success: this.handleData,
 				failure: function(_error) {
-					var alert = Ti.UI.createAlertDialog({
-						title: "Connection Error",
-						message: "The request has timed out.",
-						buttonNames: ["Retry", "Cancel"],
-						cancel: 1
-					});
-
-					alert.addEventListener("click", function(_event) {
-						if(_event.index != _event.source.cancel) {
-							this.fetch(_params);
-						} else {
-							_params.callback();
-						}
-					});
-
-					alert.show();
+					alert("Unable to connect. Please try again later.");
 				}
 			});
 		} else {
