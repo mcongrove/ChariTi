@@ -12,10 +12,9 @@ var SELECTED;
 $.init = function() {
 	APP.log("debug", "flickr.init | " + JSON.stringify(CONFIG));
 
-	MODEL.init(CONFIG.index);
-
 	APP.openLoading();
 
+	MODEL.init(CONFIG.index);
 	MODEL.setApiKey(CONFIG.apiKey);
 
 	$.retrieveData();
@@ -72,7 +71,8 @@ $.handleSets = function() {
 			id: data[0].id,
 			title: data[0].title,
 			cache: CONFIG.cache,
-			index: CONFIG.index
+			index: CONFIG.index,
+			apiKey: CONFIG.apiKey
 		});
 	}
 };
@@ -103,7 +103,8 @@ $.content.addEventListener("click", function(_event) {
 		id: _event.row.id,
 		cache: CONFIG.cache,
 		title: _event.row.setTitle,
-		index: CONFIG.index
+		index: CONFIG.index,
+		apiKey: CONFIG.apiKey
 	});
 });
 

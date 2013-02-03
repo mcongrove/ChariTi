@@ -13,6 +13,7 @@ $.init = function() {
 	APP.log("debug", "flickr_album.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
+	MODEL.setApiKey(CONFIG.apiKey);
 
 	MODEL.retrieveSet({
 		id: CONFIG.id,
@@ -91,7 +92,9 @@ $.createGrid = function(_data) {
 
 			APP.addChild("flickr_photo", {
 				id: _event.source.id,
-				index: CONFIG.index
+				setid: CONFIG.id,
+				index: CONFIG.index,
+				apiKey: CONFIG.apiKey
 			});
 		});
 

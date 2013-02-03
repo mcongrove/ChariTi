@@ -23,7 +23,7 @@ $.init = function() {
 $.handleData = function(_data) {
 	APP.log("debug", "blog_article.handleData");
 
-	$.handleNavigation(_data.id);
+	$.handleNavigation();
 
 	$.heading.text = _data.title;
 	$.text.value = _data.description;
@@ -53,9 +53,9 @@ $.handleData = function(_data) {
 	$.NavigationBar.rightImage.image = "/images/action.png";
 };
 
-$.handleNavigation = function(_id) {
-	ACTION.next = MODEL.getNextArticle(_id);
-	ACTION.previous = MODEL.getPreviousArticle(_id);
+$.handleNavigation = function() {
+	ACTION.next = MODEL.getNextArticle(CONFIG.id);
+	ACTION.previous = MODEL.getPreviousArticle(CONFIG.id);
 
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
 		down: function(_event) {

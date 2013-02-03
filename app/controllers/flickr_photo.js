@@ -16,6 +16,7 @@ $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
+	MODEL.setApiKey(CONFIG.apiKey);
 
 	$.handleData(MODEL.getPhoto(CONFIG.id));
 };
@@ -23,8 +24,8 @@ $.init = function() {
 $.handleData = function(_data) {
 	APP.log("debug", "flickr_photo.handleData");
 
-	PREVIOUS = MODEL.getPhoto(null, (parseInt(_data.index, 10) - 1).toString());
-	NEXT = MODEL.getPhoto(null, (parseInt(_data.index, 10) + 1).toString());
+	PREVIOUS = MODEL.getPhoto(null, (parseInt(_data.index, 10) - 1).toString(), CONFIG.setid);
+	NEXT = MODEL.getPhoto(null, (parseInt(_data.index, 10) + 1).toString(), CONFIG.setid);
 
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.back.visible = true;

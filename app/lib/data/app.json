@@ -40,13 +40,6 @@
 			"cache": 10
 		},
 		{
-			"title": "Facebook 2",
-			"userid": "8532248414",
-			"type": "facebook",
-			"image": "facebook",
-			"cache": 10
-		},
-		{
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "blog",
@@ -54,25 +47,18 @@
 			"cache": 120
 		},
 		{
-			"title": "Blog 2",
-			"feed": "http://www.diigo.com/rss/user/wwpinc/",
-			"type": "blog",
-			"image": "news2",
-			"cache": 120
+			"title": "Flickr",
+			"username": "39494278@N04",
+			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
+			"type": "flickr",
+			"image": "photo",
+			"cache": 1440
 		},
 		{
 			"title": "Events",
 			"userid": "7304307941",
 			"type": "events",
 			"image": "event",
-			"cache": 1440
-		},
-		{
-			"title": "Flickr",
-			"username": "39494278@N04",
-			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
-			"type": "flickr",
-			"image": "photo",
 			"cache": 1440
 		},
 		{

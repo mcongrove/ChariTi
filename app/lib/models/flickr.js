@@ -9,6 +9,8 @@ function Model() {
 	this.init = function(_id) {
 		APP.log("debug", "FLICKR.init(" + _id + ")");
 
+		TID = _id;
+
 		var db = Ti.Database.open("ChariTi");
 
 		db.execute("CREATE TABLE IF NOT EXISTS flickr_sets_" + TID + " (id TEXT PRIMARY KEY, title TEXT, date_create TEXT, date_update TEXT, description TEXT, photo_count TEXT);");
@@ -182,7 +184,7 @@ function Model() {
 
 				var id = UTIL.escapeString(photo.id);
 				set_id = UTIL.escapeString(set_id[1]);
-				index = i;
+				var index = i;
 				var title = UTIL.escapeString(photo.title);
 				var url_m = UTIL.escapeString(photo.url_m);
 				var url_sq = UTIL.escapeString(photo.url_sq);
@@ -247,8 +249,10 @@ function Model() {
 		return temp;
 	};
 
-	this.getPhoto = function(_id, _index) {
+	this.getPhoto = function(_id, _index, _setid) {
 		APP.log("debug", "FLICKR.getPhoto");
+		APP.log("error", _id);
+		APP.log("error", _index);
 
 		var db = Ti.Database.open("ChariTi");
 		var data = null;
@@ -257,7 +261,7 @@ function Model() {
 		if(_id) {
 			data = db.execute("SELECT * FROM flickr_photos_" + TID + " WHERE id = " + UTIL.cleanEscapeString(_id) + " LIMIT 1;");
 		} else if(_index) {
-			data = db.execute("SELECT * FROM flickr_photos_" + TID + " WHERE indx = " + UTIL.cleanEscapeString(_index) + " LIMIT 1;");
+			data = db.execute("SELECT * FROM flickr_photos_" + TID + " WHERE indx = " + UTIL.cleanEscapeString(_index) + " AND set_id = " + UTIL.cleanEscapeString(_setid) + " LIMIT 1;");
 		}
 
 		while(data.isValidRow()) {

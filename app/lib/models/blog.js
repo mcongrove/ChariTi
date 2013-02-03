@@ -8,6 +8,8 @@ function Model() {
 	this.init = function(_id) {
 		APP.log("debug", "BLOG.init(" + _id + ")");
 
+		TID = _id;
+
 		var db = Ti.Database.open("ChariTi");
 
 		db.execute("CREATE TABLE IF NOT EXISTS blog_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT, link TEXT, image TEXT);");
