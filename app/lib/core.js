@@ -357,11 +357,10 @@ var APP = {
 
 				if(APP.Device.isTablet) {
 					switch(type) {
-						case "blog":
 						case "events":
 						case "facebook":
 						case "flickr":
-						case "news":
+						case "rss":
 						case "youtube":
 							type += "_tablet";
 							APP.hasDetail = true;

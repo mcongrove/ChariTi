@@ -4,7 +4,7 @@ var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
 
 var MODEL = (function() {
-	var Model = require("models/blog");
+	var Model = require("models/rss");
 
 	return new Model();
 })();
@@ -17,7 +17,7 @@ var refreshLoading = false;
 var refreshEngaged = false;
 
 $.init = function() {
-	APP.log("debug", "blog.init | " + JSON.stringify(CONFIG));
+	APP.log("debug", "rss.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
 
@@ -52,12 +52,12 @@ $.retrieveData = function(_force, _callback) {
 };
 
 $.handleData = function(_data) {
-	APP.log("debug", "blog.handleData");
+	APP.log("debug", "rss.handleData");
 
 	var rows = [];
 
 	for(var i = 0, x = _data.length; i < x; i++) {
-		var row = Alloy.createController("blog_row", {
+		var row = Alloy.createController("rss_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
 			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date)).fromNow())
@@ -73,7 +73,7 @@ $.handleData = function(_data) {
 	if(APP.Device.isTablet) {
 		SELECTED = _data[0].id;
 
-		APP.addChild("blog_article", {
+		APP.addChild("rss_article", {
 			id: _data[0].id,
 			index: CONFIG.index
 		});
@@ -86,7 +86,7 @@ $.Wrapper.addEventListener("APP:screenAdded", function(_event) {
 });
 
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "blog @close");
+	APP.log("debug", "rss @close");
 
 	APP.removeChild();
 });
@@ -96,7 +96,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 });
 
 $.container.addEventListener("click", function(_event) {
-	APP.log("debug", "blog @click " + _event.row.id);
+	APP.log("debug", "rss @click " + _event.row.id);
 
 	if(APP.Device.isTablet) {
 		if(_event.row.id == SELECTED) {
@@ -106,7 +106,7 @@ $.container.addEventListener("click", function(_event) {
 		}
 	}
 
-	APP.addChild("blog_article", {
+	APP.addChild("rss_article", {
 		id: _event.row.id,
 		index: CONFIG.index
 	});

@@ -4,7 +4,7 @@ var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
 
 var MODEL = (function() {
-	var Model = require("models/news");
+	var Model = require("models/rss");
 
 	return new Model();
 })();
@@ -13,7 +13,7 @@ var CONFIG = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
-	APP.log("debug", "news_article.init | " + JSON.stringify(CONFIG));
+	APP.log("debug", "rss_article.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
 
@@ -21,7 +21,7 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
-	APP.log("debug", "news_article.handleData");
+	APP.log("debug", "rss_article.handleData");
 
 	$.handleNavigation();
 
@@ -45,7 +45,7 @@ $.handleData = function(_data) {
 		$.content.remove($.image)
 	}
 
-	ACTION.url = _data.link
+	ACTION.url = _data.link;
 
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.back.visible = APP.Device.isHandheld;
@@ -59,17 +59,17 @@ $.handleNavigation = function() {
 
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
 		down: function(_event) {
-			APP.log("debug", "news_article @next");
+			APP.log("debug", "rss_article @next");
 
-			APP.addChild("news_article", {
+			APP.addChild("rss_article", {
 				id: ACTION.next.id,
 				index: CONFIG.index
 			});
 		},
 		up: function(_event) {
-			APP.log("debug", "news_article @previous");
+			APP.log("debug", "rss_article @previous");
 
-			APP.addChild("news_article", {
+			APP.addChild("rss_article", {
 				id: ACTION.previous.id,
 				index: CONFIG.index
 			});
@@ -81,13 +81,13 @@ $.handleNavigation = function() {
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "news_article @close");
+	APP.log("debug", "rss_article @close");
 
 	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.log("debug", "news_article @menu");
+	APP.log("debug", "rss_article @menu");
 
 	SOCIAL.share(ACTION.url, $.NavigationBar.right);
 });

@@ -5,7 +5,7 @@ APP.Detail[APP.currentStack] = $.Detail;
 
 APP.addChild("tablet_detail");
 
-var master = Alloy.createController("blog", arguments[0]).getView();
+var master = Alloy.createController("rss", arguments[0]).getView();
 APP.addMasterScreen(master);
 
 $.Wrapper.addEventListener("APP:tabletScreenAdded", function(_event) {
