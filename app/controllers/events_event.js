@@ -8,15 +8,15 @@ var MODEL = (function() {
 	return new Model();
 })();
 
-var DATA = arguments[0] || {};
+var CONFIG = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
-	APP.log("debug", "events_event.init | " + JSON.stringify(DATA));
+	APP.log("debug", "events_event.init | " + JSON.stringify(CONFIG));
 
-	MODEL.init(DATA.index);
+	MODEL.init(CONFIG.index);
 
-	$.handleData(MODEL.getEvent(DATA.id));
+	$.handleData(MODEL.getEvent(CONFIG.id));
 };
 
 $.handleData = function(_data) {
@@ -48,7 +48,7 @@ $.handleNavigation = function(_date) {
 
 			APP.addChild("events_event", {
 				id: ACTION.next.id,
-				index: DATA.index
+				index: CONFIG.index
 			});
 		},
 		up: function(_event) {
@@ -56,7 +56,7 @@ $.handleNavigation = function(_date) {
 
 			APP.addChild("events_event", {
 				id: ACTION.previous.id,
-				index: DATA.index
+				index: CONFIG.index
 			});
 		}
 	}).getView();

@@ -6,22 +6,22 @@ var MODEL = (function() {
 	return new Model();
 })();
 
-var DATA = arguments[0] || {};
+var CONFIG = arguments[0] || {};
 var PHOTOS;
 
 $.init = function() {
-	APP.log("debug", "flickr_album.init | " + JSON.stringify(DATA));
+	APP.log("debug", "flickr_album.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
 
 	MODEL.retrieveSet({
-		id: DATA.id,
-		cache: DATA.cache,
+		id: CONFIG.id,
+		cache: CONFIG.cache,
 		callback: $.handleData
 	});
 
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.title.text = DATA.title;
+	$.NavigationBar.title.text = CONFIG.title;
 	$.NavigationBar.title.color = APP.Settings.colors.text || "#FFF";
 	$.NavigationBar.back.visible = APP.Device.isHandheld;
 };
@@ -29,7 +29,7 @@ $.init = function() {
 $.handleData = function() {
 	APP.log("debug", "flickr_album.handleData");
 
-	PHOTOS = MODEL.getSet(DATA.id);
+	PHOTOS = MODEL.getSet(CONFIG.id);
 
 	$.createGrid(PHOTOS);
 

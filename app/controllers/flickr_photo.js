@@ -6,18 +6,18 @@ var MODEL = (function() {
 	return new Model();
 })();
 
-var DATA = arguments[0] || {};
+var CONFIG = arguments[0] || {};
 var PREVIOUS = null;
 var NEXT = null;
 
 var metaVisible = false;
 
 $.init = function() {
-	APP.log("debug", "flickr_photo.init | " + JSON.stringify(DATA));
+	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
 
-	MODEL.init(DATA.index);
+	MODEL.init(CONFIG.index);
 
-	$.handleData(MODEL.getPhoto(DATA.id));
+	$.handleData(MODEL.getPhoto(CONFIG.id));
 };
 
 $.handleData = function(_data) {
@@ -51,7 +51,7 @@ $.content.addEventListener("swipe", function(_event) {
 		if(PREVIOUS) {
 			APP.log("debug", "flickr_photo @previous");
 
-			DATA.id = PREVIOUS.id;
+			CONFIG.id = PREVIOUS.id;
 			PREVIOUS = null;
 			NEXT = null;
 			metaVisible = false;
@@ -63,7 +63,7 @@ $.content.addEventListener("swipe", function(_event) {
 		if(NEXT) {
 			APP.log("debug", "flickr_photo @next");
 
-			DATA.id = NEXT.id;
+			CONFIG.id = NEXT.id;
 			PREVIOUS = null;
 			NEXT = null;
 			metaVisible = false;

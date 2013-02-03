@@ -1,8 +1,8 @@
 var APP = require("core");
 
-var DATA = arguments[0] || {};
+var CONFIG = arguments[0] || {};
 
-$.Wrapper.id = DATA.id || 0;
-$.heading.text = DATA.heading || "";
+$.Wrapper.id = CONFIG.id || 0;
+$.heading.text = CONFIG.heading || "";
 $.subHeading.color = APP.Settings.colors.primary || "#000";
-$.subHeading.text = DATA.subHeading || "";
+$.subHeading.text = CONFIG.subHeading || "";

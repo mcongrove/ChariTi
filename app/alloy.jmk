@@ -57,9 +57,9 @@ task("pre:compile", function(event, logger) {
             var bits = files[i].split(".");
             
             if(bits[bits.length - 1] == "js") {
-                var file    = event.dir.project + "/app/lib/" + files[i];
+                var file    = event.dir.project + "/app/lib/models/" + files[i];
                 
-                logger.debug("Beautifying \"app/lib/" + files[i] + "\"");
+                logger.debug("Beautifying \"app/lib/models/" + files[i] + "\"");
                 
                 var data    = fs.readFileSync(file, "utf8");
                 var newData = beautify(data, {

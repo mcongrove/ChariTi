@@ -9,15 +9,15 @@ var MODEL = (function() {
 	return new Model();
 })();
 
-var DATA = arguments[0] || {};
+var CONFIG = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
-	APP.log("debug", "blog_article.init | " + JSON.stringify(DATA));
+	APP.log("debug", "blog_article.init | " + JSON.stringify(CONFIG));
 
-	MODEL.init(DATA.index);
+	MODEL.init(CONFIG.index);
 
-	$.handleData(MODEL.getArticle(DATA.id));
+	$.handleData(MODEL.getArticle(CONFIG.id));
 };
 
 $.handleData = function(_data) {
@@ -63,7 +63,7 @@ $.handleNavigation = function(_id) {
 
 			APP.addChild("blog_article", {
 				id: ACTION.next.id,
-				index: DATA.index
+				index: CONFIG.index
 			});
 		},
 		up: function(_event) {
@@ -71,7 +71,7 @@ $.handleNavigation = function(_id) {
 
 			APP.addChild("blog_article", {
 				id: ACTION.previous.id,
-				index: DATA.index
+				index: CONFIG.index
 			});
 		}
 	}).getView();
