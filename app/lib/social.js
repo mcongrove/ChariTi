@@ -9,6 +9,7 @@ if(OS_IOS) {
 
 	/**
 	 * Shares information via e-mail
+	 * @param {String} [_url] The URL to share
 	 */
 	exports.email = function(_url) {
 		if(exports.emailSupported) {
@@ -23,6 +24,7 @@ if(OS_IOS) {
 
 	/**
 	 * Shares information via Twitter
+	 * @param {String} [_url] The URL to share
 	 */
 	exports.twitter = function(_url) {
 		if(exports.twitterSupported) {
@@ -34,8 +36,9 @@ if(OS_IOS) {
 	};
 
 	/**
-	 * Opens the sharing menu
-	 * NOTE: Min iOS 6 for ActivityView, otherwise fall back to Twitter and e-mail 
+	 * Opens the sharing menu (min iOS 6 for ActivityView, otherwise fall back to Twitter and e-mail)
+	 * @param {String} [_url] The URL to share
+	 * @param {Object} [_view] The view to attach the OptionDialog to (required for iPad)
 	 */
 	exports.share = function(_url, view) {
 		if(exports.activitySupported) {
@@ -94,6 +97,10 @@ if(OS_IOS) {
 		}
 	};
 } else if(OS_ANDROID) {
+	/**
+	 * Opens the sharing menu
+	 * @param {String} [_url] The URL to share
+	 */
 	exports.share = function(_url) {
 		var intent = Ti.Android.createIntent({
 			action: Ti.Android.ACTION_SEND,

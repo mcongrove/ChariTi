@@ -1,8 +1,13 @@
 var APP = require("core");
 var UTIL = require("utilities");
-var MODEL = require("models/blog");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
+
+var MODEL = (function() {
+	var Model = require("models/blog");
+
+	return new Model();
+})();
 
 var CONFIG = arguments[0];
 var SELECTED;
@@ -13,6 +18,8 @@ var refreshEngaged = false;
 
 $.init = function() {
 	APP.log("debug", "blog.init | " + JSON.stringify(CONFIG));
+
+	MODEL.init(CONFIG.index);
 
 	APP.openLoading();
 
@@ -67,7 +74,8 @@ $.handleData = function(_data) {
 		SELECTED = _data[0].id;
 
 		APP.addChild("blog_article", {
-			id: _data[0].id
+			id: _data[0].id,
+			index: CONFIG.index
 		});
 	}
 };
@@ -99,7 +107,8 @@ $.container.addEventListener("click", function(_event) {
 	}
 
 	APP.addChild("blog_article", {
-		id: _event.row.id
+		id: _event.row.id,
+		index: CONFIG.index
 	});
 });
 

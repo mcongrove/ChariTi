@@ -26,31 +26,56 @@ task("pre:compile", function(event, logger) {
 			}
 		}
 	});
-	
-	fs.readdir(event.dir.project + "/app/lib/", function(err, files) {
-		for(var i in files) {
-			var bits = files[i].split(".");
-			
-			if(bits[bits.length - 1] == "js") {
-				var file	= event.dir.project + "/app/lib/" + files[i];
-				
-				logger.debug("Beautifying \"app/lib/" + files[i] + "\"");
-				
-				var data	= fs.readFileSync(file, "utf8");
-				var newData	= beautify(data, {
-					indent_char: "\t",
-					indent_size: 1,
-					preserve_newlines: true,
-					max_preserve_newlines: 1,
-					keep_array_indentation: true,
-					space_before_conditional: false,
-					brace_style: "collapse"
-				});
-				
-				fs.writeFile(file, newData);
-			}
-		}
-	});
+    
+    fs.readdir(event.dir.project + "/app/lib/", function(err, files) {
+        for(var i in files) {
+            var bits = files[i].split(".");
+            
+            if(bits[bits.length - 1] == "js") {
+                var file    = event.dir.project + "/app/lib/" + files[i];
+                
+                logger.debug("Beautifying \"app/lib/" + files[i] + "\"");
+                
+                var data    = fs.readFileSync(file, "utf8");
+                var newData = beautify(data, {
+                    indent_char: "\t",
+                    indent_size: 1,
+                    preserve_newlines: true,
+                    max_preserve_newlines: 1,
+                    keep_array_indentation: true,
+                    space_before_conditional: false,
+                    brace_style: "collapse"
+                });
+                
+                fs.writeFile(file, newData);
+            }
+        }
+    });
+    
+    fs.readdir(event.dir.project + "/app/lib/models/", function(err, files) {
+        for(var i in files) {
+            var bits = files[i].split(".");
+            
+            if(bits[bits.length - 1] == "js") {
+                var file    = event.dir.project + "/app/lib/" + files[i];
+                
+                logger.debug("Beautifying \"app/lib/" + files[i] + "\"");
+                
+                var data    = fs.readFileSync(file, "utf8");
+                var newData = beautify(data, {
+                    indent_char: "\t",
+                    indent_size: 1,
+                    preserve_newlines: true,
+                    max_preserve_newlines: 1,
+                    keep_array_indentation: true,
+                    space_before_conditional: false,
+                    brace_style: "collapse"
+                });
+                
+                fs.writeFile(file, newData);
+            }
+        }
+    });
 });
 
 task("post:compile", function(event, logger) {

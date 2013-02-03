@@ -33,6 +33,20 @@
 			"image": "home"
 		},
 		{
+			"title": "Facebook",
+			"userid": "20594753592",
+			"type": "facebook",
+			"image": "facebook",
+			"cache": 10
+		},
+		{
+			"title": "Facebook",
+			"userid": "8532248414",
+			"type": "facebook",
+			"image": "facebook",
+			"cache": 10
+		},
+		{
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "blog",
@@ -68,13 +82,6 @@
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "donate",
 			"image": "donate1"
-		},
-		{
-			"title": "Facebook",
-			"userid": "20594753592",
-			"type": "facebook",
-			"image": "facebook",
-			"cache": 10
 		}
 	],
 	"examples": [

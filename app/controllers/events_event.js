@@ -1,13 +1,20 @@
 var APP = require("core");
 var SOCIAL = require("social");
-var MODEL = require("models/events");
 var DATE = require("alloy/moment");
+
+var MODEL = (function() {
+	var Model = require("models/events");
+
+	return new Model();
+})();
 
 var DATA = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
 	APP.log("debug", "events_event.init | " + JSON.stringify(DATA));
+
+	MODEL.init(DATA.index);
 
 	$.handleData(MODEL.getEvent(DATA.id));
 };
@@ -40,14 +47,16 @@ $.handleNavigation = function(_date) {
 			APP.log("debug", "events_event @next");
 
 			APP.addChild("events_event", {
-				id: ACTION.next.id
+				id: ACTION.next.id,
+				index: DATA.index
 			});
 		},
 		up: function(_event) {
 			APP.log("debug", "events_event @previous");
 
 			APP.addChild("events_event", {
-				id: ACTION.previous.id
+				id: ACTION.previous.id,
+				index: DATA.index
 			});
 		}
 	}).getView();

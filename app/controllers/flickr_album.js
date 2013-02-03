@@ -1,11 +1,18 @@
 var APP = require("core");
-var MODEL = require("models/flickr");
+
+var MODEL = (function() {
+	var Model = require("models/flickr");
+
+	return new Model();
+})();
 
 var DATA = arguments[0] || {};
 var PHOTOS;
 
 $.init = function() {
 	APP.log("debug", "flickr_album.init | " + JSON.stringify(DATA));
+
+	MODEL.init(CONFIG.index);
 
 	MODEL.retrieveSet({
 		id: DATA.id,
@@ -83,7 +90,8 @@ $.createGrid = function(_data) {
 			APP.log("debug", "flickr_album @click " + _event.source.id);
 
 			APP.addChild("flickr_photo", {
-				id: _event.source.id
+				id: _event.source.id,
+				index: CONFIG.index
 			});
 		});
 

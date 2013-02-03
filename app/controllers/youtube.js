@@ -1,13 +1,20 @@
 var APP = require("core");
-var MODEL = require("models/youtube");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
+
+var MODEL = (function() {
+	var Model = require("models/youtube");
+
+	return new Model();
+})();
 
 var CONFIG = arguments[0];
 var SELECTED;
 
 $.init = function() {
 	APP.log("debug", "youtube.init | " + JSON.stringify(CONFIG));
+
+	MODEL.init(CONFIG.index);
 
 	APP.openLoading();
 
@@ -64,7 +71,8 @@ $.handleVideos = function() {
 
 		APP.addChild("youtube_video", {
 			url: data[0].link,
-			title: data[0].title
+			title: data[0].title,
+			index: CONFIG.index
 		});
 	}
 };
@@ -93,7 +101,8 @@ $.content.addEventListener("click", function(_event) {
 
 	APP.addChild("youtube_video", {
 		url: _event.row.url,
-		title: _event.row.setTitle
+		title: _event.row.setTitle,
+		index: CONFIG.index
 	});
 });
 

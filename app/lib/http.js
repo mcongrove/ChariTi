@@ -1,6 +1,6 @@
 /**
  * Standard HTTP Request
- * @param {Object} _params
+ * @param {Object} _params The arguments for the method
  * @description The following are valid options to pass through:
  *  _params.timeout		: int Timeout request
  *  _params.type		: string GET/POST
@@ -16,14 +16,13 @@ exports.request = function(_params) {
 	Ti.API.debug("HTTP.request " + _params.url);
 
 	if(Ti.Network.online) {
-		// Setup the xhr object
 		var xhr = Ti.Network.createHTTPClient();
 
-		// Set the timeout or a default if one is not provided
 		xhr.timeout = _params.timeout ? _params.timeout : 10000;
 
 		/**
-		 * When XHR request is loaded
+		 * Data return
+		 * @param {Object} [_data] The HTTP response object
 		 */
 		xhr.onload = function(_data) {
 			if(_data) {
@@ -74,7 +73,6 @@ exports.request = function(_params) {
 			Ti.API.error(_event);
 		};
 
-		// Open the remote connection
 		_params.type = _params.type ? _params.type : "GET";
 		_params.async = _params.async ? _params.async : true;
 
@@ -86,10 +84,10 @@ exports.request = function(_params) {
 			}
 		}
 
+		// Overcomes the 'unsupported browser' error sometimes received
 		xhr.setRequestHeader("User-Agent", "Appcelerator Titanium/" + Ti.version + " (" + Ti.Platform.osname + "/" + Ti.Platform.version + "; " + Ti.Platform.name + "; " + Ti.Locale.currentLocale + ";)");
 
 		if(_params.data) {
-			// send the data
 			xhr.send(JSON.stringify(_params.data));
 		} else {
 			xhr.send();

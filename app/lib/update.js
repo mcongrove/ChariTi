@@ -20,6 +20,7 @@ exports.init = function() {
 
 /**
  * Handles the update with the new configuration file
+ * @param {String} [_data] The response data
  */
 exports.handleUpdate = function(_data) {
 	APP.log("debug", "UPDATE.handleUpdate");
@@ -61,6 +62,7 @@ exports.handleUpdate = function(_data) {
 
 /**
  * Retrieves remote items
+ * @param {Array} [_items] An array of items from the manifest
  */
 exports.downloadManifest = function(_items) {
 	APP.log("debug", "UPDATE.downloadManifest");
@@ -79,6 +81,8 @@ exports.downloadManifest = function(_items) {
 
 /**
  * Stores remote items locally
+ * @param {String} [_data] The content of the item we downloaded
+ * @param {String} [_url] The URL of the item we downloaded
  */
 exports.handleManifestItem = function(_data, _url) {
 	APP.log("debug", "UPDATE.handleManifestItem");

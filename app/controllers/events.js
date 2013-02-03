@@ -1,12 +1,19 @@
 var APP = require("core");
-var MODEL = require("models/events");
 var DATE = require("alloy/moment");
+
+var MODEL = (function() {
+	var Model = require("models/events");
+
+	return new Model();
+})();
 
 var CONFIG = arguments[0];
 var SELECTED;
 
 $.init = function() {
 	APP.log("debug", "events.init | " + JSON.stringify(CONFIG));
+
+	MODEL.init(CONFIG.index);
 
 	CONFIG.feed = "https://graph.facebook.com/" + CONFIG.userid + "/events?fields=id,name,start_time,end_time,location,description&since=now&access_token=AAAEdFU8bj50BAL7MQcSHuIDf1KzST7gZAAubz49tio8yLM8Lb7o29IxtxZALrogeimSAsTkYXJRzzqrRqSniABwtDRPONoQxsdNy6XQjIaRR9sedAM";
 
@@ -60,7 +67,8 @@ $.handleData = function(_data) {
 		SELECTED = _data[0].id;
 
 		APP.addChild("events_event", {
-			id: _data[0].id
+			id: _data[0].id,
+			index: CONFIG.index
 		});
 	}
 };
@@ -88,7 +96,8 @@ $.content.addEventListener("click", function(_event) {
 	}
 
 	APP.addChild("events_event", {
-		id: _event.row.id
+		id: _event.row.id,
+		index: CONFIG.index
 	});
 });
 

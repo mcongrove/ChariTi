@@ -1,14 +1,21 @@
 var APP = require("core");
 var SOCIAL = require("social");
-var MODEL = require("models/news");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
+
+var MODEL = (function() {
+	var Model = require("models/news");
+
+	return new Model();
+})();
 
 var DATA = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
 	APP.log("debug", "news_article.init | " + JSON.stringify(DATA));
+
+	MODEL.init(DATA.index);
 
 	$.handleData(MODEL.getArticle(DATA.id));
 };
@@ -55,14 +62,16 @@ $.handleNavigation = function() {
 			APP.log("debug", "news_article @next");
 
 			APP.addChild("news_article", {
-				id: ACTION.next.id
+				id: ACTION.next.id,
+				index: DATA.index
 			});
 		},
 		up: function(_event) {
 			APP.log("debug", "news_article @previous");
 
 			APP.addChild("news_article", {
-				id: ACTION.previous.id
+				id: ACTION.previous.id,
+				index: DATA.index
 			});
 		}
 	}).getView();

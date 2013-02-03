@@ -1,8 +1,13 @@
 var APP = require("core");
 var UTIL = require("utilities");
-var MODEL = require("models/facebook");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
+
+var MODEL = (function() {
+	var Model = require("models/facebook");
+
+	return new Model();
+})();
 
 var CONFIG = arguments[0];
 var SELECTED;
@@ -14,11 +19,11 @@ var refreshEngaged = false;
 $.init = function() {
 	APP.log("debug", "facebook.init | " + JSON.stringify(CONFIG));
 
+	MODEL.init(CONFIG.index);
+
 	CONFIG.feed = "http://www.facebook.com/feeds/page.php?format=json&id=" + CONFIG.userid;
 
 	APP.openLoading();
-
-	$.retrieveData();
 
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible = true;
@@ -71,7 +76,8 @@ $.handleData = function(_data) {
 		SELECTED = _data[0].id;
 
 		APP.addChild("facebook_article", {
-			id: _data[0].id
+			id: _data[0].id,
+			index: CONFIG.index
 		});
 	}
 };
@@ -103,7 +109,8 @@ $.container.addEventListener("click", function(_event) {
 	}
 
 	APP.addChild("facebook_article", {
-		id: _event.row.id
+		id: _event.row.id,
+		index: CONFIG.index
 	});
 });
 

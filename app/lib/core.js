@@ -2,10 +2,6 @@ var Alloy = require("alloy");
 var UTIL = require("utilities");
 var HTTP = require("http");
 
-/**
- * Main app singleton
- * @type {Object}
- */
 var APP = {
 	/**
 	 * Holds data from the JSON config file
@@ -49,7 +45,6 @@ var APP = {
 	},
 	/**
 	 * The stack controller
-	 * @type {Object}
 	 */
 	currentStack: -1,
 	previousScreen: null,
@@ -68,29 +63,24 @@ var APP = {
 	MainWindow: null,
 	/**
 	 * The global view all screen controllers get added to
-	 * @type {Object}
 	 */
 	GlobalWrapper: null,
 	/**
 	 * The global view all content screen controllers get added to
-	 * @type {Object}
 	 */
 	ContentWrapper: null,
 	/**
 	 * The loading view
-	 * @type {Object}
 	 */
 	Loading: Alloy.createWidget("com.chariti.loading").getView(),
 	cancelLoading: false,
 	loadingOpen: false,
 	/**
 	 * Tabs Widget
-	 * @type {Object}
 	 */
 	Tabs: null,
 	/**
-	 * Sets up the app singleton and all it"s child dependencies
-	 * NOTE: This should only be fired in index controller file and only once.
+	 * Initializes the application
 	 */
 	init: function() {
 		Ti.API.debug("APP.init");
@@ -190,7 +180,7 @@ var APP = {
 	 */
 	dropDatabase: function() {
 		Ti.API.debug("APP.dropDatabase");
-	
+
 		var db = Ti.Database.open("ChariTi");
 		db.remove();
 	},
@@ -231,10 +221,14 @@ var APP = {
 		APP.Settings = data.settings;
 		APP.Plugins = data.plugins;
 		APP.Nodes = data.tabs;
+
+		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
+			APP.Nodes[i].index = i;
+		}
 	},
 	/**
 	 * Builds out the tab group
-	 * @param {Boolean} _rebuild Whether this is a re-build or not
+	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
 	 */
 	build: function(_rebuild) {
 		APP.log("debug", "APP.build");
@@ -298,7 +292,7 @@ var APP = {
 	},
 	/**
 	 * Global event handler to change screens
-	 * @param  {String} _id The ID of the tab being opened
+	 * @param {String} [_id] The ID (index) of the tab being opened
 	 */
 	handleNavigation: function(_id) {
 		APP.log("debug", "APP.handleNavigation | " + APP.Nodes[_id].type);
@@ -350,6 +344,13 @@ var APP = {
 				} else {
 					screen = controllerStack[controllerStack.length - 1];
 				}
+
+				// Tell the parent screen it was added to the window
+				if(controllerStack[0].type == "tablet") {
+					controllerStack[0].fireEvent("APP:tabletScreenAdded");
+				} else {
+					controllerStack[0].fireEvent("APP:screenAdded");
+				}
 			} else {
 				// Create a new screen
 				var type = APP.Nodes[_id].type.toLowerCase();
@@ -390,8 +391,9 @@ var APP = {
 	},
 	/**
 	 * Open a child screen
-	 * @param {String} _controller The name of the controller to open
-	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
+	 * @param {String} [_controller] The name of the controller to open
+	 * @param {Object} [_params] An optional dictionary of parameters to pass to the controller
+	 * @param {String} [_stack] The stack to add the child to (optional)
 	 */
 	addChild: function(_controller, _params, _stack) {
 		var stack;
@@ -426,6 +428,7 @@ var APP = {
 	},
 	/**
 	 * Removes a child screen
+	 * @param {String} [_stack] Removes the child from this stack
 	 */
 	removeChild: function(_stack) {
 		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
@@ -472,6 +475,7 @@ var APP = {
 	},
 	/**
 	 * Removes all children screens
+	 * @param {String} [_stack] Removes all children from this stack
 	 */
 	removeAllChildren: function(_stack) {
 		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
@@ -484,6 +488,7 @@ var APP = {
 	},
 	/**
 	 * Global function to add a screen
+	 * @param {Object} [_screen] The screen to add
 	 */
 	addScreen: function(_screen) {
 		if(_screen) {
@@ -498,6 +503,7 @@ var APP = {
 	},
 	/**
 	 * Global function to remove a screen
+	 * @param {Object} [_screen] The screen to remove
 	 */
 	removeScreen: function(_screen) {
 		if(_screen) {
@@ -508,6 +514,7 @@ var APP = {
 	},
 	/**
 	 * Adds a screen to the Master window
+	 * @param {Object} [_screen] The screen to add
 	 */
 	addMasterScreen: function(_screen) {
 		if(_screen) {
@@ -516,6 +523,7 @@ var APP = {
 	},
 	/**
 	 * Adds a screen to the Detail window
+	 * @param {Object} [_screen] The screen to add
 	 */
 	addDetailScreen: function(_screen) {
 		if(_screen) {
@@ -536,6 +544,8 @@ var APP = {
 	},
 	/**
 	 * Removes a screen from the Detail window
+	 * @param {Object} [_screen] The screen to remove
+	 * @param {Boolean} [_pop] Whether to pop the item off the controller stack
 	 */
 	removeDetailScreen: function(_screen, _pop) {
 		if(_screen) {
@@ -586,7 +596,7 @@ var APP = {
 	},
 	/**
 	 * Logs all console data
-	 * @param {String} _severity A severity type (error, trace, info)
+	 * @param {String} _severity A severity type (debug, error, info, log, trace, warn)
 	 * @param {String} _text The text to log
 	 */
 	log: function(_severity, _text) {
@@ -652,7 +662,7 @@ var APP = {
 	},
 	/**
 	 * Global orientation event handler
-	 * @param {Object} _event Standard Ti callback
+	 * @param {Object} _event Standard Titanium event callback
 	 */
 	orientationObserver: function(_event) {
 		APP.log("debug", "APP.orientationObserver");
@@ -669,7 +679,7 @@ var APP = {
 	},
 	/**
 	 * Global network event handler
-	 * @param {Object} _event Standard Ti callback
+	 * @param {Object} _event Standard Titanium event callback
 	 */
 	networkObserver: function(_event) {
 		APP.log("debug", "APP.networkObserver");
@@ -681,14 +691,16 @@ var APP = {
 	},
 	/**
 	 * Exit event observer
+	 * @param {Object} _event Standard Titanium event callback
 	 */
-	exitObserver: function() {
+	exitObserver: function(_event) {
 		APP.log("debug", "APP.exitObserver");
 	},
 	/**
 	 * Resume event observer
+	 * @param {Object} _event Standard Titanium event callback
 	 */
-	resumeObserver: function() {
+	resumeObserver: function(_event) {
 		APP.log("debug", "APP.resumeObserver");
 	}
 };

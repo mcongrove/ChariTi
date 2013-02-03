@@ -1,5 +1,10 @@
 var APP = require("core");
-var MODEL = require("models/flickr");
+
+var MODEL = (function() {
+	var Model = require("models/flickr");
+
+	return new Model();
+})();
 
 var DATA = arguments[0] || {};
 var PREVIOUS = null;
@@ -9,6 +14,8 @@ var metaVisible = false;
 
 $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(DATA));
+
+	MODEL.init(DATA.index);
 
 	$.handleData(MODEL.getPhoto(DATA.id));
 };

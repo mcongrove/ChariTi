@@ -4,7 +4,7 @@ exports.previous;
 exports.current;
 
 /**
- * Checks versions, need for migration
+ * Checks versions, determines need for migration
  */
 exports.init = function() {
 	Ti.API.debug("MIGRATE.init");
@@ -30,7 +30,7 @@ exports.init = function() {
 
 		APP.dropDatabase();
 	}
-	
+
 	Ti.API.info("Migrating" + exports.previous + " => " + exports.current);
 
 	Ti.App.Properties.setString("CVERSION", current);

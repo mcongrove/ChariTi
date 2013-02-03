@@ -1,5 +1,7 @@
 /**
  * Checks to see if an item in the cache is stale or fresh
+ * @param {String} [_url] The URL of the file we're checking
+ * @param {Integer} [_time] The time, in minutes, to consider 'warm' in the cache
  */
 exports.isStale = function(_url, _time) {
 	var db = Ti.Database.open("ChariTi");
@@ -30,6 +32,7 @@ exports.isStale = function(_url, _time) {
 
 /**
  * Returns last updated time for an item in the cache
+ * @param {String} [_url] The URL of the file we're checking
  */
 exports.lastUpdate = function(_url) {
 	var db = Ti.Database.open("ChariTi");
@@ -55,6 +58,7 @@ exports.lastUpdate = function(_url) {
 
 /**
  * Escapes a string for SQL insertion
+ * @param {String} [_string] The string to perform the action on
  */
 exports.escapeString = function(_string) {
 	if(typeof _string !== "string") {
@@ -66,6 +70,7 @@ exports.escapeString = function(_string) {
 
 /**
  * Removes HTML entities, replaces breaks/paragraphs with newline, strips HTML, trims
+ * @param {String} [_string] The string to perform the action on
  */
 exports.cleanString = function(_string) {
 	if(typeof _string !== "string") {
@@ -88,6 +93,7 @@ exports.cleanString = function(_string) {
 
 /**
  * Combination of clean and escape string
+ * @param {String} [_string] The string to perform the action on
  */
 exports.cleanEscapeString = function(_string) {
 	_string = exports.cleanString(_string);
@@ -97,6 +103,7 @@ exports.cleanEscapeString = function(_string) {
 
 /**
  * Cleans up nasty XML
+ * @param {String} [_string] The XML string to perform the action on
  */
 exports.xmlNormalize = function(_string) {
 	_string = _string.replace(/&nbsp;*/ig, " ");
@@ -112,6 +119,7 @@ exports.xmlNormalize = function(_string) {
 
 /**
  * Decodes HTML entities
+ * @param {String} [_string] The string to perform the action on
  */
 exports.htmlDecode = function(_string) {
 	var tmp_str = _string.toString();
@@ -135,12 +143,16 @@ exports.htmlDecode = function(_string) {
 	return tmp_str;
 };
 
+/**
+ * The HTML entities table used for decoding
+ */
 exports.htmlTranslationTable = function() {
 	var entities = {
 		"&#x2013;": "8211",
 		"&#x2014;": "8212",
 		"&#x2018;": "8216",
 		"&#x2019;": "8217",
+		"&#xae;": "174",
 		"&amp;": "38",
 		"&bdquo;": "8222",
 		"&bull;": "8226",
@@ -403,6 +415,7 @@ exports.htmlTranslationTable = function() {
 
 /**
  * Adds thousands separators to a number
+ * @param {Integer} [_number] The number to perform the action on
  */
 exports.formatNumber = function(_number) {
 	_number = _number + "";
