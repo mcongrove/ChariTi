@@ -1,12 +1,7 @@
 var APP = require("core");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
-
-var MODEL = (function() {
-	var Model = require("models/youtube");
-
-	return new Model();
-})();
+var MODEL = require("models/youtube")();
 
 var CONFIG = arguments[0];
 var SELECTED;

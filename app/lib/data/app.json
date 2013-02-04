@@ -33,6 +33,13 @@
 			"image": "home"
 		},
 		{
+			"title": "News",
+			"userid": "7304307941",
+			"type": "facebook",
+			"image": "news1",
+			"cache": 120
+		},
+		{
 			"title": "Facebook",
 			"userid": "20594753592",
 			"type": "facebook",

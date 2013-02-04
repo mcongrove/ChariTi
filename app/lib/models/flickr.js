@@ -273,4 +273,6 @@ function Model() {
 	};
 }
 
-module.exports = Model;
+module.exports = function() {
+	return new Model();
+};

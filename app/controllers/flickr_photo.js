@@ -1,10 +1,5 @@
 var APP = require("core");
-
-var MODEL = (function() {
-	var Model = require("models/flickr");
-
-	return new Model();
-})();
+var MODEL = require("models/flickr")();
 
 var CONFIG = arguments[0] || {};
 var PREVIOUS = null;

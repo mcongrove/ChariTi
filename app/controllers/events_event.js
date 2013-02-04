@@ -1,12 +1,7 @@
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
-
-var MODEL = (function() {
-	var Model = require("models/events");
-
-	return new Model();
-})();
+var MODEL = require("models/events")();
 
 var CONFIG = arguments[0] || {};
 var ACTION = {};

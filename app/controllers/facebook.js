@@ -2,12 +2,7 @@ var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
-
-var MODEL = (function() {
-	var Model = require("models/facebook");
-
-	return new Model();
-})();
+var MODEL = require("models/facebook")();
 
 var CONFIG = arguments[0];
 var SELECTED;

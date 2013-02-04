@@ -2,12 +2,7 @@ var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
-
-var MODEL = (function() {
-	var Model = require("models/rss");
-
-	return new Model();
-})();
+var MODEL = require("models/rss")();
 
 var CONFIG = arguments[0] || {};
 var ACTION = {};
