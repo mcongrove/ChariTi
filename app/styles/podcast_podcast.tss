@@ -93,10 +93,9 @@
 		fontSize: "14dp",
 		fontWeight: "bold"
 	},
-	color: "#E6E6E6",
+	color: "#777777",
 	shadowColor: "#000",
 	textAlign: "right",
-	touchEnabled: false,
 	shadowOffset: {
 		x: "0dp",
 		y: "1dp"
