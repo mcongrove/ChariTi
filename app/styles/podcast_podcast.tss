@@ -1,0 +1,108 @@
+"#Wrapper": {
+	backgroundColor: "#000"
+},
+"#content": {
+	top: "47dp"
+},
+"#artworkWrapper": {
+	top: "40dp",
+	bottom: "40dp",
+	width: Ti.UI.SIZE
+},
+"#artwork": {
+	width: Ti.UI.FILL,
+	preventDefaultImage: true
+},
+"#controls": {
+	width: "163dp",
+	height: "69dp"
+},
+"#previous": {
+	width: "47dp",
+	height: "47dp",
+	left: "0dp",
+	top: "11dp"
+},
+"#next": {
+	width: "47dp",
+	height: "47dp",
+	left: "116dp",
+	top: "11dp"
+},
+"#play": {
+	width: "69dp",
+	height: "69dp",
+	left: "47dp"
+},
+"#pause": {
+	width: "69dp",
+	height: "69dp",
+	left: "47dp",
+	visible: false
+},
+"#meta": {
+	top: "0dp",
+	width: Ti.UI.FILL,
+	height: "40dp",
+	backgroundImage: "/images/transparent.png"
+},
+"#title": {
+	top: "12dp",
+	left: "12dp",
+	right: "12dp",
+	height: "16dp",
+	font: {
+		fontSize: "14dp",
+		fontWeight: "bold"
+	},
+	color: "#E6E6E6",
+	shadowColor: "#000",
+	textAlign: "left",
+	shadowOffset: {
+		x: "0dp",
+		y: "1dp"
+	}
+},
+"#track": {
+	width: Ti.UI.FILL,
+	height: "40dp",
+	bottom: "0dp",
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#222",
+			"#000"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
+	}
+},
+"#position": {
+	width: "1%",
+	height: "40dp",
+	left: "0dp",
+	touchEnabled: false,
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#E6E6E6",
+			"#C6C6C6"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
+	}
+}

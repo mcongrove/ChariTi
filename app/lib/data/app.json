@@ -33,11 +33,11 @@
 			"image": "home"
 		},
 		{
-			"title": "News",
-			"userid": "7304307941",
-			"type": "facebook",
-			"image": "news1",
-			"cache": 120
+			"title": "Podcast",
+			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
+			"type": "podcast",
+			"image": "audio",
+			"cache": 1440
 		},
 		{
 			"title": "Facebook",
@@ -64,7 +64,7 @@
 		{
 			"title": "Events",
 			"userid": "7304307941",
-			"type": "events",
+			"type": "event",
 			"image": "event",
 			"cache": 1440
 		},
