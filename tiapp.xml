@@ -16,26 +16,41 @@
     <description>ChariTi is a framework built to allow charities to quickly and easily create mobile applications.</description>
     <copyright>2013 by Matthew Congrove</copyright>
     <icon>appicon.png</icon>
-    <persistent-wifi>false</persistent-wifi>
-    <prerendered-icon>true</prerendered-icon>
-    <statusbar-style>default</statusbar-style>
-    <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>false</analytics>
     <guid>66774a0a-ba43-45f5-9686-f2de98701f32</guid>
     <property name="ti.ui.defaultunit">dip</property>
-    <iphone>
-        <orientations device="iphone">
-            <orientation>Ti.UI.PORTRAIT</orientation>
-        </orientations>
-        <orientations device="ipad">
-            <orientation>Ti.UI.PORTRAIT</orientation>
-            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
-        </orientations>
-    </iphone>
+	<ios>
+		<min-ios-ver>4.3</min-ios-ver>
+		<plist>
+			<dict>
+				<key>UIRequiresPersistentWiFi</key><false/>
+				<key>UIPrerenderedIcon</key><true/>
+				<key>UIStatusBarHidden</key><false/>
+				<key>UIStatusBarStyle</key><string>UIStatusBarStyleDefault</string>
+				<key>UISupportedInterfaceOrientations~iphone</key>
+				<array>
+					<string>UIInterfaceOrientationPortrait</string>
+				</array>
+				<key>UISupportedInterfaceOrientations~ipod</key>
+				<array>
+					<string>UIInterfaceOrientationPortrait</string>
+				</array>
+				<key>UISupportedInterfaceOrientations~ipad</key>
+				<array>
+					<string>UIInterfaceOrientationPortrait</string>
+					<string>UIInterfaceOrientationPortraitUpsideDown</string>
+					<string>UIInterfaceOrientationLandscapeLeft</string>
+					<string>UIInterfaceOrientationLandscapeRight</string>
+				</array>
+				<key>UIBackgroundModes</key>
+				<array>
+					<string>audio</string>
+				</array>
+			</dict>
+		</plist>
+	</ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest android:versionCode="1" android:versionName="1"
             package="com.chariti.mobile" xmlns:android="http://schemas.android.com/apk/res/android">

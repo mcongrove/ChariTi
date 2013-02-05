@@ -1,12 +1,12 @@
 var APP = require("core");
 var DATE = require("alloy/moment");
-var MODEL = require("models/events")();
+var MODEL = require("models/event")();
 
 var CONFIG = arguments[0];
 var SELECTED;
 
 $.init = function() {
-	APP.log("debug", "events.init | " + JSON.stringify(CONFIG));
+	APP.log("debug", "event.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
 
@@ -40,12 +40,12 @@ $.retrieveData = function(_force, _callback) {
 };
 
 $.handleData = function(_data) {
-	APP.log("debug", "events.handleData");
+	APP.log("debug", "event.handleData");
 
 	var rows = [];
 
 	for(var i = 0, x = _data.length; i < x; i++) {
-		var row = Alloy.createController("events_row", {
+		var row = Alloy.createController("event_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
 			subHeading: DATE(parseInt(_data[i].date_start)).format("MMMM Do, YYYY h:mma")
@@ -61,7 +61,7 @@ $.handleData = function(_data) {
 	if(APP.Device.isTablet) {
 		SELECTED = _data[0].id;
 
-		APP.addChild("events_event", {
+		APP.addChild("event_event", {
 			id: _data[0].id,
 			index: CONFIG.index
 		});
@@ -70,7 +70,7 @@ $.handleData = function(_data) {
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "events @close");
+	APP.log("debug", "event @close");
 
 	APP.removeChild();
 });
@@ -80,7 +80,7 @@ $.NavigationBar.right.addEventListener("click", function(_event) {
 });
 
 $.content.addEventListener("click", function(_event) {
-	APP.log("debug", "events @click " + _event.row.id);
+	APP.log("debug", "event @click " + _event.row.id);
 
 	if(APP.Device.isTablet) {
 		if(_event.row.id == SELECTED) {
@@ -90,7 +90,7 @@ $.content.addEventListener("click", function(_event) {
 		}
 	}
 
-	APP.addChild("events_event", {
+	APP.addChild("event_event", {
 		id: _event.row.id,
 		index: CONFIG.index
 	});

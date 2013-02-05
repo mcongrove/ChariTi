@@ -1,13 +1,13 @@
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
-var MODEL = require("models/events")();
+var MODEL = require("models/event")();
 
 var CONFIG = arguments[0] || {};
 var ACTION = {};
 
 $.init = function() {
-	APP.log("debug", "events_event.init | " + JSON.stringify(CONFIG));
+	APP.log("debug", "event_event.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
 
@@ -15,7 +15,7 @@ $.init = function() {
 };
 
 $.handleData = function(_data) {
-	APP.log("debug", "events_event.handleData");
+	APP.log("debug", "event_event.handleData");
 
 	$.handleNavigation(_data.date_start);
 
@@ -39,17 +39,17 @@ $.handleNavigation = function(_date) {
 
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
 		down: function(_event) {
-			APP.log("debug", "events_event @next");
+			APP.log("debug", "event_event @next");
 
-			APP.addChild("events_event", {
+			APP.addChild("event_event", {
 				id: ACTION.next.id,
 				index: CONFIG.index
 			});
 		},
 		up: function(_event) {
-			APP.log("debug", "events_event @previous");
+			APP.log("debug", "event_event @previous");
 
-			APP.addChild("events_event", {
+			APP.addChild("event_event", {
 				id: ACTION.previous.id,
 				index: CONFIG.index
 			});
@@ -61,13 +61,13 @@ $.handleNavigation = function(_date) {
 
 // Event listeners
 $.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "events_event @close");
+	APP.log("debug", "event_event @close");
 
 	APP.removeAllChildren();
 });
 
 $.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.log("debug", "events_event @menu");
+	APP.log("debug", "event_event @menu");
 
 	SOCIAL.share(ACTION.url, $.NavigationBar.right);
 });

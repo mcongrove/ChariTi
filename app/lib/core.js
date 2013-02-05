@@ -355,6 +355,7 @@ var APP = {
 				// Create a new screen
 				var type = APP.Nodes[_id].type.toLowerCase();
 
+				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
 					switch(type) {
 						case "events":

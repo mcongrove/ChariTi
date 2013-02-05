@@ -6,7 +6,7 @@ APP.Detail[APP.currentStack] = $.Detail;
 var detail = Alloy.createController("tablet_detail").getView();
 APP.addDetailScreen(detail);
 
-var master = Alloy.createController("events", arguments[0]).getView();
+var master = Alloy.createController("event", arguments[0]).getView();
 APP.addMasterScreen(master);
 
 $.Wrapper.addEventListener("APP:tabletScreenAdded", function(_event) {
