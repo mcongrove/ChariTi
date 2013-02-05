@@ -25,7 +25,7 @@ $.init = function(_params) {
 		$.excess = true;
 	}
 	
-	$.width	= $.excess ? ($.display.width / $.excessLength) : ($.display.width / _params.tabs.length);
+	$.width	= $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.tabs.length);
 	
 	$.TabGroup.backgroundColor			= _params.colors.primary;
 	$.TabContainerMore.backgroundColor	= _params.colors.primary;
@@ -84,7 +84,7 @@ $.init = function(_params) {
 		tab.add(icon);
 		tab.add(label);
 		
-		if($.excess && i > ($.excessLength - 2)) {
+		if($.excess && i >= ($.excessLength - 1)) {
 			tab.backgroundImage = WPATH("images/overlay.png");
 			tab.width	= ($.width + 1) + "dp";
 			label.left	= "6dp";

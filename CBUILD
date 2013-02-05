@@ -78,7 +78,8 @@ titanium clean --platform ios
 ##################################################
 
 echo "Updating files..."
-cp -r $LIB/data/iphone/* $ASSETS/iphone/
+rm -rf $ASSETS/iphone/
+cp -r $LIB/data/iphone/ $ASSETS/iphone/
 sed -i "" "s/\<id\>.*/\<id\>$ID\<\/id\>/" $WORKSPACE/tiapp.xml
 sed -i "" "s/\<name\>.*/\<name\>$APPLICATION\<\/name\>/" $WORKSPACE/tiapp.xml
 sed -i "" "s/#appid.*/#appid:$ID/" $WORKSPACE/manifest
