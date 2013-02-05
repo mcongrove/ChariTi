@@ -53,7 +53,7 @@ $.createAudioPlayer = function(_url) {
 	STREAM.addEventListener("playbackstate", $.streamState);
 	STREAM.addEventListener("loadstate", $.streamPlay);
 
-	setInterval($.streamProgress, 2000);
+	setInterval($.streamProgress, 500);
 };
 
 $.handleNavigation = function(_id) {
@@ -87,9 +87,7 @@ $.handleNavigation = function(_id) {
 };
 
 $.streamPlay = function(_event) {
-	if(_event.loadState == Ti.Media.VIDEO_LOAD_STATE_PLAYABLE) {
-		STREAM.play();
-	}
+	STREAM.play();
 };
 
 $.streamPause = function(_event) {
@@ -112,13 +110,22 @@ $.streamSeek = function(_event) {
 	$.position.width = (percentage * 100) + "%";
 };
 
+function secondsToString(seconds) {
+	var numhours = Math.round(Math.floor(((seconds % 31536000) % 86400) / 3600));
+	var numminutes = Math.round(Math.floor((((seconds % 31536000) % 86400) % 3600) / 60));
+	var numseconds = Math.round((((seconds % 31536000) % 86400) % 3600) % 60);
+	return((numhours !== 0) ? numhours + ':' : '') + numminutes + ':' + (((numseconds < 10) ? '0' : '') + numseconds);
+}
+
 $.streamProgress = function(_event) {
 	if(STREAM.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
-		var percentage = Math.round((STREAM.currentPlaybackTime / STREAM.getDuration()) * 100);
+		var percentage = (STREAM.currentPlaybackTime / STREAM.getDuration()) * 100;
 
 		percentage = percentage >= 1 ? percentage : 1;
 
 		$.position.width = percentage + "%";
+
+		$.time.text = secondsToString(STREAM.currentPlaybackTime / 1000);
 	}
 };
 
