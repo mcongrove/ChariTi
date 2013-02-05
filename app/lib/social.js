@@ -40,12 +40,9 @@ if(OS_IOS) {
 	 * @param {String} [_url] The URL to share
 	 * @param {Object} [_view] The view to attach the OptionDialog to (required for iPad)
 	 */
-	exports.share = function(_url, view) {
+	exports.share = function(_url, _view) {
 		if(exports.activitySupported) {
-			SOCIAL.activityView({
-				text: APP.Settings.share + " " + _url,
-				removeIcons: "print,copy,contact,camera,weibo"
-			});
+			exports.shareActivityView(_url, _view);
 		} else {
 			var options = [];
 			var mapping = [];
@@ -86,14 +83,48 @@ if(OS_IOS) {
 				}
 			});
 
-			if(view === undefined) {
+			if(_view === undefined) {
 				dialog.show();
 			} else {
 				dialog.show({
-					view: view
+					view: _view
 				});
 			}
+		}
+	};
 
+	/**
+	 * Opens the sharing menu for iOS 6 users
+	 * @param {String} [_url] The URL to share
+	 * @param {Object} [_view] The view to attach the OptionDialog to (required for iPad)
+	 */
+	exports.shareActivityView = function(_url, _view) {
+		var dialog = Ti.UI.createOptionDialog({
+			options: ["Share", "Open in Safari", "Cancel"],
+			cancel: 2,
+			selectedIndex: 2
+		});
+
+		dialog.addEventListener("click", function(_event) {
+			switch(_event.index) {
+				case 0:
+					SOCIAL.activityView({
+						text: APP.Settings.share + " " + _url,
+						removeIcons: "print,copy,contact,camera,weibo"
+					});
+					break;
+				case 1:
+					Ti.Platform.openURL(_url);
+					break;
+			}
+		});
+
+		if(_view === undefined) {
+			dialog.show();
+		} else {
+			dialog.show({
+				view: _view
+			});
 		}
 	};
 } else if(OS_ANDROID) {

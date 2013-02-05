@@ -8,8 +8,8 @@ $.init = function() {
 	$.heading.text = CONFIG.heading;
 	$.heading.color = APP.Settings.colors.primary || "#666";
 	$.text.text = CONFIG.text;
-	$.button.backgroundColor = APP.Settings.colors.primary || "#FFF";
-	$.button.color = APP.Settings.colors.text || "#FFF";
+	$.button.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.buttonText.color = APP.Settings.colors.text || "#FFF";
 
 	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.NavigationBar.right.visible = true;
