@@ -53,7 +53,7 @@ $.createAudioPlayer = function(_url) {
 	STREAM.addEventListener("playbackstate", $.streamState);
 	STREAM.addEventListener("loadstate", $.streamPlay);
 
-	setInterval($.streamProgress, 2000);
+	setInterval($.streamProgress, 500);
 };
 
 $.handleNavigation = function(_id) {
@@ -87,9 +87,7 @@ $.handleNavigation = function(_id) {
 };
 
 $.streamPlay = function(_event) {
-	if(_event.loadState == Ti.Media.VIDEO_LOAD_STATE_PLAYABLE) {
-		STREAM.play();
-	}
+	STREAM.play();
 };
 
 $.streamPause = function(_event) {
@@ -114,11 +112,13 @@ $.streamSeek = function(_event) {
 
 $.streamProgress = function(_event) {
 	if(STREAM.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
-		var percentage = Math.round((STREAM.currentPlaybackTime / STREAM.getDuration()) * 100);
+		var percentage = ((STREAM.currentPlaybackTime / STREAM.getDuration()) * 100);
+		var time = DATE.duration(STREAM.currentPlaybackTime);
 
 		percentage = percentage >= 1 ? percentage : 1;
 
 		$.position.width = percentage + "%";
+		$.time.text = (time.hours() !== 0 ? time.hours() + ":" : "") + time.minutes() + ":" + (time.seconds() < 10 ? "0" : "") + time.seconds();
 	}
 };
 

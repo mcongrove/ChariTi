@@ -84,6 +84,24 @@
 		backFillStart: true
 	}
 },
+"#time": {
+	top: "12dp",
+	left: "12dp",
+	right: "12dp",
+	height: "16dp",
+	font: {
+		fontSize: "14dp",
+		fontWeight: "bold"
+	},
+	color: "#E6E6E6",
+	shadowColor: "#000",
+	textAlign: "right",
+	touchEnabled: false,
+	shadowOffset: {
+		x: "0dp",
+		y: "1dp"
+	}
+},
 "#position": {
 	width: "1%",
 	height: "40dp",
