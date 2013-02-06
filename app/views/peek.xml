@@ -1,0 +1,13 @@
+<Alloy>
+	<View id="Wrapper">
+		<ImageView id="logo" image="/images/peek.png" />
+
+		<Label id="urlLabel" text="CONFIGURATION FILE URL" />
+
+		<TextField id="urlField" />
+
+		<Label id="historyLabel" text="HISTORY" />
+
+		<TableView id="history" />
+	</View>
+</Alloy>

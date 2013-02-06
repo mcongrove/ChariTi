@@ -1,0 +1,63 @@
+"#Wrapper": {
+	backgroundColor: "#EEE",
+	top: "0dp",
+	left: "0dp",
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	layout: "vertical"
+},
+"#logo": {
+	width: "89dp",
+	height: "28dp",
+	top: "20dp",
+	left: "20dp"
+},
+"#urlLabel": {
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	color: "#569BBE",
+	top: "20dp",
+	left: "20dp",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},
+"#urlField": {
+	backgroundColor: "#FFF",
+	color: "#666",
+	font: {
+		fontSize: "15dp",
+		fontWeight: "bold"
+	},
+	height: "35dp",
+	left: "20dp",
+	right: "20dp",
+	top: "10dp",
+	paddingLeft: "10dp",
+	paddingRight: "10dp",
+	autocorrect: false,
+	autocapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
+	clearButtonMode: Ti.UI.INPUT_BUTTONMODE_ONFOCUS,
+	returnKeyType: Ti.UI.RETURNKEY_GO
+},
+"#historyLabel": {
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	color: "#569BBE",
+	top: "20dp",
+	left: "20dp",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},
+"#history": {
+	top: "10dp",
+	left: "20dp",
+	right: "20dp",
+	backgroundColor: "#FFF",
+	rowHeight: "48dp",
+	separatorColor: "#EEE",
+	height: "240dp"
+}

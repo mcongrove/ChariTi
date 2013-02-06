@@ -65,5 +65,8 @@ $.logs.addEventListener("click", function(_event) {
 	APP.logSend();
 });
 
+// Make PEEK modifications
+APP.PEEK.configureSettings($.content);
+
 // Kick off the init
 $.init();

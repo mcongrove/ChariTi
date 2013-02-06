@@ -1,0 +1,20 @@
+"TableView": {
+	right: "10dp",
+	left: "10dp",
+	top: "10dp",
+	borderRadius: "10dp",
+	borderColor: "#DDD",
+	separatorColor: "#DDD",
+	rowHeight: "45dp",
+	backgroundColor: "#FFF",
+	scrollable: false
+},
+"TableViewRow": {
+	selectedBackgroundColor: "#DDD",
+	font: {
+		fontSize: "16dp",
+		fontWeight: "bold"
+	},
+	color: "#666",
+	height: "45dp"
+},

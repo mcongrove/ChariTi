@@ -7,5 +7,8 @@ APP.GlobalWrapper = $.GlobalWrapper;
 APP.ContentWrapper = $.ContentWrapper;
 APP.Tabs = $.Tabs;
 
+// Configure PEEK
+APP.PEEK = Alloy.createController("peek");
+
 // Start the APP
 APP.init();

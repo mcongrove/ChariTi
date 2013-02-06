@@ -1,0 +1,6 @@
+<Alloy>
+	<TableView height="90dp">
+		<TableViewRow id="refresh" title="Refresh App" hasChild="true" />
+		<TableViewRow id="restart" title="New App" hasChild="true" />
+	</TableView>
+</Alloy>
