@@ -394,6 +394,7 @@ var APP = {
 						case "events":
 						case "facebook":
 						case "flickr":
+						case "podcast":
 						case "rss":
 						case "youtube":
 							type += "_tablet";
