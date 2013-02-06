@@ -33,7 +33,7 @@ $.openConfiguration = function() {
 $.loadHistory = function() {
 	var urls = Ti.App.Properties.getList("URLS", []);
 	var rows = [];
-	
+
 	for(var i = 0, z = URLS.length; i < z; i++) {
 		var row = Ti.UI.createTableViewRow({
 			title: urls[i],
