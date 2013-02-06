@@ -3,11 +3,21 @@ var HTTP = require("http");
 
 /**
  * Updates the app.json from a remote source
+ * @param {Object} _params The parameters for the function, used to force an update
  */
-exports.init = function() {
+exports.init = function(_params) {
 	APP.log("debug", "UPDATE.init");
 
-	if(APP.ConfigurationURL) {
+	if(_params) {
+		HTTP.request({
+			timeout: 10000,
+			type: "GET",
+			format: "DATA",
+			url: _params.url,
+			success: exports.handleUpdate,
+			passthrough: _params.callback
+		});
+	} else if(APP.ConfigurationURL) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
@@ -21,18 +31,23 @@ exports.init = function() {
 /**
  * Handles the update with the new configuration file
  * @param {String} [_data] The response data
+ * @param {String} [_url] The URL we requested
+ * @param {Function} [_callback] The optional callback function, used to force an update
+ * 
  */
-exports.handleUpdate = function(_data) {
+exports.handleUpdate = function(_data, _url, _callback) {
 	APP.log("debug", "UPDATE.handleUpdate");
 
 	// Determine if this is the same version as we already have
 	var data = JSON.parse(_data);
 
-	if(data.version == APP.VERSION) {
-		// We already have it
-		APP.log("info", "Application is up-to-date");
+	if(typeof _callback === "undefined") {
+		if(data.version == APP.VERSION) {
+			// We already have it
+			APP.log("info", "Application is up-to-date");
 
-		return;
+			return;
+		}
 	}
 
 	// Grab the items from the manifest
@@ -45,19 +60,23 @@ exports.handleUpdate = function(_data) {
 	file.write(_data);
 	file = null;
 
-	// Alert the user about the update
-	var dialog = Ti.UI.createAlertDialog({
-		title: "Update Available",
-		message: "New content has been downloaded."
-	});
+	if(typeof _callback === "undefined") {
+		// Alert the user about the update
+		var dialog = Ti.UI.createAlertDialog({
+			title: "Update Available",
+			message: "New content has been downloaded."
+		});
 
-	dialog.addEventListener("click", function(_event) {
-		APP.log("info", "Update accepted");
+		dialog.addEventListener("click", function(_event) {
+			APP.log("info", "Update accepted");
 
-		APP.rebuild();
-	});
+			APP.rebuild();
+		});
 
-	dialog.show();
+		dialog.show();
+	} else {
+		_callback();
+	}
 };
 
 /**

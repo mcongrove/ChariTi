@@ -31,7 +31,7 @@ exports.init = function() {
 		APP.dropDatabase();
 	}
 
-	Ti.API.info("Migrating" + exports.previous + " => " + exports.current);
+	Ti.API.info("Migrating " + exports.previous + " => " + exports.current);
 
 	Ti.App.Properties.setString("CVERSION", current);
 };

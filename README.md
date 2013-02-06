@@ -34,6 +34,6 @@ What if I want to help with the ChariTi Desktop application?
 ------------------------------------------------------------
 The ChariTi Desktop application is open source and can be found on the [ChariTi Desktop](http://github.com/mcongrove/ChariTi-Desktop) GitHub page.
 
-What is this "Viewer" branch?
+What is this "Peek" branch?
 -----------------------------
-The "Viewer" branch is ChariTi Peek, an application which lets you test out your applications quickly and easily with only a JSON configuration file. This application will be available in the App Store soon.
+The "Peek" branch is ChariTi Peek, an application which lets you test out your applications quickly and easily with only a JSON configuration file. This application will be available in the App Store soon.
