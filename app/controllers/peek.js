@@ -31,7 +31,10 @@ $.openConfiguration = function() {
 };
 
 $.loadHistory = function() {
-	var urls = Ti.App.Properties.getList("URLS", []);
+	var urls = Ti.App.Properties.getList("URLS", [
+		"http://chariti.mobi/app/app.json"
+	]);
+
 	var rows = [];
 
 	for(var i = 0, z = urls.length; i < z; i++) {
