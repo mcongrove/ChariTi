@@ -69,6 +69,13 @@
 			"cache": 1440
 		},
 		{
+			"title": "Vimeo",
+			"username": "appcelerator",
+			"type": "vimeo",
+			"image": "video1",
+			"cache": 1440
+		},
+		{
 			"title": "YouTube",
 			"username": "appcelerator",
 			"type": "youtube",
