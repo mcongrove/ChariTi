@@ -396,6 +396,7 @@ var APP = {
 						case "flickr":
 						case "podcast":
 						case "rss":
+						case "vimeo":
 						case "youtube":
 							type += "_tablet";
 							APP.hasDetail = true;

@@ -1,0 +1,13 @@
+"#Wrapper": {
+	backgroundColor: "#DDD"
+},
+"#Master": {
+	left: "0dp",
+	top: "0dp",
+	width: "320dp"
+},
+"#Detail": {
+	left: "321dp",
+	top: "0dp",
+	width: Ti.UI.FILL
+}
