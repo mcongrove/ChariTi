@@ -65,7 +65,7 @@ $.handleData = function(_data) {
 
 	APP.closeLoading();
 
-	if(APP.Device.isTablet) {
+	if(APP.Device.isTablet && !SELECTED) {
 		SELECTED = _data[0].id;
 
 		APP.addChild("rss_article", {
