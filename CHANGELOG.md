@@ -8,8 +8,9 @@ v 1.1 (02-??-2013)
 *	Added initial Android support
 *	Added tablet support (iPad + Android Tablet)
 *	Added a preview application ("ChariTi Peek")
-*	Removed Twitter tab due to API changes
 *	Added Podcast tab (follows iTunes Podcast format)
+*	Added Vimeo tab
+*	Removed Twitter tab due to API changes
 *	Merged Blog and News tabs into one, now called RSS
 *	Converted Facebook model to utilize JSON instead of XML
 *	Fixed memory management for controller stacking
