@@ -1,3 +1,6 @@
+!!OUTDATED!!
+============
+
 ChariTi Manual Test Plan
 ========================
 

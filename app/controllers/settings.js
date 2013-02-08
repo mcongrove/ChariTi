@@ -10,11 +10,11 @@ $.init = function() {
 		$.content.remove($.legal_table);
 	} else if(!APP.LEGAL.TOS || !APP.LEGAL.PRIVACY) {
 		if(!APP.LEGAL.TOS) {
-			$.legal_table.deleteRow(OS_IOS ? $.terms : 0);
+			$.legal_table.deleteRow(0);
 		}
 
 		if(!APP.LEGAL.PRIVACY) {
-			$.legal_table.deleteRow(OS_IOS ? $.privacy : 1);
+			$.legal_table.deleteRow(1);
 		}
 
 		$.legal_table.height = "45dp";

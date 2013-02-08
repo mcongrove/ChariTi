@@ -113,14 +113,15 @@ var APP = {
 		// The initial screen to show
 		APP.handleNavigation(0);
 
+		// NOTICE
+		// The following sections are abstracted for PEEK
+
 		// Updates the app from a remote source
-		require("update").init();
+		APP.update();
 
 		// Set up push notifications
 		if(OS_IOS) {
-			if(APP.Settings.notifications.enabled) {
-				require("push").init();
-			}
+			APP.registerForPush();
 		}
 	},
 	/**
@@ -205,8 +206,17 @@ var APP = {
 			APP.log("error", "Unable to parse downloaded JSON, reverting to packaged JSON");
 
 			contentFile = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "data/app.json");
-			content = contentFile.read();
-			data = JSON.parse(content.text);
+
+			if(contentFile.exists()) {
+				content = contentFile.read();
+				data = JSON.parse(content.text);
+			} else {
+				APP.log("error", "Unable to parse local JSON, dying");
+
+				alert("Unable to open the application");
+
+				return;
+			}
 		}
 
 		APP.ID = data.id;
@@ -284,11 +294,34 @@ var APP = {
 		APP.cancelLoading = false;
 		APP.loadingOpen = false;
 
+		// NOTICE
+		// The following section is abstracted for PEEK
+
+		APP.rebuildRestart();
+	},
+	/**
+	 * Kicks off the newly re-built application
+	 */
+	rebuildRestart: function() {
 		APP.dropDatabase();
 		APP.setupDatabase();
 		APP.loadContent();
 		APP.build(true);
 		APP.handleNavigation(0);
+	},
+	/**
+	 * Updates the app from a remote source
+	 */
+	update: function() {
+		require("update").init();
+	},
+	/**
+	 * Set up push notifications
+	 */
+	registerForPush: function() {
+		if(APP.Settings.notifications.enabled) {
+			require("push").init();
+		}
 	},
 	/**
 	 * Global event handler to change screens
@@ -361,7 +394,9 @@ var APP = {
 						case "events":
 						case "facebook":
 						case "flickr":
+						case "podcast":
 						case "rss":
+						case "vimeo":
 						case "youtube":
 							type += "_tablet";
 							APP.hasDetail = true;

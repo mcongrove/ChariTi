@@ -38,5 +38,6 @@
 	textAlign: "center"
 },
 "#copyright": {
-	top: "10dp"
+	top: "10dp",
+	bottom: "10dp"
 }

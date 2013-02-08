@@ -1,8 +1,5 @@
 var APP = require("core");
 
-exports.previous;
-exports.current;
-
 /**
  * Checks versions, determines need for migration
  */
@@ -14,8 +11,6 @@ exports.init = function() {
 	var current = APP.CVERSION.match(regexp)[0];
 	current = current.substr(0, current.length - 1);
 
-	exports.current = current;
-
 	var db = Ti.Database.open("ChariTi");
 	var result = db.execute("SELECT name FROM sqlite_master WHERE name = 'log';");
 	var previousInstall = result.rowCount == 1 ? true : false;
@@ -26,12 +21,12 @@ exports.init = function() {
 	if(previousInstall) {
 		var previous = Ti.App.Properties.getString("CVERSION", "1.0.0");
 
-		exports.previous = previous;
+		if(current !== previous) {
+			APP.dropDatabase();
 
-		APP.dropDatabase();
+			Ti.API.info("Migrating " + previous + " => " + current);
+		}
 	}
-
-	Ti.API.info("Migrating" + exports.previous + " => " + exports.current);
 
 	Ti.App.Properties.setString("CVERSION", current);
 };
