@@ -6,4 +6,4 @@ APP.Master[APP.currentStack] = $.Master;
 APP.Detail[APP.currentStack] = $.Detail;
 
 APP.addChild("tablet_detail");
-APP.addMasterScreen(CONFIG.controller, CONFIG, $.Wrapper);
+APP.addMasterScreen(CONFIG.type.toLowerCase(), CONFIG, $.Wrapper);

@@ -398,7 +398,6 @@ var APP = {
 						case "rss":
 						case "vimeo":
 						case "youtube":
-							APP.Nodes[_id].controller = type;
 							type = "tablet";
 							APP.hasDetail = true;
 							break;
