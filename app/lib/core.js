@@ -391,14 +391,15 @@ var APP = {
 				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
 					switch(type) {
-						case "events":
+						case "event":
 						case "facebook":
 						case "flickr":
 						case "podcast":
 						case "rss":
 						case "vimeo":
 						case "youtube":
-							type += "_tablet";
+							APP.Nodes[_id].controller = type;
+							type = "tablet";
 							APP.hasDetail = true;
 							break;
 					}
@@ -549,12 +550,18 @@ var APP = {
 	},
 	/**
 	 * Adds a screen to the Master window
-	 * @param {Object} [_screen] The screen to add
+	 * @param {String} [_controller] The name of the controller to open
+	 * @param {Object} [_params] An optional dictionary of parameters to pass to the controller
+	 * @param {Object} [_wrapper] The parent wrapper screen to fire events to
 	 */
-	addMasterScreen: function(_screen) {
-		if(_screen) {
-			APP.Master[APP.currentStack].add(_screen);
-		}
+	addMasterScreen: function(_controller, _params, _wrapper) {
+		var screen = Alloy.createController(_controller, _params).getView();
+
+		_wrapper.addEventListener("APP:tabletScreenAdded", function(_event) {
+			screen.fireEvent("APP:screenAdded");
+		});
+
+		APP.Master[APP.currentStack].add(screen);
 	},
 	/**
 	 * Adds a screen to the Detail window
