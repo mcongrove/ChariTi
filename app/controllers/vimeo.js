@@ -55,7 +55,7 @@ $.handleVideos = function() {
 
 	APP.closeLoading();
 
-	if(APP.Device.isTablet) {
+	if(APP.Device.isTablet && !SELECTED) {
 		SELECTED = data[0].id;
 
 		APP.addChild("vimeo_video", {

@@ -1,6 +1,0 @@
-<Alloy>
-	<View id="Wrapper" type="tablet">
-		<View id="Master" />
-		<View id="Detail" />
-	</View>
-</Alloy>
