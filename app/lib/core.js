@@ -395,7 +395,7 @@ var APP = {
 						case "facebook":
 						case "flickr":
 						case "podcast":
-						case "rss":
+						case "article":
 						case "vimeo":
 						case "youtube":
 							type = "tablet";

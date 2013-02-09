@@ -6,19 +6,19 @@ function Model() {
 	var TID;
 
 	this.init = function(_id) {
-		APP.log("debug", "RSS.init(" + _id + ")");
+		APP.log("debug", "ARTICLE.init(" + _id + ")");
 
 		TID = _id;
 
 		var db = Ti.Database.open("ChariTi");
 
-		db.execute("CREATE TABLE IF NOT EXISTS rss_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT, link TEXT, image TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS article_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, description TEXT, link TEXT, image TEXT);");
 
 		db.close();
 	};
 
 	this.fetch = function(_params) {
-		APP.log("debug", "RSS.fetch");
+		APP.log("debug", "ARTICLE.fetch");
 		APP.log("trace", JSON.stringify(_params));
 
 		var isStale = UTIL.isStale(_params.url, _params.cache);
@@ -45,7 +45,7 @@ function Model() {
 	};
 
 	this.handleData = function(_data, _url, _passthrough) {
-		APP.log("debug", "RSS.handleData");
+		APP.log("debug", "ARTICLE.handleData");
 
 		var xml = Ti.XML.parseString(UTIL.xmlNormalize(_data));
 		var nodes = xml.documentElement.getElementsByTagName("item");
@@ -53,7 +53,7 @@ function Model() {
 		if(nodes.length > 0) {
 			var db = Ti.Database.open("ChariTi");
 
-			db.execute("DELETE FROM rss_" + TID + ";");
+			db.execute("DELETE FROM article_" + TID + ";");
 			db.execute("BEGIN TRANSACTION;");
 
 			for(var i = 0, x = nodes.length; i < x; i++) {
@@ -68,7 +68,7 @@ function Model() {
 					image = UTIL.escapeString(nodes.item(i).getElementsByTagName("media:content").item(0).attributes.getNamedItem("url").text);
 				}
 
-				db.execute("INSERT INTO rss_" + TID + " (id, title, date, description, link, image) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ", " + image + ");");
+				db.execute("INSERT INTO article_" + TID + " (id, title, date, description, link, image) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ", " + image + ");");
 			}
 
 			db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
@@ -82,10 +82,10 @@ function Model() {
 	};
 
 	this.getAllArticles = function() {
-		APP.log("debug", "RSS.getAllArticles");
+		APP.log("debug", "ARTICLE.getAllArticles");
 
 		var db = Ti.Database.open("ChariTi");
-		var data = db.execute("SELECT id, title, date FROM rss_" + TID + " ORDER BY id ASC LIMIT 25;");
+		var data = db.execute("SELECT id, title, date FROM article_" + TID + " ORDER BY id ASC LIMIT 25;");
 		var temp = [];
 
 		while(data.isValidRow()) {
@@ -105,10 +105,10 @@ function Model() {
 	};
 
 	this.getArticle = function(_id) {
-		APP.log("debug", "RSS.getArticle");
+		APP.log("debug", "ARTICLE.getArticle");
 
 		var db = Ti.Database.open("ChariTi");
-		var data = db.execute("SELECT * FROM rss_" + TID + " WHERE id = " + UTIL.cleanEscapeString(_id) + ";");
+		var data = db.execute("SELECT * FROM article_" + TID + " WHERE id = " + UTIL.cleanEscapeString(_id) + ";");
 		var temp;
 
 		while(data.isValidRow()) {
@@ -135,10 +135,10 @@ function Model() {
 	};
 
 	this.getNextArticle = function(_id) {
-		APP.log("debug", "RSS.getNextArticle");
+		APP.log("debug", "ARTICLE.getNextArticle");
 
 		var db = Ti.Database.open("ChariTi");
-		var data = db.execute("SELECT id FROM rss_" + TID + " WHERE id > " + UTIL.cleanEscapeString(_id) + " ORDER BY id ASC LIMIT 1;");
+		var data = db.execute("SELECT id FROM article_" + TID + " WHERE id > " + UTIL.cleanEscapeString(_id) + " ORDER BY id ASC LIMIT 1;");
 		var temp;
 
 		while(data.isValidRow()) {
@@ -156,13 +156,13 @@ function Model() {
 	};
 
 	this.getPreviousArticle = function(_id) {
-		APP.log("debug", "RSS.getPreviousArticle");
+		APP.log("debug", "ARTICLE.getPreviousArticle");
 
 		var db = Ti.Database.open("ChariTi");
-		var data = db.execute("SELECT id FROM rss_" + TID + " WHERE id < " + UTIL.cleanEscapeString(_id) + " ORDER BY id DESC LIMIT 1;");
+		var data = db.execute("SELECT id FROM article_" + TID + " WHERE id < " + UTIL.cleanEscapeString(_id) + " ORDER BY id DESC LIMIT 1;");
 
 		if(data.rowCount == 0) {
-			data = db.execute("SELECT id FROM rss_" + TID + " ORDER BY id DESC LIMIT 1;");
+			data = db.execute("SELECT id FROM article_" + TID + " ORDER BY id DESC LIMIT 1;");
 		}
 
 		var temp;
