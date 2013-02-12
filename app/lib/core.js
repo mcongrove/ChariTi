@@ -306,15 +306,6 @@ var APP = {
 			APP.MainWindow.width = APP.Device.height + "dp";
 		}
 
-		// Listen for orientation change event to force window width
-		Ti.App.addEventListener("APP:orientationChange", function(_event) {
-			if(APP.Device.orientation == "PORTRAIT") {
-				APP.MainWindow.width = APP.Device.width + "dp";
-			} else {
-				APP.MainWindow.width = APP.Device.height + "dp";
-			}
-		});
-
 		// Remove the TabGroup
 		APP.GlobalWrapper.remove(APP.Tabs.Wrapper);
 
@@ -333,6 +324,54 @@ var APP = {
 				APP.toggleMenu();
 			});
 		}
+
+		// Listen for orientation change event to force window width
+		Ti.App.addEventListener("APP:orientationChange", function(_event) {
+			if(APP.Device.orientation == "PORTRAIT") {
+				APP.MainWindow.width = APP.Device.width + "dp";
+			} else {
+				APP.MainWindow.width = APP.Device.height + "dp";
+			}
+		});
+
+		// Listen for gestures on the main window to open/close the slide menu
+		APP.MainWindow.addEventListener("touchstart", function(_event) {
+			_event.source.lastPosition = parseInt(_event.x);
+		});
+
+		APP.MainWindow.addEventListener("touchmove", function(_event) {
+			var point = APP.MainWindow.convertPointToView({
+				x: _event.x,
+				y: _event.y
+			}, APP.SlideMenu.Wrapper);
+
+			var distance = parseInt(point.x) - _event.source.lastPosition;
+
+			if(distance > 20 || distance < -20) {
+				_event.source.moving = true;
+			}
+
+			if(_event.source.moving && distance <= 200 && distance >= 0) {
+				APP.MainWindow.animate({
+					left: distance,
+					duration: 20
+				});
+
+				APP.MainWindow.left = distance;
+			}
+		});
+
+		APP.MainWindow.addEventListener("touchend", function(_event) {
+			if(_event.source.moving) {
+				_event.source.moving = false;
+
+				if(APP.MainWindow.left >= 100 && APP.MainWindow.left < 200) {
+					APP.openMenu();
+				} else {
+					APP.closeMenu();
+				}
+			}
+		});
 	},
 	/**
 	 * Re-builds the app with newly downloaded JSON configration file
@@ -679,26 +718,38 @@ var APP = {
 		APP.addChild("settings", {}, "settings");
 	},
 	/**
+	 * Toggles the Slide Menu
+	 */
+	toggleMenu: function(_position) {
+		if(APP.SlideMenuOpen) {
+			APP.closeMenu();
+		} else {
+			APP.openMenu();
+		}
+	},
+	/**
 	 * Opens the Slide Menu
 	 */
-	toggleMenu: function() {
-		if(APP.SlideMenuOpen) {
-			APP.MainWindow.animate({
-				left: "0dp",
-				duration: 400,
-				curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-			});
+	openMenu: function() {
+		APP.MainWindow.animate({
+			left: "200dp",
+			duration: 400,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
 
-			APP.SlideMenuOpen = false;
-		} else {
-			APP.MainWindow.animate({
-				left: "200dp",
-				duration: 400,
-				curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-			});
+		APP.SlideMenuOpen = true;
+	},
+	/**
+	 * Closes the Slide Menu
+	 */
+	closeMenu: function() {
+		APP.MainWindow.animate({
+			left: "0dp",
+			duration: 400,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
 
-			APP.SlideMenuOpen = true;
-		}
+		APP.SlideMenuOpen = false;
 	},
 	/**
 	 * Shows the loading screen
