@@ -42,10 +42,21 @@ $.handleData = function(_data) {
 
 	ACTION.url = _data.link;
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible = APP.Device.isHandheld;
-	$.NavigationBar.right.visible = true;
-	$.NavigationBar.rightImage.image = "/images/action.png";
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+
+	if(APP.Device.isHandheld) {
+		$.NavigationBar.showBack({
+			callback: function(_event) {
+				APP.removeAllChildren();
+			}
+		});
+	}
+
+	$.NavigationBar.showAction({
+		callback: function(_event) {
+			SOCIAL.share(ACTION.url, $.NavigationBar.right);
+		}
+	});
 };
 
 $.handleNavigation = function() {
@@ -71,21 +82,8 @@ $.handleNavigation = function() {
 		}
 	}).getView();
 
-	$.NavigationBar.Wrapper.add(navigation);
+	$.NavigationBar.addNavigation(navigation);
 };
-
-// Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "article_article @close");
-
-	APP.removeAllChildren();
-});
-
-$.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.log("debug", "article_article @menu");
-
-	SOCIAL.share(ACTION.url, $.NavigationBar.right);
-});
 
 // Kick off the init
 $.init();

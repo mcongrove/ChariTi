@@ -3,9 +3,6 @@ var APP = require("core");
 $.init = function() {
 	APP.log("debug", "settings.init");
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible = true;
-
 	if(!APP.LEGAL.TOS && !APP.LEGAL.PRIVACY) {
 		$.content.remove($.legal_table);
 	} else if(!APP.LEGAL.TOS || !APP.LEGAL.PRIVACY) {
@@ -26,15 +23,17 @@ $.init = function() {
 
 	$.copyright.text = APP.LEGAL.COPYRIGHT;
 	$.version.text = "Version " + APP.VERSION + ", ChariTi " + APP.CVERSION;
+
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+
+	$.NavigationBar.showBack({
+		callback: function(_event) {
+			APP.removeChild("settings");
+		}
+	});
 };
 
 // Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "settings @close");
-
-	APP.removeChild("settings");
-});
-
 $.terms.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @terms");
 

@@ -18,7 +18,8 @@
 			"primary": "#327B9F",
 			"secondary": "#569BBE",
 			"text":	"#FFF"
-		}
+		},
+		"useSlideMenu": false
 	},
 	"_manifest": [
 		"http://localhost/ChariTi/app/logo.png",

@@ -18,17 +18,26 @@ $.init = function() {
 
 	APP.openLoading();
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.right.visible = true;
-	$.NavigationBar.rightImage.image = "/images/settings.png";
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(CONFIG.isChild === true) {
-		$.NavigationBar.back.visible = true;
+		$.NavigationBar.showBack();
 	}
 
-	if(!OS_IOS) {
-		$.NavigationBar.left.visible = true;
-		$.NavigationBar.leftImage.image = "/images/refresh.png";
+	if(OS_IOS) {
+		if(APP.Settings.useSlideMenu) {
+			$.NavigationBar.showMenu();
+		} else {
+			$.NavigationBar.showSettings();
+		}
+	} else {
+		$.NavigationBar.showSettings();
+
+		$.NavigationBar.showRefresh({
+			callback: function(_event) {
+				$.retrieveData(true)
+			}
+		});
 	}
 };
 
@@ -80,16 +89,6 @@ $.Wrapper.addEventListener("APP:screenAdded", function(_event) {
 	$.retrieveData();
 });
 
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "article @close");
-
-	APP.removeChild();
-});
-
-$.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.openSettings();
-});
-
 $.container.addEventListener("click", function(_event) {
 	APP.log("debug", "article @click " + _event.row.id);
 
@@ -122,10 +121,6 @@ if(OS_IOS) {
 	});
 
 	pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed))).toDate());
-} else {
-	$.NavigationBar.left.addEventListener("click", function(_event) {
-		$.retrieveData(true);
-	});
 }
 
 // Kick off the init

@@ -16,10 +16,12 @@ $.init = function() {
 		callback: $.handleData
 	});
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.title.text = CONFIG.title;
-	$.NavigationBar.title.color = APP.Settings.colors.text || "#FFF";
-	$.NavigationBar.back.visible = APP.Device.isHandheld;
+	$.NavigationBar.setTitle(CONFIG.title);
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+
+	if(APP.Device.isHandheld) {
+		$.NavigationBar.showBack();
+	}
 };
 
 $.handleData = function() {
@@ -104,13 +106,6 @@ $.createGrid = function(_data) {
 		}
 	}
 };
-
-// Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "flickr_album @close");
-
-	APP.removeChild();
-});
 
 // Kick off the init
 $.init();

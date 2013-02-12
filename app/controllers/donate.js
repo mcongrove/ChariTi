@@ -11,26 +11,20 @@ $.init = function() {
 	$.button.backgroundColor = APP.Settings.colors.primary || "#000";
 	$.buttonText.color = APP.Settings.colors.text || "#FFF";
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.right.visible = true;
-	$.NavigationBar.rightImage.image = "/images/settings.png";
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(CONFIG.isChild === true) {
-		$.NavigationBar.back.visible = true;
+		$.NavigationBar.showBack();
+	}
+
+	if(APP.Settings.useSlideMenu) {
+		$.NavigationBar.showMenu();
+	} else {
+		$.NavigationBar.showSettings();
 	}
 };
 
 // Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "donate @close");
-
-	APP.removeChild();
-});
-
-$.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.openSettings();
-});
-
 $.button.addEventListener("click", function(_event) {
 	APP.log("debug", "donate @openLink");
 
