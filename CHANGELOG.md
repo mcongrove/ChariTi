@@ -7,6 +7,7 @@ v 1.1 (02-??-2013)
 ------------------
 *	Added initial Android support
 *	Added tablet support (iPad + Android Tablet)
+*	Added a sliding menu that can optionally replace tabs
 *	Added a preview application ("ChariTi Peek")
 *	Added Podcast tab (follows iTunes Podcast format)
 *	Added Vimeo tab
