@@ -1,0 +1,46 @@
+<h1>Getting Started with GCM</h1>
+<p>Follow these steps to properly configure your Titanium application to use GCM as the transport for Urban Airship push notifications.</p>
+<p><em>NOTE</em></p>
+<p>You will not need to make the changes to the AndroidManifest.xml that you see in the setup guide. This will be done for you automatically during the application build process.</p>
+<h2>Step 1: Get your API Key from Google</h2>
+<ol>
+<li>Go to the <a href="https://code.google.com/apis/console">Google API Console</a></li>
+<li>Create a project (note the Project Number -- you will need it in step 3 below)</li>
+<li>Enable GCM (Google Cloud Messaging for Android)</li>
+<li>Generate an API key<ul>
+<li>Click on the text where it says "Google Cloud Messaging for Android" in the image above.</li>
+<li>This takes you to the Google APIs page.  Click on API Access.</li>
+<li>Urban Airship takes care of API Access authorization for you, so you do not need to create an OAuth 2.0 client ID.</li>
+<li>Click on "Create a new Server key..." to generate your API Key.</li>
+<li>Do not specify any IP addresses in the form, and click "Create"</li>
+<li>Copy your key for server apps</li>
+</ul>
+</li>
+</ol>
+<h2>Step 2: Setting things up with Urban Airship</h2>
+<p>Set the GCM API Key for your application in the Urban Airship console.</p>
+<ul>
+<li>Navigate to <a href="http://go.urbanairship.com">http://go.urbanairship.com</a></li>
+<li>Edit you application and enter the Android Package name and GCM Api Key that was just generated</li>
+</ul>
+<h2>Step 3: Configure GCM Transport</h2>
+<p>Set the Urban Airship options in your airshipconfig.properties file to use the GCM transport.</p>
+<ul>
+<li>Set the "transport" option to "gcm"</li>
+<li>Set the "gcmSender" option to your Google API project number</li>
+</ul>
+<pre>
+  transport = gcm
+  gcmSender = 12345678901
+</pre>
+
+<h2>Important Notes</h2>
+<ul>
+<li>Device must be running Android 2.2 or higher that also have the Market application installed</li>
+<li>Device must have at least one logged in Google account. "Settings &gt; Account &amp; sync"</li>
+</ul>
+<h2>GCM Documentation</h2>
+<ul>
+<li><a href="https://docs.urbanairship.com/display/DOCS/Getting+Started%3A+Android%3A+GCM+Push">UrbanAirship Getting Started: Android: GCM Push</a></li>
+<li><a href="http://developer.android.com/google/gcm/index.html">Google's Cloud Messaging for Android</a></li>
+</ul>
