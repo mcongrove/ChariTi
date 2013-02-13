@@ -10,6 +10,7 @@
         "com.chariti.navigationBar": "1.0",
         "com.chariti.loading": "1.0",
         "com.chariti.detailNavigation": "1.0",
-        "nl.fokkezb.pullToRefresh": "1.2"
+        "nl.fokkezb.pullToRefresh": "1.2",
+        "com.chariti.slideMenu": "1.0"
     }
 }

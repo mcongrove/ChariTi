@@ -22,13 +22,13 @@ $.handleData = function(_data) {
 	PREVIOUS = MODEL.getPhoto(null, (parseInt(_data.index, 10) - 1).toString(), CONFIG.setid);
 	NEXT = MODEL.getPhoto(null, (parseInt(_data.index, 10) + 1).toString(), CONFIG.setid);
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible = true;
-
 	$.image.image = _data.url_m;
 	$.title.text = _data.title ? _data.title : "";
 	$.description.text = _data.description ? _data.description.substring(0, 150) : "";
 	$.meta.visible = false;
+
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.showBack();
 };
 
 // Event listeners
@@ -68,12 +68,6 @@ $.content.addEventListener("swipe", function(_event) {
 			$.init();
 		}
 	}
-});
-
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "flickr_photo @close");
-
-	APP.removeChild();
 });
 
 // Kick off the init

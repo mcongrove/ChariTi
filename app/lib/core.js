@@ -80,6 +80,11 @@ var APP = {
 	 */
 	Tabs: null,
 	/**
+	 * Slide Menu Widget
+	 */
+	SlideMenu: null,
+	SlideMenuOpen: false,
+	/**
 	 * Initializes the application
 	 */
 	init: function() {
@@ -254,9 +259,20 @@ var APP = {
 			});
 		}
 
-		// Create a tab group
+		if(APP.Settings.useSlideMenu) {
+			APP.buildMenu(tabs, _rebuild);
+		} else {
+			APP.buildTabs(tabs, _rebuild);
+		}
+	},
+	/**
+	 * Builds a TabGroup
+	 * @param {Array} [_tabs] The tabs to build
+	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
+	 */
+	buildTabs: function(_tabs, _rebuild) {
 		APP.Tabs.init({
-			tabs: tabs,
+			tabs: _tabs,
 			colors: {
 				primary: APP.Settings.colors.primary,
 				secondary: APP.Settings.colors.secondary,
@@ -265,13 +281,97 @@ var APP = {
 		});
 
 		if(!_rebuild) {
-			// Add a handler for the TabGroup
+			// Add a handler for the tabs
 			APP.Tabs.Wrapper.addEventListener("click", function(_event) {
-				if(typeof _event.source.id == "number") {
+				if(typeof _event.source.id !== "undefined" && typeof _event.source.id == "number") {
 					APP.handleNavigation(_event.source.id);
 				}
 			});
 		}
+	},
+	/**
+	 * Builds a slide menu
+	 * @param {Array} [_tabs] The tabs to build
+	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
+	 */
+	buildMenu: function(_tabs, _rebuild) {
+		APP.SlideMenu.init({
+			tabs: _tabs
+		});
+
+		// Force the window width
+		if(APP.Device.orientation == "PORTRAIT") {
+			APP.MainWindow.width = APP.Device.width + "dp";
+		} else {
+			APP.MainWindow.width = APP.Device.height + "dp";
+		}
+
+		// Remove the TabGroup
+		APP.GlobalWrapper.remove(APP.Tabs.Wrapper);
+
+		// Move everything down to take up the TabGroup space
+		APP.ContentWrapper.bottom = "0dp";
+
+		if(!_rebuild) {
+			// Add a handler for the tabs
+			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
+				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
+					APP.handleNavigation(_event.row.id);
+				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
+					APP.openSettings();
+				}
+
+				APP.toggleMenu();
+			});
+		}
+
+		// Listen for orientation change event to force window width
+		Ti.App.addEventListener("APP:orientationChange", function(_event) {
+			if(APP.Device.orientation == "PORTRAIT") {
+				APP.MainWindow.width = APP.Device.width + "dp";
+			} else {
+				APP.MainWindow.width = APP.Device.height + "dp";
+			}
+		});
+
+		// Listen for gestures on the main window to open/close the slide menu
+		APP.MainWindow.addEventListener("touchstart", function(_event) {
+			_event.source.lastPosition = parseInt(_event.x);
+		});
+
+		APP.MainWindow.addEventListener("touchmove", function(_event) {
+			var point = APP.MainWindow.convertPointToView({
+				x: _event.x,
+				y: _event.y
+			}, APP.SlideMenu.Wrapper);
+
+			var distance = parseInt(point.x) - _event.source.lastPosition;
+
+			if(distance > 20 || distance < -20) {
+				_event.source.moving = true;
+			}
+
+			if(_event.source.moving && distance <= 200 && distance >= 0) {
+				APP.MainWindow.animate({
+					left: distance,
+					duration: 20
+				});
+
+				APP.MainWindow.left = distance;
+			}
+		});
+
+		APP.MainWindow.addEventListener("touchend", function(_event) {
+			if(_event.source.moving) {
+				_event.source.moving = false;
+
+				if(APP.MainWindow.left >= 100 && APP.MainWindow.left < 200) {
+					APP.openMenu();
+				} else {
+					APP.closeMenu();
+				}
+			}
+		});
 	},
 	/**
 	 * Re-builds the app with newly downloaded JSON configration file
@@ -279,7 +379,11 @@ var APP = {
 	rebuild: function() {
 		APP.log("debug", "APP.rebuild");
 
-		APP.Tabs.clear();
+		if(APP.Settings.useSlideMenu) {
+			APP.SlideMenu.clear();
+		} else {
+			APP.Tabs.clear();
+		}
 
 		APP.currentStack = -1;
 		APP.previousScreen = null;
@@ -334,8 +438,13 @@ var APP = {
 		if(_id == APP.currentStack) {
 			// Do nothing
 		} else {
-			// Move the tab selection indicator
-			APP.Tabs.setIndex(_id);
+			if(APP.Settings.useSlideMenu) {
+				// Select the row for the requested item
+				APP.SlideMenu.setIndex(_id);
+			} else {
+				// Move the tab selection indicator
+				APP.Tabs.setIndex(_id);
+			}
 
 			// Closes any loading screens
 			APP.closeLoading();
@@ -395,7 +504,7 @@ var APP = {
 						case "facebook":
 						case "flickr":
 						case "podcast":
-						case "rss":
+						case "article":
 						case "vimeo":
 						case "youtube":
 							type = "tablet";
@@ -419,7 +528,6 @@ var APP = {
 			} else {
 				screen.fireEvent("APP:screenAdded");
 			}
-
 		}
 
 		APP.nonTabStacks = {};
@@ -602,12 +710,46 @@ var APP = {
 		}
 	},
 	/**
-	 * Opens the settings window
+	 * Opens the Settings window
 	 */
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
 
 		APP.addChild("settings", {}, "settings");
+	},
+	/**
+	 * Toggles the Slide Menu
+	 */
+	toggleMenu: function(_position) {
+		if(APP.SlideMenuOpen) {
+			APP.closeMenu();
+		} else {
+			APP.openMenu();
+		}
+	},
+	/**
+	 * Opens the Slide Menu
+	 */
+	openMenu: function() {
+		APP.MainWindow.animate({
+			left: "200dp",
+			duration: 400,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+
+		APP.SlideMenuOpen = true;
+	},
+	/**
+	 * Closes the Slide Menu
+	 */
+	closeMenu: function() {
+		APP.MainWindow.animate({
+			left: "0dp",
+			duration: 400,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+
+		APP.SlideMenuOpen = false;
 	},
 	/**
 	 * Shows the loading screen

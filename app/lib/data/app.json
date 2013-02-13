@@ -18,7 +18,8 @@
 			"primary": "#327B9F",
 			"secondary": "#569BBE",
 			"text":	"#FFF"
-		}
+		},
+		"useSlideMenu": false
 	},
 	"_manifest": [
 		"http://localhost/ChariTi/app/logo.png",
@@ -49,7 +50,7 @@
 		{
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "rss",
+			"type": "article",
 			"image": "news2",
 			"cache": 120
 		},
@@ -123,7 +124,7 @@
 		{
 			"title": "News",
 			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "rss",
+			"type": "article",
 			"image": "news1",
 			"cache": 120
 		},

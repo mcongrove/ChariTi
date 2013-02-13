@@ -1,0 +1,5 @@
+<Alloy>
+	<Window id="Wrapper">
+		<TableView id="Tabs" />
+	</Window>
+</Alloy>

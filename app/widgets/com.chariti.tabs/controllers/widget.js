@@ -1,5 +1,3 @@
-var Alloy		= require("alloy");
-
 $.init = function(_params) {
 	$.tabs			= [];
 	$.excess		= false;
