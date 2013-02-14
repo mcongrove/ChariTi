@@ -119,10 +119,11 @@ var APP = {
 		// Updates the app from a remote source
 		APP.update();
 
+		// Set up acs
+		APP.initACS();
+
 		// Set up push notifications
-		if(OS_IOS) {
-			APP.registerForPush();
-		}
+		APP.initPush();
 	},
 	/**
 	 * Determines the device characteristics
@@ -229,6 +230,8 @@ var APP = {
 
 		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 10 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
+		// APP.enableACS = data.enableACS;
+		// APP.pushProvider = (data.pushProvider) ? data.pushProvider : false;
 		APP.Plugins = data.plugins;
 		APP.Nodes = data.tabs;
 
@@ -315,10 +318,22 @@ var APP = {
 	update: function() {
 		require("update").init();
 	},
+
+	/**
+	 * Set up ACS
+	 */
+	initACS: function() {
+		if(APP.Settings.enableACS || APP.Settings.notifications.provider === 'ACS') {
+			APP.log("debug", "APP.InitACS");
+			var Cloud = require('ti.cloud');
+			Cloud.debug = true; // optional;
+			APP.Cloud = Cloud;
+		}
+	},
 	/**
 	 * Set up push notifications
 	 */
-	registerForPush: function() {
+	initPush: function() {
 		if(APP.Settings.notifications.enabled) {
 			require("push").init();
 		}
@@ -635,6 +650,7 @@ var APP = {
 	 * @param {String} _text The text to log
 	 */
 	log: function(_severity, _text) {
+
 		switch(_severity.toLowerCase()) {
 			case "debug":
 				Ti.API.debug(_text);
