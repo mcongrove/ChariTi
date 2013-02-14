@@ -28,15 +28,15 @@ exports.create = function(_params) {
 	if(_params.email) {
 		options.email = _params.email;
 	}
-	
+
 	if(_params.username) {
 		options.username = _params.username;
 	}
-	
+
 	if(_params.first_name) {
 		options.first_name = _params.first_name;
 	}
-	
+
 	if(_params.last_name) {
 		options.last_name = _params.last_name;
 	}
@@ -46,9 +46,9 @@ exports.create = function(_params) {
 			APP.log("debug", "USER.create @success");
 
 			var user = _event.users[0];
-			
+
 			APP.log("trace", JSON.stringify(user));
-			
+
 			exports.save({
 				id: user.id,
 				login: (_params.username) ? _params.username : _params.email,
@@ -111,7 +111,7 @@ exports.login = function(_params) {
 			var user = _event.users[0];
 
 			APP.log("trace", JSON.stringify(user));
-			
+
 			exports.save({
 				id: user.id,
 				login: (_params.username) ? _params.username : _params.email,

@@ -436,7 +436,7 @@ var APP = {
 	 */
 	initACS: function() {
 		APP.log("debug", "APP.initACS");
-		
+
 		APP.ACS = require("ti.cloud");
 	},
 	/**
@@ -444,7 +444,7 @@ var APP = {
 	 */
 	initPush: function() {
 		APP.log("debug", "APP.initPush");
-		
+
 		if(APP.Settings.notifications.enabled) {
 			require("push").init();
 		}
