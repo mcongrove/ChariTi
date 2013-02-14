@@ -427,7 +427,7 @@ var APP = {
 	 * Set up ACS
 	 */
 	initACS: function() {
-		if(APP.Settings.enableACS || APP.Settings.notifications.provider === 'ACS') {
+		if(APP.Settings.enableACS || (APP.Settings.notifications.enabled && APP.Settings.notifications.provider === 'ACS')) {
 			APP.log("debug", "APP.InitACS");
 			var Cloud = require('ti.cloud');
 			Cloud.debug = true; // optional;
