@@ -70,6 +70,10 @@ var APP = {
 	 */
 	ContentWrapper: null,
 	/**
+	 * Holder for ACS cloud module
+	 */
+	ACS: null,
+	/**
 	 * The loading view
 	 */
 	Loading: Alloy.createWidget("com.chariti.loading").getView(),
@@ -124,10 +128,11 @@ var APP = {
 		// Updates the app from a remote source
 		APP.update();
 
+		// Set up ACS
+		APP.initACS();
+
 		// Set up push notifications
-		if(OS_IOS) {
-			APP.registerForPush();
-		}
+		APP.initPush();
 	},
 	/**
 	 * Determines the device characteristics
@@ -271,6 +276,8 @@ var APP = {
 	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
 	 */
 	buildTabs: function(_tabs, _rebuild) {
+		APP.log("debug", "APP.buildTabs");
+
 		APP.Tabs.init({
 			tabs: _tabs,
 			colors: {
@@ -295,6 +302,8 @@ var APP = {
 	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
 	 */
 	buildMenu: function(_tabs, _rebuild) {
+		APP.log("debug", "APP.buildMenu");
+
 		APP.SlideMenu.init({
 			tabs: _tabs
 		});
@@ -407,6 +416,8 @@ var APP = {
 	 * Kicks off the newly re-built application
 	 */
 	rebuildRestart: function() {
+		APP.log("debug", "APP.rebuildRestart");
+
 		APP.dropDatabase();
 		APP.setupDatabase();
 		APP.loadContent();
@@ -419,10 +430,21 @@ var APP = {
 	update: function() {
 		require("update").init();
 	},
+
+	/**
+	 * Set up ACS
+	 */
+	initACS: function() {
+		APP.log("debug", "APP.initACS");
+
+		APP.ACS = require("ti.cloud");
+	},
 	/**
 	 * Set up push notifications
 	 */
-	registerForPush: function() {
+	initPush: function() {
+		APP.log("debug", "APP.initPush");
+
 		if(APP.Settings.notifications.enabled) {
 			require("push").init();
 		}

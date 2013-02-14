@@ -11,6 +11,7 @@
 		"share": "Check out this great ChariTi content",
 		"notifications": {
 			"enabled": false,
+			"provider": "UA",
 			"key": "AuKi5Qn3QKGTno3xX9ECYA",
 			"secret": "s-RDQejhRwmx-j4DCaXPMw"
 		},
