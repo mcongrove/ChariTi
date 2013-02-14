@@ -1,10 +1,11 @@
 var APP = require("core");
+var PUSH = require("push");
 
 /**
  * Sets up UrbanAirship push
  */
 exports.init = function() {
-	APP.log("debug", "PUSH.initUrbanAirship");
+	APP.log("debug", "UA.init");
 
 	var UA = require("ti.urbanairship");
 
@@ -26,10 +27,12 @@ exports.init = function() {
 		 * @param {Object} [_data] UrbanAirship data object
 		 */
 		success: function(_data) {
-			APP.log("debug", "PUSH.initUrbanAirship @success");
+			APP.log("debug", "UA.init @success");
 			APP.log("trace", _data.deviceToken);
+			
+			PUSH.deviceToken = _data.deviceToken;
 
-			UA.registerDevice(_data.deviceToken, {
+			UA.registerDevice(PUSH.deviceToken, {
 				tags: [
 					APP.ID,
 					APP.Version,
@@ -43,7 +46,7 @@ exports.init = function() {
 		 * @param {Object} [_data] UrbanAirship data object
 		 */
 		error: function(_data) {
-			APP.log("debug", "PUSH.initUrbanAirship @error");
+			APP.log("debug", "UA.init @error");
 			APP.log("trace", JSON.stringify(_data));
 		},
 		/**
@@ -51,7 +54,7 @@ exports.init = function() {
 		 * @param {Object} [_data] UrbanAirship data object
 		 */
 		callback: function(_data) {
-			APP.log("debug", "PUSH.initUrbanAirship @callback");
+			APP.log("debug", "UA.init @callback");
 			APP.log("trace", JSON.stringify(_data));
 
 			UA.handleNotification(_data.data);

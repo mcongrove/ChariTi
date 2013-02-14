@@ -20,6 +20,7 @@
 			
 			<View id="track">
 				<Label id="time" />
+				
 				<View id="position" />
 			</View>
 		</View>

@@ -1,14 +1,13 @@
 {
 	"id": "ChariTi.001",
 	"version": "1.0",
-	"_configurationUrl": "http://chariti.mobi/app/app.json",	
+	"_configurationUrl": "http://chariti.mobi/app/app.json",
 	"legal": {
 		"copyright": "Copyright ‌© 2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
 		"privacy": "https://policy-portal.truste.com/core/privacy-policy/ChariTi/04175946-6006-4c76-b174-6bc589432474"
 	},
 	"settings": {
-		"enableACS": false,
 		"share": "Check out this great ChariTi content",
 		"notifications": {
 			"enabled": false,

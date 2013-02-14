@@ -70,6 +70,10 @@ var APP = {
 	 */
 	ContentWrapper: null,
 	/**
+	 * Holder for ACS cloud module
+	 */
+	ACS: null,
+	/**
 	 * The loading view
 	 */
 	Loading: Alloy.createWidget("com.chariti.loading").getView(),
@@ -124,7 +128,7 @@ var APP = {
 		// Updates the app from a remote source
 		APP.update();
 
-		// Set up acs
+		// Set up ACS
 		APP.initACS();
 
 		// Set up push notifications
@@ -235,8 +239,6 @@ var APP = {
 
 		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 10 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
-		// APP.enableACS = data.enableACS;
-		// APP.pushProvider = (data.pushProvider) ? data.pushProvider : false;
 		APP.Plugins = data.plugins;
 		APP.Nodes = data.tabs;
 
@@ -274,6 +276,8 @@ var APP = {
 	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
 	 */
 	buildTabs: function(_tabs, _rebuild) {
+		APP.log("debug", "APP.buildTabs");
+
 		APP.Tabs.init({
 			tabs: _tabs,
 			colors: {
@@ -298,6 +302,8 @@ var APP = {
 	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
 	 */
 	buildMenu: function(_tabs, _rebuild) {
+		APP.log("debug", "APP.buildMenu");
+
 		APP.SlideMenu.init({
 			tabs: _tabs
 		});
@@ -410,6 +416,8 @@ var APP = {
 	 * Kicks off the newly re-built application
 	 */
 	rebuildRestart: function() {
+		APP.log("debug", "APP.rebuildRestart");
+
 		APP.dropDatabase();
 		APP.setupDatabase();
 		APP.loadContent();
@@ -427,17 +435,16 @@ var APP = {
 	 * Set up ACS
 	 */
 	initACS: function() {
-		if(APP.Settings.enableACS || (APP.Settings.notifications.enabled && APP.Settings.notifications.provider === 'ACS')) {
-			APP.log("debug", "APP.InitACS");
-			var Cloud = require('ti.cloud');
-			Cloud.debug = true; // optional;
-			APP.Cloud = Cloud;
-		}
+		APP.log("debug", "APP.initACS");
+		
+		APP.ACS = require("ti.cloud");
 	},
 	/**
 	 * Set up push notifications
 	 */
 	initPush: function() {
+		APP.log("debug", "APP.initPush");
+		
 		if(APP.Settings.notifications.enabled) {
 			require("push").init();
 		}
@@ -798,7 +805,6 @@ var APP = {
 	 * @param {String} _text The text to log
 	 */
 	log: function(_severity, _text) {
-
 		switch(_severity.toLowerCase()) {
 			case "debug":
 				Ti.API.debug(_text);

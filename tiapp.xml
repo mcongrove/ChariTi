@@ -135,7 +135,7 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-    	<module platform="commonjs">ti.cloud</module>
+        <module platform="commonjs">ti.cloud</module>
         <module platform="iphone">dk.napp.social</module>
         <module platform="iphone">ti.urbanairship</module>
         <module platform="android">ti.urbanairship</module>

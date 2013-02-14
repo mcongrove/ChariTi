@@ -123,22 +123,15 @@ $.streamSeek = function(_event) {
 	$.position.width = (percentage * 100) + "%";
 };
 
-function secondsToString(seconds) {
-	var numhours = Math.round(Math.floor(((seconds % 31536000) % 86400) / 3600));
-	var numminutes = Math.round(Math.floor((((seconds % 31536000) % 86400) % 3600) / 60));
-	var numseconds = Math.round((((seconds % 31536000) % 86400) % 3600) % 60);
-	return((numhours !== 0) ? numhours + ':' : '') + numminutes + ':' + (((numseconds < 10) ? '0' : '') + numseconds);
-}
-
 $.streamProgress = function(_event) {
 	if(STREAM.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
-		var percentage = (STREAM.currentPlaybackTime / STREAM.getDuration()) * 100;
+		var percentage = ((STREAM.currentPlaybackTime / STREAM.getDuration()) * 100);
+		var time = DATE.duration(STREAM.currentPlaybackTime);
 
 		percentage = percentage >= 1 ? percentage : 1;
 
 		$.position.width = percentage + "%";
-
-		$.time.text = secondsToString(STREAM.currentPlaybackTime / 1000);
+		$.time.text = (time.hours() !== 0 ? time.hours() + ":" : "") + time.minutes() + ":" + (time.seconds() < 10 ? "0" : "") + time.seconds();
 	}
 };
 
