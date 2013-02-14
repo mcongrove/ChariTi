@@ -1,0 +1,156 @@
+<h1>Ti.UrbanAirship Module</h1>
+<h2>Description</h2>
+<p>This Module allows the Urban Airship iOS library to used inside of Titanium. Push and Rich Push are supported.</p>
+<h2>Getting Started</h2>
+<p>View the <a href="http://docs.appcelerator.com/titanium/latest/#!/guide/Using_Titanium_Modules">Using Titanium Modules</a> document for instructions on getting
+started with using this module in your application.</p>
+<h2>Accessing the UrbanAirship Module</h2>
+<p>To access this module from JavaScript, you would do the following:</p>
+<pre><code>var UrbanAirship = require('ti.urbanairship');
+</code></pre>
+<h2>Urban Airship Docs</h2>
+<p><a href="https://docs.urbanairship.com">https://docs.urbanairship.com</a></p>
+<h2>Apple Push Docs</h2>
+<p><a href="http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html">http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Introduction/Introduction.html</a></p>
+<h2>Setup</h2>
+<p>Follow these steps to properly setup your Titanium iOS application to use Urban Airship push notifications.</p>
+<h3>Step 1: Setting App Credentials</h3>
+<p>You need to specify your app's credentials before it can interact with an application you've created on the Urban Airship dashboard (https://go.urbanairship.com).
+Urban Airship looks for these in a file called <strong>AirshipConfig.plist</strong>, in the root of your application bundle.
+You can optionally specify these values using the <code>options</code> property on the module.</p>
+<ul>
+<li>A sample AirshipConfig.plist file has been provided in the module's example folder (example/platform/iphone/AirshipConfig.plist).</li>
+<li>Copy the sample 'platform' folder to your application's project folder. For example, if your application folder is 'TestApp' then the resulting path should be 'TestApp/platform/iphone/AirshipConfig.plist'. This will ensure that your AirshipConfig.plist file is properly copied into the application bundle of your iPhone application when it is built.</li>
+<li>Update the AirshipConfig.plist file with your app's key and secret, and whether the app is currently in development or production.</li>
+<li>See the <a href="http://docs.urbanairship.com">Urban Airship Documentation</a> for additional properties that can be set in this file.</li>
+</ul>
+<h3>Step 2: Register for push notifications</h3>
+<p>Your application must register with Titanium to receive push notifications.</p>
+<ul>
+<li>Add a call to Ti.Network.registerForPushNotifications</li>
+<li>When the <code>success</code> function is called, register the device token with the module by calling the <code>registerDevice</code> method</li>
+<li>When the <code>callback</code> function is called, process the notification and pass the data to the module by calling <code>handleNotification</code>.</li>
+</ul>
+<h3>Step 3: Set additional options</h3>
+<p>Several additional options can be controlled in your application code.</p>
+<ul>
+<li>See the list of properties below for other module options that can be set in your application</li>
+</ul>
+<h2>Urban Airship Module Functions</h2>
+<h3>Ti.UrbanAirship.registerDevice(token[string])</h3>
+<p>Registers the device with Urban Airship for push notifications. Call this function after calling
+Ti.Network.registerForPushNotifications.</p>
+<p><strong>Note:</strong> Versions of this module prior to 1.3.0 provided an <code>options</code> property for specifying <code>tags</code> and
+<code>alias</code>. These have been deprecated in order to more closely match the functionality of the Urban Airship iOS Push Library.
+You should now set the <code>tags</code> and <code>alias</code> properties directly on the module object.</p>
+<h4>Arguments</h4>
+<p>Requires one argument.</p>
+<ul>
+<li>token[string, required]: The deviceToken returned from Ti.Network.registerForPushNotifications.</li>
+</ul>
+<h3>Ti.UrbanAirship.unregisterDevice()</h3>
+<p>Unregisters the device with Urban Airship.</p>
+<h4>Arguments</h4>
+<p>None.</p>
+<h3>Ti.UrbanAirship.displayInbox({ animated[bool] })</h3>
+<p>Shows the persistent inbox that stores and organizes rich push notifications.</p>
+<h4>Arguments</h4>
+<p>Takes one optional argument, a dictionary with keys:</p>
+<ul>
+<li>animated[bool]: Whether the inbox should animate in; defaults to true</li>
+</ul>
+<h3>Ti.UrbanAirship.hideInbox()</h3>
+<p>Hides the persistent inbox.</p>
+<h3>Ti.UrbanAirship.handleNotification(data[object])</h3>
+<p>Handles a notification from Apple's servers.</p>
+<h4>Arguments</h4>
+<p>Takes one argument, the data payload from the "Ti.Network.registerForPushNotifications" callback.</p>
+<ul>
+<li>data[object]: The data payload from the "Ti.Network.registerForPushNotification" callback.</li>
+</ul>
+<h3>Ti.UrbanAirship.resetBadge()</h3>
+<p>Resets the badge count on the UA servers. Note that the badge count is automatically reset at startup, application resume, and notification received events if the autoResetBadge property is true (the default value).</p>
+<h4>Arguments</h4>
+<p>None</p>
+<h2>Properties</h2>
+<h3>isFlying[boolean] (read-only)</h3>
+<p>Tests if Urban Airship has been initialized and is ready for use</p>
+<h3>tags[string[]]</h3>
+<p>Tags can be used to categorize devices, and you can push notifications to devices with particular tags.</p>
+<h3>alias[string]</h3>
+<p>Aliases are associated with device tokens, providing an alternate name.</p>
+<h3>notificationsEnabled[boolean] (read-only)</h3>
+<p>Whether or not notifications are enabled for your application (of any type: badge, alert, or sound).</p>
+<h3>autoBadge[boolean] (write-only)</h3>
+<p>Ensures that the client will always sync badge changes with the server so that subsequent autobadge notifications will increment properly.</p>
+<h3>badgeNumber[int] (write-only)</h3>
+<p>Sets the current badge number</p>
+<h3>autoResetBadge[boolean] (default: true)</h3>
+<p>Enables the Urban Airship module to automatically call resetBadge after takeoff, when the application resumes, and when a notification is received (via a call to handleNotification).</p>
+<h3>username[string] (read-only)</h3>
+<p>The username created by Urban Airship during device registration</p>
+<h3>options[object]</h3>
+<p>A dictionary of the configuration options for this application. These values can be used to override any values
+specified in the AirshipConfig.plist file (if provided):</p>
+<ul>
+<li>PRODUCTION_APP_KEY[string]: The application key for production</li>
+<li>PRODUCTION_APP_SECRET[string]: The application secret for production</li>
+<li>DEVELOPMENT_APP_KEY[string]: The application key for development</li>
+<li>DEVELOPMENT_APP_SECRET[string]: The application secret for development</li>
+<li>APP_STORE_OR_AD_HOC_BUILD[bool]: Whether or not the app is in production (true if yes, false if not)</li>
+<li>LOGGING_ENABLED[bool]: Whether or not logging should be enabled</li>
+</ul>
+<h2>Example</h2>
+<p><pre>/<em>
+ * Demonstrates how to set up your UA Inbox,
+ * and how to display the messages from it via the picker interface.
+ </em>/</p>
+<p>var window = Ti.UI.createWindow({
+    backgroundColor: 'white'
+});</p>
+<p>var UrbanAirship = require('ti.urbanairship');</p>
+<p>Ti.UrbanAirship.options = {
+    APP_STORE_OR_AD_HOC_BUILD: false,
+    PRODUCTION_APP_KEY: '=== YOUR PROD APP KEY ===',
+    PRODUCTION_APP_SECRET: '=== YOUR PROD APP SECRET ===',
+    DEVELOPMENT_APP_KEY: '=== YOUR DEV APP KEY ===',
+    DEVELOPMENT_APP_SECRET: '=== YOUR DEV APP SECRET ===',
+    LOGGING_ENABLED: true
+};</p>
+<p>var b = Ti.UI.createButton({
+    title: 'Open UA Inbox',
+    width: 200, height: 40
+});
+b.addEventListener('click', function() {
+    // Open default mailbox
+    Ti.UrbanAirship.displayInbox({ animated:true });
+});
+window.add(b);</p>
+<p>Ti.Network.registerForPushNotifications({
+    types:[
+        Ti.Network.NOTIFICATION_TYPE_BADGE,
+        Ti.Network.NOTIFICATION_TYPE_ALERT,
+        Ti.Network.NOTIFICATION_TYPE_SOUND
+    ],
+    success: function(e) {
+        var token = e.deviceToken;
+        Ti.UrbanAirship.registerDevice(token);</p>
+<pre><code>    b.enabled = true;
+},
+error: function(e) {
+    alert("Error: " + e.error);
+},
+callback: function(e) {
+    Ti.UrbanAirship.handleNotification(e.data);
+}
+</code></pre>
+<p>});</p>
+<p>window.open();</pre></p>
+<h2>Author</h2>
+<p>Jeff English</p>
+<h2>Module History</h2>
+<p>View the <a href="changelog.html">change log</a> for this module.</p>
+<h2>Feedback and Support</h2>
+<p>Please direct all questions, feedback, and concerns to <a href="mailto:info@appcelerator.com?subject=iOS%20UrbanAirship%20Module">info@appcelerator.com</a>.</p>
+<h2>License</h2>
+<p>Copyright(c) 2010-2013 by Appcelerator, Inc. All Rights Reserved. Please see the LICENSE file included in the distribution for further details.</p>

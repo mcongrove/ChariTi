@@ -6,6 +6,7 @@ APP.MainWindow = $.MainWindow;
 APP.GlobalWrapper = $.GlobalWrapper;
 APP.ContentWrapper = $.ContentWrapper;
 APP.Tabs = $.Tabs;
+APP.SlideMenu = $.SlideMenu;
 
 // Start the APP
 APP.init();

@@ -1,4 +1,6 @@
 <Alloy>
+	<Require type="widget" src="com.chariti.slideMenu" id="SlideMenu" />
+	
 	<Window id="MainWindow">
 		<View id="GlobalWrapper">
 			<View id="ContentWrapper" />

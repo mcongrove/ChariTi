@@ -8,20 +8,14 @@ $.heading.text = CONFIG.heading;
 $.heading.color = APP.Settings.colors.primary || "#666";
 $.text.text = CONFIG.text;
 
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+
 if(CONFIG.isChild === true) {
-	$.NavigationBar.back.visible = true;
+	$.NavigationBar.showBack();
 }
 
-$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-$.NavigationBar.right.visible = true;
-$.NavigationBar.rightImage.image = "/images/settings.png";
-
-$.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.openSettings();
-});
-
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "text @close");
-
-	APP.removeChild();
-});
+if(APP.Settings.useSlideMenu) {
+	$.NavigationBar.showMenu();
+} else {
+	$.NavigationBar.showSettings();
+}

@@ -26,10 +26,23 @@ $.handleData = function(_data) {
 
 	ACTION.url = _data.url;
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.back.visible = APP.Device.isHandheld;
-	$.NavigationBar.right.visible = true;
-	$.NavigationBar.rightImage.image = "/images/action.png";
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+
+	if(APP.Device.isHandheld) {
+		$.NavigationBar.showBack({
+			callback: function(_event) {
+				$.streamStop();
+
+				APP.removeAllChildren();
+			}
+		});
+	}
+
+	$.NavigationBar.showAction({
+		callback: function(_event) {
+			SOCIAL.share(ACTION.url, $.NavigationBar.right);
+		}
+	});
 };
 
 $.createAudioPlayer = function(_url) {
@@ -83,7 +96,7 @@ $.handleNavigation = function(_id) {
 		}
 	}).getView();
 
-	$.NavigationBar.Wrapper.add(navigation);
+	$.NavigationBar.addNavigation(navigation);
 };
 
 $.streamPlay = function(_event) {
@@ -140,20 +153,6 @@ $.streamState = function(_event) {
 };
 
 // Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "podcast_podcast @close");
-
-	$.streamStop();
-
-	APP.removeAllChildren();
-});
-
-$.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.log("debug", "podcast_podcast @menu");
-
-	SOCIAL.share(ACTION.url, $.NavigationBar.right);
-});
-
 $.play.addEventListener("click", $.streamPlay);
 $.pause.addEventListener("click", $.streamPause);
 $.track.addEventListener("click", $.streamSeek);

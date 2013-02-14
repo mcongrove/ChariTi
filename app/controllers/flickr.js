@@ -14,12 +14,16 @@ $.init = function() {
 
 	$.retrieveData();
 
-	$.NavigationBar.Wrapper.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.NavigationBar.right.visible = true;
-	$.NavigationBar.rightImage.image = "/images/settings.png";
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(CONFIG.isChild === true) {
-		$.NavigationBar.back.visible = true;
+		$.NavigationBar.showBack();
+	}
+
+	if(APP.Settings.useSlideMenu) {
+		$.NavigationBar.showMenu();
+	} else {
+		$.NavigationBar.showSettings();
 	}
 };
 
@@ -59,7 +63,7 @@ $.handleSets = function() {
 
 	APP.closeLoading();
 
-	if(APP.Device.isTablet) {
+	if(APP.Device.isTablet && !SELECTED) {
 		SELECTED = data[0].id;
 
 		APP.addChild("flickr_album", {
@@ -73,16 +77,6 @@ $.handleSets = function() {
 };
 
 // Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "flickr @close");
-
-	APP.removeChild();
-});
-
-$.NavigationBar.right.addEventListener("click", function(_event) {
-	APP.openSettings();
-});
-
 $.content.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @click " + _event.row.id);
 

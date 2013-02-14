@@ -7,12 +7,12 @@
 },
 "#MainWindow[platform=android formFactor=tablet]": {
 	orientationModes: [
-		Titanium.UI.LANDSCAPE_LEFT
+		Ti.UI.LANDSCAPE_LEFT
 	]
 },
 "#MainWindow[formFactor=handheld]": {
 	orientationModes: [
-		Titanium.UI.PORTRAIT
+		Ti.UI.PORTRAIT
 	]
 },
 "#ContentWrapper": {
