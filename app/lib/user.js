@@ -19,9 +19,9 @@ var USER = {
 		Ti.App.Properties.setString('APP:USER:id', id);
 		Ti.App.Properties.setString('APP:USER:login', login);
 		Ti.App.Properties.setString('APP:USER:password', password);
-		
-        Ti.App.Properties.setBool('APP:USER:isSaved', true);
-        Ti.App.Properties.setBool('APP:USER:isLoggedIn', true);
+
+		Ti.App.Properties.setBool('APP:USER:isSaved', true);
+		Ti.App.Properties.setBool('APP:USER:isLoggedIn', true);
 	},
 	create: function(_params) {
 		var options = {
@@ -83,9 +83,9 @@ var USER = {
 			password: password
 		}, function(e) {
 			if(e.success) {
-                
-                var user = e.users[0];
-                USER.save(user.id, (_params.username) ? _params.username : _params.email, _params.password);
+
+				var user = e.users[0];
+				USER.save(user.id, (_params.username) ? _params.username : _params.email, _params.password);
 
 				APP.log("debug", "USER.login @success");
 				APP.log("trace", JSON.stringify(user));
