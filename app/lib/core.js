@@ -345,7 +345,7 @@ var APP = {
 
 		// Listen for gestures on the main window to open/close the slide menu
 		APP.MainWindow.addEventListener("touchstart", function(_event) {
-			_event.source.lastPosition = parseInt(_event.x);
+			_event.source.lastPosition = parseInt(_event.x, 10);
 		});
 
 		APP.MainWindow.addEventListener("touchmove", function(_event) {
@@ -354,7 +354,7 @@ var APP = {
 				y: _event.y
 			}, APP.SlideMenu.Wrapper);
 
-			var distance = parseInt(point.x) - _event.source.lastPosition;
+			var distance = parseInt(point.x, 10) - _event.source.lastPosition;
 
 			if(distance > 20 || distance < -20) {
 				_event.source.moving = true;
