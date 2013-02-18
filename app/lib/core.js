@@ -596,10 +596,16 @@ var APP = {
 	 * @param {String} [_stack] Removes the child from this stack
 	 */
 	removeChild: function(_stack) {
-		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var stack;
 
-		if(APP.Device.isTablet && APP.hasDetail) {
-			stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.detailStacks[APP.currentDetailStack];
+		if(typeof _stack == "string") {
+			stack = APP.nonTabStacks[_stack];
+		} else {
+			if(APP.Device.isTablet && APP.hasDetail) {
+				stack = APP.detailStacks[APP.currentDetailStack];
+			} else {
+				stack = APP.controllerStacks[APP.currentStack];
+			}
 		}
 
 		var screen = stack[stack.length - 1];
