@@ -459,6 +459,7 @@ var APP = {
 		// Requesting same screen as we're on
 		if(_id == APP.currentStack) {
 			// Do nothing
+			return;
 		} else {
 			if(APP.Settings.useSlideMenu) {
 				// Select the row for the requested item
@@ -539,20 +540,21 @@ var APP = {
 
 				// Add screen to the controller stack
 				controllerStack.push(screen);
+
+				// Tell the screen it was added to the window
+				if(screen.type == "tablet") {
+					screen.fireEvent("APP:tabletScreenAdded");
+				} else {
+					screen.fireEvent("APP:screenAdded");
+				}
 			}
 
 			// Add the screen to the window
 			APP.addScreen(screen);
 
-			// Tell the screen it was added to the window
-			if(screen.type == "tablet") {
-				screen.fireEvent("APP:tabletScreenAdded");
-			} else {
-				screen.fireEvent("APP:screenAdded");
-			}
+			// Reset the non-tab stack
+			APP.nonTabStacks = {};
 		}
-
-		APP.nonTabStacks = {};
 	},
 	/**
 	 * Open a child screen
