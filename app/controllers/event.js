@@ -52,7 +52,7 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("event_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: DATE(parseInt(_data[i].date_start)).format("MMMM Do, YYYY h:mma")
+			subHeading: DATE(parseInt(_data[i].date_start, 10)).format("MMMM Do, YYYY h:mma")
 		}).getView();
 
 		rows.push(row);

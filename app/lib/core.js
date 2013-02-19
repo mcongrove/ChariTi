@@ -325,6 +325,8 @@ var APP = {
 			// Add a handler for the tabs
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
+					APP.closeSettings();
+					
 					APP.handleNavigation(_event.row.id);
 				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
 					APP.openSettings();
@@ -345,7 +347,7 @@ var APP = {
 
 		// Listen for gestures on the main window to open/close the slide menu
 		APP.MainWindow.addEventListener("touchstart", function(_event) {
-			_event.source.lastPosition = parseInt(_event.x);
+			_event.source.lastPosition = parseInt(_event.x, 10);
 		});
 
 		APP.MainWindow.addEventListener("touchmove", function(_event) {
@@ -354,7 +356,7 @@ var APP = {
 				y: _event.y
 			}, APP.SlideMenu.Wrapper);
 
-			var distance = parseInt(point.x) - _event.source.lastPosition;
+			var distance = parseInt(point.x, 10) - _event.source.lastPosition;
 
 			if(distance > 20 || distance < -20) {
 				_event.source.moving = true;
@@ -459,6 +461,7 @@ var APP = {
 		// Requesting same screen as we're on
 		if(_id == APP.currentStack) {
 			// Do nothing
+			return;
 		} else {
 			if(APP.Settings.useSlideMenu) {
 				// Select the row for the requested item
@@ -539,20 +542,21 @@ var APP = {
 
 				// Add screen to the controller stack
 				controllerStack.push(screen);
+
+				// Tell the screen it was added to the window
+				if(screen.type == "tablet") {
+					screen.fireEvent("APP:tabletScreenAdded");
+				} else {
+					screen.fireEvent("APP:screenAdded");
+				}
 			}
 
 			// Add the screen to the window
 			APP.addScreen(screen);
 
-			// Tell the screen it was added to the window
-			if(screen.type == "tablet") {
-				screen.fireEvent("APP:tabletScreenAdded");
-			} else {
-				screen.fireEvent("APP:screenAdded");
-			}
+			// Reset the non-tab stack
+			APP.nonTabStacks = {};
 		}
-
-		APP.nonTabStacks = {};
 	},
 	/**
 	 * Open a child screen
@@ -596,10 +600,16 @@ var APP = {
 	 * @param {String} [_stack] Removes the child from this stack
 	 */
 	removeChild: function(_stack) {
-		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+		var stack;
 
-		if(APP.Device.isTablet && APP.hasDetail) {
-			stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.detailStacks[APP.currentDetailStack];
+		if(typeof _stack == "string") {
+			stack = APP.nonTabStacks[_stack];
+		} else {
+			if(APP.Device.isTablet && APP.hasDetail) {
+				stack = APP.detailStacks[APP.currentDetailStack];
+			} else {
+				stack = APP.controllerStacks[APP.currentStack];
+			}
 		}
 
 		var screen = stack[stack.length - 1];
@@ -738,6 +748,14 @@ var APP = {
 		APP.log("debug", "APP.openSettings");
 
 		APP.addChild("settings", {}, "settings");
+	},
+	/**
+	 * Closes all non-tab stacks
+	 */
+	closeSettings: function() {
+		if(APP.nonTabStacks.settings) {
+			APP.removeChild("settings");
+		}
 	},
 	/**
 	 * Toggles the Slide Menu

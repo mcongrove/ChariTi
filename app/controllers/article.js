@@ -64,7 +64,7 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("article_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date)).fromNow())
+			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date, 10)).fromNow())
 		}).getView();
 
 		rows.push(row);
@@ -120,7 +120,7 @@ if(OS_IOS) {
 		}
 	});
 
-	pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed))).toDate());
+	pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
 }
 
 // Kick off the init

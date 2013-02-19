@@ -22,7 +22,7 @@ $.handleData = function(_data) {
 	$.heading.text = _data.title;
 	$.text.value = _data.description;
 	$.location.text = "@ " + _data.location;
-	$.date.text = DATE(parseInt(_data.date_start)).format("MMMM Do, YYYY h:mma");
+	$.date.text = DATE(parseInt(_data.date_start, 10)).format("MMMM Do, YYYY h:mma");
 	$.date.color = APP.Settings.colors.primary;
 
 	ACTION.url = "http://www.facebook.com/events/" + _data.id;

@@ -60,7 +60,7 @@ exports.init = function() {
 			UA.handleNotification(_data.data);
 
 			if(_data.data.tab) {
-				var tabIndex = parseInt(_data.data.tab) - 1;
+				var tabIndex = parseInt(_data.data.tab, 10) - 1;
 
 				if(APP.Nodes[tabIndex]) {
 					APP.handleNavigation(tabIndex);

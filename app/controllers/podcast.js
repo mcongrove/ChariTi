@@ -50,7 +50,7 @@ $.handleData = function(_data) {
 		var row = Alloy.createController("podcast_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: DATE(parseInt(_data[i].date)).format("MMMM Do, YYYY h:mma")
+			subHeading: DATE(parseInt(_data[i].date, 10)).format("MMMM Do, YYYY h:mma")
 		}).getView();
 
 		rows.push(row);
