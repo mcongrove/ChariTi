@@ -326,6 +326,7 @@ var APP = {
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
 					APP.closeSettings();
+					
 					APP.handleNavigation(_event.row.id);
 				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
 					APP.openSettings();

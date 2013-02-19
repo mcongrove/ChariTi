@@ -45,8 +45,8 @@ $.init = function(_params) {
 			touchEnabled: false
 		});
 		
-		tab.add(iconWrapper);
 		iconWrapper.add(icon);
+		tab.add(iconWrapper);
 		tab.add(label);
 		
 		$.tabs.push(tab);

@@ -43,7 +43,6 @@ $.init = function() {
 			}
 		});
 	}
-
 };
 
 // Event listeners

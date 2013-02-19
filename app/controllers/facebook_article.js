@@ -22,7 +22,7 @@ $.handleData = function(_data) {
 
 	$.heading.text = _data.title;
 	$.text.value = _data.description;
-	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date)).fromNow());
+	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date, 10)).fromNow());
 	$.date.color = APP.Settings.colors.primary;
 
 	ACTION.url = _data.link
