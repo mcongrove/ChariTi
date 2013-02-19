@@ -308,13 +308,6 @@ var APP = {
 			tabs: _tabs
 		});
 
-		// Force the window width
-		if(APP.Device.orientation == "PORTRAIT") {
-			APP.MainWindow.width = APP.Device.width + "dp";
-		} else {
-			APP.MainWindow.width = APP.Device.height + "dp";
-		}
-
 		// Remove the TabGroup
 		APP.GlobalWrapper.remove(APP.Tabs.Wrapper);
 
@@ -326,7 +319,7 @@ var APP = {
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
 					APP.closeSettings();
-					
+
 					APP.handleNavigation(_event.row.id);
 				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
 					APP.openSettings();
@@ -336,53 +329,47 @@ var APP = {
 			});
 		}
 
-		// Listen for orientation change event to force window width
-		Ti.App.addEventListener("APP:orientationChange", function(_event) {
-			if(APP.Device.orientation == "PORTRAIT") {
-				APP.MainWindow.width = APP.Device.width + "dp";
-			} else {
-				APP.MainWindow.width = APP.Device.height + "dp";
-			}
-		});
+		// Swiping is awful on Android, so only support this for iOS
+		if(OS_IOS) {
+			// Listen for gestures on the main window to open/close the slide menu
+			APP.GlobalWrapper.addEventListener("touchstart", function(_event) {
+				_event.source.lastPosition = parseInt(_event.x, 10);
+			});
 
-		// Listen for gestures on the main window to open/close the slide menu
-		APP.MainWindow.addEventListener("touchstart", function(_event) {
-			_event.source.lastPosition = parseInt(_event.x, 10);
-		});
+			APP.GlobalWrapper.addEventListener("touchmove", function(_event) {
+				var point = APP.GlobalWrapper.convertPointToView({
+					x: _event.x,
+					y: _event.y
+				}, APP.SlideMenu.Wrapper);
 
-		APP.MainWindow.addEventListener("touchmove", function(_event) {
-			var point = APP.MainWindow.convertPointToView({
-				x: _event.x,
-				y: _event.y
-			}, APP.SlideMenu.Wrapper);
+				var distance = parseInt(point.x, 10) - _event.source.lastPosition;
 
-			var distance = parseInt(point.x, 10) - _event.source.lastPosition;
-
-			if(distance > 20 || distance < -20) {
-				_event.source.moving = true;
-			}
-
-			if(_event.source.moving && distance <= 200 && distance >= 0) {
-				APP.MainWindow.animate({
-					left: distance,
-					duration: 20
-				});
-
-				APP.MainWindow.left = distance;
-			}
-		});
-
-		APP.MainWindow.addEventListener("touchend", function(_event) {
-			if(_event.source.moving) {
-				_event.source.moving = false;
-
-				if(APP.MainWindow.left >= 100 && APP.MainWindow.left < 200) {
-					APP.openMenu();
-				} else {
-					APP.closeMenu();
+				if(distance > 20 || distance < -20) {
+					_event.source.moving = true;
 				}
-			}
-		});
+
+				if(_event.source.moving && distance <= 200 && distance >= 0) {
+					APP.GlobalWrapper.animate({
+						left: distance,
+						duration: 20
+					});
+
+					APP.GlobalWrapper.left = distance;
+				}
+			});
+
+			APP.GlobalWrapper.addEventListener("touchend", function(_event) {
+				if(_event.source.moving) {
+					_event.source.moving = false;
+
+					if(APP.GlobalWrapper.left >= 100 && APP.GlobalWrapper.left < 200) {
+						APP.openMenu();
+					} else {
+						APP.closeMenu();
+					}
+				}
+			});
+		}
 	},
 	/**
 	 * Re-builds the app with newly downloaded JSON configration file
@@ -771,7 +758,9 @@ var APP = {
 	 * Opens the Slide Menu
 	 */
 	openMenu: function() {
-		APP.MainWindow.animate({
+		APP.SlideMenu.Wrapper.left = "0dp";
+
+		APP.GlobalWrapper.animate({
 			left: "200dp",
 			duration: 400,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -783,7 +772,7 @@ var APP = {
 	 * Closes the Slide Menu
 	 */
 	closeMenu: function() {
-		APP.MainWindow.animate({
+		APP.GlobalWrapper.animate({
 			left: "0dp",
 			duration: 400,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT

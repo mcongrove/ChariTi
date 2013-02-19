@@ -1,7 +1,7 @@
 "#Wrapper": {
 	width: "200dp",
 	top: "0dp",
-	left: "0dp"
+	left: "-200dp"
 },
 "#Tabs": {
 	backgroundColor: "#2E2E2E",

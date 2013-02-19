@@ -26,16 +26,8 @@ $.init = function() {
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
-	if(OS_IOS) {
-		if(APP.Settings.useSlideMenu) {
-			$.NavigationBar.showMenu();
-		} else {
-			$.NavigationBar.showBack({
-				callback: function(_event) {
-					APP.removeChild("settings");
-				}
-			});
-		}
+	if(APP.Settings.useSlideMenu) {
+		$.NavigationBar.showMenu();
 	} else {
 		$.NavigationBar.showBack({
 			callback: function(_event) {
