@@ -325,6 +325,7 @@ var APP = {
 			// Add a handler for the tabs
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
+					APP.closeSettings();
 					APP.handleNavigation(_event.row.id);
 				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
 					APP.openSettings();
@@ -345,7 +346,7 @@ var APP = {
 
 		// Listen for gestures on the main window to open/close the slide menu
 		APP.MainWindow.addEventListener("touchstart", function(_event) {
-			_event.source.lastPosition = parseInt(_event.x);
+			_event.source.lastPosition = parseInt(_event.x, 10);
 		});
 
 		APP.MainWindow.addEventListener("touchmove", function(_event) {
@@ -354,7 +355,7 @@ var APP = {
 				y: _event.y
 			}, APP.SlideMenu.Wrapper);
 
-			var distance = parseInt(point.x) - _event.source.lastPosition;
+			var distance = parseInt(point.x, 10) - _event.source.lastPosition;
 
 			if(distance > 20 || distance < -20) {
 				_event.source.moving = true;
@@ -746,6 +747,14 @@ var APP = {
 		APP.log("debug", "APP.openSettings");
 
 		APP.addChild("settings", {}, "settings");
+	},
+	/**
+	 * Closes all non-tab stacks
+	 */
+	closeSettings: function() {
+		if(APP.nonTabStacks.settings) {
+			APP.removeChild("settings");
+		}
 	},
 	/**
 	 * Toggles the Slide Menu

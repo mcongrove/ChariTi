@@ -10,12 +10,19 @@ $.init = function(_params) {
 			selectedBackgroundColor: "#1E1E1E"
 		});
 		
+		var iconWrapper = Ti.UI.createView({
+			width: "28dp",
+			height: "28dp",
+			top: "9dp",
+			left: "7dp",
+			touchEnabled: false
+		});
+
 		var icon = Ti.UI.createImageView({
 			image: _params.tabs[i].image,
-			width: "32dp",
-			height: "32dp",
-			top: "7dp",
-			left: "7dp",
+			width: Ti.UI.SIZE,
+			height: "28dp",
+			top: 0,
 			touchEnabled: false
 		});
 		
@@ -38,7 +45,8 @@ $.init = function(_params) {
 			touchEnabled: false
 		});
 		
-		tab.add(icon);
+		tab.add(iconWrapper);
+		iconWrapper.add(icon);
 		tab.add(label);
 		
 		$.tabs.push(tab);
@@ -62,9 +70,9 @@ $.createSettings = function() {
 	
 	var icon = Ti.UI.createImageView({
 		image: WPATH("images/settings.png"),
-		width: "32dp",
-		height: "32dp",
-		top: "7dp",
+		width: "28dp",
+		height: "28dp",
+		top: "9dp",
 		left: "7dp",
 		touchEnabled: false
 	});
