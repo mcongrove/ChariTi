@@ -88,11 +88,15 @@ $.content.addEventListener("click", function(_event) {
 		}
 	}
 
-	APP.addChild("youtube_video", {
-		url: _event.row.url,
-		title: _event.row.setTitle,
-		index: CONFIG.index
-	});
+	if(OS_ANDROID) {
+		Ti.Platform.openURL(_event.row.url);
+	} else {
+		APP.addChild("youtube_video", {
+			url: _event.row.url,
+			title: _event.row.setTitle,
+			index: CONFIG.index
+		});
+	}
 });
 
 // Kick off the init
