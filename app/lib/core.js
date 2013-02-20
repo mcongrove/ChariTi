@@ -49,7 +49,7 @@ var APP = {
 	currentStack: -1,
 	previousScreen: null,
 	controllerStacks: [],
-	nonTabStacks: {},
+	modalStack: [],
 	hasDetail: false,
 	currentDetailStack: -1,
 	previousDetailScreen: null,
@@ -100,6 +100,10 @@ var APP = {
 		Ti.App.addEventListener("pause", APP.exitObserver);
 		Ti.App.addEventListener("close", APP.exitObserver);
 		Ti.App.addEventListener("resumed", APP.resumeObserver);
+
+		if(OS_ANDROID) {
+			APP.MainWindow.addEventListener("androidback", APP.backButtonObserver);
+		}
 
 		// Determine device characteristics
 		APP.determineDevice();
@@ -308,13 +312,6 @@ var APP = {
 			tabs: _tabs
 		});
 
-		// Force the window width
-		if(APP.Device.orientation == "PORTRAIT") {
-			APP.MainWindow.width = APP.Device.width + "dp";
-		} else {
-			APP.MainWindow.width = APP.Device.height + "dp";
-		}
-
 		// Remove the TabGroup
 		APP.GlobalWrapper.remove(APP.Tabs.Wrapper);
 
@@ -326,7 +323,7 @@ var APP = {
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
 					APP.closeSettings();
-					
+
 					APP.handleNavigation(_event.row.id);
 				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
 					APP.openSettings();
@@ -336,53 +333,47 @@ var APP = {
 			});
 		}
 
-		// Listen for orientation change event to force window width
-		Ti.App.addEventListener("APP:orientationChange", function(_event) {
-			if(APP.Device.orientation == "PORTRAIT") {
-				APP.MainWindow.width = APP.Device.width + "dp";
-			} else {
-				APP.MainWindow.width = APP.Device.height + "dp";
-			}
-		});
+		// Swiping is awful on Android, so only support this for iOS
+		if(OS_IOS) {
+			// Listen for gestures on the main window to open/close the slide menu
+			APP.GlobalWrapper.addEventListener("touchstart", function(_event) {
+				_event.source.lastPosition = parseInt(_event.x, 10);
+			});
 
-		// Listen for gestures on the main window to open/close the slide menu
-		APP.MainWindow.addEventListener("touchstart", function(_event) {
-			_event.source.lastPosition = parseInt(_event.x, 10);
-		});
+			APP.GlobalWrapper.addEventListener("touchmove", function(_event) {
+				var point = APP.GlobalWrapper.convertPointToView({
+					x: _event.x,
+					y: _event.y
+				}, APP.SlideMenu.Wrapper);
 
-		APP.MainWindow.addEventListener("touchmove", function(_event) {
-			var point = APP.MainWindow.convertPointToView({
-				x: _event.x,
-				y: _event.y
-			}, APP.SlideMenu.Wrapper);
+				var distance = parseInt(point.x, 10) - _event.source.lastPosition;
 
-			var distance = parseInt(point.x, 10) - _event.source.lastPosition;
-
-			if(distance > 20 || distance < -20) {
-				_event.source.moving = true;
-			}
-
-			if(_event.source.moving && distance <= 200 && distance >= 0) {
-				APP.MainWindow.animate({
-					left: distance,
-					duration: 20
-				});
-
-				APP.MainWindow.left = distance;
-			}
-		});
-
-		APP.MainWindow.addEventListener("touchend", function(_event) {
-			if(_event.source.moving) {
-				_event.source.moving = false;
-
-				if(APP.MainWindow.left >= 100 && APP.MainWindow.left < 200) {
-					APP.openMenu();
-				} else {
-					APP.closeMenu();
+				if(distance > 20 || distance < -20) {
+					_event.source.moving = true;
 				}
-			}
-		});
+
+				if(_event.source.moving && distance <= 200 && distance >= 0) {
+					APP.GlobalWrapper.animate({
+						left: distance,
+						duration: 20
+					});
+
+					APP.GlobalWrapper.left = distance;
+				}
+			});
+
+			APP.GlobalWrapper.addEventListener("touchend", function(_event) {
+				if(_event.source.moving) {
+					_event.source.moving = false;
+
+					if(APP.GlobalWrapper.left >= 100 && APP.GlobalWrapper.left < 200) {
+						APP.openMenu();
+					} else {
+						APP.closeMenu();
+					}
+				}
+			});
+		}
 	},
 	/**
 	 * Re-builds the app with newly downloaded JSON configration file
@@ -399,7 +390,7 @@ var APP = {
 		APP.currentStack = -1;
 		APP.previousScreen = null;
 		APP.controllerStacks = [];
-		APP.nonTabStacks = {};
+		APP.modalStack = [];
 		APP.hasDetail = false;
 		APP.currentDetailStack = -1;
 		APP.previousDetailScreen = null;
@@ -554,26 +545,22 @@ var APP = {
 			// Add the screen to the window
 			APP.addScreen(screen);
 
-			// Reset the non-tab stack
-			APP.nonTabStacks = {};
+			// Reset the modal stack
+			APP.modalStack = [];
 		}
 	},
 	/**
 	 * Open a child screen
 	 * @param {String} [_controller] The name of the controller to open
 	 * @param {Object} [_params] An optional dictionary of parameters to pass to the controller
-	 * @param {String} [_stack] The stack to add the child to (optional)
+	 * @param {Boolean} [_modal] Whether this is for the modal stack
 	 */
-	addChild: function(_controller, _params, _stack) {
+	addChild: function(_controller, _params, _modal) {
 		var stack;
 
 		// Determine if stack is associated with a tab
-		if(typeof _stack !== "undefined") {
-			if(typeof APP.nonTabStacks[_stack] === "undefined") {
-				APP.nonTabStacks[_stack] = [];
-			}
-
-			stack = APP.nonTabStacks[_stack];
+		if(_modal) {
+			stack = APP.modalStack;
 		} else {
 			if(APP.Device.isHandheld || !APP.hasDetail) {
 				stack = APP.controllerStacks[APP.currentStack];
@@ -589,7 +576,7 @@ var APP = {
 		stack.push(screen);
 
 		// Add the screen to the window
-		if(APP.Device.isHandheld || !APP.hasDetail || typeof _stack !== "undefined") {
+		if(APP.Device.isHandheld || !APP.hasDetail || _modal) {
 			APP.addScreen(screen);
 		} else {
 			APP.addDetailScreen(screen);
@@ -597,13 +584,13 @@ var APP = {
 	},
 	/**
 	 * Removes a child screen
-	 * @param {String} [_stack] Removes the child from this stack
+	 * @param {Boolean} [_modal] Removes the child from the modal stack
 	 */
-	removeChild: function(_stack) {
+	removeChild: function(_modal) {
 		var stack;
 
-		if(typeof _stack == "string") {
-			stack = APP.nonTabStacks[_stack];
+		if(_modal) {
+			stack = APP.modalStack;
 		} else {
 			if(APP.Device.isTablet && APP.hasDetail) {
 				stack = APP.detailStacks[APP.currentDetailStack];
@@ -628,7 +615,7 @@ var APP = {
 			} else {
 				previousScreen = previousStack[0];
 
-				if(typeof _stack !== "undefined") {
+				if(_modal) {
 					APP.addScreen(previousScreen);
 				} else {
 					APP.addDetailScreen(previousScreen);
@@ -640,7 +627,7 @@ var APP = {
 			if(APP.Device.isHandheld || !APP.hasDetail) {
 				APP.addScreen(previousScreen);
 			} else {
-				if(typeof _stack !== "undefined") {
+				if(_modal) {
 					APP.addScreen(previousScreen);
 				} else {
 					APP.addDetailScreen(previousScreen);
@@ -650,10 +637,10 @@ var APP = {
 	},
 	/**
 	 * Removes all children screens
-	 * @param {String} [_stack] Removes all children from this stack
+	 * @param {Boolean} [_modal] Removes all children from the modal stack
 	 */
-	removeAllChildren: function(_stack) {
-		var stack = (typeof _stack !== "undefined") ? APP.nonTabStacks[_stack] : APP.controllerStacks[APP.currentStack];
+	removeAllChildren: function(_modal) {
+		var stack = _modal ? APP.modalStack : APP.controllerStacks[APP.currentStack];
 
 		for(var i = stack.length - 1; i > 0; i--) {
 			stack.pop();
@@ -747,14 +734,14 @@ var APP = {
 	openSettings: function() {
 		APP.log("debug", "APP.openSettings");
 
-		APP.addChild("settings", {}, "settings");
+		APP.addChild("settings", {}, true);
 	},
 	/**
 	 * Closes all non-tab stacks
 	 */
 	closeSettings: function() {
-		if(APP.nonTabStacks.settings) {
-			APP.removeChild("settings");
+		if(APP.modalStack.length > 0) {
+			APP.removeChild(true);
 		}
 	},
 	/**
@@ -771,7 +758,9 @@ var APP = {
 	 * Opens the Slide Menu
 	 */
 	openMenu: function() {
-		APP.MainWindow.animate({
+		APP.SlideMenu.Wrapper.left = "0dp";
+
+		APP.GlobalWrapper.animate({
 			left: "200dp",
 			duration: 400,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -783,7 +772,7 @@ var APP = {
 	 * Closes the Slide Menu
 	 */
 	closeMenu: function() {
-		APP.MainWindow.animate({
+		APP.GlobalWrapper.animate({
 			left: "0dp",
 			duration: 400,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -925,6 +914,33 @@ var APP = {
 	 */
 	resumeObserver: function(_event) {
 		APP.log("debug", "APP.resumeObserver");
+	},
+	/**
+	 * Back button observer
+	 * @param {Object} _event Standard Titanium event callback
+	 */
+	backButtonObserver: function(_event) {
+		APP.log("debug", "APP.backButtonObserver");
+
+		if(APP.modalStack.length > 0) {
+			APP.removeChild(true);
+
+			return;
+		} else {
+			var stack;
+
+			if(APP.Device.isHandheld || !APP.hasDetail) {
+				stack = APP.controllerStacks[APP.currentStack];
+			} else {
+				stack = APP.detailStacks[APP.currentDetailStack];
+			}
+
+			if(stack.length > 1) {
+				APP.removeChild();
+			} else {
+				APP.MainWindow.close();
+			}
+		}
 	}
 };
 

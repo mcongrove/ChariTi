@@ -55,8 +55,6 @@ $.init = function(_params) {
 	$.Tabs.setData($.tabs);
 	
 	$.createSettings();
-	
-	$.Wrapper.open();
 };
 
 $.createSettings = function() {

@@ -26,20 +26,10 @@ $.init = function() {
 		$.NavigationBar.showBack();
 	}
 
-	if(OS_IOS) {
-		if(APP.Settings.useSlideMenu) {
-			$.NavigationBar.showMenu();
-		} else {
-			$.NavigationBar.showSettings();
-		}
+	if(APP.Settings.useSlideMenu) {
+		$.NavigationBar.showMenu();
 	} else {
 		$.NavigationBar.showSettings();
-
-		$.NavigationBar.showRefresh({
-			callback: function(_event) {
-				$.retrieveData(true)
-			}
-		});
 	}
 };
 

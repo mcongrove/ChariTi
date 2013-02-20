@@ -1,5 +1,5 @@
 "#MainWindow": {
-	backgroundColor: "#EEE"
+	backgroundColor: "#EEE",
 },
 "#MainWindow[platform=android]": {
 	navBarHidden: true,
@@ -14,6 +14,9 @@
 	orientationModes: [
 		Ti.UI.PORTRAIT
 	]
+},
+"#GlobalWrapper": {
+	width: "100%"
 },
 "#ContentWrapper": {
 	top: "0dp",

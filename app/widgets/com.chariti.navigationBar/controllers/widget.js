@@ -74,13 +74,6 @@ $.showRight = function(_params) {
 	$.right.addEventListener("click", _params.callback);
 };
 
-$.showRefresh = function(_params) {
-	$.showLeft({
-		image: WPATH("images/refresh.png"),
-		callback: _params.callback
-	});
-};
-
 $.showMenu = function() {
 	$.showLeft({
 		image: WPATH("images/menu.png"),

@@ -88,14 +88,22 @@ $.content.addEventListener("click", function(_event) {
 		}
 	}
 
-	if(OS_ANDROID) {
-		Ti.Platform.openURL(_event.row.url);
-	} else {
+	if(OS_IOS) {
 		APP.addChild("youtube_video", {
 			url: _event.row.url,
 			title: _event.row.setTitle,
 			index: CONFIG.index
 		});
+	} else if(OS_ANDROID) {
+		if(APP.Device.isTablet) {
+			APP.addChild("youtube_video", {
+				url: _event.row.url,
+				title: _event.row.setTitle,
+				index: CONFIG.index
+			});
+		}
+
+		Ti.Platform.openURL(_event.row.url);
 	}
 });
 
