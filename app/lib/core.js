@@ -249,7 +249,7 @@ var APP = {
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			APP.Nodes[i].index = i;
 		}
-		
+
 		if(typeof APP.Settings.useSlideMenu == "undefined") {
 			APP.Settings.useSlideMenu = false;
 		}
@@ -377,6 +377,14 @@ var APP = {
 					}
 				}
 			});
+		} else {
+			APP.GlobalWrapper.addEventListener("swipe", function(_event) {
+				if(_event.direction == "right") {
+					APP.openMenu();
+				} else if(_event.direction == "left") {
+					APP.closeMenu();
+				}
+			});
 		}
 	},
 	/**
@@ -387,6 +395,10 @@ var APP = {
 
 		APP.SlideMenu.clear();
 		APP.Tabs.clear();
+
+		// Undo removal of TabGroup
+		APP.GlobalWrapper.add(APP.Tabs.Wrapper);
+		APP.ContentWrapper.bottom = "60dp";
 
 		APP.currentStack = -1;
 		APP.previousScreen = null;
