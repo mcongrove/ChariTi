@@ -3,9 +3,9 @@ var APP = require("core");
 $.appInit = null;
 
 $.init = function() {
-	APP.log("debug", "peek.init");
-
 	APP.Configuration = $.Wrapper;
+
+	APP.setupDatabase();
 
 	$.overrideCore();
 	$.openConfiguration();
