@@ -249,6 +249,10 @@ var APP = {
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			APP.Nodes[i].index = i;
 		}
+		
+		if(typeof APP.Settings.useSlideMenu == "undefined") {
+			APP.Settings.useSlideMenu = false;
+		}
 	},
 	/**
 	 * Builds out the tab group
@@ -381,11 +385,8 @@ var APP = {
 	rebuild: function() {
 		APP.log("debug", "APP.rebuild");
 
-		if(APP.Settings.useSlideMenu) {
-			APP.SlideMenu.clear();
-		} else {
-			APP.Tabs.clear();
-		}
+		APP.SlideMenu.clear();
+		APP.Tabs.clear();
 
 		APP.currentStack = -1;
 		APP.previousScreen = null;
