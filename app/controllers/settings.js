@@ -31,7 +31,7 @@ $.init = function() {
 	} else {
 		$.NavigationBar.showBack({
 			callback: function(_event) {
-				APP.removeChild("settings");
+				APP.removeChild(true);
 			}
 		});
 	}
@@ -44,7 +44,7 @@ $.terms.addEventListener("click", function(_event) {
 	APP.addChild("settings_legal", {
 		title: "Terms of Service",
 		url: APP.LEGAL.TOS
-	}, "settings");
+	}, true);
 });
 
 $.privacy.addEventListener("click", function(_event) {
@@ -53,13 +53,13 @@ $.privacy.addEventListener("click", function(_event) {
 	APP.addChild("settings_legal", {
 		title: "Privacy Policy",
 		url: APP.LEGAL.PRIVACY
-	}, "settings");
+	}, true);
 });
 
 $.acknowledgements.addEventListener("click", function(_event) {
 	APP.log("debug", "settings @credits");
 
-	APP.addChild("settings_credits", {}, "settings");
+	APP.addChild("settings_credits", {}, true);
 });
 
 $.logs.addEventListener("click", function(_event) {

@@ -14,7 +14,7 @@ $.init = function() {
 
 	$.NavigationBar.showBack({
 		callback: function(_event) {
-			APP.removeChild("settings");
+			APP.removeChild(true);
 		}
 	});
 };
