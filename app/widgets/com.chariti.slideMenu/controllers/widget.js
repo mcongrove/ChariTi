@@ -101,7 +101,7 @@ $.createSettings = function() {
 };
 
 $.clear = function() {
-	$.Tabs.setData = [];
+	$.Tabs.setData([]);
 };
 
 $.setIndex = function(_index) {
