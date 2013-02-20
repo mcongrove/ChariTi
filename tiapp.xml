@@ -59,73 +59,7 @@
 			</dict>
 		</plist>
 	</ios>
-    <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="1" android:versionName="1"
-            package="com.chariti.mobile" xmlns:android="http://schemas.android.com/apk/res/android">
-            <uses-sdk android:minSdkVersion="8"/>
-            <permission
-                android:name="com.chariti.mobile.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-            <application android:debuggable="false"
-                android:icon="@drawable/appicon" android:label="ChariTi" android:name="CharitiApplication">
-                <receiver android:name="com.urbanairship.CoreReceiver">
-                    <intent-filter>
-                        <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                        <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
-                    </intent-filter>
-                </receiver>
-                <receiver
-                    android:name="com.urbanairship.push.c2dm.C2DMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-                    <intent-filter>
-                        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                        <category android:name="com.chariti.mobile"/>
-                    </intent-filter>
-                    <intent-filter>
-                        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-                        <category android:name="com.chariti.mobile"/>
-                    </intent-filter>
-                </receiver>
-                <service android:name="com.urbanairship.push.PushService"/>
-                <receiver android:name="ti.modules.titanium.urbanairship.IntentReceiver"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:label="ChariTi"
-                    android:name=".CharitiActivity" android:theme="@style/Theme.Titanium">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN"/>
-                        <category android:name="android.intent.category.LAUNCHER"/>
-                    </intent-filter>
-                </activity>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:launchMode="singleTask" android:name="ti.modules.titanium.map.TiMapActivity"/>
-                <uses-library android:name="com.google.android.maps"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiActivity"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiTranslucentActivity" android:theme="@android:style/Theme.Translucent"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiModalActivity" android:theme="@android:style/Theme.Translucent"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation" android:name="ti.modules.titanium.ui.TiTabActivity"/>
-                <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
-                <service android:exported="false" android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"/>
-            </application>
-            <uses-permission android:name="android.permission.VIBRATE"/>
-            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-            <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
-            <uses-permission android:name="com.chariti.mobile.permission.C2D_MESSAGE"/>
-            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-            <uses-permission android:name="android.permission.INTERNET"/>
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-        </manifest>
-    </android>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"></android>
     <mobileweb>
         <precache/>
         <splash>
