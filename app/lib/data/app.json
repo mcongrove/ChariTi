@@ -1,6 +1,7 @@
 {
 	"id": "ChariTi.001",
-	"version": "1.0",
+	"version": "1.1",
+	"minimumVersion": "1.1",
 	"_configurationUrl": "http://chariti.mobi/app/app.json",
 	"legal": {
 		"copyright": "Copyright ‌© 2013 ChariTi",
@@ -52,7 +53,7 @@
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "article",
-			"image": "news2",
+			"image": "news1",
 			"cache": 120
 		},
 		{
@@ -60,28 +61,28 @@
 			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
-			"image": "photo",
+			"image": "photo1",
 			"cache": 1440
 		},
 		{
 			"title": "Events",
 			"userid": "7304307941",
 			"type": "event",
-			"image": "event",
+			"image": "event2",
 			"cache": 1440
 		},
 		{
 			"title": "Vimeo",
 			"username": "appcelerator",
 			"type": "vimeo",
-			"image": "video1",
+			"image": "video4",
 			"cache": 1440
 		},
 		{
 			"title": "YouTube",
 			"username": "appcelerator",
 			"type": "youtube",
-			"image": "video2",
+			"image": "video5",
 			"cache": 1440
 		},
 		{
@@ -90,7 +91,7 @@
 			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "donate",
-			"image": "donate1"
+			"image": "donate3"
 		}
 	],
 	"examples": [
@@ -120,7 +121,7 @@
 				}
 			],
 			"type": "map",
-			"image": "map1"
+			"image": "map2"
 		},
 		{
 			"title": "News",
@@ -133,7 +134,7 @@
 			"title": "PDF",
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
-			"image": "social1"
+			"image": "book1"
 		},
 		{
 			"title": "Web",

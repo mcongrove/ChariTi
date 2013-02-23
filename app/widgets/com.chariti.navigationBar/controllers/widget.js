@@ -15,7 +15,8 @@ if(CONFIG.image) {
 		height: "26dp",
 		width: Ti.UI.SIZE,
 		top: "10dp",
-		bottom: "10dp"
+		bottom: "10dp",
+		preventDefaultImage: true
 	});
 } else {
 	$.title = Ti.UI.createLabel({

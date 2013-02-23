@@ -37,7 +37,8 @@
 	left: "9dp",
 	width: "28dp",
 	height: "28dp",
-	image: WPATH("images/back.png")
+	image: WPATH("images/back.png"),
+	preventDefaultImage: true
 },
 "#right": {
 	top: "0dp",

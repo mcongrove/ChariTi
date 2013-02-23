@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-	<!-- 
+    <!-- 
     <property name="acs-oauth-secret-production" type="string"></property>
     <property name="acs-oauth-key-production" type="string"></property>
     <property name="acs-api-key-production" type="string"></property>
@@ -15,7 +15,7 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>3.0.0.GA</sdk-version>
+    <sdk-version>3.0.2.GA</sdk-version>
     <id>com.chariti.mobile</id>
     <name>ChariTi</name>
     <version>1.1.0</version>
@@ -29,37 +29,45 @@
     <analytics>false</analytics>
     <guid>66774a0a-ba43-45f5-9686-f2de98701f32</guid>
     <property name="ti.ui.defaultunit">dip</property>
-	<ios>
-		<min-ios-ver>4.3</min-ios-ver>
-		<plist>
-			<dict>
-				<key>UIRequiresPersistentWiFi</key><false/>
-				<key>UIPrerenderedIcon</key><true/>
-				<key>UIStatusBarHidden</key><false/>
-				<key>UIStatusBarStyle</key><string>UIStatusBarStyleDefault</string>
-				<key>UISupportedInterfaceOrientations~iphone</key>
-				<array>
-					<string>UIInterfaceOrientationPortrait</string>
-				</array>
-				<key>UISupportedInterfaceOrientations~ipod</key>
-				<array>
-					<string>UIInterfaceOrientationPortrait</string>
-				</array>
-				<key>UISupportedInterfaceOrientations~ipad</key>
-				<array>
-					<string>UIInterfaceOrientationPortrait</string>
-					<string>UIInterfaceOrientationPortraitUpsideDown</string>
-					<string>UIInterfaceOrientationLandscapeLeft</string>
-					<string>UIInterfaceOrientationLandscapeRight</string>
-				</array>
-				<key>UIBackgroundModes</key>
-				<array>
-					<string>audio</string>
-				</array>
-			</dict>
-		</plist>
-	</ios>
-    <android xmlns:android="http://schemas.android.com/apk/res/android"></android>
+    <ios>
+        <min-ios-ver>4.3</min-ios-ver>
+        <plist>
+            <dict>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <true/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipod</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                    <string>UIInterfaceOrientationLandscapeLeft</string>
+                    <string>UIInterfaceOrientationLandscapeRight</string>
+                </array>
+                <key>UIBackgroundModes</key>
+                <array>
+                    <string>audio</string>
+                </array>
+            </dict>
+        </plist>
+    </ios>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+    	<manifest>          
+            <uses-sdk android:minSdkVersion="9" />    
+        </manifest>
+    </android>
     <mobileweb>
         <precache/>
         <splash>
@@ -73,7 +81,6 @@
         <module platform="iphone">dk.napp.social</module>
         <module platform="iphone">ti.urbanairship</module>
         <module platform="android">ti.urbanairship</module>
-        <module platform="android">ti.physicalSizeCategory</module>
     </modules>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>

@@ -23,7 +23,8 @@ $.init = function(_params) {
 			width: Ti.UI.SIZE,
 			height: "28dp",
 			top: 0,
-			touchEnabled: false
+			touchEnabled: false,
+			preventDefaultImage: true
 		});
 		
 		var label = Ti.UI.createLabel({
@@ -72,7 +73,8 @@ $.createSettings = function() {
 		height: "28dp",
 		top: "9dp",
 		left: "7dp",
-		touchEnabled: false
+		touchEnabled: false,
+		preventDefaultImage: true
 	});
 	
 	var label = Ti.UI.createLabel({
