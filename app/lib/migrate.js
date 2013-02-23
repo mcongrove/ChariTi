@@ -24,6 +24,8 @@ exports.init = function() {
 		if(current !== previous) {
 			APP.dropDatabase();
 
+			Ti.App.Properties.setBool("OUTDATED", false);
+
 			Ti.API.info("Migrating " + previous + " => " + current);
 		}
 	}

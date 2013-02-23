@@ -18,13 +18,18 @@ exports.init = function(_params) {
 			passthrough: _params.callback
 		});
 	} else if(APP.ConfigurationURL) {
-		HTTP.request({
-			timeout: 10000,
-			type: "GET",
-			format: "DATA",
-			url: APP.ConfigurationURL,
-			success: exports.handleUpdate
-		});
+		if(!Ti.App.Properties.getBool("OUTDATED", false)) {
+			HTTP.request({
+				timeout: 10000,
+				type: "GET",
+				format: "DATA",
+				url: APP.ConfigurationURL,
+				success: exports.handleUpdate
+			});
+		} else {
+			// Un-supported configuration file, die
+			APP.log("error", "Configuration file not supported by this version");
+		}
 	}
 };
 
@@ -45,6 +50,27 @@ exports.handleUpdate = function(_data, _url, _callback) {
 		if(data.version == APP.VERSION) {
 			// We already have it
 			APP.log("info", "Application is up-to-date");
+
+			return;
+		}
+	}
+
+	// Determine if this configuration file is supported by installed ChariTi version
+	if(!Ti.App.Properties.getBool("OUTDATED", false)) {
+		if(data.minimumVersion > Ti.App.Properties.getString("CVERSION", "1.0.0")) {
+			// Un-supported configuration file, die
+			APP.log("error", "Configuration file not supported by this version");
+
+			// Don't prompt the user again
+			Ti.App.Properties.setBool("OUTDATED", true);
+
+			// Alert the user about the error updating
+			var dialog = Ti.UI.createAlertDialog({
+				title: "Update Available",
+				message: "Please downloaded the latest version of this application"
+			});
+
+			dialog.show();
 
 			return;
 		}
