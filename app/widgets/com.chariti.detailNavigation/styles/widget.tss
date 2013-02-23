@@ -9,12 +9,14 @@
 	width: "47dp",
 	height: "37dp",
 	top: "0dp",
-	left: "0dp"
+	left: "0dp",
+	preventDefaultImage: true
 },
 "#arrowDown": {
 	image: WPATH("/images/arrowDown.png"),
 	width: "47dp",
 	height: "37dp",
 	top: "0dp",
-	right: "0dp"
+	right: "0dp",
+	preventDefaultImage: true
 }

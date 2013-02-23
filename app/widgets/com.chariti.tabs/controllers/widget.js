@@ -55,7 +55,8 @@ $.init = function(_params) {
 			width: "32dp",
 			height: "32dp",
 			top: "7dp",
-			touchEnabled: false
+			touchEnabled: false,
+			preventDefaultImage: true
 		});
 		
 		var label = Ti.UI.createLabel({
@@ -92,7 +93,8 @@ $.init = function(_params) {
 				height: "59dp",
 				top: "1dp",
 				left: "0dp",
-				backgroundImage: WPATH("images/border.png")
+				image: WPATH("images/border.png"),
+				preventDefaultImage: true
 			});
 			
 			tab.add(border);
@@ -107,7 +109,8 @@ $.init = function(_params) {
 					height: "59dp",
 					top: "1dp",
 					right: "0dp",
-					backgroundImage: WPATH("images/border.png")
+					image: WPATH("images/border.png"),
+					preventDefaultImage: true
 				});
 				
 				tab.add(border);
@@ -134,7 +137,8 @@ $.addMoreTab = function(_params) {
 		width: "32dp",
 		height: "32dp",
 		top: "7dp",
-		touchEnabled: false
+		touchEnabled: false,
+		preventDefaultImage: true
 	});
 	
 	var label = Ti.UI.createLabel({
