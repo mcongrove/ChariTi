@@ -1,0 +1,10 @@
+"#Wrapper": {
+	width: "200dp",
+	top: "0dp",
+	left: "-200dp"
+},
+"#Tabs": {
+	backgroundColor: "#2E2E2E",
+	separatorColor: "#1E1E1E",
+	separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.SINGLE_LINE
+}

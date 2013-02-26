@@ -1,17 +1,15 @@
 var APP = require("core");
 
-var DATA = arguments[0] || {};
+var CONFIG = arguments[0] || {};
 
-APP.log("debug", "youtube_video | " + JSON.stringify(DATA));
+APP.log("debug", "youtube_video | " + JSON.stringify(CONFIG));
 
-$.NavigationBar.Wrapper.backgroundColor	= APP.Settings.colors.primary || "#000";
-$.NavigationBar.back.visible			= true;
+$.content.url = CONFIG.url || "";
+$.content.scalesPageToFit = true;
+$.content.willHandleTouches = false;
 
-$.content.url = DATA.url || "";
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
-// Event listeners
-$.NavigationBar.back.addEventListener("click", function(_event) {
-	APP.log("debug", "youtube_video @close");
-	
-	APP.removeChild();
-});
+if(APP.Device.isHandheld) {
+	$.NavigationBar.showBack();
+}

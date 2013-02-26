@@ -1,17 +1,21 @@
 "#content": {
 	top: "47dp",
 	backgroundColor: "#EEE",
+	contentWidth: "auto",
+	contentHeight: "auto",
 	layout: "vertical"
 },
-"#text": {
+"Label": {
 	top: "15dp",
 	left: "15dp",
 	right: "15dp",
-	bottom: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
 		fontWeight: "normal"
 	},
 	color: "#666"
+},
+".last": {
+	bottom: "15dp"
 }

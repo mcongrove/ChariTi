@@ -78,7 +78,8 @@ titanium clean --platform ios
 ##################################################
 
 echo "Updating files..."
-cp -r $LIB/data/iphone/* $ASSETS/iphone/
+rm -rf $ASSETS/iphone/
+cp -r $LIB/data/iphone/ $ASSETS/iphone/
 sed -i "" "s/\<id\>.*/\<id\>$ID\<\/id\>/" $WORKSPACE/tiapp.xml
 sed -i "" "s/\<name\>.*/\<name\>$APPLICATION\<\/name\>/" $WORKSPACE/tiapp.xml
 sed -i "" "s/#appid.*/#appid:$ID/" $WORKSPACE/manifest
@@ -98,9 +99,9 @@ alloy compile
 echo "Compiled. Building..."
 if $DEPLOY
 then
-	titanium build --platform ios --force --device-family iphone --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
+	titanium build --platform ios --force --target dist-adhoc --distribution-name "$CERTIFICATE" --pp-uuid "$PROFILE" --output-dir $TARGET
 else
-	titanium build --platform ios --force --device-family iphone
+	titanium build --platform ios --force
 fi
 
 echo "$i Complete"

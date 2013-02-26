@@ -8,18 +8,15 @@
 				<TableViewRow id="privacy" title="Privacy Policy" hasChild="true" />
 			</TableView>
 			
-			<TableView height="45dp">
+			<TableView id="logs_table" height="90dp">
 				<TableViewRow id="logs" title="Send Application Logs" hasChild="true" />
+				<TableViewRow id="acknowledgements" title="Acknowledgements" hasChild="true" />
 			</TableView>
 			
 			<Label id="copyright" />
 			<Label id="version" />
-			
-			<TableView height="45dp">
-				<TableViewRow id="acknowledgements" title="Acknowledgements" hasChild="true" />
-			</TableView>
-			
-			<Label text="This application was created using the open source ChariTi framework, freely available at:\nhttp://chariti.mobi/\nChariTi ‌© 2013 Matthew Congrove" />
+			<Label text="This application was created using the open source ChariTi framework, freely available at:\nhttp://chariti.mobi" />
+			<Label text="ChariTi ‌© 2013 Matthew Congrove" />
 		</ScrollView>
 	</View>
 </Alloy>

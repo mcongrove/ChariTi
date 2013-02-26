@@ -1,0 +1,6 @@
+"#Wrapper": {
+	backgroundColor: "#000"
+},
+"#content": {
+	top: "47dp"
+}

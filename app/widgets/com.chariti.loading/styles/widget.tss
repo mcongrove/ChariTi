@@ -1,7 +1,6 @@
 "#Wrapper": {
 	width: Ti.UI.FILL,
-	top: "46dp",
-	bottom: "60dp"
+	top: "46dp"
 },
 "#Background": {
 	backgroundColor: "#000",
@@ -21,18 +20,18 @@
 	top: "17dp",
 	left: "29dp",
 	images: [
-		"/com.chariti.loading/00.png",
-		"/com.chariti.loading/01.png",
-		"/com.chariti.loading/02.png",
-		"/com.chariti.loading/03.png",
-		"/com.chariti.loading/04.png",
-		"/com.chariti.loading/05.png",
-		"/com.chariti.loading/06.png",
-		"/com.chariti.loading/07.png",
-		"/com.chariti.loading/08.png",
-		"/com.chariti.loading/09.png",
-		"/com.chariti.loading/10.png",
-		"/com.chariti.loading/11.png"
+		WPATH("images/00.png"),
+		WPATH("images/01.png"),
+		WPATH("images/02.png"),
+		WPATH("images/03.png"),
+		WPATH("images/04.png"),
+		WPATH("images/05.png"),
+		WPATH("images/06.png"),
+		WPATH("images/07.png"),
+		WPATH("images/08.png"),
+		WPATH("images/09.png"),
+		WPATH("images/10.png"),
+		WPATH("images/11.png")
 	]
 },
 "#Label": {

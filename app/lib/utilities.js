@@ -1,5 +1,7 @@
 /**
  * Checks to see if an item in the cache is stale or fresh
+ * @param {String} [_url] The URL of the file we're checking
+ * @param {Integer} [_time] The time, in minutes, to consider 'warm' in the cache
  */
 exports.isStale = function(_url, _time) {
 	var db = Ti.Database.open("ChariTi");
@@ -7,21 +9,21 @@ exports.isStale = function(_url, _time) {
 	var cacheTime = typeof _time !== "undefined" ? _time : 5;
 	var freshTime = time - (cacheTime * 60 * 1000);
 	var lastUpdate = 0;
-	
+
 	var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
+
 	while(data.isValidRow()) {
 		lastUpdate = data.fieldByName("time");
 
 		data.next();
 	}
-	
+
 	data.close();
 	db.close();
-	
+
 	if(lastUpdate === 0) {
-		return 'new';
-	} else if (lastUpdate > freshTime) {
+		return "new";
+	} else if(lastUpdate > freshTime) {
 		return false;
 	} else {
 		return true;
@@ -30,68 +32,78 @@ exports.isStale = function(_url, _time) {
 
 /**
  * Returns last updated time for an item in the cache
+ * @param {String} [_url] The URL of the file we're checking
  */
 exports.lastUpdate = function(_url) {
 	var db = Ti.Database.open("ChariTi");
 	var lastUpdate = 0;
-	
+
 	var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-	
+
 	while(data.isValidRow()) {
 		lastUpdate = data.fieldByName("time");
 
 		data.next();
 	}
-	
+
 	data.close();
 	db.close();
-	
-	return lastUpdate;
+
+	if(lastUpdate === 0) {
+		return new Date().getTime();
+	} else {
+		return lastUpdate;
+	}
 };
 
 /**
  * Escapes a string for SQL insertion
+ * @param {String} [_string] The string to perform the action on
  */
 exports.escapeString = function(_string) {
 	if(typeof _string !== "string") {
 		return "\"" + _string + "\"";
 	}
-	
+
 	return "\"" + _string.replace(/"/g, "'") + "\"";
 };
 
 /**
  * Removes HTML entities, replaces breaks/paragraphs with newline, strips HTML, trims
+ * @param {String} [_string] The string to perform the action on
  */
 exports.cleanString = function(_string) {
 	if(typeof _string !== "string") {
 		return _string;
 	}
-	
+
 	_string = _string.replace(/&amp;*/ig, "&");
 	_string = exports.htmlDecode(_string);
 	_string = _string.replace(/\s*<br[^>]*>\s*/ig, "\n");
 	_string = _string.replace(/\s*<\/p>*\s*/ig, "\n\n");
+	_string = _string.replace(/<a[^h]*href=["']{1}([^'"]*)["']{1}>([^<]*)<\/a>/ig, "$2 [$1]");
 	_string = _string.replace(/<[^>]*>/g, "");
 	_string = _string.replace(/\s*\n{3,}\s*/g, "\n\n");
 	_string = _string.replace(/[^\S\n]{2,}/g, " ");
 	_string = _string.replace(/\n[^\S\n]*/g, "\n");
 	_string = _string.replace(/^\s+|\s+$/g, "");
-	
+
 	return _string;
 };
 
 /**
  * Combination of clean and escape string
+ * @param {String} [_string] The string to perform the action on
  */
 exports.cleanEscapeString = function(_string) {
 	_string = exports.cleanString(_string);
-	
+
 	return exports.escapeString(_string);
 };
 
 /**
  * Cleans up nasty XML
+ * @param {String} [_string] The XML string to perform the action on
  */
 exports.xmlNormalize = function(_string) {
 	_string = _string.replace(/&nbsp;*/ig, " ");
@@ -101,41 +113,46 @@ exports.xmlNormalize = function(_string) {
 	_string = _string.replace(/<description>(?!<!\[CDATA\[)/ig, "<description><![CDATA[");
 	_string = _string.replace(/(\]\]>)?<\/title>/ig, "]]></title>");
 	_string = _string.replace(/(\]\]>)?<\/description>/ig, "]]></description>");
-	
+
 	return _string;
 };
 
 /**
  * Decodes HTML entities
+ * @param {String} [_string] The string to perform the action on
  */
 exports.htmlDecode = function(_string) {
 	var tmp_str = _string.toString();
 	var hash_map = exports.htmlTranslationTable();
 	var results = tmp_str.match(/&#\d*;/ig);
-	
+
 	if(results) {
 		for(var i = 0, x = results.length; i < x; i++) {
 			var code = parseInt(results[i].replace("&#", "").replace(";", ""), 10);
-			
+
 			hash_map[results[i]] = code;
 		}
 	}
-	
+
 	for(var entity in hash_map) {
 		var symbol = String.fromCharCode(hash_map[entity]);
-		
+
 		tmp_str = tmp_str.split(entity).join(symbol);
 	}
-	
+
 	return tmp_str;
 };
 
+/**
+ * The HTML entities table used for decoding
+ */
 exports.htmlTranslationTable = function() {
 	var entities = {
 		"&#x2013;": "8211",
 		"&#x2014;": "8212",
 		"&#x2018;": "8216",
 		"&#x2019;": "8217",
+		"&#xae;": "174",
 		"&amp;": "38",
 		"&bdquo;": "8222",
 		"&bull;": "8226",
@@ -398,69 +415,20 @@ exports.htmlTranslationTable = function() {
 
 /**
  * Adds thousands separators to a number
+ * @param {Integer} [_number] The number to perform the action on
  */
 exports.formatNumber = function(_number) {
 	_number = _number + "";
-	
+
 	x = _number.split(".");
 	x1 = x[0];
 	x2 = x.length > 1 ? "." + x[1] : "";
-	
+
 	var expression = /(\d+)(\d{3})/;
-	
-	while (expression.test(x1)) {
+
+	while(expression.test(x1)) {
 		x1 = x1.replace(expression, "$1" + "," + "$2");
 	}
-	
+
 	return x1 + x2;
-};
-
-/**
- * Converts a date to absolute time (e.g. "May 2, 2011 12:00PM")
- */
-exports.toDateAbsolute = function(_date) {
-	var date = new Date();
-	date.setTime(_date);
-	var dateHour = date.getHours() > 11 ? date.getHours() - 12 : date.getHours();
-	dateHour = dateHour == 0 ? 12 : dateHour;
-	var dateMinutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-	var datePeriod = date.getHours() > 12 ? "PM" : "AM";
-	var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-	
-	return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " " + dateHour + ":" + dateMinutes + datePeriod;
-};
-
-/**
- * Converts a date to relative time (e.g. "Yesterday 12:01PM")
- */
-exports.toDateRelative = function(_date) {
-	var date = new Date();
-	date.setTime(_date);
-	var now = new Date();
-	var days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-	var dateMonth = date.getMonth();
-	var dateDate = date.getDate();
-	var dateDay = days[date.getDay()];
-	var dateYear = date.getFullYear();
-	var dateHour = date.getHours() > 11 ? date.getHours() - 12 : date.getHours();
-	dateHour = dateHour == 0 ? 12 : dateHour;
-	var dateMinutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-	var datePeriod = date.getHours() > 12 ? "PM" : "AM";
-	var nowMonth = now.getMonth();
-	var nowDate = now.getDate();
-	var nowYear = now.getFullYear();
-	
-	if(dateYear == nowYear && dateMonth == nowMonth) {
-		if(dateDate == nowDate) {
-			return "Today " + dateHour + ":" + dateMinutes + datePeriod;
-		} else if(dateDate >= nowDate - 1) {
-			return "Yesterday " + dateHour + ":" + dateMinutes + datePeriod;
-		} else if(dateDate >= nowDate - 6) {
-			return dateDay + " " + dateHour + ":" + dateMinutes + datePeriod;
-		} else {
-			return exports.toDateAbsolute(_date);
-		}
-	} else {
-		return exports.toDateAbsolute(_date);
-	}
 };

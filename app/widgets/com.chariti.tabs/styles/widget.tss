@@ -1,22 +1,17 @@
 "#Wrapper": {
-	bottom: "0dp",
-	height: "60dp"
+	height: "60dp",
+	bottom: "0dp"
 },
 "#TabGroup": {
 	height: "60dp",
 	width: Ti.UI.FILL,
 	bottom: "0dp"
 },
-"#TabContainer": {
-	layout: "horizontal",
-	zIndex: 100,
-	height: "60dp",
-	width: Ti.UI.FILL,
-	backgroundImage: "/com.chariti.tabs/overlay.png"
+"#IndicatorContainer": {
+	height: "60dp"
 },
 "#Indicator": {
 	height: "59dp",
-	zIndex: 98,
 	top: "1dp",
 	left: "0dp",
 	backgroundGradient: {
@@ -37,24 +32,28 @@
 	},
 	opacity: 0.4
 },
-"#TabGroupMore": {
-	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE,
-	right: "0dp",
-	bottom: "60dp",
-	backgroundColor: "#7a0000"
+"#Overlay": {
+	width: Ti.UI.FILL,
+	height: "60dp",
+	backgroundImage: WPATH("images/overlay.png")
 },
-"#TabContainerMore": {
-	layout: "vertical",
-	zIndex: 99,
+"#TabContainer": {
+	height: "60dp"
+},
+"#Tabs": {
+	layout: "horizontal",
+	height: "60dp",
+	width: Ti.UI.FILL
+},
+"#TabGroupMore": {
 	height: Ti.UI.SIZE,
-	bottom: "0dp"
+	bottom: "60dp"
 },
 "#IndicatorMore": {
 	height: "60dp",
-	zIndex: 98,
 	top: "1dp",
 	left: "1dp",
+	width: Ti.UI.FILL,
 	backgroundGradient: {
 		type: "linear",
 		colors: [
@@ -72,4 +71,13 @@
 		backFillStart: true
 	},
 	opacity: 0.5
+},
+"#TabContainerMore": {
+	height: Ti.UI.SIZE,
+	right: "0dp"
+},
+"#TabsMore": {
+	layout: "vertical",
+	height: Ti.UI.SIZE,
+	bottom: "0dp"
 }

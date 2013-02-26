@@ -22,7 +22,8 @@
 		fontSize: "16dp",
 		fontWeight: "bold"
 	},
-	color: "#666"
+	color: "#666",
+	height: "45dp"
 },
 "Label": {
 	color: "#AAA",

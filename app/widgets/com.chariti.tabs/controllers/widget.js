@@ -1,25 +1,44 @@
-$.tabs			= [];
-$.excess		= false;
-$.moreOpen		= false;
-$.width			= 0;
-
 $.init = function(_params) {
-	if(_params.tabs.length > 5) {
-		$.excess		= true;
+	$.tabs			= [];
+	$.excess		= false;
+	$.excessLength	= 5;
+	$.moreOpen		= false;
+	$.width			= 0;
+	$.display		= {
+		width:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
+		height:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
+		dpi:	Ti.Platform.displayCaps.dpi
+	};
+	
+	if(OS_ANDROID) {
+		$.display.width		= ($.display.width / ($.display.dpi / 160));
+		$.display.height	= ($.display.height / ($.display.dpi / 160));
 	}
 	
-	$.width	= $.excess ? (Ti.Platform.displayCaps.platformWidth / 5) : (Ti.Platform.displayCaps.platformWidth / _params.tabs.length);
+	if(Alloy.isTablet) {
+		$.excessLength = Math.floor($.display.width / 70);
+	}
 	
-	$.TabGroup.backgroundColor		= _params.colors.primary;
-	$.TabGroupMore.backgroundColor	= _params.colors.primary;
-	$.TabGroupMore.width			= ($.width + 1) + "dp";
+	if(_params.tabs.length > $.excessLength) {
+		$.excess = true;
+	}
+	
+	$.width	= $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.tabs.length);
+	
+	$.TabGroup.backgroundColor			= _params.colors.primary;
+	$.TabContainerMore.backgroundColor	= _params.colors.primary;
+	$.Indicator.backgroundColor			= _params.colors.secondary;
+	$.IndicatorMore.backgroundColor		= _params.colors.secondary;
+	
+	$.IndicatorContainer.width		= $.display.width + "dp";
 	$.Indicator.width				= ($.width - 1) + "dp";
 	$.IndicatorMore.width			= $.width + "dp";
-	$.Indicator.backgroundColor		= _params.colors.secondary;
-	$.IndicatorMore.backgroundColor	= _params.colors.secondary;
+	$.TabContainer.width			= $.display.width + "dp";
+	$.TabGroupMore.width			= $.display.width + "dp";
+	$.TabContainerMore.width		= ($.width + 1) + "dp";
 	
 	for(var i = 0; i < _params.tabs.length; i++) {
-		if($.excess && i == 4) {
+		if($.excess && i == ($.excessLength - 1)) {
 			$.addMoreTab(_params);
 		}
 		
@@ -36,16 +55,17 @@ $.init = function(_params) {
 			width: "32dp",
 			height: "32dp",
 			top: "7dp",
-			touchEnabled: false
+			touchEnabled: false,
+			preventDefaultImage: true
 		});
 		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
-			top: "43dp",
+			top: "42dp",
 			left: "5dp",
 			right: "5dp",
 			width: Ti.UI.FILL,
-			height: "13dp",
+			height: "15dp",
 			font: {
 				fontSize: "11dp",
 				fontWeight: "bold"
@@ -63,23 +83,25 @@ $.init = function(_params) {
 		tab.add(icon);
 		tab.add(label);
 		
-		if($.excess && i > 3) {
-			tab.backgroundImage = "/com.chariti.tabs/overlay.png";
-			tab.width = ($.width + 1) + "dp";
+		if($.excess && i >= ($.excessLength - 1)) {
+			tab.backgroundImage = WPATH("images/overlay.png");
+			tab.width	= ($.width + 1) + "dp";
+			label.left	= "6dp";
 			
 			var border = Ti.UI.createImageView({
 				width: "1dp",
 				height: "59dp",
 				top: "1dp",
 				left: "0dp",
-				backgroundImage: "/com.chariti.tabs/border.png"
+				image: WPATH("images/border.png"),
+				preventDefaultImage: true
 			});
 			
 			tab.add(border);
 			
 			$.tabs.push(tab);
 			
-			$.TabContainerMore.add(tab);
+			$.TabsMore.add(tab);
 		} else {
 			if((i + 1) < _params.tabs.length) {
 				var border = Ti.UI.createImageView({
@@ -87,7 +109,8 @@ $.init = function(_params) {
 					height: "59dp",
 					top: "1dp",
 					right: "0dp",
-					backgroundImage: "/com.chariti.tabs/border.png"
+					image: WPATH("images/border.png"),
+					preventDefaultImage: true
 				});
 				
 				tab.add(border);
@@ -97,8 +120,10 @@ $.init = function(_params) {
 		}
 	}
 	
-	for(var i = 0, z = $.tabs.length; i < z; i++) {
-		$.TabContainer.add($.tabs[i]);
+	for(var i = 0, z = $.excessLength; i < z; i++) {
+		if($.tabs[i]) {
+			$.Tabs.add($.tabs[i]);
+		}
 	}
 };
 
@@ -112,7 +137,8 @@ $.addMoreTab = function(_params) {
 		width: "32dp",
 		height: "32dp",
 		top: "7dp",
-		touchEnabled: false
+		touchEnabled: false,
+		preventDefaultImage: true
 	});
 	
 	var label = Ti.UI.createLabel({
@@ -145,18 +171,25 @@ $.addMoreTab = function(_params) {
 };
 
 $.clear = function() {
-	for(var i = 0; i < $.tabs.length; i++) {
-		$.TabContainer.remove($.tabs[i]);
+	var children		= $.Tabs.children;
+	var childrenMore	= $.TabsMore.children;
+	
+	for(var i = 0; i < children.length; i++) {
+		$.Tabs.remove(children[i]);
+	}
+	
+	for(var i = 0; i < childrenMore.length; i++) {
+		$.TabsMore.remove(childrenMore[i]);
 	}
 };
 
 $.setIndex = function(_index) {
-	if($.excess && _index > 3) {
-		_moreIndex	= _index - 4;
-		_index		= 4;
+	if($.excess && _index > ($.excessLength - 2)) {
+		_moreIndex	= _index - ($.excessLength - 1);
+		_index		= ($.excessLength - 1);
 		
 		$.IndicatorMore.visible = true;
-		$.IndicatorMore.top		= (_moreIndex * 60) + "dp";
+		$.IndicatorMore.top		= ((_moreIndex * 60)) + "dp";
 	} else {
 		$.IndicatorMore.visible = false;
 	}
