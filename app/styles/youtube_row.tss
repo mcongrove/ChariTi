@@ -31,7 +31,7 @@
 	height: "14dp",
 	font: {
 		fontSize: "12dp",
-		fontWeight: "bold"
+		fontWeight: "normal"
 	},
 	color: "#777"
 },

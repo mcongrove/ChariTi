@@ -2,7 +2,7 @@
 	<View id="Wrapper">
 		<View id="overlay">
 			<View id="back" visible="false">
-				<ImageView id="backImage" image="/com.chariti.navigationBar/back.png" />
+				<ImageView id="backImage" />
 			</View>
 			
 			<View id="left" visible="false">

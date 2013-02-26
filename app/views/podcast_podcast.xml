@@ -1,0 +1,28 @@
+<Alloy>
+	<View id="Wrapper">
+		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
+		
+		<View id="content">
+			<View id="meta">
+				<Label id="title" />
+			</View>
+			
+			<View id="artworkWrapper">
+				<ImageView id="artwork" />
+				
+				<View id="controls">
+					<ImageView id="previous" image="/images/audioPrevious.png" />
+					<ImageView id="play" image="/images/audioPlay.png" />
+					<ImageView id="pause" image="/images/audioPause.png" />
+					<ImageView id="next" image="/images/audioNext.png" />
+				</View>
+			</View>
+			
+			<View id="track">
+				<Label id="time" />
+				
+				<View id="position" />
+			</View>
+		</View>
+	</View>
+</Alloy>

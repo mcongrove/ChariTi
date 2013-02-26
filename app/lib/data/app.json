@@ -1,22 +1,18 @@
 {
 	"id": "ChariTi.001",
-	"version": "1.0",
-	"_configurationUrl": "http://mcongrove.github.com/ChariTi/app.json",
+	"version": "1.1",
+	"minimumVersion": "1.1",
+	"_configurationUrl": "http://chariti.mobi/app/app.json",
 	"legal": {
-		"copyright": "Copyright ‌© 2012 ChariTi",
-		"terms": "http://m.appcelerator.com/legal/terms-conditions",
+		"copyright": "Copyright ‌© 2013 ChariTi",
+		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
 		"privacy": "https://policy-portal.truste.com/core/privacy-policy/ChariTi/04175946-6006-4c76-b174-6bc589432474"
 	},
 	"settings": {
-		"email": {
-			"subject": "Check out this great ChariTi content!",
-			"body": "I found this and thought you might find it interesting:",
-			"footer": "Sent via <a href='http://mcongrove.github.com/ChariTi/'>ChariTi</a>"
-		},
-		"facebook": "Check out this great ChariTi content",
-		"twitter": "Check out this great ChariTi content",
+		"share": "Check out this great ChariTi content",
 		"notifications": {
-			"enabled": true,
+			"enabled": false,
+			"provider": "UA",
 			"key": "AuKi5Qn3QKGTno3xX9ECYA",
 			"secret": "s-RDQejhRwmx-j4DCaXPMw"
 		},
@@ -24,8 +20,13 @@
 			"primary": "#327B9F",
 			"secondary": "#569BBE",
 			"text":	"#FFF"
-		}
+		},
+		"useSlideMenu": false
 	},
+	"_manifest": [
+		"http://localhost/ChariTi/app/logo.png",
+		"http://localhost/ChariTi/app/logo@2x.png"
+	],
 	"tabs": [
 		{
 			"title": "Text",
@@ -35,41 +36,11 @@
 			"image": "home"
 		},
 		{
-			"title": "Blog",
-			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "blog",
-			"image": "news2",
-			"cache": 120
-		},
-		{
-			"title": "Events",
-			"userid": "7304307941",
-			"type": "events",
-			"image": "event",
+			"title": "Podcast",
+			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
+			"type": "podcast",
+			"image": "audio",
 			"cache": 1440
-		},
-		{
-			"title": "Flickr",
-			"username": "39494278@N04",
-			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
-			"type": "flickr",
-			"image": "photo",
-			"cache": 1440
-		},
-		{
-			"title": "Twitter",
-			"username": "appcelerator",
-			"type": "twitter",
-			"image": "twitter2",
-			"cache": 10
-		},
-		{
-			"title": "Donate",
-			"heading": "Donate to ChariTi",
-			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
-			"url": "https://github.com/mcongrove/ChariTi",
-			"type": "donate",
-			"image": "donate1"
 		},
 		{
 			"title": "Facebook",
@@ -77,9 +48,53 @@
 			"type": "facebook",
 			"image": "facebook",
 			"cache": 10
+		},
+		{
+			"title": "Blog",
+			"feed": "http://developer.appcelerator.com/blog/feed",
+			"type": "article",
+			"image": "news1",
+			"cache": 120
+		},
+		{
+			"title": "Flickr",
+			"username": "39494278@N04",
+			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
+			"type": "flickr",
+			"image": "photo1",
+			"cache": 1440
+		},
+		{
+			"title": "Events",
+			"userid": "7304307941",
+			"type": "event",
+			"image": "event2",
+			"cache": 1440
+		},
+		{
+			"title": "Vimeo",
+			"username": "appcelerator",
+			"type": "vimeo",
+			"image": "video4",
+			"cache": 1440
+		},
+		{
+			"title": "YouTube",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video5",
+			"cache": 1440
+		},
+		{
+			"title": "Donate",
+			"heading": "Donate to ChariTi",
+			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
+			"url": "https://github.com/mcongrove/ChariTi",
+			"type": "donate",
+			"image": "donate3"
 		}
 	],
-	"nontabs": [
+	"examples": [
 		{
 			"title": "Map",
 			"points": [
@@ -106,12 +121,12 @@
 				}
 			],
 			"type": "map",
-			"image": "map1"
+			"image": "map2"
 		},
 		{
 			"title": "News",
 			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "news",
+			"type": "article",
 			"image": "news1",
 			"cache": 120
 		},
@@ -119,20 +134,13 @@
 			"title": "PDF",
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
-			"image": "social1"
+			"image": "book1"
 		},
 		{
 			"title": "Web",
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "web",
 			"image": "home"
-		},
-		{
-			"title": "YouTube",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video2",
-			"cache": 1440
 		}
 	]
 }

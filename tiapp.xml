@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
+    <!-- 
+    <property name="acs-oauth-secret-production" type="string"></property>
+    <property name="acs-oauth-key-production" type="string"></property>
+    <property name="acs-api-key-production" type="string"></property>
+    <property name="acs-oauth-secret-development" type="string"></property>
+    <property name="acs-oauth-key-development" type="string"></property>
+    <property name="acs-api-key-development" type="string"></property>	
+	-->
     <deployment-targets>
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
@@ -7,106 +15,57 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>3.0.0.GA</sdk-version>
+    <sdk-version>3.0.2.GA</sdk-version>
     <id>com.chariti.mobile</id>
     <name>ChariTi</name>
-    <version>1.0</version>
+    <version>1.1.0</version>
     <publisher>Matthew Congrove</publisher>
     <url>http://chariti.mobi</url>
     <description>ChariTi is a framework built to allow charities to quickly and easily create mobile applications.</description>
     <copyright>2013 by Matthew Congrove</copyright>
     <icon>appicon.png</icon>
-    <persistent-wifi>false</persistent-wifi>
-    <prerendered-icon>true</prerendered-icon>
-    <statusbar-style>default</statusbar-style>
-    <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>false</analytics>
     <guid>66774a0a-ba43-45f5-9686-f2de98701f32</guid>
-    <property name="ti.ui.defaultunit">system</property>
-    <iphone>
-        <orientations device="iphone">
-            <orientation>Ti.UI.PORTRAIT</orientation>
-        </orientations>
-        <orientations device="ipad">
-            <orientation>Ti.UI.PORTRAIT</orientation>
-            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
-        </orientations>
-    </iphone>
+    <property name="ti.ui.defaultunit">dip</property>
+    <ios>
+        <min-ios-ver>4.3</min-ios-ver>
+        <plist>
+            <dict>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <true/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipod</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                    <string>UIInterfaceOrientationLandscapeLeft</string>
+                    <string>UIInterfaceOrientationLandscapeRight</string>
+                </array>
+                <key>UIBackgroundModes</key>
+                <array>
+                    <string>audio</string>
+                </array>
+            </dict>
+        </plist>
+    </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="1" android:versionName="1"
-            package="com.chariti.mobile" xmlns:android="http://schemas.android.com/apk/res/android">
-            <uses-sdk android:minSdkVersion="8"/>
-            <permission
-                android:name="com.chariti.mobile.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-            <application android:debuggable="false"
-                android:icon="@drawable/appicon" android:label="ChariTi" android:name="CharitiApplication">
-                <receiver android:name="com.urbanairship.CoreReceiver">
-                    <intent-filter>
-                        <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                        <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
-                    </intent-filter>
-                </receiver>
-                <receiver
-                    android:name="com.urbanairship.push.c2dm.C2DMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-                    <intent-filter>
-                        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                        <category android:name="com.chariti.mobile"/>
-                    </intent-filter>
-                    <intent-filter>
-                        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-                        <category android:name="com.chariti.mobile"/>
-                    </intent-filter>
-                </receiver>
-                <service android:name="com.urbanairship.push.PushService"/>
-                <receiver android:name="ti.modules.titanium.urbanairship.IntentReceiver"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:label="ChariTi"
-                    android:name=".CharitiActivity"
-                    android:screenOrientation="portrait" android:theme="@style/Theme.Titanium">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN"/>
-                        <category android:name="android.intent.category.LAUNCHER"/>
-                    </intent-filter>
-                </activity>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:launchMode="singleTask"
-                    android:name="ti.modules.titanium.map.TiMapActivity" android:screenOrientation="portrait"/>
-                <uses-library android:name="com.google.android.maps"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiTranslucentActivity"
-                    android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="org.appcelerator.titanium.TiModalActivity"
-                    android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent"/>
-                <activity
-                    android:configChanges="keyboardHidden|orientation"
-                    android:name="ti.modules.titanium.ui.TiTabActivity" android:screenOrientation="portrait"/>
-                <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
-                <service android:exported="false" android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"/>
-            </application>
-            <uses-permission android:name="android.permission.VIBRATE"/>
-            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-            <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
-            <uses-permission android:name="com.chariti.mobile.permission.C2D_MESSAGE"/>
-            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-            <uses-permission android:name="android.permission.INTERNET"/>
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    	<manifest>          
+            <uses-sdk android:minSdkVersion="9" />    
         </manifest>
     </android>
     <mobileweb>
@@ -118,10 +77,10 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
+        <module platform="commonjs">ti.cloud</module>
         <module platform="iphone">dk.napp.social</module>
-        <module platform="android">ti.physicalSizeCategory</module>
-        <module platform="android">ti.urbanairship</module>
         <module platform="iphone">ti.urbanairship</module>
+        <module platform="android">ti.urbanairship</module>
     </modules>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>

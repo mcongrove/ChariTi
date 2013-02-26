@@ -2,5 +2,6 @@
 	backgroundColor: "#FFF"
 },
 "#content": {
-	top: "47dp"
+	top: "47dp",
+	layout: "vertical"
 }

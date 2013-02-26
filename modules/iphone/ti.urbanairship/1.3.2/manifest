@@ -1,0 +1,17 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.3.2
+apiversion: 2
+description: Urban Airship module for push notifications
+author: Jeff English
+license: Apache License, Version 2.0
+copyright: Copyright (c) 2010-2013 by Appcelerator, Inc.
+
+# these should not be edited
+name: urbanairship
+moduleid: ti.urbanairship
+guid: d00fbe22-e01d-4ca5-b11b-133155320625
+platform: iphone
+minsdk: 2.1.3.GA

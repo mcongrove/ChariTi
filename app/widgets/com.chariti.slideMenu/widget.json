@@ -1,0 +1,13 @@
+{
+	"id": "com.chariti.slideMenu",
+	"name": "com.chariti.slideMenu",
+	"description" : "",
+	"author": "Matthew Congrove",
+	"version": "1.0",
+	"copyright":"Copyright 2013 Matthew Congrove",
+	"license":"Public Domain",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"",
+	"platforms":"android,ios,mobileweb"
+}
