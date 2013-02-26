@@ -8,7 +8,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.1.0.0120131716",
+	CVERSION: "1.1.0.0226131418",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,

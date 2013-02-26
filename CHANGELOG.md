@@ -3,7 +3,7 @@ Change Log
 
 This document describes the high-level changes made for each version. For a complete list of changes, please refer to the [ChariTi GitHub repository](http://github.com/mcongrove/ChariTi/).
 
-v 1.1 (02-??-2013)
+v 1.1 (02-26-2013)
 ------------------
 *	Added initial Android support
 *	Added tablet support (iPad + Android Tablet)
