@@ -1,6 +1,9 @@
 var APP = require("core");
 var HTTP = require("http");
 
+var manifestCount = 0;
+var onComplete;
+
 /**
  * Updates the app.json from a remote source
  * @param {Object} _params The parameters for the function, used to force an update
@@ -87,21 +90,23 @@ exports.handleUpdate = function(_data, _url, _callback) {
 	file = null;
 
 	if(typeof _callback === "undefined") {
-		// Alert the user about the update
-		var dialog = Ti.UI.createAlertDialog({
-			title: "Update Available",
-			message: "New content has been downloaded."
-		});
+		onComplete = function() {
+			// Alert the user about the update
+			var dialog = Ti.UI.createAlertDialog({
+				title: "Update Available",
+				message: "New content has been downloaded."
+			});
 
-		dialog.addEventListener("click", function(_event) {
-			APP.log("info", "Update accepted");
+			dialog.addEventListener("click", function(_event) {
+				APP.log("info", "Update accepted");
 
-			APP.rebuild();
-		});
+				APP.rebuild();
+			});
 
-		dialog.show();
+			dialog.show();
+		}
 	} else {
-		_callback();
+		onComplete = _callback;
 	}
 };
 
@@ -112,8 +117,11 @@ exports.handleUpdate = function(_data, _url, _callback) {
 exports.downloadManifest = function(_items) {
 	APP.log("debug", "UPDATE.downloadManifest");
 
+	// Keep track of how many items are in the manifest
+	manifestCount = _items.length;
+
 	// Write manifest files
-	for(var i = 0, x = _items.length; i < x; i++) {
+	for(var i = 0, x = manifestCount; i < x; i++) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
@@ -139,4 +147,11 @@ exports.handleManifestItem = function(_data, _url) {
 	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, filename);
 	file.write(_data);
 	file = null;
+
+	manifestCount--;
+
+	if(manifestCount === 0) {
+		onComplete();
+		onComplete = null;
+	}
 };

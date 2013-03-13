@@ -141,13 +141,13 @@ if(OS_IOS) {
 	$.history.addEventListener("longpress", function(_event) {
 		var url = _event.row.title;
 		var index = _event.index;
-	
+
 		var dialog = Ti.UI.createOptionDialog({
 			options: ["Preview", "Delete", "Cancel"],
 			cancel: 2,
 			selectedIndex: 0
 		});
-	
+
 		dialog.addEventListener("click", function(_event) {
 			switch(_event.index) {
 				case 0:
@@ -159,7 +159,7 @@ if(OS_IOS) {
 					break;
 			}
 		});
-	
+
 		dialog.show();
 	});
 }
