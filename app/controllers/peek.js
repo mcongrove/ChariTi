@@ -57,6 +57,9 @@ $.loadHistory = function() {
 };
 
 $.loadApp = function(_url) {
+	// Save the URL for later usage
+	Ti.App.Properties.setString("URL", _url);
+
 	// Restore the APP.init function
 	APP.init = $.appInit;
 
@@ -93,6 +96,19 @@ $.configureSettings = function(_view) {
 	}
 };
 
+$.deleteRow = function(_url) {
+	var urls = Ti.App.Properties.getList("URLS", []);
+	var newUrls = [];
+
+	for(var i = 0, z = urls.length; i < z; i++) {
+		if(urls[i] !== _url) {
+			newUrls.push(urls[i]);
+		}
+	}
+
+	Ti.App.Properties.setList("URLS", newUrls);
+};
+
 // Event listeners
 $.urlField.addEventListener("return", function(_event) {
 	var url = $.urlField.value;
@@ -113,11 +129,40 @@ $.history.addEventListener("click", function(_event) {
 	var url = _event.row.title;
 
 	if(url.length > 0) {
-		Ti.App.Properties.setString("URL", url);
-
 		$.loadApp(url);
 	}
 });
+
+if(OS_IOS) {
+	$.history.addEventListener("delete", function(_event) {
+		$.deleteRow(_event.row.title);
+	});
+} else {
+	$.history.addEventListener("longpress", function(_event) {
+		var url = _event.row.title;
+		var index = _event.index;
+	
+		var dialog = Ti.UI.createOptionDialog({
+			options: ["Preview", "Delete", "Cancel"],
+			cancel: 2,
+			selectedIndex: 0
+		});
+	
+		dialog.addEventListener("click", function(_event) {
+			switch(_event.index) {
+				case 0:
+					$.loadApp(url);
+					break;
+				case 1:
+					$.deleteRow(url);
+					$.history.deleteRow(index);
+					break;
+			}
+		});
+	
+		dialog.show();
+	});
+}
 
 // Kick off the init
 $.init();

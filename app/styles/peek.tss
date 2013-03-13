@@ -59,5 +59,6 @@
 	backgroundColor: "#FFF",
 	rowHeight: "48dp",
 	separatorColor: "#EEE",
-	height: "240dp"
+	height: "240dp",
+	editable: true
 }
