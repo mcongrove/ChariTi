@@ -37,9 +37,9 @@ $.loadHistory = function() {
 
 	var rows = [];
 
-	for(var i = 0, z = urls.length; i < z; i++) {
+	for(var i = urls.length, z = 0; i > z; i--) {
 		var row = Ti.UI.createTableViewRow({
-			title: urls[i],
+			title: urls[i - 1],
 			height: Ti.UI.SIZE,
 			selectedBackgroundColor: "#222",
 			font: {
