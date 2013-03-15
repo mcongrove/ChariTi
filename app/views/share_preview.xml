@@ -1,0 +1,19 @@
+<Alloy>
+	<View id="PreviewWrapper">
+		<View id="content">
+			<ScrollView id="preview">
+				<Label id="text" />
+			</ScrollView>
+			
+			<View id="buttons">
+				<View id="buttonCancel">
+					<Label class="buttonText" text="Cancel" />
+				</View>
+				
+				<View id="buttonConfirm">
+					<Label class="buttonText" text="Confirm" />
+				</View>
+			</View>
+		</View>
+	</View>
+</Alloy>

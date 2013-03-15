@@ -86,6 +86,21 @@
 			"cache": 1440
 		},
 		{
+			"title": "Share",
+			"templates": [
+				{
+					"title": "Help Wanted",
+					"text": "Did you know that mobile apps can cost charities nearly $50,000 to build?<br /><br />That's why I've donated my time to help develop ChariTi, an initiative that aims to help charities build useful applications for iPhone, Android, and more. The best part is that these ChariTi apps can be created in 30 minutes instead of 30 days, and cost the charities absolutely nothing.<br /><br />Consider joining me in helping ChariTi; developers, designers, and testers are much needed. Visit the <a href='http://chariti.mobi'>ChariTi website</a> and find out how you can help."
+				},
+				{
+					"title": "Code Donations Welcome",
+					"text": "Did you know that mobile apps can cost charities nearly $50,000 to build?<br /><br />That's why I've donated my time to help develop ChariTi, an initiative that aims to help charities build useful applications for iPhone, Android, and more. The best part is that these ChariTi apps can be created in 30 minutes instead of 30 days, and cost the charities absolutely nothing.<br /><br />Consider joining me in helping ChariTi; developers, designers, and testers are much needed. Visit the <a href='http://chariti.mobi'>ChariTi website</a> and find out how you can help."
+				}
+			],
+			"type": "share",
+			"image": "social4"
+		},
+		{
 			"title": "Donate",
 			"heading": "Donate to ChariTi",
 			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
