@@ -68,7 +68,6 @@ $.handleSets = function() {
 
 		APP.addChild("flickr_album", {
 			id: data[0].id,
-			title: data[0].title,
 			cache: CONFIG.cache,
 			index: CONFIG.index,
 			apiKey: CONFIG.apiKey
@@ -91,7 +90,6 @@ $.content.addEventListener("click", function(_event) {
 	APP.addChild("flickr_album", {
 		id: _event.row.id,
 		cache: CONFIG.cache,
-		title: _event.row.setTitle,
 		index: CONFIG.index,
 		apiKey: CONFIG.apiKey
 	});

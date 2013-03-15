@@ -5,7 +5,10 @@ var CONFIG = arguments[0] || {};
 var PREVIOUS = null;
 var NEXT = null;
 
-var metaVisible = false;
+var metaVisible = true;
+
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+$.NavigationBar.showBack();
 
 $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
@@ -25,10 +28,6 @@ $.handleData = function(_data) {
 	$.image.image = _data.url_m;
 	$.title.text = _data.title ? _data.title : "";
 	$.description.text = _data.description ? _data.description.substring(0, 150) : "";
-	$.meta.visible = false;
-
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
-	$.NavigationBar.showBack();
 };
 
 // Event listeners
@@ -50,8 +49,8 @@ $.content.addEventListener("swipe", function(_event) {
 			CONFIG.id = PREVIOUS.id;
 			PREVIOUS = null;
 			NEXT = null;
-			metaVisible = false;
-			$.meta.visible = false;
+			metaVisible = true;
+			$.meta.visible = true;
 
 			$.init();
 		}
@@ -62,8 +61,8 @@ $.content.addEventListener("swipe", function(_event) {
 			CONFIG.id = NEXT.id;
 			PREVIOUS = null;
 			NEXT = null;
-			metaVisible = false;
-			$.meta.visible = false;
+			metaVisible = true;
+			$.meta.visible = true;
 
 			$.init();
 		}

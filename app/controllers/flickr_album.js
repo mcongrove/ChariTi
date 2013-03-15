@@ -16,7 +16,6 @@ $.init = function() {
 		callback: $.handleData
 	});
 
-	$.NavigationBar.setTitle(CONFIG.title);
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(APP.Device.isHandheld) {
