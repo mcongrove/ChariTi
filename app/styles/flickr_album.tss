@@ -3,5 +3,6 @@
 },
 "#content": {
 	top: "47dp",
-	layout: "vertical"
+	layout: "vertical",
+	scrollsToTop: true
 }

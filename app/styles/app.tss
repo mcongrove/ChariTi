@@ -1,0 +1,12 @@
+"TableView": {
+	scrollsToTop: false
+},
+"WebView": {
+	scrollsToTop: false
+},
+"TextArea": {
+	scrollsToTop: false
+},
+"ScrollView": {
+	scrollsToTop: false
+}

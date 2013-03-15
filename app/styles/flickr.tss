@@ -2,5 +2,6 @@
 	top: "47dp",
 	backgroundColor: "#EEE",
 	rowHeight: "48dp",
-	separatorColor: "#DDD"
+	separatorColor: "#DDD",
+	scrollsToTop: true
 }
