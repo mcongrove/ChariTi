@@ -9,6 +9,10 @@ $.heading.text = CONFIG.heading || "";
 $.subHeading.color = APP.Settings.colors.primary || "#000";
 $.subHeading.text = CONFIG.subHeading || "";
 
+if(OS_IOS && CONFIG.header) {
+	$.Wrapper.header = CONFIG.header;
+}
+
 $.Wrapper.addEventListener("click", function(_event) {
 	if(isChecked) {
 		$.check.visible = false;

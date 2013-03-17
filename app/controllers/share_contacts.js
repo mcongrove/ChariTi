@@ -44,18 +44,39 @@ $.loadData = function() {
 	var contacts = $.getContacts();
 	var emails = $.getEmails(contacts);
 	var rows = [];
+	var index = [];
+	var letter = "";
 
 	for(var i = 0, x = emails.length; i < x; i++) {
+		if(OS_IOS) {
+			var firstLetter = emails[i].name.substr(0, 1).toUpperCase();
+			var header = false;
+
+			if(firstLetter !== letter) {
+				letter = firstLetter;
+
+				index.push({
+					title: letter,
+					index: i
+				});
+
+				header = letter;
+			}
+		}
+
 		var row = Alloy.createController("share_contacts_row", {
 			id: emails[i].email,
 			heading: emails[i].name,
-			subHeading: emails[i].email
+			subHeading: emails[i].email,
+			header: OS_IOS && header ? header : false
 		}).getView();
 
 		rows.push(row);
 	}
 
 	$.content.setData(rows);
+
+	$.content.index = index;
 };
 
 $.getContacts = function() {
