@@ -7,7 +7,7 @@ exports.init = function(_callback) {
 		exports.login({
 			username: Ti.App.Properties.getString("USER_LOGIN"),
 			password: Ti.App.Properties.getString("USER_PASSWORD"),
-			callback: _callback
+			success: _callback
 		});
 	} else {
 		// Auto-create users until we add user account functionality
