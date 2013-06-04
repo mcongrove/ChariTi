@@ -22,11 +22,12 @@ $.handleData = function(_data) {
 	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
 	$.downloadRemoteMP3(_data.url);
+	
 
-	//$.artwork.image = _data.image;
-	$.date.text = DATE(parseInt(_data.date, 10)).format("MMMM Do, YYYY h:mma")
+	$.artwork.image = _data.image;
+
 	$.title.text = _data.title;
-	$.text.value = _data.description;
+
 
 	ACTION.url = _data.url;
 
@@ -56,7 +57,7 @@ $.downloadRemoteMP3 = function(_url) {
 	if(Titanium.Platform.name == 'android') {
 		// SD Card
 		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
-		//Ti.API.info('directoryListing = ' + dir.getParent().getDirectoryListing());
+		
 	} else {
 		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
 	}
@@ -66,8 +67,6 @@ $.downloadRemoteMP3 = function(_url) {
 	if(FileToPlayInternaly.exists()) {
 
 		var MP3_path = FileToPlayInternaly.getNativePath();
-
-		//alert(MP3_path);
 
 	} else {
 
@@ -82,7 +81,6 @@ $.downloadRemoteMP3 = function(_url) {
 			Ti.API.info("Downloaded file: " + filename);
 
 		};
-		// function called when an error occurs, including a timeout
 		client.onerror = function(e) {
 			Ti.API.debug(e.error);
 		};
@@ -103,7 +101,7 @@ $.createAudioPlayer = function(_url) {
 	if(Titanium.Platform.name == 'android') {
 		// SD Card
 		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
-		//Ti.API.info('directoryListing = ' + dir.getParent().getDirectoryListing());
+		
 	} else {
 		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
 	}
