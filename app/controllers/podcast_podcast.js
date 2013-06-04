@@ -1,6 +1,7 @@
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
+var STRING = require("alloy/string");
 var MODEL = require("models/podcast")();
 
 var CONFIG = arguments[0] || {};
@@ -20,9 +21,12 @@ $.handleData = function(_data) {
 
 	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
+	$.downloadRemoteMP3(_data.url);
 
-	$.artwork.image = _data.image;
+	//$.artwork.image = _data.image;
+	$.date.text = DATE(parseInt(_data.date, 10)).format("MMMM Do, YYYY h:mma")
 	$.title.text = _data.title;
+	$.text.value = _data.description;
 
 	ACTION.url = _data.url;
 
@@ -45,13 +49,82 @@ $.handleData = function(_data) {
 	});
 };
 
+$.downloadRemoteMP3 = function(_url) {
+
+	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
+
+	if(Titanium.Platform.name == 'android') {
+		// SD Card
+		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
+		//Ti.API.info('directoryListing = ' + dir.getParent().getDirectoryListing());
+	} else {
+		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
+	}
+
+	var FileToPlayInternaly = Titanium.Filesystem.getFile(AppDataDir, filename);
+
+	if(FileToPlayInternaly.exists()) {
+
+		var MP3_path = FileToPlayInternaly.getNativePath();
+
+		//alert(MP3_path);
+
+	} else {
+
+		client = Titanium.Network.createHTTPClient();
+
+		client.onload = function(e) {
+
+			var file = Titanium.Filesystem.getFile(AppDataDir, filename);
+
+			file.write(this.responseData);
+
+			Ti.API.info("Downloaded file: " + filename);
+
+		};
+		// function called when an error occurs, including a timeout
+		client.onerror = function(e) {
+			Ti.API.debug(e.error);
+		};
+
+		client.open('GET', _url);
+		client.send();
+	}
+
+};
+
 $.createAudioPlayer = function(_url) {
 	APP.log("debug", "podcast_podcast.createAudioPlayer(" + _url + ")");
 
 	Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
 
+	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
+
+	if(Titanium.Platform.name == 'android') {
+		// SD Card
+		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
+		//Ti.API.info('directoryListing = ' + dir.getParent().getDirectoryListing());
+	} else {
+		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
+	}
+
+	var FileToPlayInternaly = Titanium.Filesystem.getFile(AppDataDir, filename);
+
+	if(FileToPlayInternaly.exists()) {
+
+		var MP3_path = FileToPlayInternaly.getNativePath();
+
+		Ti.API.info("Using local mp3");
+
+	} else {
+
+		var MP3_path = _url;
+		Ti.API.info("Getting remote mp3");
+
+	}
+
 	STREAM = Ti.Media.createVideoPlayer({
-		url: _url,
+		url: MP3_path,
 		backgroundColor: "#000",
 		fullscreen: false,
 		allowsAirPlay: true,
@@ -60,6 +133,7 @@ $.createAudioPlayer = function(_url) {
 		repeatMode: Ti.Media.VIDEO_REPEAT_MODE_NONE,
 		sourceType: Ti.Media.VIDEO_SOURCE_TYPE_STREAMING,
 		useApplicationAudioSession: true,
+		autoplay: false,
 		visible: false
 	});
 

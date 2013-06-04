@@ -37,7 +37,7 @@
 		},
 		{
 			"title": "Podcast",
-			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
+			"feed": "http://www.ricardo-vargas.com/pt/?feed=podcast",
 			"type": "podcast",
 			"image": "audio",
 			"cache": 1440

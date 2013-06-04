@@ -12,7 +12,7 @@ function Model() {
 
 		var db = Ti.Database.open("ChariTi");
 
-		db.execute("CREATE TABLE IF NOT EXISTS podcast_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, image TEXT, url TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS podcast_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, image TEXT, description TEXT, url TEXT, link TEXT);");
 
 		db.close();
 	};
@@ -59,7 +59,12 @@ function Model() {
 			for(var i = 0, x = nodes.length; i < x; i++) {
 				var title = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("title").item(0).text);
 				var date = UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
-				var url = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("media:content").item(0).attributes.getNamedItem("url").text);
+				var description = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("description").item(0).text);
+				var link = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("link").item(0).text);
+
+				if(nodes.item(i).getElementsByTagName("enclosure").length > 0) {
+					url = UTIL.escapeString(nodes.item(i).getElementsByTagName("enclosure").item(0).getAttribute("url"));
+				}
 
 				var image = null;
 
@@ -71,7 +76,7 @@ function Model() {
 					}
 				}
 
-				db.execute("INSERT INTO podcast_" + TID + " (id, title, date, image, url) VALUES (NULL, " + title + ", " + date + ", " + image + ", " + url + ");");
+				db.execute("INSERT INTO podcast_" + TID + " (id, title, date, image, description, url, link) VALUES (NULL, " + title + ", " + date + ", " + image + ", " + description + ", " + url + ", " + link + ");");
 			}
 
 			db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
@@ -119,6 +124,8 @@ function Model() {
 				id: data.fieldByName("id"),
 				title: data.fieldByName("title"),
 				date: data.fieldByName("date"),
+				description: data.fieldByName("description"),
+				link: data.fieldByName("link"),
 				url: data.fieldByName("url"),
 				image: null
 			};
