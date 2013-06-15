@@ -1,9 +1,90 @@
 "#Wrapper": {
-	backgroundColor: "#000"
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#555",
+			"#222"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
+	}
 },
 "#content": {
-	top: "47dp"
+	layout: "vertical",
+	top: "47dp",
+	showVerticalScrollIndicator: true
 },
+
+"#header": {
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#F8F8F8",
+			"#ECECEC"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
+	},
+	height: Ti.UI.SIZE,
+	width: Ti.UI.FILL,
+	layout: "vertical"
+},
+"#date": {
+	top: "10dp",
+	left: "10dp",
+	right: "10dp",
+	height: "14dp",
+	font: {
+		fontSize: "12dp",
+		fontWeight: "bold"
+	},
+	color: "#777"
+},
+"#title": {
+	left: "10dp",
+	right: "10dp",
+	bottom: "10dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "16dp",
+		fontWeight: "bold"
+	},
+	color: "#333"
+},
+"#image": {
+	top: "15dp",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},
+"#text": {
+	top: "5dp",
+	left: "5dp",
+	right: "5dp",
+	bottom: "5dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "14dp",
+		fontWeight: "normal"
+	},
+	color: "#f7f7f7",
+	backgroundColor: "transparent",
+	editable: false,
+	autoLink: Ti.UI.AUTOLINK_URLS
+}
 "#artworkWrapper": {
 	top: "40dp",
 	bottom: "40dp",
@@ -45,23 +126,6 @@
 	width: Ti.UI.FILL,
 	height: "40dp",
 	backgroundImage: "/images/transparent.png"
-},
-"#title": {
-	top: "12dp",
-	left: "12dp",
-	right: "12dp",
-	height: "16dp",
-	font: {
-		fontSize: "14dp",
-		fontWeight: "bold"
-	},
-	color: "#E6E6E6",
-	shadowColor: "#000",
-	textAlign: "left",
-	shadowOffset: {
-		x: "0dp",
-		y: "1dp"
-	}
 },
 "#track": {
 	width: Ti.UI.FILL,

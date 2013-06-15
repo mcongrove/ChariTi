@@ -1,6 +1,7 @@
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
+var STRING = require("alloy/string");
 var MODEL = require("models/podcast")();
 
 var CONFIG = arguments[0] || {};
@@ -13,6 +14,7 @@ $.init = function() {
 	MODEL.init(CONFIG.index);
 
 	$.handleData(MODEL.getPodcast(CONFIG.id));
+
 };
 
 $.handleData = function(_data) {
@@ -20,11 +22,15 @@ $.handleData = function(_data) {
 
 	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
+	$.downloadRemoteMP3(_data.url);
 
-	$.artwork.image = _data.image;
+	//disabled cover image because my podcast only have the same cover image for all episode
+	//$.artwork.image = _data.image;
+	$.date.text = DATE(parseInt(_data.date, 10)).format("MMMM Do, YYYY h:mma")
 	$.title.text = _data.title;
+	$.text.value = _data.description;
 
-	ACTION.url = _data.url;
+	ACTION.url = _data.link;
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
@@ -45,13 +51,79 @@ $.handleData = function(_data) {
 	});
 };
 
+$.downloadRemoteMP3 = function(_url) {
+
+	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
+
+	if(Titanium.Platform.name == 'android') {
+		// SD Card
+		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
+
+	} else {
+		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
+	}
+
+	var FileToPlayInternaly = Titanium.Filesystem.getFile(AppDataDir, filename);
+
+	if(FileToPlayInternaly.exists()) {
+
+		var MP3_path = FileToPlayInternaly.getNativePath();
+
+	} else {
+
+		client = Titanium.Network.createHTTPClient();
+
+		client.onload = function(e) {
+
+			var file = Titanium.Filesystem.getFile(AppDataDir, filename);
+
+			file.write(this.responseData);
+
+			Ti.API.info("Downloaded file: " + filename);
+
+		};
+		client.onerror = function(e) {
+			Ti.API.debug(e.error);
+		};
+
+		client.open('GET', _url);
+		client.send();
+	}
+
+};
+
 $.createAudioPlayer = function(_url) {
 	APP.log("debug", "podcast_podcast.createAudioPlayer(" + _url + ")");
 
 	Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
 
+	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
+
+	if(Titanium.Platform.name == 'android') {
+		// SD Card
+		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
+
+	} else {
+		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
+	}
+
+	var FileToPlayInternaly = Titanium.Filesystem.getFile(AppDataDir, filename);
+
+	if(FileToPlayInternaly.exists()) {
+
+		var MP3_path = FileToPlayInternaly.getNativePath();
+
+		Ti.API.info("Using local mp3");
+
+	} else {
+
+		var MP3_path = _url;
+		Ti.API.info("Getting remote mp3");
+
+	}
+
 	STREAM = Ti.Media.createVideoPlayer({
-		url: _url,
+		url: MP3_path,
 		backgroundColor: "#000",
 		fullscreen: false,
 		allowsAirPlay: true,
@@ -60,6 +132,7 @@ $.createAudioPlayer = function(_url) {
 		repeatMode: Ti.Media.VIDEO_REPEAT_MODE_NONE,
 		sourceType: Ti.Media.VIDEO_SOURCE_TYPE_STREAMING,
 		useApplicationAudioSession: true,
+		autoplay: false,
 		visible: false
 	});
 
@@ -74,6 +147,7 @@ $.handleNavigation = function(_id) {
 	ACTION.previous = MODEL.getPreviousPodcast(_id);
 
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
+
 		down: function(_event) {
 			APP.log("debug", "podcast_podcast @next");
 
@@ -93,10 +167,54 @@ $.handleNavigation = function(_id) {
 				id: ACTION.previous.id,
 				index: CONFIG.index
 			});
+		},
+		favorite: function(_event) {
+			APP.log("debug", "podcast_podcast @favorite");
+
+			var imageFullPath = this.image;
+			var imagePath = imageFullPath.slice(0, -9); // all but star.png
+			var imageFile = imageFullPath.slice(-9); // only star.png
+
+			var isFavorite = MODEL.getPodcast(_id).favorite;
+
+			Ti.API.info("Is Favorite on load = " + isFavorite);
+			Ti.API.info("Favorite button clicked and set value = " + isFavorite);
+
+			if(isFavorite == 1) {
+				//set favorite image				
+				this.image = imagePath + "star2.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			} else {
+				//unset favorite image
+				this.image = imagePath + "star1.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			}
+
+			ACTION.setFavorite = MODEL.toggleFavorite(_id);
+
+		},
+		favIcon: function(_event) {
+			var imageFullPath = this.image;
+			var imagePath = imageFullPath.slice(0, -9); // all but star.png
+			var imageFile = imageFullPath.slice(-9); // only star.png
+
+			Ti.API.info("Is Favorite = " + isFavorite);
+
+			if(isFavorite === 1) {
+				//set favorite image				
+				this.image = imagePath + "star2.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			} else {
+				//unset favorite image
+				this.image = imagePath + "star1.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			}
+
 		}
 	}).getView();
 
 	$.NavigationBar.addNavigation(navigation);
+
 };
 
 $.streamPlay = function(_event) {

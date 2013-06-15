@@ -2,5 +2,6 @@
 	<View id="Wrapper">
 		<ImageView id="arrowUp" />
 		<ImageView id="arrowDown" />
+		<ImageView id="favButton" />
 	</View>
 </Alloy>

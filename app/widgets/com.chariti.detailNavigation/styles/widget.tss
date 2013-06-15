@@ -1,8 +1,8 @@
 "#Wrapper": {
-	width: "96dp",
+	width: "150dp",
 	height: "37dp",
 	top: "5dp",
-	backgroundImage: WPATH("/images/background.png")
+	//backgroundImage: WPATH("/images/background.png")
 },
 "#arrowUp": {
 	image: WPATH("/images/arrowUp.png"),
@@ -14,6 +14,14 @@
 },
 "#arrowDown": {
 	image: WPATH("/images/arrowDown.png"),
+	width: "47dp",
+	height: "37dp",
+	top: "0dp",
+	left: "50dp",
+	preventDefaultImage: true
+},
+"#favButton": {
+	image: WPATH("/images/star1.png"),
 	width: "47dp",
 	height: "37dp",
 	top: "0dp",

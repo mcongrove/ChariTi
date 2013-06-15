@@ -1,0 +1,13 @@
+{
+	"id": "com.chariti.favoriteButton",
+	"name": "com.chariti.favoriteButton",
+	"description" : "A button that set the item as favorite.",
+	"author": "Sérgio Jardim",
+	"version": "1.0",
+	"copyright":"Copyright 2013 Sérgio Jardim",
+	"license":"Public Domain",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"",
+	"platforms":"android,ios,mobileweb"
+}

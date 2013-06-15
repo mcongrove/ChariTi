@@ -2,14 +2,14 @@
 	"id": "ChariTi.001",
 	"version": "1.1",
 	"minimumVersion": "1.1",
-	"_configurationUrl": "http://chariti.mobi/app/app.json",
+	"configurationUrl": "http://iphone.ricardo-vargas.com/app.json",
 	"legal": {
 		"copyright": "Copyright ‌© 2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
 		"privacy": "https://policy-portal.truste.com/core/privacy-policy/ChariTi/04175946-6006-4c76-b174-6bc589432474"
 	},
 	"settings": {
-		"share": "Check out this great ChariTi content",
+		"share": "Check out this great content",
 		"notifications": {
 			"enabled": false,
 			"provider": "UA",
@@ -17,9 +17,9 @@
 			"secret": "s-RDQejhRwmx-j4DCaXPMw"
 		},
 		"colors": {
-			"primary": "#327B9F",
-			"secondary": "#569BBE",
-			"text":	"#FFF"
+			"primary": "#333333",
+			"secondary": "#111111",
+			"text":	"#f7f7f7"
 		},
 		"useSlideMenu": false
 	},
@@ -27,87 +27,44 @@
 		"http://localhost/ChariTi/app/logo.png",
 		"http://localhost/ChariTi/app/logo@2x.png"
 	],
-	"tabs": [
+	"tabs": [		
 		{
-			"title": "Text",
-			"heading": "Open Source Mobile Framework for Charities",
-			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
-			"type": "text",
-			"image": "home"
-		},
-		{
-			"title": "Podcast",
-			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
+			"title": "Podcasts",
+			"feed": "http://www.ricardo-vargas.com/pt/?feed=podcast",
 			"type": "podcast",
 			"image": "audio",
+			"cache": 1440
+		},	
+		{
+			"title": "YouTube",
+			"username": "rvvargas",
+			"type": "youtube",
+			"image": "video3",
 			"cache": 1440
 		},
 		{
 			"title": "Facebook",
-			"userid": "20594753592",
+			"userid": "583449112",
 			"type": "facebook",
 			"image": "facebook",
-			"cache": 10
-		},
-		{
-			"title": "Blog",
-			"feed": "http://developer.appcelerator.com/blog/feed",
-			"type": "article",
-			"image": "news1",
 			"cache": 120
 		},
 		{
 			"title": "Flickr",
-			"username": "39494278@N04",
-			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
+			"username": "15804376@N08",
+			"apiKey": "cc1e3ec67808e7c5cde2d25131ca3d18",
 			"type": "flickr",
-			"image": "photo1",
+			"image": "photo2",
 			"cache": 1440
 		},
 		{
-			"title": "Events",
-			"userid": "7304307941",
-			"type": "event",
-			"image": "event2",
-			"cache": 1440
-		},
-		{
-			"title": "Vimeo",
-			"username": "appcelerator",
-			"type": "vimeo",
-			"image": "video4",
-			"cache": 1440
-		},
-		{
-			"title": "YouTube",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video5",
-			"cache": 1440
-		},
-		{
-			"title": "Share",
-			"templates": [
-				{
-					"title": "Help Wanted",
-					"text": "Did you know that mobile apps can cost charities nearly $50,000 to build?<br /><br />That's why I've donated my time to help develop ChariTi, an initiative that aims to help charities build useful applications for iPhone, Android, and more. The best part is that these ChariTi apps can be created in 30 minutes instead of 30 days, and cost the charities absolutely nothing.<br /><br />Consider joining me in helping ChariTi; developers, designers, and testers are much needed. Visit the <a href='http://chariti.mobi'>ChariTi website</a> and find out how you can help."
-				},
-				{
-					"title": "Code Donations Welcome",
-					"text": "Did you know that mobile apps can cost charities nearly $50,000 to build?<br /><br />That's why I've donated my time to help develop ChariTi, an initiative that aims to help charities build useful applications for iPhone, Android, and more. The best part is that these ChariTi apps can be created in 30 minutes instead of 30 days, and cost the charities absolutely nothing.<br /><br />Consider joining me in helping ChariTi; developers, designers, and testers are much needed. Visit the <a href='http://chariti.mobi'>ChariTi website</a> and find out how you can help."
-				}
-			],
-			"type": "share",
-			"image": "social4"
-		},
-		{
-			"title": "Donate",
-			"heading": "Donate to ChariTi",
-			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
-			"url": "https://github.com/mcongrove/ChariTi",
-			"type": "donate",
-			"image": "donate3"
+			"title": "Biografia",
+			"heading": "Biografia",
+			"text": "",
+			"type": "text",
+			"image": "home"
 		}
+		
 	],
 	"examples": [
 		{

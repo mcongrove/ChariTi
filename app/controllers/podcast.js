@@ -23,7 +23,7 @@ $.init = function() {
 	if(APP.Settings.useSlideMenu) {
 		$.NavigationBar.showMenu();
 	} else {
-		$.NavigationBar.showSettings();
+		//$.NavigationBar.showSettings();
 	}
 };
 

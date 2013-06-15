@@ -11,3 +11,13 @@ if(CONFIG.down && typeof CONFIG.down == "function") {
 } else {
 	$.arrowDown.opacity = 0.4;
 }
+
+// if(CONFIG.favIcon && typeof CONFIG.favIcon == "function") {	
+	// $.favButton.addEventListener("load", CONFIG.favIcon);	
+// }
+
+if(CONFIG.favorite && typeof CONFIG.favorite == "function") {	
+	$.favButton.addEventListener("click", CONFIG.favorite);	
+} else {
+	$.favButton.opacity = 0.4;
+}
