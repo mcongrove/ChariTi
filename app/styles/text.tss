@@ -15,6 +15,17 @@
 	},
 	color: "#666"
 },
+"Label": {
+	color: "#666",
+	font: {
+		fontSize: "14dp",
+		fontWeight: "normal"
+	},
+	top: "5dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE
+},
 "#text": {
 	top: "10dp",
 	left: "15dp",

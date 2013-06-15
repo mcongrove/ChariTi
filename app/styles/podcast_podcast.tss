@@ -1,5 +1,20 @@
 "#Wrapper": {
-	backgroundColor: "#FFF"
+	backgroundGradient: {
+		type: "linear",
+		colors: [
+			"#555",
+			"#222"
+		],
+		startPoint: {
+			x: 0,
+			y: 0
+		},
+		endPoint: {
+			x: 0,
+			y: "100%"
+		},
+		backFillStart: true
+	}
 },
 "#content": {
 	layout: "vertical",
@@ -65,7 +80,7 @@
 		fontSize: "14dp",
 		fontWeight: "normal"
 	},
-	color: "#777",
+	color: "#f7f7f7",
 	backgroundColor: "transparent",
 	editable: false,
 	autoLink: Ti.UI.AUTOLINK_URLS

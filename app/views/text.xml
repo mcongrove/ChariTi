@@ -6,6 +6,23 @@
 			<Label id="heading" />
 			
 			<Label id="text" />
+			
+			<Label text="Ricardo Viana Vargas é especialista em  gerenciamento de projetos, portfólio e riscos. Foi, nos últimos 15 anos, responsável por mais de 80 projetos de grande porte em diversos países, nas áreas de petróleo, energia, infraestrutura, telecomunicações, informática e finanças, com um portfólio de investimentos gerenciado superior a 18 bilhões de dólares." />
+
+			<Label text="Atualmente, é diretor do Grupo de Práticas de Projetos do Escritório de Serviços de Projetos das Nações Unidas (UNOPS, na sigla em inglês) e vive em Copenhagen, na Dinamarca. Seu trabalho tem como foco a melhoria da gestão dos projetos humanitários, de construção da paz e de desenvolvimento de infraestrutura em dezenas de países, como Haiti, Afeganistão, Iraque e Sudão do Sul." />
+			
+			<Label text="Foi o primeiro voluntário latino-americano a ser eleito para exercer a função de presidente do conselho diretor (Chairman) do Project Management Institute (PMI), maior organização do mundo voltada para a administração de projetos, com cerca de 600 mil membros e profissionais certificados em 175 países." />
+			
+			<Label text="Ricardo Vargas escreveu onze livros sobre gerenciamento de projetos, publicados em português e inglês, com mais de 250 mil exemplares vendidos mundialmente. Recebeu em 2005 o prêmio PMI Distinguished Award e em 2011 o PMI IS CoP Professional Development Award pela sua contribuição para o desenvolvimento do gerenciamento de projetos. Recebeu também o PMI Professional Development Product of the Year pelo workshop PMDome®, considerado a melhor solução do mundo para o ensino do gerenciamento de projetos." />
+			
+			<Label text="É professor de gerenciamento de projetos em diversos cursos de MBA, participando do conselho editorial de revistas especializadas no Brasil e nos Estados Unidos. Vargas é revisor reconhecido da mais importante referência no mundo sobre gerenciamento de projetos, o PMBOK Guide. Foi também chair da tradução oficial do PMBOK para o português." />
+			
+			<Label text="Engenheiro químico e mestre em Engenharia de Produção pela UFMG, Ricardo Vargas tem também o Master Certificate in Project Management pela George Washington University, além de ser certificado pelo PMI como Project Management Professional (PMP), Risk Management Professional (PMI-RMP) e Scheduling Professional (PMI-SP). É também certificado pelo Escritório de Governo e Comércio do Reino Unido (OGC) como PRINCE2® Practitioner e pela Scrum Alliance como Certified Scrum Master (CSM). Participou do programa de negociações para executivos da Harvard Law School e tem formação executiva de estratégia e inovação pelo Massachusetts Institute of Technology (MIT)." />
+			
+			<Label text="Durante onze anos, a partir de 1995, desenvolveu em conjunto com dois sócios um dos mais sólidos negócios de tecnologia, gerenciamento de projetos e terceirização do mercado brasileiro, que contava com 4,000 colaboradores e gerava uma receita anual de 50 milhões de dólares em 2006, quando Ricardo Vargas vendeu sua participação para se dedicar integralmente à internacionalização de seus trabalhos em gerenciamento de projetos." />
+			
+			<Label text="É membro da Association for Advancement of Cost Engineering (AACE), da American Management Association (AMA), da International Project Management Association (IPMA), do Institute for Global Ethics e da Professional Risk Management International Association (PRMIA)." />
 		</ScrollView>
+		
 	</View>
 </Alloy>

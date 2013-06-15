@@ -7,7 +7,7 @@
 				<Label id="date" />				
 				<Label id="title" />
 			</View>
-			
+
 			<TextArea id="text" />
 			
 			<View id="controls">

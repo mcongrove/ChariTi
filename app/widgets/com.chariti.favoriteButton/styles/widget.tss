@@ -1,0 +1,13 @@
+"#Wrapper": {
+	width: "32dp",
+	height: "32dp",
+	top: "5dp"
+},
+"#check": {
+	image: WPATH("/images/stop.png"),
+	width: "28dp",
+	height: "28dp",
+	top: "0dp",
+	left: "0dp",
+	preventDefaultImage: true
+}

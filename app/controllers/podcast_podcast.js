@@ -14,6 +14,7 @@ $.init = function() {
 	MODEL.init(CONFIG.index);
 
 	$.handleData(MODEL.getPodcast(CONFIG.id));
+
 };
 
 $.handleData = function(_data) {
@@ -22,14 +23,14 @@ $.handleData = function(_data) {
 	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
 	$.downloadRemoteMP3(_data.url);
-	
 
-	$.artwork.image = _data.image;
-
+	//disabled cover image because my podcast only have the same cover image for all episode
+	//$.artwork.image = _data.image;
+	$.date.text = DATE(parseInt(_data.date, 10)).format("MMMM Do, YYYY h:mma")
 	$.title.text = _data.title;
+	$.text.value = _data.description;
 
-
-	ACTION.url = _data.url;
+	ACTION.url = _data.link;
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
@@ -57,7 +58,7 @@ $.downloadRemoteMP3 = function(_url) {
 	if(Titanium.Platform.name == 'android') {
 		// SD Card
 		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
-		
+
 	} else {
 		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
 	}
@@ -101,7 +102,7 @@ $.createAudioPlayer = function(_url) {
 	if(Titanium.Platform.name == 'android') {
 		// SD Card
 		var AppDataDir = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
-		
+
 	} else {
 		var AppDataDir = Titanium.Filesystem.applicationDataDirectory;
 	}
@@ -146,6 +147,7 @@ $.handleNavigation = function(_id) {
 	ACTION.previous = MODEL.getPreviousPodcast(_id);
 
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
+
 		down: function(_event) {
 			APP.log("debug", "podcast_podcast @next");
 
@@ -165,10 +167,54 @@ $.handleNavigation = function(_id) {
 				id: ACTION.previous.id,
 				index: CONFIG.index
 			});
+		},
+		favorite: function(_event) {
+			APP.log("debug", "podcast_podcast @favorite");
+
+			var imageFullPath = this.image;
+			var imagePath = imageFullPath.slice(0, -9); // all but star.png
+			var imageFile = imageFullPath.slice(-9); // only star.png
+
+			var isFavorite = MODEL.getPodcast(_id).favorite;
+
+			Ti.API.info("Is Favorite on load = " + isFavorite);
+			Ti.API.info("Favorite button clicked and set value = " + isFavorite);
+
+			if(isFavorite == 1) {
+				//set favorite image				
+				this.image = imagePath + "star2.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			} else {
+				//unset favorite image
+				this.image = imagePath + "star1.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			}
+
+			ACTION.setFavorite = MODEL.toggleFavorite(_id);
+
+		},
+		favIcon: function(_event) {
+			var imageFullPath = this.image;
+			var imagePath = imageFullPath.slice(0, -9); // all but star.png
+			var imageFile = imageFullPath.slice(-9); // only star.png
+
+			Ti.API.info("Is Favorite = " + isFavorite);
+
+			if(isFavorite === 1) {
+				//set favorite image				
+				this.image = imagePath + "star2.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			} else {
+				//unset favorite image
+				this.image = imagePath + "star1.png";
+				Ti.API.info("imagePath = " + imagePath + " imageFile = " + imageFile);
+			}
+
 		}
 	}).getView();
 
 	$.NavigationBar.addNavigation(navigation);
+
 };
 
 $.streamPlay = function(_event) {
@@ -243,6 +289,10 @@ $.next.addEventListener("click", function(_event) {
 		index: CONFIG.index
 	});
 });
+
+// $.setFavorite.addEventListener("click", function(_event) {
+// alert("bbbb");
+// });
 
 // Kick off the init
 $.init();

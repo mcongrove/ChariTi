@@ -12,7 +12,7 @@ function Model() {
 
 		var db = Ti.Database.open("ChariTi");
 
-		db.execute("CREATE TABLE IF NOT EXISTS podcast_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, image TEXT, description TEXT, url TEXT, link TEXT);");
+		db.execute("CREATE TABLE IF NOT EXISTS podcast_" + TID + " (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, date TEXT, image TEXT, description TEXT, url TEXT, link TEXT, favorite INTEGER);");
 
 		db.close();
 	};
@@ -66,6 +66,8 @@ function Model() {
 					url = UTIL.escapeString(nodes.item(i).getElementsByTagName("enclosure").item(0).getAttribute("url"));
 				}
 
+				var favorite = 0;
+
 				var image = null;
 
 				if(nodes.item(i).getElementsByTagName("itunes:image").length > 0) {
@@ -76,7 +78,7 @@ function Model() {
 					}
 				}
 
-				db.execute("INSERT INTO podcast_" + TID + " (id, title, date, image, description, url, link) VALUES (NULL, " + title + ", " + date + ", " + image + ", " + description + ", " + url + ", " + link + ");");
+				db.execute("INSERT INTO podcast_" + TID + " (id, title, date, image, description, url, link, favorite) VALUES (NULL, " + title + ", " + date + ", " + image + ", " + description + ", " + url + ", " + link + ", " + favorite + ");");
 			}
 
 			db.execute("INSERT OR REPLACE INTO updates (url, time) VALUES(" + UTIL.escapeString(_url) + ", " + new Date().getTime() + ");");
@@ -127,12 +129,17 @@ function Model() {
 				description: data.fieldByName("description"),
 				link: data.fieldByName("link"),
 				url: data.fieldByName("url"),
+				favorite: data.fieldByName("favorite"),
 				image: null
 			};
 
 			if(data.fieldByName("image")) {
 				temp.image = data.fieldByName("image");
-			}
+			};
+
+			// if(data.fieldByName("favorite")) {
+			// temp.favorite = data.fieldByName("favorite");
+			// };
 
 			data.next();
 		}
@@ -141,6 +148,33 @@ function Model() {
 		db.close();
 
 		return temp;
+	};
+
+	this.toggleFavorite = function(_id) {
+
+		db = Titanium.Database.open('ChariTi');
+		var data = db.execute("SELECT id, favorite FROM podcast_" + TID + " WHERE id = " + UTIL.cleanEscapeString(_id) + " LIMIT 1;");
+		var flag = 0;
+		if(data.isValidRow()) {
+
+			var id = data.fieldByName("id");
+			var favorite = data.fieldByName("favorite");
+
+			if(favorite != 1) {
+				Ti.API.info("id = " + id + " favorite is now = " + favorite);
+				db.execute("UPDATE podcast_" + TID + " set favorite = 1 where id = " + UTIL.cleanEscapeString(_id) + ";");
+
+			} else {
+				Ti.API.info("id = " + id + " favorite is now = " + favorite);
+				db.execute("UPDATE podcast_" + TID + " set favorite = 0 where id = " + UTIL.cleanEscapeString(_id) + ";");
+			}
+		}
+
+		data.close();
+		db.close();
+
+		return favorite;
+
 	};
 
 	this.getNextPodcast = function(_id) {
