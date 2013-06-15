@@ -290,9 +290,5 @@ $.next.addEventListener("click", function(_event) {
 	});
 });
 
-// $.setFavorite.addEventListener("click", function(_event) {
-// alert("bbbb");
-// });
-
 // Kick off the init
 $.init();
