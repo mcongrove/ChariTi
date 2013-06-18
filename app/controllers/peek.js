@@ -37,8 +37,6 @@ $.handleLaunchUrl = function() {
 
 	if(typeof arguments == "object" && arguments.hasOwnProperty("url")) {
 		if(arguments.url !== Ti.App.Properties.getString("LaunchURL")) {
-			alert(arguments.url);
-
 			Ti.App.Properties.setString("LaunchURL", arguments.url);
 
 			var url = UTIL.parseUrl("url", arguments.url);
@@ -47,11 +45,7 @@ $.handleLaunchUrl = function() {
 				return;
 			}
 
-			if(!APP.PEEK) {
-				APP.PEEK = Alloy.createController("peek");
-			}
-
-			APP.PEEK.loadApp(url);
+			$.loadApp(url);
 		}
 	}
 };
