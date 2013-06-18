@@ -13,5 +13,7 @@
 				<ImageView id="rightImage" />
 			</View>
 		</View>
+		
+		<View id="border" />
 	</View>
 </Alloy>

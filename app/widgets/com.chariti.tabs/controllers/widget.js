@@ -31,11 +31,11 @@ $.init = function(_params) {
 	$.IndicatorMore.backgroundColor		= _params.colors.secondary;
 	
 	$.IndicatorContainer.width		= $.display.width + "dp";
-	$.Indicator.width				= ($.width - 1) + "dp";
+	$.Indicator.width				= $.width + "dp";
 	$.IndicatorMore.width			= $.width + "dp";
 	$.TabContainer.width			= $.display.width + "dp";
 	$.TabGroupMore.width			= $.display.width + "dp";
-	$.TabContainerMore.width		= ($.width + 1) + "dp";
+	$.TabContainerMore.width		= $.width + "dp";
 	
 	for(var i = 0; i < _params.tabs.length; i++) {
 		if($.excess && i == ($.excessLength - 1)) {
@@ -46,7 +46,7 @@ $.init = function(_params) {
 			id: _params.tabs[i].id,
 			width: $.width + "dp",
 			height: "60dp",
-			top: "0dp",
+			bottom: "0dp",
 			left: "0dp"
 		});
 
@@ -68,12 +68,7 @@ $.init = function(_params) {
 			height: "15dp",
 			font: {
 				fontSize: "11dp",
-				fontWeight: "bold"
-			},
-			shadowColor: "#000",
-			shadowOffset: {
-				x: "0dp",
-				y: "1dp"
+				fontFamily: "HelveticaNeue"
 			},
 			color: _params.colors.text,
 			textAlign: "center",
@@ -84,38 +79,13 @@ $.init = function(_params) {
 		tab.add(label);
 		
 		if($.excess && i >= ($.excessLength - 1)) {
-			tab.backgroundImage = WPATH("images/overlay.png");
-			tab.width	= ($.width + 1) + "dp";
-			label.left	= "6dp";
-			
-			var border = Ti.UI.createImageView({
-				width: "1dp",
-				height: "59dp",
-				top: "1dp",
-				left: "0dp",
-				image: WPATH("images/border.png"),
-				preventDefaultImage: true
-			});
-			
-			tab.add(border);
+			tab.width	= $.width + "dp";
+			label.left	= "5dp";
 			
 			$.tabs.push(tab);
 			
 			$.TabsMore.add(tab);
 		} else {
-			if((i + 1) < _params.tabs.length) {
-				var border = Ti.UI.createImageView({
-					width: "1dp",
-					height: "59dp",
-					top: "1dp",
-					right: "0dp",
-					image: WPATH("images/border.png"),
-					preventDefaultImage: true
-				});
-				
-				tab.add(border);
-			}
-		
 			$.tabs.push(tab);
 		}
 	}
@@ -150,12 +120,7 @@ $.addMoreTab = function(_params) {
 		height: "13dp",
 		font: {
 			fontSize: "11dp",
-			fontWeight: "bold"
-		},
-		shadowColor: "#000",
-		shadowOffset: {
-			x: "0dp",
-			y: "1dp"
+			fontFamily: "HelveticaNeue"
 		},
 		color: _params.colors.text,
 		textAlign: "center",

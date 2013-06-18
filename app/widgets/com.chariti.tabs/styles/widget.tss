@@ -7,35 +7,26 @@
 	width: Ti.UI.FILL,
 	bottom: "0dp"
 },
+"#Border": {
+	top: "0dp",
+	height: "1dp",
+	width: Ti.UI.FILL,
+	backgroundColor: "#000",
+	opacity: 0.2
+},
 "#IndicatorContainer": {
-	height: "60dp"
+	height: "59dp"
 },
 "#Indicator": {
 	height: "59dp",
-	top: "1dp",
+	bottom: "0dp",
 	left: "0dp",
-	backgroundGradient: {
-		type: "linear",
-		colors: [
-			"#000",
-			"transparent"
-		],
-		startPoint: {
-			x: 0,
-			y: 0
-		},
-		endPoint: {
-			x: 0,
-			y: "100%"
-		},
-		backFillStart: true
-	},
+	backgroundColor: "#FFF",
 	opacity: 0.4
 },
 "#Overlay": {
 	width: Ti.UI.FILL,
-	height: "60dp",
-	backgroundImage: WPATH("images/overlay.png")
+	height: "60dp"
 },
 "#TabContainer": {
 	height: "60dp"
@@ -51,26 +42,11 @@
 },
 "#IndicatorMore": {
 	height: "60dp",
-	top: "1dp",
-	left: "1dp",
+	top: "0dp",
+	left: "0dp",
 	width: Ti.UI.FILL,
-	backgroundGradient: {
-		type: "linear",
-		colors: [
-			"#000",
-			"transparent"
-		],
-		startPoint: {
-			x: 0,
-			y: 0
-		},
-		endPoint: {
-			x: 0,
-			y: "100%"
-		},
-		backFillStart: true
-	},
-	opacity: 0.5
+	backgroundColor: "#FFF",
+	opacity: 0.4
 },
 "#TabContainerMore": {
 	height: Ti.UI.SIZE,

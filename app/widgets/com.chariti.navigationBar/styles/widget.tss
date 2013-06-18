@@ -5,6 +5,13 @@
 	height: "47dp",
 	backgroundColor: "#000"
 },
+"#border": {
+	bottom: "0dp",
+	height: "1dp",
+	width: Ti.UI.FILL,
+	backgroundColor: "#000",
+	opacity: 0.2
+},
 "#overlay": {
 	height: Ti.UI.FILL,
 	width: Ti.UI.FILL,

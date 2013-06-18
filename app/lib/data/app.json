@@ -21,7 +21,7 @@
 			"secondary": "#569BBE",
 			"text":	"#FFF"
 		},
-		"useSlideMenu": false
+		"useSlideMenu": true
 	},
 	"_manifest": [
 		"http://localhost/ChariTi/app/logo.png",
@@ -76,13 +76,6 @@
 			"username": "appcelerator",
 			"type": "vimeo",
 			"image": "video4",
-			"cache": 1440
-		},
-		{
-			"title": "YouTube",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video5",
 			"cache": 1440
 		},
 		{
@@ -150,6 +143,13 @@
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
 			"image": "book1"
+		},
+		{
+			"title": "YouTube",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video5",
+			"cache": 1440
 		},
 		{
 			"title": "Web",
