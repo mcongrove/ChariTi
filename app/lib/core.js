@@ -129,13 +129,6 @@ var APP = {
 		// NOTICE
 		// The following sections are abstracted for PEEK
 
-		// Get URL arguments
-		var arguments = Ti.App.getArguments();
-
-		if(typeof arguments == "object" && arguments.hasOwnProperty("url")) {
-			Ti.API.error("HEY!!!!!! " + arguments.url);
-		}
-
 		// Updates the app from a remote source
 		APP.update();
 
@@ -892,6 +885,7 @@ var APP = {
 			email.open();
 		}
 	},
+
 	/**
 	 * Global orientation event handler
 	 * @param {Object} _event Standard Titanium event callback
@@ -934,6 +928,11 @@ var APP = {
 	 */
 	resumeObserver: function(_event) {
 		APP.log("debug", "APP.resumeObserver");
+
+		// NOTICE
+		// The following sections are abstracted for PEEK
+
+		APP.PEEK.handleLaunchUrl();
 	},
 	/**
 	 * Back button observer

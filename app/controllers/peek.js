@@ -1,4 +1,5 @@
 var APP = require("core");
+var UTIL = require("utilities");
 
 $.appInit = null;
 
@@ -10,6 +11,7 @@ $.init = function() {
 	$.overrideCore();
 	$.openConfiguration();
 	$.loadHistory();
+	$.handleLaunchUrl();
 };
 
 $.overrideCore = function() {
@@ -28,6 +30,30 @@ $.openConfiguration = function() {
 	APP.Configuration.visible = true;
 
 	APP.MainWindow.open();
+};
+
+$.handleLaunchUrl = function() {
+	var arguments = Ti.App.getArguments();
+
+	if(typeof arguments == "object" && arguments.hasOwnProperty("url")) {
+		if(arguments.url !== Ti.App.Properties.getString("LaunchURL")) {
+			alert(arguments.url);
+
+			Ti.App.Properties.setString("LaunchURL", arguments.url);
+
+			var url = UTIL.parseUrl("url", arguments.url);
+
+			if(!url) {
+				return;
+			}
+
+			if(!APP.PEEK) {
+				APP.PEEK = Alloy.createController("peek");
+			}
+
+			APP.PEEK.loadApp(url);
+		}
+	}
 };
 
 $.loadHistory = function() {
@@ -114,8 +140,7 @@ $.urlField.addEventListener("return", function(_event) {
 	var url = $.urlField.value;
 
 	if(url.length > 0) {
-		Ti.App.Properties.setString("URL", url);
-
+		// Load up the app
 		$.loadApp(url);
 
 		// Save the history
