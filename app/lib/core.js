@@ -129,6 +129,13 @@ var APP = {
 		// NOTICE
 		// The following sections are abstracted for PEEK
 
+		// Get URL arguments
+		var arguments = Ti.App.getArguments();
+
+		if(typeof arguments == "object" && arguments.hasOwnProperty("url")) {
+			Ti.API.error("HEY!!!!!! " + arguments.url);
+		}
+
 		// Updates the app from a remote source
 		APP.update();
 
