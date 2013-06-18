@@ -138,6 +138,10 @@ function Model() {
 		var db = Ti.Database.open("ChariTi");
 		var data = db.execute("SELECT id FROM article_" + TID + " WHERE id > " + UTIL.cleanEscapeString(_id) + " ORDER BY id ASC LIMIT 1;");
 		var temp;
+		
+		if(data.rowCount === 0) {
+			data = db.execute("SELECT id FROM article_" + TID + " ORDER BY id ASC LIMIT 1;");
+		}
 
 		while(data.isValidRow()) {
 			temp = {
@@ -159,7 +163,7 @@ function Model() {
 		var db = Ti.Database.open("ChariTi");
 		var data = db.execute("SELECT id FROM article_" + TID + " WHERE id < " + UTIL.cleanEscapeString(_id) + " ORDER BY id DESC LIMIT 1;");
 
-		if(data.rowCount == 0) {
+		if(data.rowCount === 0) {
 			data = db.execute("SELECT id FROM article_" + TID + " ORDER BY id DESC LIMIT 1;");
 		}
 
