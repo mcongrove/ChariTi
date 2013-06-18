@@ -1,4 +1,5 @@
 var APP = require("core");
+var UTIL = require("utilities");
 var MODEL = require("models/flickr")();
 
 var CONFIG = arguments[0];
@@ -27,10 +28,25 @@ $.init = function() {
 	}
 };
 
-$.retrieveData = function() {
+$.retrieveData = function(_force, _callback) {
 	MODEL.generateNsid({
 		username: CONFIG.username,
-		callback: $.handleNsid
+		callback: function() {
+			$.handleNsid();
+
+			if(typeof _callback !== "undefined") {
+				_callback();
+			}
+		},
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+
+			if(OS_IOS) {
+				pullToRefresh.hide();
+			}
+		}
 	});
 };
 
@@ -39,7 +55,12 @@ $.handleNsid = function() {
 
 	MODEL.retrieveSets({
 		cache: CONFIG.cache,
-		callback: $.handleSets
+		callback: $.handleSets,
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+		}
 	});
 };
 
@@ -59,7 +80,7 @@ $.handleSets = function() {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
 	APP.closeLoading();
 
@@ -76,7 +97,7 @@ $.handleSets = function() {
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "flickr @click " + _event.row.id);
 
 	if(APP.Device.isTablet) {
@@ -94,6 +115,23 @@ $.content.addEventListener("click", function(_event) {
 		apiKey: CONFIG.apiKey
 	});
 });
+
+if(OS_IOS) {
+	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
+		table: $.container,
+		backgroundColor: "#EEE",
+		fontColor: "#AAA",
+		indicator: "dark",
+		image: "/images/ptrArrow.png",
+		refresh: function(_callback) {
+			$.retrieveData(true, function() {
+				_callback(true);
+			});
+		}
+	});
+
+	pullToRefresh.date(false);
+}
 
 // Kick off the init
 $.init();

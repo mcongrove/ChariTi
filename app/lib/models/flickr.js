@@ -51,18 +51,19 @@ function Model() {
 				format: "JSON",
 				url: ApiBase + "urls.lookupUser&url=flickr.com%2Fphotos%2F" + _params.username,
 				passthrough: _params.callback,
-				success: this.handleNsid
+				success: this.handleNsid,
+				failure: _params.error
 			});
 		}
 	};
 
-	this.handleNsid = function(_data, _url, _passthrough) {
+	this.handleNsid = function(_data, _url, _callback) {
 		APP.log("debug", "FLICKR.handleNsid");
 
 		Ti.App.Properties.setString("FLICKR_NSID", _data.user.id);
 
-		if(typeof _passthrough !== "undefined") {
-			_passthrough();
+		if(typeof _callback !== "undefined") {
+			_callback();
 		}
 	};
 
@@ -83,9 +84,7 @@ function Model() {
 				url: ApiBase + "photosets.getList&user_id=" + Ti.App.Properties.getString("FLICKR_NSID"),
 				passthrough: _params.callback,
 				success: this.handleSets,
-				failure: function(_error) {
-					alert("Unable to connect. Please try again later.");
-				}
+				failure: _params.error
 			});
 		} else {
 			_params.callback();
@@ -136,19 +135,7 @@ function Model() {
 				url: ApiBase + "photosets.getPhotos&extras=url_sq,url_m&privacy_filter=1&media=photos&photoset_id=" + _params.id,
 				passthrough: _params.callback,
 				success: this.handleSet,
-				failure: function(_error) {
-					var alert = Ti.UI.createAlertDialog({
-						title: "Connection Error",
-						message: "The request has timed out.",
-						ok: "Retry"
-					});
-
-					alert.addEventListener("click", function(_data) {
-						this.retrieveSet(_params);
-					});
-
-					alert.show();
-				}
+				failure: _params.error
 			});
 		} else {
 			_params.callback();

@@ -35,16 +35,14 @@ function Model() {
 				url: _params.url,
 				passthrough: _params.callback,
 				success: this.handleData,
-				failure: function(_error) {
-					alert("Unable to connect. Please try again later.");
-				}
+				failure: _params.error
 			});
 		} else {
 			_params.callback();
 		}
 	};
 
-	this.handleData = function(_data, _url, _passthrough) {
+	this.handleData = function(_data, _url, _callback) {
 		APP.log("debug", "ARTICLE.handleData");
 
 		var xml = Ti.XML.parseString(UTIL.xmlNormalize(_data));
@@ -76,8 +74,8 @@ function Model() {
 			db.close();
 		}
 
-		if(_passthrough) {
-			_passthrough();
+		if(_callback) {
+			_callback();
 		}
 	};
 

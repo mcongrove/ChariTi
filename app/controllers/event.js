@@ -1,4 +1,5 @@
 var APP = require("core");
+var UTIL = require("utilities");
 var DATE = require("alloy/moment");
 var MODEL = require("models/event")();
 
@@ -39,6 +40,15 @@ $.retrieveData = function(_force, _callback) {
 			if(typeof _callback !== "undefined") {
 				_callback();
 			}
+		},
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+
+			if(OS_IOS) {
+				pullToRefresh.hide();
+			}
 		}
 	});
 };
@@ -58,7 +68,7 @@ $.handleData = function(_data) {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
 	APP.closeLoading();
 
@@ -73,7 +83,7 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "event @click " + _event.row.id);
 
 	if(APP.Device.isTablet) {
@@ -89,6 +99,25 @@ $.content.addEventListener("click", function(_event) {
 		index: CONFIG.index
 	});
 });
+
+if(OS_IOS) {
+	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
+		table: $.container,
+		backgroundColor: "#EEE",
+		fontColor: "#AAA",
+		indicator: "dark",
+		image: "/images/ptrArrow.png",
+		refresh: function(_callback) {
+			$.retrieveData(true, function() {
+				_callback(true);
+			});
+		}
+	});
+
+	if(CONFIG.feed) {
+		pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
+	}
+}
 
 // Kick off the init
 $.init();

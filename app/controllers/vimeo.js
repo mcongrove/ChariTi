@@ -1,4 +1,5 @@
 var APP = require("core");
+var UTIL = require("utilities");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
 var MODEL = require("models/vimeo")();
@@ -30,11 +31,26 @@ $.init = function() {
 	}
 };
 
-$.retrieveData = function() {
+$.retrieveData = function(_force, _callback) {
 	MODEL.fetch({
 		url: CONFIG.feed,
-		cache: CONFIG.cache,
-		callback: $.handleVideos
+		cache: _force ? 0 : CONFIG.cache,
+		callback: function() {
+			$.handleVideos();
+
+			if(typeof _callback !== "undefined") {
+				_callback();
+			}
+		},
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+
+			if(OS_IOS) {
+				pullToRefresh.hide();
+			}
+		}
 	});
 };
 
@@ -55,7 +71,7 @@ $.handleVideos = function() {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
 	APP.closeLoading();
 
@@ -71,7 +87,7 @@ $.handleVideos = function() {
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "vimeo @click " + _event.row.url);
 
 	if(APP.Device.isTablet) {
@@ -88,6 +104,25 @@ $.content.addEventListener("click", function(_event) {
 		index: CONFIG.index
 	});
 });
+
+if(OS_IOS) {
+	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
+		table: $.container,
+		backgroundColor: "#EEE",
+		fontColor: "#AAA",
+		indicator: "dark",
+		image: "/images/ptrArrow.png",
+		refresh: function(_callback) {
+			$.retrieveData(true, function() {
+				_callback(true);
+			});
+		}
+	});
+
+	if(CONFIG.feed) {
+		pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
+	}
+}
 
 // Kick off the init
 $.init();

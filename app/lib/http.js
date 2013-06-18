@@ -65,7 +65,11 @@ exports.request = function(_params) {
 		 */
 		xhr.onerror = function(_event) {
 			if(_params.failure) {
-				_params.failure(this);
+				if(_params.passthrough) {
+					_params.failure(this, _params.url, _params.passthrough);
+				} else {
+					_params.failure(this, _params.url);
+				}
 			} else {
 				Ti.API.error(JSON.stringify(this));
 			}
@@ -94,5 +98,13 @@ exports.request = function(_params) {
 		}
 	} else {
 		Ti.API.error("No internet connection");
+
+		if(_params.failure) {
+			if(_params.passthrough) {
+				_params.failure(null, _params.url, _params.passthrough);
+			} else {
+				_params.failure(null, _params.url);
+			}
+		}
 	}
 };
