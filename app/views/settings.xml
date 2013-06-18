@@ -16,7 +16,7 @@
 			<Label id="copyright" />
 			<Label id="version" />
 			<Label text="This application was created using the open source ChariTi framework, freely available at:\nhttp://chariti.mobi" />
-			<Label text="ChariTi ‌© 2013 Matthew Congrove" />
+			<Label id="chariti" />
 		</ScrollView>
 	</View>
 </Alloy>

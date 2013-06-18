@@ -8,7 +8,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.1.0.0226131418",
+	CVERSION: "1.1.0.061813",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
@@ -835,7 +835,7 @@ var APP = {
 		db.close();
 
 		var email = Ti.UI.createEmailDialog({
-			barColor: "#000",
+			barColor: "#FFF",
 			subject: "Application Log",
 			messageBody: log
 		});

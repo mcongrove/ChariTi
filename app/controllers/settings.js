@@ -21,8 +21,8 @@ $.init = function() {
 		$.content.remove($.logs_table);
 	}
 
-	$.copyright.text = APP.LEGAL.COPYRIGHT;
-	$.version.text = "Version " + APP.VERSION + ", ChariTi " + APP.CVERSION;
+	$.copyright.text = APP.LEGAL.COPYRIGHT + " v" + APP.VERSION;
+	$.chariti.text = "ChariTi ‌© 2013 Matthew Congrove v" + APP.CVERSION;
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 

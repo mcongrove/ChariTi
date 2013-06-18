@@ -80,7 +80,7 @@ $.createSettings = function() {
 		height: "47dp",
 		font: {
 			fontSize: "16dp",
-			fontFamily: "HelveticaNeue-Medium"
+			fontFamily: "HelveticaNeue"
 		},
 		color: "#000",
 		touchEnabled: false
