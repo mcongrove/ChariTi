@@ -337,55 +337,14 @@ var APP = {
 			});
 		}
 
-		// Swiping is awful on Android, so only support this for iOS
-		if(OS_IOS) {
-			// Listen for gestures on the main window to open/close the slide menu
-			APP.GlobalWrapper.addEventListener("touchstart", function(_event) {
-				_event.source.lastPosition = parseInt(_event.x, 10);
-			});
-
-			APP.GlobalWrapper.addEventListener("touchmove", function(_event) {
-				var point = APP.GlobalWrapper.convertPointToView({
-					x: _event.x,
-					y: _event.y
-				}, APP.SlideMenu.Wrapper);
-
-				var distance = parseInt(point.x, 10) - _event.source.lastPosition;
-
-				if(distance > 20 || distance < -20) {
-					_event.source.moving = true;
-				}
-
-				if(_event.source.moving && distance <= 200 && distance >= 0) {
-					APP.GlobalWrapper.animate({
-						left: distance,
-						duration: 20
-					});
-
-					APP.GlobalWrapper.left = distance;
-				}
-			});
-
-			APP.GlobalWrapper.addEventListener("touchend", function(_event) {
-				if(_event.source.moving) {
-					_event.source.moving = false;
-
-					if(APP.GlobalWrapper.left >= 100 && APP.GlobalWrapper.left < 200) {
-						APP.openMenu();
-					} else {
-						APP.closeMenu();
-					}
-				}
-			});
-		} else {
-			APP.GlobalWrapper.addEventListener("swipe", function(_event) {
-				if(_event.direction == "right") {
-					APP.openMenu();
-				} else if(_event.direction == "left") {
-					APP.closeMenu();
-				}
-			});
-		}
+		// Listen for gestures on the main window to open/close the slide menu
+		APP.GlobalWrapper.addEventListener("swipe", function(_event) {
+			if(_event.direction == "right") {
+				APP.openMenu();
+			} else if(_event.direction == "left") {
+				APP.closeMenu();
+			}
+		});
 	},
 	/**
 	 * Re-builds the app with newly downloaded JSON configration file
