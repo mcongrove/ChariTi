@@ -133,21 +133,21 @@ function Model() {
 
 		return temp;
 	};
-	
+
 	this.downloadPodcast = function(_url) {
 		APP.log("debug", "PODCAST.downloadPodcast(" + _url + ")");
-		
+
 		var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + ".mp3";
 		var directory;
-	
+
 		if(OS_ANDROID) {
 			directory = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
 		} else {
 			directory = Ti.Filesystem.applicationDataDirectory;
 		}
-	
+
 		var file = Ti.Filesystem.getFile(directory, filename);
-	
+
 		if(!file.exists()) {
 			HTTP.request({
 				timeout: 10000,
