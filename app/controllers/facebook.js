@@ -43,6 +43,15 @@ $.retrieveData = function(_force, _callback) {
 			if(typeof _callback !== "undefined") {
 				_callback();
 			}
+		},
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+
+			if(OS_IOS) {
+				pullToRefresh.hide();
+			}
 		}
 	});
 };
@@ -112,7 +121,9 @@ if(OS_IOS) {
 		}
 	});
 
-	pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
+	if(CONFIG.feed) {
+		pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
+	}
 }
 
 // Kick off the init

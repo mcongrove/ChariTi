@@ -2,6 +2,6 @@
 	<View id="Wrapper">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
 		
-		<TableView id="container" />
+		<TableView id="content" />
 	</View>
 </Alloy>

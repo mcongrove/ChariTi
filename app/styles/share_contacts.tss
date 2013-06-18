@@ -1,7 +1,6 @@
-"#container": {
+"#content": {
 	top: "47dp",
 	backgroundColor: "#EEE",
 	rowHeight: "48dp",
-	separatorColor: "#DDD",
-	scrollsToTop: true
+	separatorColor: "#DDD"
 }

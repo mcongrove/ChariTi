@@ -13,10 +13,14 @@ $.init = function() {
 	MODEL.retrieveSet({
 		id: CONFIG.id,
 		cache: CONFIG.cache,
-		callback: $.handleData
+		callback: $.handleData,
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+		}
 	});
 
-	$.NavigationBar.setTitle(CONFIG.title);
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(APP.Device.isHandheld) {

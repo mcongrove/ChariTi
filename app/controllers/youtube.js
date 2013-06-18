@@ -1,4 +1,5 @@
 var APP = require("core");
+var UTIL = require("utilities");
 var DATE = require("alloy/moment");
 var STRING = require("alloy/string");
 var MODEL = require("models/youtube")();
@@ -40,7 +41,12 @@ $.handleUsername = function() {
 
 	MODEL.fetch({
 		cache: CONFIG.cache,
-		callback: $.handleVideos
+		callback: $.handleVideos,
+		error: function() {
+			alert("Unable to connect. Please try again later.");
+
+			APP.closeLoading();
+		}
 	});
 };
 
@@ -61,7 +67,7 @@ $.handleVideos = function() {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
 	APP.closeLoading();
 
@@ -77,7 +83,7 @@ $.handleVideos = function() {
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "youtube @click " + _event.row.url);
 
 	if(APP.Device.isTablet) {

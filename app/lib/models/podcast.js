@@ -35,16 +35,14 @@ function Model() {
 				url: _params.url,
 				passthrough: _params.callback,
 				success: this.handleData,
-				failure: function(_error) {
-					alert("Unable to connect. Please try again later.");
-				}
+				failure: _params.error
 			});
 		} else {
 			_params.callback();
 		}
 	};
 
-	this.handleData = function(_data, _url, _passthrough) {
+	this.handleData = function(_data, _url, _callback) {
 		APP.log("debug", "PODCAST.handleData");
 
 		var xml = Ti.XML.parseString(UTIL.xmlNormalize(_data));
@@ -79,8 +77,8 @@ function Model() {
 			db.close();
 		}
 
-		if(_passthrough) {
-			_passthrough();
+		if(_callback) {
+			_callback();
 		}
 	};
 
@@ -134,6 +132,33 @@ function Model() {
 		db.close();
 
 		return temp;
+	};
+
+	this.downloadPodcast = function(_url) {
+		APP.log("debug", "PODCAST.downloadPodcast(" + _url + ")");
+
+		var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + ".mp3";
+		var directory;
+
+		if(OS_ANDROID) {
+			directory = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
+		} else {
+			directory = Ti.Filesystem.applicationDataDirectory;
+		}
+
+		var file = Ti.Filesystem.getFile(directory, filename);
+
+		if(!file.exists()) {
+			HTTP.request({
+				timeout: 10000,
+				type: "GET",
+				format: "DATA",
+				url: _url,
+				success: function(_data) {
+					file.write(data);
+				}
+			});
+		}
 	};
 
 	this.getNextPodcast = function(_id) {

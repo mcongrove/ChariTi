@@ -92,6 +92,7 @@ exports.hide = function() {
 	$.status.text = options.msgPull;
 
 	pulled = false;
+	loading = false;
 };
 
 exports.trigger = function() {

@@ -35,9 +35,7 @@ function Model() {
 				url: _params.url,
 				passthrough: _params.callback,
 				success: this.handleData,
-				failure: function(_error) {
-					alert("Unable to connect. Please try again later.");
-				}
+				failure: _params.error
 			});
 		} else {
 			_params.callback();

@@ -26,11 +26,9 @@ Can I be a contributor?
 -----------------------
 After you've submitted a couple of pull requests you can ask to be added as a contributor. We'd like to make sure that contributors are following the guidelines first.
 
-What if I want to help with the ChariTi website / ChariTi Desktop?
+What if I want to help with the ChariTi website?
 ------------------------------------------------
 We have a private repository for the ChariTi website. Contact us with more information on how you'd like to help and we can discuss this option.
-
-The ChariTi Desktop application is open source and can be found on the [ChariTi Desktop](http://github.com/mcongrove/ChariTi-Desktop) GitHub page.
 
 What is this "Peek" branch?
 -----------------------------

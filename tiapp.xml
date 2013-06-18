@@ -9,6 +9,7 @@
     <property name="acs-api-key-development" type="string"></property>	
 	-->
     <deployment-targets>
+        <target device="tizen">false</target>
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>

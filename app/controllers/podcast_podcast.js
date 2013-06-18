@@ -48,6 +48,26 @@ $.handleData = function(_data) {
 $.createAudioPlayer = function(_url) {
 	APP.log("debug", "podcast_podcast.createAudioPlayer(" + _url + ")");
 
+	/* Adds support for offline listening
+	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
+	var directory;
+
+	if(OS_ANDROID) {
+		directory = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory);
+	} else {
+		directory = Ti.Filesystem.applicationDataDirectory;
+	}
+
+	var file = Ti.Filesystem.getFile(directory, filename);
+	var filepath;
+
+	if(file.exists()) {
+		filepath = file.getNativePath();
+	} else {
+		filepath = _url;
+	}
+	*/
+
 	Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
 
 	STREAM = Ti.Media.createVideoPlayer({
