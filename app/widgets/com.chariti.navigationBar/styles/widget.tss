@@ -6,7 +6,6 @@
 	backgroundColor: "#000"
 },
 "#overlay": {
-	backgroundImage: WPATH("images/overlay.png"),
 	height: Ti.UI.FILL,
 	width: Ti.UI.FILL,
 	left: "0dp",
@@ -16,8 +15,7 @@
 	top: "0dp",
 	left: "0dp",
 	width: "48dp",
-	height: "47dp",
-	backgroundImage: WPATH("images/overlay_left.png")
+	height: "47dp"
 },
 "#leftImage": {
 	top: "9dp",
@@ -29,8 +27,7 @@
 	top: "0dp",
 	left: "0dp",
 	width: "48dp",
-	height: "47dp",
-	backgroundImage: WPATH("images/overlay_left.png")
+	height: "47dp"
 },
 "#backImage": {
 	top: "9dp",
@@ -44,8 +41,7 @@
 	top: "0dp",
 	right: "0dp",
 	width: "48dp",
-	height: "47dp",
-	backgroundImage: WPATH("images/overlay_right.png")
+	height: "47dp"
 },
 "#rightImage": {
 	top: "9dp",
