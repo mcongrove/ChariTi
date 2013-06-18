@@ -11,10 +11,10 @@ Code Contribution Practices
 * Please _do not_ use the `master` branch; instead, use the next release branch
 * Contributions will only be accepted as __pull requests__
 * If you plan on taking on an [Issue](https://github.com/mcongrove/ChariTi/issues), leave a comment so no one else duplicates your work
-* Be sure to pull the lastest code before submitting a pull request; conflicting merges may be rejected
+* Be sure to pull the latest code before submitting a pull request; conflicting merges may be rejected
 * Poorly written or inefficient contributions will be rejected; it's not personal, we still love you
 * If you follow the coding standards established in our existing code, we'll love you even more
-	* We've included JS Beautifier in this project; it automatically runs before each time you compile to keep code uniform and beautiful
+	* We've included JS Beautifier in this project; it automatically runs each time you compile to keep code uniform and beautiful
 
 Where do I start?
 -----------------
@@ -32,4 +32,6 @@ We have a private repository for the ChariTi website. Contact us with more infor
 
 What is this "Peek" branch?
 -----------------------------
-The "Peek" branch is ChariTi Peek, an application which lets you test out your applications quickly and easily with only a JSON configuration file. This application will be available in the App Store soon.
+The "Peek" branch is ChariTi PEEK, an application which lets you test out your applications quickly and easily with only a JSON configuration file.
+
+You can download PEEK for [iOS](https://itunes.apple.com/us/app/chariti-peek/id613335033?mt=8) or [Android](https://play.google.com/store/apps/details?id=com.chariti.peek).

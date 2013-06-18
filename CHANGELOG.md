@@ -3,11 +3,23 @@ Change Log
 
 This document describes the high-level changes made for each version. For a complete list of changes, please refer to the [ChariTi GitHub repository](http://github.com/mcongrove/ChariTi/).
 
+v 1.1.1 (??-??-2013)
+--------------------
+*	Added Share tab
+*	Added support for scroll-to-top
+*	Fixed handling of unavailable network situations
+*	Fixed slide menu jitters
+*	Added URL scheme support for PEEK
+*	Added URL normalization for PEEK
+*	Fixed image downloading for PEEK
+*	Removed desktop application
+*	Removed command line scripts
+
 v 1.1 (02-26-2013)
 ------------------
 *	Added initial Android support
 *	Added tablet support (iPad + Android Tablet)
-*	Added a preview application ("ChariTi Peek")
+*	Added a preview application ("ChariTi PEEK")
 *	Added support for ACS push notifications
 *	Added a sliding menu that can optionally replace tabs
 *	Added Podcast tab (follows iTunes Podcast format)
