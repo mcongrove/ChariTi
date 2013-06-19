@@ -8,11 +8,13 @@
 			</View>
 			
 			<View id="meta">
+				<Label id="time" />
+				
 				<View id="track">
-					<Label id="time" />
 					<View id="position" />
 				</View>
 				
+				<Label id="duration" />
 				<Label id="title" />
 				
 				<View id="controls">

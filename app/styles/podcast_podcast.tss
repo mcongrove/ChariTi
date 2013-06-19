@@ -20,27 +20,27 @@
 	height: "152dp",
 	backgroundColor: "#FFF"
 },
+"#time": {
+	top: "15dp",
+	left: "15dp",
+	height: "20dp",
+	font: {
+		fontSize: "11dp",
+		fontFamily: "HelveticaNeue-Light"
+	},
+	color: "#000",
+	width: "40dp",
+	textAlign: "left",
+	touchEnabled: false,
+	zIndex: 101
+},
 "#track": {
 	width: Ti.UI.FILL,
 	height: "20dp",
 	top: "15dp",
-	left: "15dp",
-	right: "15dp",
+	left: "55dp",
+	right: "55dp",
 	backgroundColor: "#DDD"
-},
-"#time": {
-	top: "0dp",
-	right: "6dp",
-	height: "20dp",
-	font: {
-		fontSize: "14dp",
-		fontFamily: "HelveticaNeue-Bold"
-	},
-	color: "#AAA",
-	width: Ti.UI.SIZE,
-	textAlign: "right",
-	touchEnabled: false,
-	zIndex: 101
 },
 "#position": {
 	width: "1%",
@@ -49,6 +49,20 @@
 	touchEnabled: false,
 	zIndex: 100
 },
+"#duration": {
+	top: "15dp",
+	right: "15dp",
+	height: "20dp",
+	font: {
+		fontSize: "11dp",
+		fontFamily: "HelveticaNeue-Light"
+	},
+	color: "#000",
+	width: "40dp",
+	textAlign: "right",
+	touchEnabled: false,
+	zIndex: 101
+},
 "#title": {
 	top: "50dp",
 	left: "15dp",
@@ -56,7 +70,7 @@
 	height: "44dp",
 	font: {
 		fontSize: "18dp",
-		fontFamily: "HelveticaNeue"
+		fontFamily: "HelveticaNeue-Light"
 	},
 	color: "#000",
 	textAlign: "center"

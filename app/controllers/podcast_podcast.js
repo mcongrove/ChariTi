@@ -86,7 +86,12 @@ $.createAudioPlayer = function(_url) {
 	});
 
 	STREAM.addEventListener("playbackstate", $.streamState);
-	STREAM.addEventListener("loadstate", $.streamPlay);
+	STREAM.addEventListener("loadstate", function(_event) {
+		var duration = DATE.duration(STREAM.getDuration());
+		$.duration.text = (duration.hours() !== 0 ? duration.hours() + ":" : "") + duration.minutes() + ":" + (duration.seconds() < 10 ? "0" : "") + duration.seconds();
+
+		$.streamPlay();
+	});
 
 	setInterval($.streamProgress, 500);
 };
