@@ -16,8 +16,6 @@ $.init = function() {
 		callback: $.handleData,
 		error: function() {
 			alert("Unable to connect. Please try again later.");
-
-			APP.closeLoading();
 		}
 	});
 
@@ -36,10 +34,10 @@ $.handleData = function() {
 	$.createGrid(PHOTOS);
 
 	Ti.App.addEventListener("APP:orientationChange", function(_event) {
-		var children = $.content.children;
+		var children = $.container.children;
 
 		for(var i = 0, z = children.length; i < z; i++) {
-			$.content.remove(children[i]);
+			$.container.remove(children[i]);
 		}
 
 		$.createGrid(PHOTOS);
@@ -67,9 +65,9 @@ $.createGrid = function(_data) {
 		}
 	}
 
-	var rowLength = Math.floor((width - 10) / 77);
-	var photosWidth = (67 * rowLength);
-	var padding = ((width - photosWidth) / (rowLength + 1));
+	var rowLength = Math.floor(width / 80);
+	var photosWidth = (77 * rowLength);
+	var padding = ((width - photosWidth) / (rowLength - 1));
 	var counter = 1;
 	var row;
 
@@ -77,15 +75,15 @@ $.createGrid = function(_data) {
 		if(counter == 1) {
 			row = Ti.UI.createView({
 				layout: "horizontal",
-				top: padding + "dp",
-				height: "67dp"
+				top: (i == 0 ? 0 : padding) + "dp",
+				height: "77dp"
 			});
 		}
 
 		var thumbnail = Alloy.createController("flickr_thumb", {
 			id: _data[i].id,
 			image: _data[i].url_sq,
-			left: padding + "dp"
+			left: (counter == 1 ? 0 : padding) + "dp"
 		}).getView();
 
 		thumbnail.addEventListener("click", function(_event) {
@@ -102,7 +100,7 @@ $.createGrid = function(_data) {
 		row.add(thumbnail);
 
 		if(counter == rowLength || (i + 1) == z) {
-			$.content.add(row);
+			$.container.add(row);
 
 			counter = 1;
 		} else {

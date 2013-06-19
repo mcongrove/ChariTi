@@ -1,7 +1,7 @@
 "#Wrapper": {
 	backgroundColor: "#FFF"
 },
-"#content": {
+"#container": {
 	top: "47dp",
 	layout: "vertical",
 	scrollsToTop: true

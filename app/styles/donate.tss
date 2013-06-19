@@ -1,6 +1,6 @@
 "#content": {
 	top: "47dp",
-	backgroundColor: "#EEE",
+	backgroundColor: "#FFF",
 	layout: "vertical",
 	showVerticalScrollIndicator: true
 },
@@ -11,9 +11,9 @@
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "18dp",
-		fontWeight: "bold"
+		fontFamily: "HelveticaNeue-Light"
 	},
-	color: "#666"
+	color: "#000"
 },
 "#text": {
 	top: "10dp",
@@ -23,27 +23,25 @@
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
-		fontWeight: "normal"
+		fontFamily: "HelveticaNeue"
 	},
-	color: "#666"
-},
+	color: "#000"
+}
 "#button": {
 	top: "10dp",
 	left: "15dp",
-	height: "36dp",
-	borderRadius: "3dp",
+	height: "50dp",
 	width: Ti.UI.SIZE
 },
 "#buttonText": {
-	top: "10dp",
-	left: "10dp",
-	right: "10dp",
-	bottom: "10dp",
-	height: "16dp",
+	top: "0dp",
+	left: "15dp",
+	right: "15dp",
+	bottom: "0dp",
 	width: Ti.UI.SIZE,
 	font: {
-		fontSize: "14dp",
-		fontWeight: "bold"
+		fontSize: "18dp",
+		fontFamily: "HelveticaNeue-Light"
 	},
 	color: "#FFF",
 	textAlign: "center"
