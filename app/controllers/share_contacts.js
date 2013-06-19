@@ -26,10 +26,6 @@ $.init = function() {
 		$.NavigationBar.showBack();
 	}
 
-	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu();
-	}
-
 	$.NavigationBar.showRight({
 		image: "/images/next.png",
 		callback: function() {
@@ -74,9 +70,9 @@ $.loadData = function() {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
-	$.content.index = index;
+	$.container.index = index;
 };
 
 $.getContacts = function() {
@@ -132,7 +128,9 @@ $.getEmails = function(_contacts) {
 $.createEmail = function(_addresses) {
 	APP.log("debug", "share_contacts.createEmail");
 
-	var email = Ti.UI.createEmailDialog();
+	var email = Ti.UI.createEmailDialog({
+		barColor: APP.Settings.colors.primary || "#000"
+	});
 
 	if(_addresses) {
 		email.bccRecipients = _addresses;
@@ -149,7 +147,7 @@ $.createEmail = function(_addresses) {
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "share_contacts @click " + _event.row.id);
 
 	if(SELECTED.indexOf(_event.row.id) === -1) {

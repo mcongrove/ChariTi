@@ -6,13 +6,8 @@
 			</ScrollView>
 			
 			<View id="buttons">
-				<View id="buttonCancel">
-					<Label class="buttonText" text="Cancel" />
-				</View>
-				
-				<View id="buttonConfirm">
-					<Label class="buttonText" text="Confirm" />
-				</View>
+				<Label id="buttonCancel" text="Cancel" />
+				<Label id="buttonConfirm" text="Confirm" />
 			</View>
 		</View>
 	</View>

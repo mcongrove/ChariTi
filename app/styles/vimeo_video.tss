@@ -1,5 +1,5 @@
 "#Wrapper": {
-	backgroundColor: "#000"
+	backgroundColor: "#FFF"
 },
 "#content": {
 	top: "47dp"

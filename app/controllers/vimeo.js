@@ -80,7 +80,6 @@ $.handleVideos = function() {
 
 		APP.addChild("vimeo_video", {
 			url: data[0].link,
-			title: data[0].title,
 			index: CONFIG.index
 		});
 	}
@@ -100,7 +99,6 @@ $.container.addEventListener("click", function(_event) {
 
 	APP.addChild("vimeo_video", {
 		url: _event.row.url,
-		title: _event.row.setTitle,
 		index: CONFIG.index
 	});
 });

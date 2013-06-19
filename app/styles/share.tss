@@ -5,24 +5,24 @@
 	height: Ti.UI.FILL
 },
 "#heading": {
-	top: "10dp",
-	left: "15dp",
-	right: "15dp",
-	bottom: "10dp",
-	height: Ti.UI.SIZE,
+	color: "#666",
 	font: {
 		fontSize: "14dp",
-		fontWeight: "normal"
+		fontFamily: "HelveticaNeue"
 	},
-	color: "#666"
-},
-"#templates": {
-	backgroundColor: "#DDD",
-	borderRadius: "10dp",
-	rowHeight: "48dp",
-	separatorColor: "#DDD",
-	height: Ti.UI.FILL,
+	top: "15dp",
 	left: "15dp",
 	right: "15dp",
-	bottom: "15dp"
+	height: Ti.UI.SIZE,
+	textAlign: "left"
+},
+"#templates": {
+	right: "0dp",
+	left: "0dp",
+	top: "20dp",
+	bottom: "0dp",
+	separatorColor: "#EEE",
+	rowHeight: "45dp",
+	backgroundColor: "#FFF",
+	scrollable: false
 }

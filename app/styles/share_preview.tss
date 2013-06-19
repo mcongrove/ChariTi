@@ -1,61 +1,57 @@
 "#content": {
 	top: "47dp",
-	backgroundImage: "/images/transparent.png",
 	height: Ti.UI.FILL,
 	width: Ti.UI.FILL
 },
 "#preview": {
-	backgroundImage: "/images/transparent.png",
-	top: "20dp",
-	left: "20dp",
-	right: "20dp",
-	bottom: "76dp",
-	showVerticalScrollIndicator: true,
-	borderRadius: "3dp"
+	backgroundColor: "#FFF",
+	top: "0dp",
+	left: "0dp",
+	right: "0dp",
+	bottom: "53dp",
+	showVerticalScrollIndicator: true
 },
 "#text": {
-	top: "10dp",
-	left: "10dp",
-	right: "10dp",
-	bottom: "10dp",
+	top: "20dp",
+	left: "15dp",
+	right: "15dp",
+	bottom: "20dp",
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
-		fontWeight: "normal"
+		fontFamily: "HelveticaNeue"
 	},
-	color: "#CCC"	
+	color: "#000"
 },
 "#buttons": {
-	left: "20dp",
-	right: "20dp",
-	bottom: "20dp",
-	height: "36dp"
+	left: "0dp",
+	right: "0dp",
+	bottom: "0dp",
+	height: "53dp"
 },
 "#buttonCancel": {
+	bottom: "0dp",
 	left: "0dp",
-	height: "36dp",
-	borderRadius: "3dp",
-	width: Ti.UI.SIZE,
-	backgroundColor: "#CE4746"
+	height: "53dp",
+	width: "50%",
+	backgroundColor: "#EBEBEB",
+	font: {
+		fontSize: "23dp",
+		fontFamily: "HelveticaNeue-Light"
+	},
+	color: "#000",
+	textAlign: "center"
 },
 "#buttonConfirm": {
+	bottom: "0dp",
 	right: "0dp",
-	height: "36dp",
-	borderRadius: "3dp",
-	width: Ti.UI.SIZE,
-	backgroundColor: "#5FA857"
-},
-".buttonText": {
-	top: "10dp",
-	left: "10dp",
-	right: "10dp",
-	bottom: "10dp",
-	height: "16dp",
-	width: Ti.UI.SIZE,
+	height: "53dp",
+	width: "50%",
+	backgroundColor: "#EBEBEB",
 	font: {
-		fontSize: "14dp",
-		fontWeight: "bold"
+		fontSize: "23dp",
+		fontFamily: "HelveticaNeue-Medium"
 	},
-	textAlign: "center",
-	color: "#FFF"
+	color: "#000",
+	textAlign: "center"
 }
