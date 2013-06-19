@@ -6,65 +6,44 @@
 	top: "47dp",
 	showVerticalScrollIndicator: true
 },
-"#header": {
-	backgroundGradient: {
-		type: "linear",
-		colors: [
-			"#F8F8F8",
-			"#ECECEC"
-		],
-		startPoint: {
-			x: 0,
-			y: 0
-		},
-		endPoint: {
-			x: 0,
-			y: "100%"
-		},
-		backFillStart: true
-	},
+"#heading": {
+	top: "15dp",
+	left: "15dp",
+	right: "15dp",
 	height: Ti.UI.SIZE,
-	width: Ti.UI.FILL,
-	layout: "vertical"
+	font: {
+		fontSize: "18dp",
+		fontFamily: "HelveticaNeue-Light"
+	}
 },
 "#date": {
 	top: "10dp",
-	left: "10dp",
-	right: "10dp",
-	height: "14dp",
-	font: {
-		fontSize: "12dp",
-		fontWeight: "bold"
-	},
-	color: "#777"
-},
-"#heading": {
-	left: "10dp",
-	right: "10dp",
-	bottom: "10dp",
-	height: Ti.UI.SIZE,
-	font: {
-		fontSize: "16dp",
-		fontWeight: "bold"
-	},
-	color: "#333"
-},
-"#image": {
-	top: "15dp",
-	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE
-},
-"#text": {
-	top: "15dp",
 	left: "15dp",
 	right: "15dp",
 	bottom: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
-		fontSize: "14dp",
-		fontWeight: "normal"
+		fontSize: "11dp",
+		fontFamily: "HelveticaNeue"
 	},
-	color: "#777",
+	color: "#000"
+},
+"#image": {
+	top: "10dp",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},
+"#text": {
+	top: "10dp",
+	left: "6dp",
+	right: "6dp",
+	bottom: "15dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "14dp",
+		fontFamily: "HelveticaNeue"
+	},
+	color: "#000",
 	backgroundColor: "transparent",
 	editable: false,
 	autoLink: Ti.UI.AUTOLINK_URLS

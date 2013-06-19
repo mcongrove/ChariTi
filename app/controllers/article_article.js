@@ -21,16 +21,14 @@ $.handleData = function(_data) {
 	$.handleNavigation();
 
 	$.heading.text = _data.title;
+	$.heading.color = APP.Settings.colors.primary || "#000";
 	$.text.value = _data.description;
 	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date, 10)).fromNow());
-	$.date.color = APP.Settings.colors.primary;
 
 	if(_data.image) {
-		var width = APP.Device.width - 60;
-
 		var image = Ti.UI.createImageView({
 			image: _data.image,
-			width: width + "dp",
+			width: APP.Device.width + "dp",
 			height: Ti.UI.SIZE,
 			preventDefaultImage: true
 		});
