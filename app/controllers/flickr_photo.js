@@ -8,7 +8,14 @@ var NEXT = null;
 var metaVisible = true;
 
 $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
-$.NavigationBar.showBack();
+$.NavigationBar.showBack({
+	callback: function(_event) {
+		APP.removeChild();
+		APP.SlideMenuEngaged = true;;
+	}
+});
+ 
+APP.SlideMenuEngaged = false;
 
 $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
