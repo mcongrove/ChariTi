@@ -17,10 +17,9 @@
 	}
 },
 "#date": {
-	top: "10dp",
+	top: "5dp",
 	left: "15dp",
 	right: "15dp",
-	bottom: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "11dp",
