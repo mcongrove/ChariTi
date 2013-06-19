@@ -13,6 +13,8 @@ $.init = function() {
 	MODEL.init(CONFIG.index);
 
 	$.handleData(MODEL.getPodcast(CONFIG.id));
+
+	$.position.backgroundColor = APP.Settings.colors.primary || "#000";
 };
 
 $.handleData = function(_data) {
@@ -48,7 +50,6 @@ $.handleData = function(_data) {
 $.createAudioPlayer = function(_url) {
 	APP.log("debug", "podcast_podcast.createAudioPlayer(" + _url + ")");
 
-	/* Adds support for offline listening
 	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
 	var directory;
 
@@ -63,15 +64,16 @@ $.createAudioPlayer = function(_url) {
 
 	if(file.exists()) {
 		filepath = file.getNativePath();
+
+		$.disableDownload();
 	} else {
 		filepath = _url;
 	}
-	*/
 
 	Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
 
 	STREAM = Ti.Media.createVideoPlayer({
-		url: _url,
+		url: filepath,
 		backgroundColor: "#000",
 		fullscreen: false,
 		allowsAirPlay: true,
@@ -89,34 +91,20 @@ $.createAudioPlayer = function(_url) {
 	setInterval($.streamProgress, 500);
 };
 
+$.downloadRemoteFile = function() {
+	MODEL.downloadPodcast(ACTION.url);
+
+	$.disableDownload();
+};
+
+$.disableDownload = function() {
+	$.download.touchEnabled = false;
+	$.download.opacity = 0.4;
+};
+
 $.handleNavigation = function(_id) {
 	ACTION.next = MODEL.getNextPodcast(_id);
 	ACTION.previous = MODEL.getPreviousPodcast(_id);
-
-	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
-		down: function(_event) {
-			APP.log("debug", "podcast_podcast @next");
-
-			$.streamStop();
-
-			APP.addChild("podcast_podcast", {
-				id: ACTION.next.id,
-				index: CONFIG.index
-			});
-		},
-		up: function(_event) {
-			APP.log("debug", "podcast_podcast @previous");
-
-			$.streamStop();
-
-			APP.addChild("podcast_podcast", {
-				id: ACTION.previous.id,
-				index: CONFIG.index
-			});
-		}
-	}).getView();
-
-	$.NavigationBar.addNavigation(navigation);
 };
 
 $.streamPlay = function(_event) {
@@ -169,6 +157,7 @@ $.streamState = function(_event) {
 $.play.addEventListener("click", $.streamPlay);
 $.pause.addEventListener("click", $.streamPause);
 $.track.addEventListener("click", $.streamSeek);
+$.download.addEventListener("click", $.downloadRemoteFile);
 
 $.previous.addEventListener("click", function(_event) {
 	APP.log("debug", "podcast_podcast @previous");

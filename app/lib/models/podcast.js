@@ -155,7 +155,7 @@ function Model() {
 				format: "DATA",
 				url: _url,
 				success: function(_data) {
-					file.write(data);
+					file.write(_data);
 				}
 			});
 		}

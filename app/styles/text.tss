@@ -10,8 +10,8 @@
 	right: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
-		fontSize: "17dp",
-		fontFamily: "HelveticaNeue"
+		fontSize: "18dp",
+		fontFamily: "HelveticaNeue-Light"
 	},
 	color: "#000"
 },
