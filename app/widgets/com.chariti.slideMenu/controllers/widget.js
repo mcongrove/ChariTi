@@ -34,8 +34,8 @@ $.init = function(_params) {
 			right: "7dp",
 			height: "47dp",
 			font: {
-				fontSize: "16dp",
-				fontFamily: "HelveticaNeue"
+				fontSize: "18dp",
+				fontFamily: "HelveticaNeue-Light"
 			},
 			color: "#000",
 			touchEnabled: false
@@ -79,8 +79,8 @@ $.createSettings = function() {
 		right: "7dp",
 		height: "47dp",
 		font: {
-			fontSize: "16dp",
-			fontFamily: "HelveticaNeue"
+			fontSize: "18dp",
+			fontFamily: "HelveticaNeue-Light"
 		},
 		color: "#000",
 		touchEnabled: false

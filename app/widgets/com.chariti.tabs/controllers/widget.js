@@ -67,7 +67,7 @@ $.init = function(_params) {
 			width: Ti.UI.FILL,
 			height: "15dp",
 			font: {
-				fontSize: "11dp",
+				fontSize: "10dp",
 				fontFamily: "HelveticaNeue"
 			},
 			color: _params.colors.text,
@@ -119,7 +119,7 @@ $.addMoreTab = function(_params) {
 		width: Ti.UI.FILL,
 		height: "13dp",
 		font: {
-			fontSize: "11dp",
+			fontSize: "10dp",
 			fontFamily: "HelveticaNeue"
 		},
 		color: _params.colors.text,

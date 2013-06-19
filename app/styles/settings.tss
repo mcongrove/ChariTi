@@ -17,8 +17,8 @@
 "TableViewRow": {
 	selectedBackgroundColor: "#EEE",
 	font: {
-		fontSize: "16dp",
-		fontFamily: "HelveticaNeue"
+		fontSize: "17dp",
+		fontFamily: "HelveticaNeue-Light"
 	},
 	color: "#000",
 	height: "45dp"
@@ -37,4 +37,7 @@
 },
 "#copyright": {
 	top: "20dp"
+},
+"#chariti": {
+	bottom: "20dp"
 }
