@@ -835,7 +835,7 @@ var APP = {
 		db.close();
 
 		var email = Ti.UI.createEmailDialog({
-			barColor: "#FFF",
+			barColor: APP.Settings.colors.primary || "#000",
 			subject: "Application Log",
 			messageBody: log
 		});
