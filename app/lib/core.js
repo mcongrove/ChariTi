@@ -88,6 +88,7 @@ var APP = {
 	 */
 	SlideMenu: null,
 	SlideMenuOpen: false,
+	SlideMenuEngaged: true,
 	/**
 	 * Initializes the application
 	 */
@@ -339,10 +340,12 @@ var APP = {
 
 		// Listen for gestures on the main window to open/close the slide menu
 		APP.GlobalWrapper.addEventListener("swipe", function(_event) {
-			if(_event.direction == "right") {
-				APP.openMenu();
-			} else if(_event.direction == "left") {
-				APP.closeMenu();
+			if(APP.SlideMenuEngaged) {
+				if(_event.direction == "right") {
+					APP.openMenu();
+				} else if(_event.direction == "left") {
+					APP.closeMenu();
+				}
 			}
 		});
 	},
