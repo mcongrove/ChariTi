@@ -21,9 +21,9 @@ $.handleData = function(_data) {
 	$.handleNavigation();
 
 	$.heading.text = _data.title;
+	$.heading.color = APP.Settings.colors.primary || "#000";
 	$.text.value = _data.description;
 	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date, 10)).fromNow());
-	$.date.color = APP.Settings.colors.primary;
 
 	ACTION.url = _data.link
 
