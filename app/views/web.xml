@@ -5,6 +5,8 @@
 		<WebView id="content" />
 		
 		<View id="toolbar">
+			<View id="border" />
+			
 			<View id="containerBack" class="container">
 				<ImageView id="Back" class="button" image="/images/back.png" />
 			</View>

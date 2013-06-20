@@ -36,7 +36,7 @@ $.initToolbar = function() {
 	APP.log("debug", "web.initToolbar");
 
 	$.toolbar.visible = true;
-	$.content.bottom = "48dp";
+	$.content.bottom = "44dp";
 
 	var width = Math.floor(APP.Device.width / 4);
 
