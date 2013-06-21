@@ -2,9 +2,9 @@
 	"id": "ChariTi.001",
 	"version": "1.1",
 	"minimumVersion": "1.1",
-	"_configurationUrl": "http://chariti.mobi/app/app.json",
+	"configurationUrl": "http://chariti.mobi/app/app.json",
 	"legal": {
-		"copyright": "Copyright ‌© 2013 ChariTi",
+		"copyright": "Copyright ‌2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
 		"privacy": "https://policy-portal.truste.com/core/privacy-policy/ChariTi/04175946-6006-4c76-b174-6bc589432474"
 	},
@@ -21,11 +21,11 @@
 			"secondary": "#569BBE",
 			"text":	"#FFF"
 		},
-		"useSlideMenu": false
+		"useSlideMenu": true
 	},
-	"_manifest": [
-		"http://localhost/ChariTi/app/logo.png",
-		"http://localhost/ChariTi/app/logo@2x.png"
+	"manifest": [
+		"http://chariti.mobi/app/logo.png",
+		"http://chariti.mobi/app/logo@2x.png"
 	],
 	"tabs": [
 		{
@@ -76,13 +76,6 @@
 			"username": "appcelerator",
 			"type": "vimeo",
 			"image": "video4",
-			"cache": 1440
-		},
-		{
-			"title": "YouTube",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video5",
 			"cache": 1440
 		},
 		{
@@ -150,6 +143,13 @@
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
 			"image": "book1"
+		},
+		{
+			"title": "YouTube",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video5",
+			"cache": 1440
 		},
 		{
 			"title": "Web",
