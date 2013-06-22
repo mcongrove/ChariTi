@@ -13,20 +13,12 @@ exports.init = function(_params) {
 	}
 
 	options = _.defaults(_params, {
-		msgPull: "Pull down to refresh...",
-		msgRelease: "Release to refresh...",
-		msgUpdating: "Updating...",
-		msgUpdated: "Last Updated: %s %s",
-		backgroundColor: "#e2e7ed",
-		fontColor: "#576c89",
-		image: WPATH("images/arrow.png"),
+		backgroundColor: "#FFF",
+		fontColor: "#AAA",
 		indicator: "PLAIN"
 	});
 
 	$.headerPullView.backgroundColor = options.backgroundColor;
-	$.status.color = options.fontColor;
-	$.updated.color = options.fontColor;
-	$.arrow.image = options.image;
 	
 	switch(options.indicator.toLowerCase()) {
 		case "plain":
@@ -43,29 +35,32 @@ exports.init = function(_params) {
 	options.table.addEventListener("dragEnd", dragEndListener);
 };
 
-exports.date = function(_date) {
-	if(_date === false) {
-		$.updated.hide();
-	} else {
-		$.updated.show();
-
-		if(_date !== true) {
-			$.updated.text = String.format(options.msgUpdated, String.formatDate(_date, "short"), String.formatTime(_date, "short"));
-		}
-	}
-};
-
 exports.show = function(_message) {
 	if(pulled) {
 		return false;
 	}
 
 	pulled = true;
-
-	$.status.text = _message || options.msgUpdating;
 	
-	$.arrow.hide();
-	$.activityIndicator.show();
+	$.status.animate({
+		bottom: 50,
+		opacity: 0,
+		duration: 200
+	}, function(_event) {
+		$.status.opacity = 0;
+		$.status.bottom = 50;
+		
+		$.activityIndicator.show();
+		
+		$.activityIndicator.animate({
+			bottom: 25,
+			opacity: 1,
+			duration: 100
+		}, function(_event) {
+			$.activityIndicator.opacity = 1;
+			$.activityIndicator.bottom = 25;
+		});
+	});
 
 	options.table.setContentInsets(
 		{ top: 80 },
@@ -84,12 +79,28 @@ exports.hide = function() {
 		{ top: 0 },
 		{ animated: true }
 	);
-
-	$.activityIndicator.hide();
-	$.arrow.transform = Ti.UI.create2DMatrix();
-	$.arrow.show();
 	
-	$.status.text = options.msgPull;
+	$.status.text = "Pull to Refresh";
+	
+	$.activityIndicator.animate({
+		bottom: 50,
+		opacity: 0,
+		duration: 100
+	}, function(_event) {
+		$.activityIndicator.opacity = 0;
+		$.activityIndicator.bottom = 50;
+		
+		$.activityIndicator.hide();
+		
+		$.status.animate({
+			bottom: 25,
+			opacity: 1,
+			duration: 200
+		}, function(_event) {
+			$.status.opacity = 1;
+			$.status.bottom = 25;
+		});
+	});
 
 	pulled = false;
 	loading = false;
@@ -126,10 +137,6 @@ exports.remove = function() {
 };
 
 function finishLoading(_update) {
-	if(_update) {
-		exports.date(new Date());
-	}
-
 	exports.hide();
 
 	loading = false;
@@ -145,25 +152,11 @@ function scrollListener(_event) {
 	if(pulling && !loading && offset > -80 && offset < 0) {
 		pulling = false;
 		
-		var unrotate = Ti.UI.create2DMatrix();
-		
-		$.arrow.animate({
-			transform: unrotate,
-			duration: 180
-		});
-		
-		$.status.text = options.msgPull;
+		$.status.text = "Pull to Refresh";
 	} else if(!pulling && !loading && offset < -80) {
 		pulling = true;
 		
-		var rotate = Ti.UI.create2DMatrix().rotate(180);
-		
-		$.arrow.animate({
-			transform: rotate,
-			duration: 180
-		});
-		
-		$.status.text = options.msgRelease;
+		$.status.text = "Release to Refresh";
 	}
 }
 

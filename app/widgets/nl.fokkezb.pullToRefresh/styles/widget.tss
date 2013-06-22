@@ -1,43 +1,24 @@
 "#headerPullView": {
-	backgroundColor: "#e2e7ed",
+	backgroundColor: "#FFF",
 	top: 0,
 	right: 0,
 	left: 0,
 	height: 60
 },
-"#arrow": {
-	left: 20,
-	bottom: 10,
-	width: 23,
-	height: 60
-},
 "#activityIndicator": {
-	left: 20,
-	bottom: 25,
+	bottom: 50,
 	width: 30,
-	height: 30
+	height: 30,
+	opacity: 0
 },
 "#status": {
-	color: "#576c89",
+	color: "#AAA",
 	font: {
-		fontSize: 13,
-		fontWeight: "bold"
-	},
-	text: "Pull down to refresh...",
-	textAlign: "center",
-	left: 55,
-	right: 55,
-	bottom: 40,
-	height: 15
-},
-"#updated": {
-	color: "#576c89",
-	font: {
-		fontSize: 12
+		fontSize: 14,
+		fontFamily: "HelveticaNeue-Medium"
 	},
 	textAlign: "center",
-	left: 55,
-	right: 55,
+	width: Ti.UI.SIZE,
 	bottom: 25,
-	height: 15
+	height: 30
 }
