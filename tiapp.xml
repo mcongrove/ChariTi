@@ -7,7 +7,7 @@
     <property name="acs-oauth-secret-development" type="string"></property>
     <property name="acs-oauth-key-development" type="string"></property>
     <property name="acs-api-key-development" type="string"></property>	
-	-->
+    -->
     <deployment-targets>
         <target device="tizen">false</target>
         <target device="mobileweb">false</target>
