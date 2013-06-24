@@ -108,10 +108,18 @@ if(OS_IOS) {
 		dialog.addEventListener("click", function(_event) {
 			switch(_event.index) {
 				case 0:
-					SOCIAL.activityView({
-						text: APP.Settings.share + " " + _url,
-						removeIcons: "print,copy,contact,camera,weibo"
-					});
+					if(APP.Device.name == "IPAD") {
+						SOCIAL.activityView({
+							text: APP.Settings.share + " " + _url,
+							removeIcons: "print,copy,contact,camera,weibo"
+						});
+					} else {
+						SOCIAL.activityPopover({
+							text: APP.Settings.share + " " + _url,
+							removeIcons: "print,copy,contact,camera,weibo",
+							view: _view
+						});
+					}
 					break;
 				case 1:
 					Ti.Platform.openURL(_url);
