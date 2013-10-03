@@ -1,4 +1,4 @@
-"#content": {
+"#container": {
 	scalesPageToFit: true,
 	willHandleTouches: false,
 	top: "46dp",

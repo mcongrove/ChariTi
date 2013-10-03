@@ -14,13 +14,13 @@ if(CONFIG.image) {
 		image: image,
 		height: "26dp",
 		width: Ti.UI.SIZE,
-		top: "10dp",
+		top: (OS_IOS && APP.Device.versionMajor >= 7) ? "30dp" : "10dp",
 		bottom: "10dp",
 		preventDefaultImage: true
 	});
 } else {
 	$.title = Ti.UI.createLabel({
-		top: "0dp",
+		top: (OS_IOS && APP.Device.versionMajor >= 7) ? "20dp" : "0dp",
 		left: "58dp",
 		right: "58dp",
 		height: "46dp",
@@ -92,3 +92,9 @@ $.showAction = function(_params) {
 };
 
 $.Wrapper.add($.title);
+
+// Move the UI down if iOS7+
+if(OS_IOS && APP.Device.versionMajor >= 7) {
+	$.Wrapper.height = "67dp";
+	$.overlay.top = "20dp";
+}

@@ -1,3 +1,5 @@
+var APP = require("core");
+
 $.init = function(_params) {
 	$.tabs = [];
 	
@@ -34,7 +36,7 @@ $.init = function(_params) {
 			right: "7dp",
 			height: "47dp",
 			font: {
-				fontSize: "18dp",
+				fontSize: "16dp",
 				fontFamily: "HelveticaNeue-Light"
 			},
 			color: "#FFF",
@@ -79,7 +81,7 @@ $.createSettings = function() {
 		right: "7dp",
 		height: "47dp",
 		font: {
-			fontSize: "18dp",
+			fontSize: "16dp",
 			fontFamily: "HelveticaNeue-Light"
 		},
 		color: "#FFF",
@@ -105,3 +107,8 @@ $.Tabs.addEventListener("click", function(_event) {
 		$.setIndex(_event.index);
 	}
 });
+
+// Move the UI down if iOS7+
+if(OS_IOS && APP.Device.versionMajor >= 7) {
+	$.Tabs.top = "20dp";
+}

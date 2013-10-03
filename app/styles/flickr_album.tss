@@ -1,8 +1,11 @@
 "#Wrapper": {
 	backgroundColor: "#FFF"
 },
+"#Wrapper": {
+	layout: "vertical"
+},
 "#container": {
-	top: "47dp",
+	top: "0dp",
 	layout: "vertical",
 	scrollsToTop: true
 }

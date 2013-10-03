@@ -1,8 +1,9 @@
 "#Wrapper": {
-	backgroundColor: "#000"
+	backgroundColor: "#000",
+	layout: "vertical"
 },
-"#content": {
-	top: "47dp"
+"#container": {
+	top: "0dp"
 },
 "#image": {
 	width: Ti.UI.FILL,

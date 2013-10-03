@@ -1,5 +1,8 @@
-"#content": {
-	top: "47dp",
+"#Wrapper": {
+	layout: "vertical"
+},
+"#container": {
+	top: "0dp",
 	backgroundColor: "#EEE",
 	layout: "vertical",
 	height: Ti.UI.FILL

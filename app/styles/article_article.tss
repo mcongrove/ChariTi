@@ -1,9 +1,10 @@
 "#Wrapper": {
-	backgroundColor: "#FFF"
+	backgroundColor: "#FFF",
+	layout: "vertical"
 },
-"#content": {
+"#container": {
+	top: "0dp",
 	layout: "vertical",
-	top: "47dp",
 	showVerticalScrollIndicator: true
 },
 "#heading": {

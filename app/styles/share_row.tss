@@ -3,7 +3,7 @@
 	selectedBackgroundColor: "#EEE",
 	backgroundColor: "#FFF"
 },
-"#content": {
+"#container": {
 	height: Ti.UI.SIZE,
 	layout: "vertical",
 	top: "0dp",

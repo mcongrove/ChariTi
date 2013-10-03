@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="PreviewWrapper">
-		<View id="content">
+		<View id="container">
 			<ScrollView id="preview">
 				<Label id="text" />
 			</ScrollView>

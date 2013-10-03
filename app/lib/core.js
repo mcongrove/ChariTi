@@ -734,7 +734,7 @@ var APP = {
 
 		APP.GlobalWrapper.animate({
 			left: "200dp",
-			duration: 400,
+			duration: 250,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
 
@@ -746,7 +746,7 @@ var APP = {
 	closeMenu: function() {
 		APP.GlobalWrapper.animate({
 			left: "0dp",
-			duration: 400,
+			duration: 250,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
 

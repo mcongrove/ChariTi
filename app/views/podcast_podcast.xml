@@ -2,7 +2,7 @@
 	<View id="Wrapper">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<View id="content">
+		<View id="container">
 			<View id="artworkContainer">
 				<ImageView id="artwork" />
 			</View>
