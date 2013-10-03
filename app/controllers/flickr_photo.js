@@ -44,7 +44,7 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.content.addEventListener("singletap", function(_event) {
+$.container.addEventListener("singletap", function(_event) {
 	if(metaVisible) {
 		metaVisible = false;
 
@@ -62,7 +62,7 @@ $.content.addEventListener("singletap", function(_event) {
 	}
 });
 
-$.content.addEventListener("swipe", function(_event) {
+$.container.addEventListener("swipe", function(_event) {
 	if(_event.direction == "right") {
 		if(PREVIOUS) {
 			APP.log("debug", "flickr_photo @previous");

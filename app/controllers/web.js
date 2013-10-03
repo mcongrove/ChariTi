@@ -8,15 +8,15 @@ $.init = function() {
 	APP.log("debug", "web.init | " + JSON.stringify(CONFIG));
 
 	if(CONFIG.url) {
-		$.content.url = CONFIG.url;
-		$.content.scalesPageToFit = true;
-		$.content.willHandleTouches = false;
+		$.container.url = CONFIG.url;
+		$.container.scalesPageToFit = true;
+		$.container.willHandleTouches = false;
 
 		$.initToolbar();
 	} else if(CONFIG.file) {
-		$.content.url = "/data/" + CONFIG.file;
+		$.container.url = "/data/" + CONFIG.file;
 	} else {
-		$.content.html = CONFIG.html;
+		$.container.html = CONFIG.html;
 	}
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
@@ -36,7 +36,7 @@ $.initToolbar = function() {
 	APP.log("debug", "web.initToolbar");
 
 	$.toolbar.visible = true;
-	$.content.bottom = "44dp";
+	$.container.bottom = "44dp";
 
 	var width = Math.floor(APP.Device.width / 4);
 
@@ -53,14 +53,14 @@ $.initToolbar = function() {
 
 // Event listeners
 if(CONFIG.url) {
-	$.content.addEventListener("load", function(_event) {
-		if($.content.canGoBack()) {
+	$.container.addEventListener("load", function(_event) {
+		if($.container.canGoBack()) {
 			$.containerBack.visible = true;
 		} else {
 			$.containerBack.visible = false;
 		}
 
-		if($.content.canGoForward()) {
+		if($.container.canGoForward()) {
 			$.containerForward.visible = true;
 		} else {
 			$.containerForward.visible = false;
@@ -70,7 +70,7 @@ if(CONFIG.url) {
 		$.containerRefresh.visible = true;
 	});
 
-	$.content.addEventListener("beforeload", function(_event) {
+	$.container.addEventListener("beforeload", function(_event) {
 		$.containerRefresh.visible = false;
 		$.containerStop.visible = true;
 
@@ -78,22 +78,22 @@ if(CONFIG.url) {
 	});
 
 	$.containerBack.addEventListener("click", function(_event) {
-		$.content.goBack();
+		$.container.goBack();
 	});
 
 	$.containerForward.addEventListener("click", function(_event) {
-		$.content.goForward();
+		$.container.goForward();
 	});
 
 	$.containerRefresh.addEventListener("click", function(_event) {
-		$.content.reload();
+		$.container.reload();
 
 		$.containerRefresh.visible = false;
 		$.containerStop.visible = true;
 	});
 
 	$.containerStop.addEventListener("click", function(_event) {
-		$.content.stopLoading();
+		$.container.stopLoading();
 
 		$.containerStop.visible = false;
 		$.containerRefresh.visible = true;

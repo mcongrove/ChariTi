@@ -15,7 +15,7 @@ $.init = function() {
 			success: $.handlePdf
 		});
 	} else {
-		$.content.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(CONFIG.url);
+		$.container.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(CONFIG.url);
 	}
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
@@ -39,7 +39,7 @@ $.handlePdf = function(_data, _url) {
 	file.createFile();
 	file.write(_data);
 
-	$.content.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(_url);
+	$.container.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(_url);
 };
 
 $.getFileName = function(_url) {
