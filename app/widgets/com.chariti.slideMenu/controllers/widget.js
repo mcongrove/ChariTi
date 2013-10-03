@@ -5,9 +5,9 @@ $.init = function(_params) {
 		var tab = Ti.UI.createTableViewRow({
 			id: _params.tabs[i].id,
 			height: "47dp",
-			backgroundcolor: "#000",
-			backgroundSelectedColor: "#EEE",
-			selectedBackgroundColor: "#EEE"
+			backgroundcolor: "#111",
+			backgroundSelectedColor: "#222",
+			selectedBackgroundColor: "#222"
 		});
 		
 		var iconWrapper = Ti.UI.createView({
@@ -37,7 +37,7 @@ $.init = function(_params) {
 				fontSize: "18dp",
 				fontFamily: "HelveticaNeue-Light"
 			},
-			color: "#000",
+			color: "#FFF",
 			touchEnabled: false
 		});
 		
@@ -57,9 +57,9 @@ $.createSettings = function() {
 	var tab = Ti.UI.createTableViewRow({
 		id: "settings",
 		height: "47dp",
-		backgroundcolor: "#000",
-		backgroundSelectedColor: "#EEE",
-		selectedBackgroundColor: "#EEE"
+		backgroundcolor: "#111",
+		backgroundSelectedColor: "#222",
+		selectedBackgroundColor: "#222"
 	});
 	
 	var icon = Ti.UI.createImageView({
@@ -82,7 +82,7 @@ $.createSettings = function() {
 			fontSize: "18dp",
 			fontFamily: "HelveticaNeue-Light"
 		},
-		color: "#000",
+		color: "#FFF",
 		touchEnabled: false
 	});
 	

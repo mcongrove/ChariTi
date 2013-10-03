@@ -4,7 +4,7 @@
 	left: "-200dp"
 },
 "#Tabs": {
-	backgroundColor: "#FFF",
-	separatorColor: "#EEE",
+	backgroundColor: "#111",
+	separatorColor: "#222",
 	separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.SINGLE_LINE
 }
