@@ -5,6 +5,10 @@
 				<ImageView id="backImage" />
 			</View>
 			
+			<View id="next" visible="false">
+				<ImageView id="nextImage" />
+			</View>
+			
 			<View id="left" visible="false">
 				<ImageView id="leftImage" />
 			</View>

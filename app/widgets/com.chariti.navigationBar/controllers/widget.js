@@ -58,6 +58,12 @@ $.showBack = function(_params) {
 	}
 };
 
+$.showNext = function(_params) {
+	$.next.visible = true;
+	
+	$.next.addEventListener("click",  _params.callback);
+};
+
 $.showLeft = function(_params) {
 	$.left.visible = true;
 	$.leftImage.image = _params.image;
