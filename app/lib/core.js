@@ -28,8 +28,8 @@ var APP = {
 		os: null,
 		name: null,
 		version: Titanium.Platform.version,
-		versionMajor: null,
-		versionMinor: null,
+		versionMajor: parseInt(Titanium.Platform.version.split(".")[0], 10),
+		versionMinor: parseInt(Titanium.Platform.version.split(".")[1], 10),
 		width: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
 		height: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
 		dpi: Ti.Platform.displayCaps.dpi,
@@ -143,9 +143,6 @@ var APP = {
 	 * Determines the device characteristics
 	 */
 	determineDevice: function() {
-		APP.Device.versionMajor = parseInt(APP.Device.version.split(".")[0], 10);
-		APP.Device.versionMinor = parseInt(APP.Device.version.split(".")[1], 10);
-
 		if(OS_IOS) {
 			APP.Device.os = "IOS";
 
