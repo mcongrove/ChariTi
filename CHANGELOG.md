@@ -3,12 +3,19 @@ Change Log
 
 This document describes the high-level changes made for each version. For a complete list of changes, please refer to the [ChariTi GitHub repository](http://github.com/mcongrove/ChariTi/).
 
-v 1.1.1 (??-??-2013)
+v 1.2.0 (??-??-2013)
 --------------------
+*	Support for iOS 7
 *	Added Share tab
 *	Added support for scroll-to-top
+*	Updated pull-to-refresh widget
+*	Android now supports pull-to-refresh
+*	Updated social widget
+*	Podcast now supports offline listening
+*	Made slide menu faster
 *	Fixed handling of unavailable network situations
 *	Fixed slide menu jitters
+*	Fixed Flickr gesture collisions
 *	Added URL scheme support for PEEK
 *	Added URL normalization for PEEK
 *	Fixed image downloading for PEEK
