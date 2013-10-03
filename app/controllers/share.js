@@ -42,33 +42,10 @@ $.loadData = function() {
 $.templates.addEventListener("click", function(_event) {
 	APP.log("debug", "share @click " + _event.row.id);
 
-	var text = CONFIG.templates[_event.row.id].text;
-
-	var modal = Alloy.createController("share_preview", {
-		text: text
+	APP.addChild("share_preview", {
+		title: CONFIG.templates[_event.row.id].title,
+		text: CONFIG.templates[_event.row.id].text
 	});
-
-	var view = modal.getView();
-
-	modal.buttonCancel.addEventListener("click", function(_event) {
-		$.Wrapper.remove(view);
-	});
-
-	modal.buttonConfirm.addEventListener("click", function(_event) {
-		$.Wrapper.remove(view);
-
-		if(!Ti.UI.createEmailDialog().isSupported()) {
-			alert("E-mail is not supported on your device.");
-
-			return;
-		}
-
-		APP.addChild("share_contacts", {
-			text: text
-		});
-	});
-
-	$.Wrapper.add(view);
 });
 
 // Kick off the init

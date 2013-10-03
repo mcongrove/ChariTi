@@ -1,14 +1,14 @@
 <Alloy>
-	<View id="PreviewWrapper">
+	<View id="Wrapper">
+		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
+		
 		<View id="container">
 			<ScrollView id="preview">
+				<Label id="title" />
 				<Label id="text" />
 			</ScrollView>
 			
-			<View id="buttons">
-				<Label id="buttonCancel" text="Cancel" />
-				<Label id="buttonConfirm" text="Confirm" />
-			</View>
+			<Label id="buttonConfirm" text="Send" />
 		</View>
 	</View>
 </Alloy>

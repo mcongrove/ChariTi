@@ -23,11 +23,14 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(APP.Device.isHandheld) {
-		$.NavigationBar.showBack();
+		$.NavigationBar.showBack({
+			callback: function(_event) {
+				APP.removeAllChildren();
+			}
+		});
 	}
 
-	$.NavigationBar.showRight({
-		image: "/images/next.png",
+	$.NavigationBar.showNext({
 		callback: function() {
 			$.createEmail(SELECTED);
 		}
@@ -137,6 +140,7 @@ $.createEmail = function(_addresses) {
 	}
 
 	email.html = true;
+	email.subject = CONFIG.title;
 	email.messageBody = CONFIG.text;
 
 	email.addEventListener("complete", function(_event) {
