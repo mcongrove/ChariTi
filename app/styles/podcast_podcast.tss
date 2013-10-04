@@ -1,8 +1,9 @@
 "#Wrapper": {
-	backgroundColor: "#000"
+	backgroundColor: "#000",
+	layout: "vertical"
 },
 "#content": {
-	top: "47dp"
+	top: "0dp"
 },
 "#artworkContainer": {
 	backgroundColor: "#000",
