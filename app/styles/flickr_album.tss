@@ -1,7 +1,5 @@
 "#Wrapper": {
-	backgroundColor: "#FFF"
-},
-"#Wrapper": {
+	backgroundColor: "#FFF",
 	layout: "vertical"
 },
 "#container": {

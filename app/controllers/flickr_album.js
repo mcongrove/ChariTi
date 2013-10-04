@@ -67,7 +67,7 @@ $.createGrid = function(_data) {
 
 	var rowLength = Math.floor(width / 80);
 	var photosWidth = (77 * rowLength);
-	var padding = ((width - photosWidth) / (rowLength - 1));
+	var padding = Math.floor((width - photosWidth) / (rowLength - 1));
 	var counter = 1;
 	var row;
 
@@ -75,6 +75,7 @@ $.createGrid = function(_data) {
 		if(counter == 1) {
 			row = Ti.UI.createView({
 				layout: "horizontal",
+				left: 0,
 				top: (i == 0 ? 0 : padding) + "dp",
 				height: "77dp"
 			});
