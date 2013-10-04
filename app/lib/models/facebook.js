@@ -129,6 +129,11 @@ function Model() {
 
 		var db = Ti.Database.open("ChariTi");
 		var data = db.execute("SELECT id FROM facebook_" + TID + " WHERE id > " + UTIL.cleanEscapeString(_id) + " ORDER BY id ASC LIMIT 1;");
+
+		if(data.rowCount == 0) {
+			data = db.execute("SELECT id FROM facebook_" + TID + " ORDER BY id ASC LIMIT 1;");
+		}
+
 		var temp;
 
 		while(data.isValidRow()) {

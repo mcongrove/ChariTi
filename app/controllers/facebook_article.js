@@ -28,7 +28,7 @@ $.handleData = function(_data) {
 	$.text.value = _data.description;
 	$.date.text = STRING.ucfirst(time.fromNow());
 
-	ACTION.url = _data.link
+	ACTION.url = _data.link;
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 

@@ -140,6 +140,11 @@ function Model() {
 
 		var db = Ti.Database.open("ChariTi");
 		var data = db.execute("SELECT id FROM event_" + TID + " WHERE date_start > " + UTIL.cleanEscapeString(_date) + " ORDER BY date_start ASC LIMIT 1;");
+
+		if(data.rowCount == 0) {
+			data = db.execute("SELECT id FROM event_" + TID + " ORDER BY date_start ASC LIMIT 1;");
+		}
+		
 		var temp;
 
 		while(data.isValidRow()) {
