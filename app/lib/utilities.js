@@ -122,10 +122,10 @@ exports.xmlNormalize = function(_string) {
  */
 String.fromCharCodePoint = function() {
 	var codeunits = [];
-	
+
 	for(var i = 0; i < arguments.length; i++) {
 		var c = arguments[i];
-		
+
 		if(arguments[i] < 0x10000) {
 			codeunits.push(arguments[i]);
 		} else if(arguments[i] < 0x110000) {
@@ -134,7 +134,7 @@ String.fromCharCodePoint = function() {
 			codeunits.push((c & 0x3FF) + 0xDC00);
 		}
 	}
-	
+
 	return String.fromCharCode.apply(String, codeunits);
 };
 

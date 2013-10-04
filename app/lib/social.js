@@ -109,15 +109,15 @@ if(OS_IOS) {
 			switch(_event.index) {
 				case 0:
 					if(APP.Device.name == "IPAD") {
-						SOCIAL.activityView({
-							text: APP.Settings.share + " " + _url,
-							removeIcons: "print,copy,contact,camera,weibo"
-						});
-					} else {
 						SOCIAL.activityPopover({
 							text: APP.Settings.share + " " + _url,
 							removeIcons: "print,copy,contact,camera,weibo",
 							view: _view
+						});
+					} else {
+						SOCIAL.activityView({
+							text: APP.Settings.share + " " + _url,
+							removeIcons: "print,copy,contact,camera,weibo"
 						});
 					}
 					break;
