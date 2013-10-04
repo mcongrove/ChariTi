@@ -4,6 +4,7 @@ var CONFIG = arguments[0] || {};
 
 $.Wrapper.id = CONFIG.id || 0;
 $.title.text = CONFIG.title || "";
+$.title.color = APP.Settings.colors.primary || "#000";
 $.text.text = CONFIG.text.replace(/\s*<br[^>]*>\s*/ig, "\n").replace(/<[^>]*>/g, "") || "";
 $.buttonConfirm.color = APP.Settings.colors.primary || "#000";
 
@@ -12,7 +13,7 @@ $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 if(APP.Device.isHandheld) {
 	$.NavigationBar.showBack({
 		callback: function(_event) {
-			APP.removeAllChildren();
+			APP.removeChild();
 		}
 	});
 }

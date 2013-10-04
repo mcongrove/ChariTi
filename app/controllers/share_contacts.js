@@ -144,7 +144,11 @@ $.createEmail = function(_addresses) {
 	email.messageBody = CONFIG.text;
 
 	email.addEventListener("complete", function(_event) {
-		APP.removeAllChildren();
+		if(APP.Device.isTablet) {
+			APP.removeChild();
+		} else {
+			APP.removeAllChildren();
+		}
 	});
 
 	email.open();

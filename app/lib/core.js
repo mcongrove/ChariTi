@@ -488,11 +488,12 @@ var APP = {
 				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
 					switch(type) {
+						case "article":
 						case "event":
 						case "facebook":
 						case "flickr":
 						case "podcast":
-						case "article":
+						case "share":
 						case "vimeo":
 						case "youtube":
 							type = "tablet";
