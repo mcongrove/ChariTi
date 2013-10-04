@@ -8,6 +8,7 @@ v 1.2.0 (??-??-2013)
 *	Support for iOS 7
 *	Added Share tab
 *	Added support for scroll-to-top
+*	Added support for Asian characters
 *	Updated pull-to-refresh widget
 *	Android now supports pull-to-refresh
 *	Updated social widget
@@ -16,6 +17,8 @@ v 1.2.0 (??-??-2013)
 *	Fixed handling of unavailable network situations
 *	Fixed slide menu jitters
 *	Fixed Flickr gesture collisions
+*	Fixed Flickr album math problems
+*	Fixed date edge-case calculations
 *	Added URL scheme support for PEEK
 *	Added URL normalization for PEEK
 *	Fixed image downloading for PEEK
