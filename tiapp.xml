@@ -7,7 +7,7 @@
     <property name="acs-oauth-secret-development" type="string"></property>
     <property name="acs-oauth-key-development" type="string"></property>
     <property name="acs-api-key-development" type="string"></property>	
-	-->
+    -->
     <deployment-targets>
         <target device="tizen">false</target>
         <target device="mobileweb">false</target>
@@ -16,10 +16,10 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>3.1.1.GA</sdk-version>
+    <sdk-version>3.1.3.GA</sdk-version>
     <id>com.chariti.mobile</id>
     <name>ChariTi</name>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <publisher>Matthew Congrove</publisher>
     <url>http://chariti.mobi</url>
     <description>ChariTi is a framework built to allow charities to quickly and easily create mobile applications.</description>

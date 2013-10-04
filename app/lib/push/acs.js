@@ -15,9 +15,9 @@ exports.init = function() {
 			success: function(_data) {
 				APP.log("debug", "ACS.init @success");
 				APP.log("trace", _data.deviceToken);
-				
+
 				PUSH.deviceToken = _data.deviceToken;
-				
+
 				exports.subscribe({
 					channel: "all"
 				});
@@ -60,7 +60,7 @@ exports.pushRecieved = function(_data) {
 	var dialog = Titanium.UI.createAlertDialog({
 		title: "Push Notification",
 		message: _data.alert,
-		buttonNames: [ "OK", "Cancel" ],
+		buttonNames: ["OK", "Cancel"],
 		cancel: 1
 	});
 

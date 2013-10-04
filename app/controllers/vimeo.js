@@ -47,8 +47,8 @@ $.retrieveData = function(_force, _callback) {
 
 			APP.closeLoading();
 
-			if(OS_IOS) {
-				pullToRefresh.hide();
+			if(typeof _callback !== "undefined") {
+				_callback();
 			}
 		}
 	});
@@ -61,11 +61,14 @@ $.handleVideos = function() {
 	var rows = [];
 
 	for(var i = 0, x = data.length; i < x; i++) {
+		var time = DATE(data[i].date, "YYYY/MM/DD HH:mm:ss");
+		time = time.isBefore() ? time : DATE();
+
 		var row = Alloy.createController("vimeo_row", {
 			id: data[i].id,
 			url: data[i].link,
 			heading: data[i].title,
-			subHeading: STRING.ucfirst(DATE(data[i].date, "YYYY/MM/DD HH:mm:ss").fromNow())
+			subHeading: STRING.ucfirst(time.fromNow())
 		}).getView();
 
 		rows.push(row);
@@ -80,7 +83,6 @@ $.handleVideos = function() {
 
 		APP.addChild("vimeo_video", {
 			url: data[0].link,
-			title: data[0].title,
 			index: CONFIG.index
 		});
 	}
@@ -100,28 +102,15 @@ $.container.addEventListener("click", function(_event) {
 
 	APP.addChild("vimeo_video", {
 		url: _event.row.url,
-		title: _event.row.setTitle,
 		index: CONFIG.index
 	});
 });
 
-if(OS_IOS) {
-	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
-		table: $.container,
-		backgroundColor: "#EEE",
-		fontColor: "#AAA",
-		indicator: "dark",
-		image: "/images/ptrArrow.png",
-		refresh: function(_callback) {
-			$.retrieveData(true, function() {
-				_callback(true);
-			});
-		}
+// Pull to Refresh
+function ptrRelease(_event) {
+	$.retrieveData(true, function() {
+		_event.hide();
 	});
-
-	if(CONFIG.feed) {
-		pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
-	}
 }
 
 // Kick off the init

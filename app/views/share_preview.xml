@@ -1,19 +1,14 @@
 <Alloy>
-	<View id="PreviewWrapper">
-		<View id="content">
+	<View id="Wrapper" type="PARENT">
+		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
+		
+		<View id="container">
 			<ScrollView id="preview">
+				<Label id="title" />
 				<Label id="text" />
 			</ScrollView>
 			
-			<View id="buttons">
-				<View id="buttonCancel">
-					<Label class="buttonText" text="Cancel" />
-				</View>
-				
-				<View id="buttonConfirm">
-					<Label class="buttonText" text="Confirm" />
-				</View>
-			</View>
+			<Label id="buttonConfirm" text="Send" />
 		</View>
 	</View>
 </Alloy>

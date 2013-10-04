@@ -20,10 +20,10 @@ $.handleData = function(_data) {
 	$.handleNavigation(_data.date_start);
 
 	$.heading.text = _data.title;
+	$.heading.color = APP.Settings.colors.primary || "#000";
 	$.text.value = _data.description;
 	$.location.text = "@ " + _data.location;
 	$.date.text = DATE(parseInt(_data.date_start, 10)).format("MMMM Do, YYYY h:mma");
-	$.date.color = APP.Settings.colors.primary;
 
 	ACTION.url = "http://www.facebook.com/events/" + _data.id;
 

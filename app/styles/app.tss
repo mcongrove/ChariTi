@@ -1,3 +1,6 @@
+"Window[platform=ios]": {
+	statusBarStyle: Ti.UI.iPhone.StatusBar.OPAQUE_BLACK
+},
 "TableView": {
 	scrollsToTop: false
 },

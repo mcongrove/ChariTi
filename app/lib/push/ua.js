@@ -29,7 +29,7 @@ exports.init = function() {
 		success: function(_data) {
 			APP.log("debug", "UA.init @success");
 			APP.log("trace", _data.deviceToken);
-			
+
 			PUSH.deviceToken = _data.deviceToken;
 
 			UA.registerDevice(PUSH.deviceToken, {

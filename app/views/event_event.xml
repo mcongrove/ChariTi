@@ -2,15 +2,10 @@
 	<View id="Wrapper">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<ScrollView id="content">
-			<View id="header">
-				<Label id="date" />
-				
-				<Label id="heading" />
-				
-				<Label id="location" />
-			</View>
-			
+		<ScrollView id="container">
+			<Label id="heading" />
+			<Label id="date" />
+			<Label id="location" />
 			<TextArea id="text" />
 		</ScrollView>
 	</View>

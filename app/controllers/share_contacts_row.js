@@ -6,7 +6,6 @@ var isChecked = false;
 
 $.Wrapper.id = CONFIG.id || 0;
 $.heading.text = CONFIG.heading || "";
-$.subHeading.color = APP.Settings.colors.primary || "#000";
 $.subHeading.text = CONFIG.subHeading || "";
 
 if(OS_IOS && CONFIG.header) {

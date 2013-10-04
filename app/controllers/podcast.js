@@ -44,8 +44,8 @@ $.retrieveData = function(_force, _callback) {
 
 			APP.closeLoading();
 
-			if(OS_IOS) {
-				pullToRefresh.hide();
+			if(typeof _callback !== "undefined") {
+				_callback();
 			}
 		}
 	});
@@ -98,23 +98,11 @@ $.container.addEventListener("click", function(_event) {
 	});
 });
 
-if(OS_IOS) {
-	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
-		table: $.container,
-		backgroundColor: "#EEE",
-		fontColor: "#AAA",
-		indicator: "dark",
-		image: "/images/ptrArrow.png",
-		refresh: function(_callback) {
-			$.retrieveData(true, function() {
-				_callback(true);
-			});
-		}
+// Pull to Refresh
+function ptrRelease(_event) {
+	$.retrieveData(true, function() {
+		_event.hide();
 	});
-
-	if(CONFIG.feed) {
-		pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
-	}
 }
 
 // Kick off the init

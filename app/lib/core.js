@@ -8,7 +8,7 @@ var APP = {
 	 */
 	ID: null,
 	VERSION: null,
-	CVERSION: "1.1.0.0226131418",
+	CVERSION: "1.1.0.061813",
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
@@ -28,8 +28,8 @@ var APP = {
 		os: null,
 		name: null,
 		version: Titanium.Platform.version,
-		versionMajor: null,
-		versionMinor: null,
+		versionMajor: parseInt(Titanium.Platform.version.split(".")[0], 10),
+		versionMinor: parseInt(Titanium.Platform.version.split(".")[1], 10),
 		width: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
 		height: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
 		dpi: Ti.Platform.displayCaps.dpi,
@@ -143,9 +143,6 @@ var APP = {
 	 * Determines the device characteristics
 	 */
 	determineDevice: function() {
-		APP.Device.versionMajor = parseInt(APP.Device.version.split(".")[0], 10);
-		APP.Device.versionMinor = parseInt(APP.Device.version.split(".")[1], 10);
-
 		if(OS_IOS) {
 			APP.Device.os = "IOS";
 
@@ -491,11 +488,12 @@ var APP = {
 				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
 					switch(type) {
+						case "article":
 						case "event":
 						case "facebook":
 						case "flickr":
 						case "podcast":
-						case "article":
+						case "share":
 						case "vimeo":
 						case "youtube":
 							type = "tablet";
@@ -737,7 +735,7 @@ var APP = {
 
 		APP.GlobalWrapper.animate({
 			left: "200dp",
-			duration: 400,
+			duration: 250,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
 
@@ -749,7 +747,7 @@ var APP = {
 	closeMenu: function() {
 		APP.GlobalWrapper.animate({
 			left: "0dp",
-			duration: 400,
+			duration: 250,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
 
@@ -838,7 +836,7 @@ var APP = {
 		db.close();
 
 		var email = Ti.UI.createEmailDialog({
-			barColor: "#000",
+			barColor: APP.Settings.colors.primary || "#000",
 			subject: "Application Log",
 			messageBody: log
 		});

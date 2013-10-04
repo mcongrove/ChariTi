@@ -1,6 +1,6 @@
 <Alloy>
 	<TableViewRow id="Wrapper">
-		<View id="content">
+		<View id="container">
 			<Label id="subHeading" />
 			
 			<Label id="heading" />

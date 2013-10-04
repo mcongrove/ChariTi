@@ -1,28 +1,30 @@
+var APP = require("core");
+
 $.init = function(_params) {
 	$.tabs = [];
+	
+	// Add the Settings tab
+	_params.tabs.push({
+		id: "settings",
+		image: WPATH("images/settings.png"),
+		title: "Settings"
+	});
 	
 	for(var i = 0; i < _params.tabs.length; i++) {
 		var tab = Ti.UI.createTableViewRow({
 			id: _params.tabs[i].id,
 			height: "47dp",
-			backgroundColor: "#2E2E2E",
-			backgroundSelectedColor: "#1E1E1E",
-			selectedBackgroundColor: "#1E1E1E"
-		});
-		
-		var iconWrapper = Ti.UI.createView({
-			width: "28dp",
-			height: "28dp",
-			top: "9dp",
-			left: "7dp",
-			touchEnabled: false
+			backgroundcolor: "#111",
+			backgroundSelectedColor: "#222",
+			selectedBackgroundColor: "#222"
 		});
 
 		var icon = Ti.UI.createImageView({
 			image: _params.tabs[i].image,
-			width: Ti.UI.SIZE,
-			height: "28dp",
-			top: 0,
+			width: "21dp",
+			height: "21dp",
+			top: "13dp",
+			left: "13dp",
 			touchEnabled: false,
 			preventDefaultImage: true
 		});
@@ -31,75 +33,23 @@ $.init = function(_params) {
 			text: _params.tabs[i].title,
 			top: "0dp",
 			left: "47dp",
-			right: "7dp",
+			right: "13dp",
 			height: "47dp",
 			font: {
-				fontSize: "14dp",
-				fontWeight: "bold"
+				fontSize: "16dp",
+				fontFamily: "HelveticaNeue-Light"
 			},
-			color: "#BBB",
-			shadowColor: "#1E1E1E",
-			shadowOffset: {
-				x: "0dp",
-				y: "1dp"
-			},
+			color: "#FFF",
 			touchEnabled: false
 		});
 		
-		iconWrapper.add(icon);
-		tab.add(iconWrapper);
+		tab.add(icon);
 		tab.add(label);
 		
 		$.tabs.push(tab);
 	}
 	
 	$.Tabs.setData($.tabs);
-	
-	$.createSettings();
-};
-
-$.createSettings = function() {
-	var tab = Ti.UI.createTableViewRow({
-		id: "settings",
-		height: "47dp",
-		backgroundColor: "#2E2E2E",
-		backgroundSelectedColor: "#1E1E1E",
-		selectedBackgroundColor: "#1E1E1E"
-	});
-	
-	var icon = Ti.UI.createImageView({
-		image: WPATH("images/settings.png"),
-		width: "28dp",
-		height: "28dp",
-		top: "9dp",
-		left: "7dp",
-		touchEnabled: false,
-		preventDefaultImage: true
-	});
-	
-	var label = Ti.UI.createLabel({
-		text: "Settings",
-		top: "0dp",
-		left: "47dp",
-		right: "7dp",
-		height: "47dp",
-		font: {
-			fontSize: "14dp",
-			fontWeight: "bold"
-		},
-		color: "#BBB",
-		shadowColor: "#1E1E1E",
-		shadowOffset: {
-			x: "0dp",
-			y: "1dp"
-		},
-		touchEnabled: false
-	});
-	
-	tab.add(icon);
-	tab.add(label);
-	
-	$.Tabs.appendRow(tab);
 };
 
 $.clear = function() {
@@ -115,3 +65,8 @@ $.Tabs.addEventListener("click", function(_event) {
 		$.setIndex(_event.index);
 	}
 });
+
+// Move the UI down if iOS7+
+if(OS_IOS && APP.Device.versionMajor >= 7) {
+	$.Tabs.top = "20dp";
+}

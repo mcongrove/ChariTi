@@ -23,15 +23,14 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(APP.Device.isHandheld) {
-		$.NavigationBar.showBack();
+		$.NavigationBar.showBack({
+			callback: function(_event) {
+				APP.removeAllChildren();
+			}
+		});
 	}
 
-	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu();
-	}
-
-	$.NavigationBar.showRight({
-		image: "/images/next.png",
+	$.NavigationBar.showNext({
 		callback: function() {
 			$.createEmail(SELECTED);
 		}
@@ -74,9 +73,9 @@ $.loadData = function() {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
-	$.content.index = index;
+	$.container.index = index;
 };
 
 $.getContacts = function() {
@@ -132,24 +131,31 @@ $.getEmails = function(_contacts) {
 $.createEmail = function(_addresses) {
 	APP.log("debug", "share_contacts.createEmail");
 
-	var email = Ti.UI.createEmailDialog();
+	var email = Ti.UI.createEmailDialog({
+		barColor: APP.Settings.colors.primary || "#000"
+	});
 
 	if(_addresses) {
 		email.bccRecipients = _addresses;
 	}
 
 	email.html = true;
+	email.subject = CONFIG.title;
 	email.messageBody = CONFIG.text;
 
 	email.addEventListener("complete", function(_event) {
-		APP.removeAllChildren();
+		if(APP.Device.isTablet) {
+			APP.removeChild();
+		} else {
+			APP.removeAllChildren();
+		}
 	});
 
 	email.open();
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "share_contacts @click " + _event.row.id);
 
 	if(SELECTED.indexOf(_event.row.id) === -1) {

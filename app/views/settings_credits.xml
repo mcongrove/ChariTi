@@ -2,7 +2,7 @@
 	<View id="Wrapper">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
 		
-		<ScrollView id="content">
+		<ScrollView id="container">
 			<Label text="Primary design and development by Matthew Congrove with the assistance of Josh Jensen and ROAR." />
 			<Label text="Uses open source code or designs developed by Mads Møller, Fokke Zandbergen, Jon Alter, Tim Wood, Ivo Ivanov and Sérgio Jardim." />
 			<Label text="Special thanks to Rick Blalock, Tony Lukasavage, Greg DiPaolo, Mark Aronica, Dennis Ashby, Varun Joshi, Fred Spencer, Elyse Phillips, Sandeep Johri, Jeff Haynie and the rest of the team at Appcelerator, Ray Miranda, Ivan Mathy, Oleg Polyakov, and the entire crowd of developers at Appcelerator's 2012 Hack-to-Help." />

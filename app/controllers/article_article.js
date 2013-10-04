@@ -20,24 +20,25 @@ $.handleData = function(_data) {
 
 	$.handleNavigation();
 
+	var time = DATE(parseInt(_data.date, 10));
+	time = time.isBefore() ? time : DATE();
+
 	$.heading.text = _data.title;
+	$.heading.color = APP.Settings.colors.primary || "#000";
 	$.text.value = _data.description;
-	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date, 10)).fromNow());
-	$.date.color = APP.Settings.colors.primary;
+	$.date.text = STRING.ucfirst(time.fromNow());
 
 	if(_data.image) {
-		var width = APP.Device.width - 60;
-
 		var image = Ti.UI.createImageView({
 			image: _data.image,
-			width: width + "dp",
+			width: APP.Device.width + "dp",
 			height: Ti.UI.SIZE,
 			preventDefaultImage: true
 		});
 
 		$.image.add(image);
 	} else {
-		$.content.remove($.image)
+		$.container.remove($.image)
 	}
 
 	ACTION.url = _data.link;

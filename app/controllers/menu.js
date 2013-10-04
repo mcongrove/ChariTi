@@ -40,13 +40,13 @@ $.handleData = function(_data) {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
 	APP.closeLoading();
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.addChild(_event.row.rowData.type, _event.row.rowData);
 });
 

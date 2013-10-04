@@ -19,16 +19,16 @@ $.init = function() {
 		annotations.push(annotation);
 	}
 
-	$.content.setAnnotations(annotations);
+	$.container.setAnnotations(annotations);
 
-	$.content.setRegion({
+	$.container.setRegion({
 		latitude: CONFIG.points[0].latitude,
 		longitude: CONFIG.points[0].longitude,
 		latitudeDelta: 0.04,
 		longitudeDelta: 0.04
 	});
 
-	$.content.selectAnnotation(annotations[0]);
+	$.container.selectAnnotation(annotations[0]);
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
