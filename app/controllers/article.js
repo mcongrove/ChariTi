@@ -60,10 +60,13 @@ $.handleData = function(_data) {
 	var rows = [];
 
 	for(var i = 0, x = _data.length; i < x; i++) {
+		var time = DATE(parseInt(_data[i].date, 10));
+		time = time.isBefore() ? time : DATE();
+
 		var row = Alloy.createController("article_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date, 10)).fromNow())
+			subHeading: STRING.ucfirst(time.fromNow())
 		}).getView();
 
 		rows.push(row);

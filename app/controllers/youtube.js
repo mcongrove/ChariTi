@@ -57,11 +57,14 @@ $.handleVideos = function() {
 	var rows = [];
 
 	for(var i = 0, x = data.length; i < x; i++) {
+		var time = DATE(data[i].date, "YYYY/MM/DD HH:mm:ss");
+		time = time.isBefore() ? time : DATE();
+
 		var row = Alloy.createController("youtube_row", {
 			id: data[i].id,
 			url: data[i].link,
 			heading: data[i].title,
-			subHeading: STRING.ucfirst(DATE(data[i].date, "YYYY/MM/DD HH:mm:ss").fromNow())
+			subHeading: STRING.ucfirst(time.fromNow())
 		}).getView();
 
 		rows.push(row);
