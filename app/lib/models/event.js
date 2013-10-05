@@ -144,7 +144,7 @@ function Model() {
 		if(data.rowCount == 0) {
 			data = db.execute("SELECT id FROM event_" + TID + " ORDER BY date_start ASC LIMIT 1;");
 		}
-		
+
 		var temp;
 
 		while(data.isValidRow()) {

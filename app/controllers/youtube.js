@@ -116,5 +116,12 @@ $.container.addEventListener("click", function(_event) {
 	}
 });
 
+// Pull to Refresh
+function ptrRelease(_event) {
+	$.retrieveData(true, function() {
+		_event.hide();
+	});
+}
+
 // Kick off the init
 $.init();

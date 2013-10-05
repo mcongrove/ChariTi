@@ -141,7 +141,7 @@ function Model() {
 		if(data.rowCount === 0) {
 			data = db.execute("SELECT id FROM article_" + TID + " ORDER BY id ASC LIMIT 1;");
 		}
-		
+
 		var temp;
 
 		while(data.isValidRow()) {
