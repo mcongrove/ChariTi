@@ -111,4 +111,10 @@
 	height: "28dp",
 	right: "0dp",
 	top: "0dp"
+},
+"#playerContainer": {
+	width: "1dp",
+	height: "1dp",
+	top: "-1dp",
+	left: "-1dp"
 }

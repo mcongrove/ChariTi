@@ -22,7 +22,7 @@ $.handleData = function(_data) {
 
 	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
-
+	
 	$.artwork.image = _data.image;
 	$.title.text = _data.title;
 
@@ -86,6 +86,7 @@ $.createAudioPlayer = function(_url) {
 	});
 
 	STREAM.addEventListener("playbackstate", $.streamState);
+
 	STREAM.addEventListener("loadstate", function(_event) {
 		var duration = DATE.duration(STREAM.getDuration());
 		$.duration.text = (duration.hours() !== 0 ? duration.hours() + ":" : "") + duration.minutes() + ":" + (duration.seconds() < 10 ? "0" : "") + duration.seconds();
@@ -94,6 +95,8 @@ $.createAudioPlayer = function(_url) {
 	});
 
 	setInterval($.streamProgress, 500);
+
+	$.playerContainer.add(STREAM);
 };
 
 $.downloadRemoteFile = function() {

@@ -26,5 +26,7 @@
 				</View>
 			</View>
 		</View>
+		
+		<View id="playerContainer" />
 	</View>
 </Alloy>
