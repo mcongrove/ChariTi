@@ -22,7 +22,7 @@ $.handleData = function(_data) {
 
 	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
-	
+
 	$.artwork.image = _data.image;
 	$.title.text = _data.title;
 
