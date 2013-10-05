@@ -19,6 +19,7 @@
 	width: "33dp",
 	top: "17dp",
 	left: "29dp",
+	backgroundColor: "#000",
 	images: [
 		WPATH("images/00.png"),
 		WPATH("images/01.png"),
