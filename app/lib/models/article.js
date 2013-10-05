@@ -63,7 +63,7 @@ function Model() {
 				var image = null;
 
 				if(nodes.item(i).getElementsByTagName("media:content").length > 0) {
-					image = UTIL.escapeString(nodes.item(i).getElementsByTagName("media:content").item(0).attributes.getNamedItem("url").text);
+					image = UTIL.escapeString(nodes.item(i).getElementsByTagName("media:content").item(0).attributes.getNamedItem("url").nodeValue);
 				}
 
 				db.execute("INSERT INTO article_" + TID + " (id, title, date, description, link, image) VALUES (NULL, " + title + ", " + date + ", " + description + ", " + link + ", " + image + ");");

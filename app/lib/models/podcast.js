@@ -55,17 +55,17 @@ function Model() {
 			db.execute("BEGIN TRANSACTION;");
 
 			for(var i = 0, x = nodes.length; i < x; i++) {
-				var title = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("title").item(0).text);
-				var date = UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).text)).getTime());
-				var url = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("media:content").item(0).attributes.getNamedItem("url").text);
+				var title = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("title").item(0).textContent);
+				var date = UTIL.escapeString(new Date(UTIL.cleanString(nodes.item(i).getElementsByTagName("pubDate").item(0).textContent)).getTime());
+				var url = UTIL.cleanEscapeString(nodes.item(i).getElementsByTagName("media:content").item(0).attributes.getNamedItem("url").nodeValue);
 
 				var image = null;
 
 				if(nodes.item(i).getElementsByTagName("itunes:image").length > 0) {
 					if(nodes.item(i).getElementsByTagName("itunes:image").item(0).attributes.getNamedItem("href")) {
-						image = UTIL.escapeString(nodes.item(i).getElementsByTagName("itunes:image").item(0).attributes.getNamedItem("href").text);
+						image = UTIL.escapeString(nodes.item(i).getElementsByTagName("itunes:image").item(0).attributes.getNamedItem("href").nodeValue);
 					} else if(nodes.item(i).getElementsByTagName("itunes:image").item(0).attributes.getNamedItem("url")) {
-						image = UTIL.escapeString(nodes.item(i).getElementsByTagName("itunes:image").item(0).attributes.getNamedItem("url").text);
+						image = UTIL.escapeString(nodes.item(i).getElementsByTagName("itunes:image").item(0).attributes.getNamedItem("url").nodeValue);
 					}
 				}
 
