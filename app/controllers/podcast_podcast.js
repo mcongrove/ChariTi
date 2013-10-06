@@ -175,7 +175,7 @@ $.previous.addEventListener("click", function(_event) {
 	APP.addChild("podcast_podcast", {
 		id: ACTION.previous.id,
 		index: CONFIG.index
-	});
+	}, false, true);
 });
 
 $.next.addEventListener("click", function(_event) {
@@ -186,7 +186,7 @@ $.next.addEventListener("click", function(_event) {
 	APP.addChild("podcast_podcast", {
 		id: ACTION.next.id,
 		index: CONFIG.index
-	});
+	}, false, true);
 });
 
 // Kick off the init

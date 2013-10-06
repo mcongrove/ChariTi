@@ -527,8 +527,9 @@ var APP = {
 	 * @param {String} [_controller] The name of the controller to open
 	 * @param {Object} [_params] An optional dictionary of parameters to pass to the controller
 	 * @param {Boolean} [_modal] Whether this is for the modal stack
+	 * @param {Boolean} [_sibling] Whether this is a sibling view
 	 */
-	addChild: function(_controller, _params, _modal) {
+	addChild: function(_controller, _params, _modal, _sibling) {
 		var stack;
 
 		// Determine if stack is associated with a tab
@@ -547,6 +548,10 @@ var APP = {
 
 		// Add screen to the controller stack
 		stack.push(screen);
+
+		if(_sibling) {
+			stack.splice(stack.length - 2, 1);
+		}
 
 		// Add the screen to the window
 		if(APP.Device.isHandheld || !APP.hasDetail || _modal) {

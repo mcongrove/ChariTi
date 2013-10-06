@@ -71,7 +71,7 @@ $.handleNavigation = function() {
 			APP.addChild("article_article", {
 				id: ACTION.next.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		},
 		up: function(_event) {
 			APP.log("debug", "article_article @previous");
@@ -79,7 +79,7 @@ $.handleNavigation = function() {
 			APP.addChild("article_article", {
 				id: ACTION.previous.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		}
 	}).getView();
 

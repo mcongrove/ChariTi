@@ -58,7 +58,7 @@ $.handleNavigation = function() {
 			APP.addChild("facebook_article", {
 				id: ACTION.next.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		},
 		up: function(_event) {
 			APP.log("debug", "facebook_article @previous");
@@ -66,7 +66,7 @@ $.handleNavigation = function() {
 			APP.addChild("facebook_article", {
 				id: ACTION.previous.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		}
 	}).getView();
 

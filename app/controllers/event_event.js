@@ -55,7 +55,7 @@ $.handleNavigation = function(_date) {
 			APP.addChild("event_event", {
 				id: ACTION.next.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		},
 		up: function(_event) {
 			APP.log("debug", "event_event @previous");
@@ -63,7 +63,7 @@ $.handleNavigation = function(_date) {
 			APP.addChild("event_event", {
 				id: ACTION.previous.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		}
 	}).getView();
 
