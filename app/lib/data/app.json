@@ -2,7 +2,7 @@
 	"id": "ChariTi.001",
 	"version": "1.1",
 	"minimumVersion": "1.1",
-	"configurationUrl": "http://chariti.mobi/app/app.json",
+	"configurationUrl": "",
 	"legal": {
 		"copyright": "Copyright ‌2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
@@ -29,11 +29,25 @@
 	],
 	"tabs": [
 		{
+			"title": "HOME",
+			"heading": "Open Source Mobile Framework for Charities",
+			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
+			"type": "text",
+			"menuHeader": true
+		},
+		{
 			"title": "Text",
 			"heading": "Open Source Mobile Framework for Charities",
 			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
 			"type": "text",
 			"image": "home"
+		},
+		{
+			"title": "SOCIAL",
+			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
+			"type": "podcast",
+			"cache": 1440,
+			"menuHeader": true
 		},
 		{
 			"title": "Podcast",
@@ -92,6 +106,12 @@
 			],
 			"type": "share",
 			"image": "social4"
+		},
+		{
+			"title": "HELP US",
+			"url": "https://github.com/mcongrove/ChariTi",
+			"type": "donate",
+			"menuHeader": true
 		},
 		{
 			"title": "Donate",
