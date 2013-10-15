@@ -57,7 +57,7 @@ exports.init = function() {
 			APP.log("debug", "UA.init @callback");
 			APP.log("trace", JSON.stringify(_data));
 
-			UA.handleNotification(_data.data);
+			PUSH.pushRecieved(_data.data);
 
 			if(_data.data.tab) {
 				var tabIndex = parseInt(_data.data.tab, 10) - 1;
