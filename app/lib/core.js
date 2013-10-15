@@ -484,22 +484,33 @@ var APP = {
 			} else {
 				// Create a new screen
 				var type = APP.Nodes[_id].type.toLowerCase();
+				
+				//check to see if we have tablet view mentioned for custom components
+				var tabletSupport = APP.Nodes[_id].tabletSupport;
+				
 
 				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
-					switch(type) {
-						case "article":
-						case "event":
-						case "facebook":
-						case "flickr":
-						case "podcast":
-						case "share":
-						case "vimeo":
-						case "youtube":
-							type = "tablet";
-							APP.hasDetail = true;
-							break;
-					}
+					
+					if(tabletSupport) { //detection from data file
+                    				type = "tablet";
+                    				APP.hasDetail = true;
+                			} else {
+					
+						switch(type) {
+							case "article":
+							case "event":
+							case "facebook":
+							case "flickr":
+							case "podcast":
+							case "share":
+							case "vimeo":
+							case "youtube":
+								type = "tablet";
+								APP.hasDetail = true;
+								break;
+						}
+                			}
 				}
 
 				screen = Alloy.createController(type, APP.Nodes[_id]).getView();
