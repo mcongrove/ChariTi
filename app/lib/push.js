@@ -24,8 +24,8 @@ exports.init = function() {
 };
 
 exports.pushRecieved = function(_data) {
-	Ti.API.info("debug", "ACS.pushReceived");
-	Ti.API.info("trace", JSON.stringify(_data));
+	APP.log("debug", "ACS.pushReceived");
+	APP.log("trace", JSON.stringify(_data));
 
 	var payload = null;
 
@@ -37,8 +37,6 @@ exports.pushRecieved = function(_data) {
 	} else {
 		return;
 	}
-
-	Ti.API.info(JSON.stringify(payload));
 
 	var dialog = Ti.UI.createAlertDialog({
 		title: "Push Notification",

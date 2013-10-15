@@ -8,22 +8,22 @@ if(OS_ANDROID) {
 
 		CloudPush.retrieveDeviceToken({
 			success: function(_data) {
-				Ti.API.info("debug", "ACS.registerAndroid @success");
-				Ti.API.info("trace", _data.deviceToken);
+				APP.log("debug", "ACS.registerAndroid @success");
+				APP.log("trace", _data.deviceToken);
 
 				PUSH.deviceToken = _data.deviceToken;
 				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
 
 				CloudPush.addEventListener('callback', function(evt) {
 					PUSH.pushRecieved(evt);
-					Ti.API.info(JSON.stringify(evt));
+					APP.log(JSON.stringify(evt));
 				});
 
 				callback();
 			},
 			error: function(_data) {
-				Ti.API.info("debug", "ACS.registerAndroid @error");
-				Ti.API.info("trace", JSON.stringify(_data));
+				APP.log("debug", "ACS.registerAndroid @error");
+				APP.log("trace", JSON.stringify(_data));
 			}
 		});
 	};
@@ -40,28 +40,28 @@ if(OS_IOS) {
                 Ti.Network.NOTIFICATION_TYPE_SOUND
             ],
 			success: function(_data) {
-				Ti.API.info("debug", "ACS.registeriOS @success");
-				Ti.API.info("trace", _data.deviceToken);
+				APP.log("debug", "ACS.registeriOS @success");
+				APP.log("trace", _data.deviceToken);
 
-				// PUSH.deviceToken = _data.deviceToken;
-				// Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
+				PUSH.deviceToken = _data.deviceToken;
+				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
 
-				// callback();
+				callback();
 			},
 			error: function(_data) {
-				Ti.API.info("debug", "ACS.registeriOS @error");
-				Ti.API.info("trace", JSON.stringify(_data));
+				APP.log("debug", "ACS.registeriOS @error");
+				APP.log("trace", JSON.stringify(_data));
 			},
 			callback: function(_data) {
 				PUSH.pushRecieved(_data);
-				Ti.API.info(JSON.stringify(_data));
+				APP.log(JSON.stringify(_data));
 			}
 		});
 	};
 }
 
 exports.registerDevice = function(callback) {
-	Ti.API.info("debug", "ACS.registerDevice");
+	APP.log("debug", "ACS.registerDevice");
 
 	if(OS_IOS) {
 		registeriOS(callback);
