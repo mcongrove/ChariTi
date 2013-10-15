@@ -38,7 +38,7 @@ $.handleData = function(_data) {
 
 		$.image.add(image);
 	} else {
-		$.container.remove($.image)
+		$.container.remove($.image);
 	}
 
 	ACTION.url = _data.link;

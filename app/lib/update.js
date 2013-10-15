@@ -104,7 +104,7 @@ exports.handleUpdate = function(_data, _url, _callback) {
 			});
 
 			dialog.show();
-		}
+		};
 	} else {
 		onComplete = _callback;
 	}

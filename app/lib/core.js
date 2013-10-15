@@ -484,19 +484,14 @@ var APP = {
 			} else {
 				// Create a new screen
 				var type = APP.Nodes[_id].type.toLowerCase();
-				
-				//check to see if we have tablet view mentioned for custom components
 				var tabletSupport = APP.Nodes[_id].tabletSupport;
-				
 
 				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
-					
-					if(tabletSupport) { //detection from data file
-                    				type = "tablet";
-                    				APP.hasDetail = true;
-                			} else {
-					
+					if(tabletSupport) {
+						type = "tablet";
+						APP.hasDetail = true;
+					} else {
 						switch(type) {
 							case "article":
 							case "event":
@@ -510,7 +505,7 @@ var APP = {
 								APP.hasDetail = true;
 								break;
 						}
-                			}
+					}
 				}
 
 				screen = Alloy.createController(type, APP.Nodes[_id]).getView();
