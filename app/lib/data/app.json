@@ -2,7 +2,7 @@
 	"id": "ChariTi.001",
 	"version": "1.1",
 	"minimumVersion": "1.1",
-	"configurationUrl": "http://chariti.mobi/app/app.json",
+	"configurationUrl": "",
 	"legal": {
 		"copyright": "Copyright ‌2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
@@ -29,12 +29,22 @@
 	],
 	"tabs": [
 		{
+			"title": "HOME",
+			"type": "text",
+			"menuHeader": true
+		},
+		{
 			"title": "Text",
 			"heading": "Open Source Mobile Framework for Charities",
 			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
 			"type": "text",
 			"image": "home",
 			"tabletSupport": false
+		},
+		{
+			"title": "SOCIAL",
+			"type": "text",
+			"menuHeader": true
 		},
 		{
 			"title": "Podcast",
@@ -100,6 +110,11 @@
 			"type": "share",
 			"image": "social4",
 			"tabletSupport": true
+		},
+		{
+			"title": "HELP US",
+			"type": "text",
+			"menuHeader": true
 		},
 		{
 			"title": "Donate",

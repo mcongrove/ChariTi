@@ -266,7 +266,8 @@ var APP = {
 				id: i,
 				title: APP.Nodes[i].title,
 				image: "/icons/" + APP.Nodes[i].image + ".png",
-				controller: APP.Nodes[i].type.toLowerCase()
+				controller: APP.Nodes[i].type.toLowerCase(),
+				menuHeader: APP.Nodes[i].menuHeader
 			});
 		}
 
