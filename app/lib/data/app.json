@@ -157,11 +157,13 @@
 			"type": "web",
 			"image": "home"
 		},
+		{
 			"title": "CustomComponent",
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "web",
 			"image": "home",
 			"tabletSupport": true
+		}
 			
 	]
 }
