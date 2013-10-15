@@ -2,7 +2,7 @@
 	"id": "ChariTi.001",
 	"version": "1.1",
 	"minimumVersion": "1.1",
-	"configurationUrl": "http://chariti.mobi/app/app.json",
+	"_configurationUrl": "http://chariti.mobi/app/app.json",
 	"legal": {
 		"copyright": "Copyright ‌2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
