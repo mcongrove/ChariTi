@@ -13,28 +13,56 @@ $.init = function(_params) {
 	for(var i = 0; i < _params.tabs.length; i++) {
 		//assigns special menuHeader styling
 		if(_params.tabs[i].menuHeader) {
+
 			var tab = Ti.UI.createTableViewRow({
-				height : "21dp",
+				height : "68dp",
 				backgroundcolor: "#111",
 				backgroundSelectedColor: "#222",
 				selectedBackgroundColor: "#222",
 				isHeader : true
 			});
 
-			var label = Ti.UI.createLabel({
-				text : _params.tabs[i].title,
+			var header = Ti.UI.createLabel({
+				text : _params.tabs[i].menuHeader,
 				top : "0dp",
 				left : "6dp",
-				height : "21dp",
+				height : "20dp",
 				font : {
-					fontSize : "10dp",
-					fontWeight : "bold"
+					fontSize : "13dp",
+					fontWeight : "HelveticaNeue-Light"
 				},
 				color : "#FFF",
 			
 				touchEnabled : false,
 				isHeader : true
 			});
+
+			var icon = Ti.UI.createImageView({
+				image: _params.tabs[i].image,
+				width: "21dp",
+				height: "21dp",
+				top: "33dp",
+				left: "13dp",
+				touchEnabled: false,
+				preventDefaultImage: true
+			});
+			
+			var label = Ti.UI.createLabel({
+				text: _params.tabs[i].title,
+				top: "20dp",
+				left: "47dp",
+				right: "13dp",
+				height: "47dp",
+				font: {
+					fontSize: "16dp",
+					fontFamily: "HelveticaNeue-Light"
+				},
+				color: "#FFF",
+				touchEnabled: false
+			});
+			
+			tab.add(header);
+			tab.add(icon);
 			tab.add(label);
 			
 			$.tabs.push(tab);
