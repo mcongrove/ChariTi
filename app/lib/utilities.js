@@ -57,6 +57,20 @@ exports.lastUpdate = function(_url) {
 };
 
 /**
+ * Checks to see if a file exists
+ * @param {String} [_path] The path of the file to check
+ */
+exports.fileExists = function(_path) {
+	var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, _path);
+
+	if(file.exists()) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+/**
  * Adds thousands separators to a number
  * @param {Integer} [_number] The number to perform the action on
  */

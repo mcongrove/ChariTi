@@ -256,6 +256,8 @@ var APP = {
 			primary: UTIL.hexToHsb(APP.Settings.colors.primary),
 			secondary: UTIL.hexToHsb(APP.Settings.colors.secondary)
 		};
+
+		APP.Settings.colors.theme = APP.Settings.colors.hsb.primary.b > 65 ? "dark" : "light";
 	},
 	/**
 	 * Builds out the tab group
@@ -265,13 +267,13 @@ var APP = {
 		APP.log("debug", "APP.build");
 
 		var tabs = [];
-		var imageFolder = APP.Settings.colors.hsb.primary.b > 60 ? "/icons/dark/" : "/icons/light/";
+		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "dark" ? "/icons/dark/" : "/icons/light/";
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			tabs.push({
 				id: i,
 				title: APP.Nodes[i].title,
-				image: imageFolder + APP.Nodes[i].image + ".png",
+				image: UTIL.fileExists(imageFolder + APP.Nodes[i].image + ".png") ? imageFolder + APP.Nodes[i].image + ".png" : null,
 				controller: APP.Nodes[i].type.toLowerCase()
 			});
 		}
@@ -292,11 +294,7 @@ var APP = {
 
 		APP.Tabs.init({
 			tabs: _tabs,
-			colors: {
-				primary: APP.Settings.colors.primary,
-				secondary: APP.Settings.colors.secondary,
-				text: APP.Settings.colors.text
-			}
+			colors: APP.Settings.colors
 		});
 
 		if(!_rebuild) {

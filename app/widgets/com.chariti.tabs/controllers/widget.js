@@ -49,15 +49,6 @@ $.init = function(_params) {
 			bottom: "0dp",
 			left: "0dp"
 		});
-
-		var icon = Ti.UI.createImageView({
-			image: _params.tabs[i].image,
-			width: "32dp",
-			height: "32dp",
-			top: "7dp",
-			touchEnabled: false,
-			preventDefaultImage: true
-		});
 		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
@@ -75,7 +66,19 @@ $.init = function(_params) {
 			touchEnabled: false
 		});
 
-		tab.add(icon);
+		if(_params.tabs[i].image) {
+			var icon = Ti.UI.createImageView({
+				image: _params.tabs[i].image,
+				width: "32dp",
+				height: "32dp",
+				top: "7dp",
+				touchEnabled: false,
+				preventDefaultImage: true
+			});
+			
+			tab.add(icon);
+		}
+
 		tab.add(label);
 		
 		if($.excess && i >= ($.excessLength - 1)) {
@@ -103,7 +106,7 @@ $.addMoreTab = function(_params) {
 	});
 
 	var icon = Ti.UI.createImageView({
-		image: "/icons/more.png",
+		image: _params.colors.theme == "dark" ? "/icons/dark/more.png" : "/icons/light/more.png",
 		width: "32dp",
 		height: "32dp",
 		top: "7dp",

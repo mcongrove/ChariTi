@@ -18,16 +18,6 @@ $.init = function(_params) {
 			backgroundSelectedColor: "#222",
 			selectedBackgroundColor: "#222"
 		});
-
-		var icon = Ti.UI.createImageView({
-			image: _params.tabs[i].image,
-			width: "21dp",
-			height: "21dp",
-			top: "13dp",
-			left: "13dp",
-			touchEnabled: false,
-			preventDefaultImage: true
-		});
 		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
@@ -43,7 +33,20 @@ $.init = function(_params) {
 			touchEnabled: false
 		});
 		
-		tab.add(icon);
+		if(_params.tabs[i].image) {
+			var icon = Ti.UI.createImageView({
+				image: _params.tabs[i].image,
+				width: "21dp",
+				height: "21dp",
+				top: "13dp",
+				left: "13dp",
+				touchEnabled: false,
+				preventDefaultImage: true
+			});
+			
+			tab.add(icon);
+		}
+		
 		tab.add(label);
 		
 		$.tabs.push(tab);
