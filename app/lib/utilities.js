@@ -81,8 +81,14 @@ exports.formatNumber = function(_number) {
  * @param {String} [_hex] The hex color to convert
  */
 exports.hexToHsb = function(_hex) {
-	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(_hex);
-
+	var result;
+	
+	if(_hex.length < 6) {
+		result = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(_hex);
+	} else {
+		result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(_hex);
+	}
+	
 	var hsb = {
 		h: 0,
 		s: 0,
@@ -91,6 +97,12 @@ exports.hexToHsb = function(_hex) {
 
 	if(!result) {
 		return hsb;
+	}
+	
+	if(result[1].length == 1) {
+		result[1] = result[1] + result[1];
+		result[2] = result[2] + result[2];
+		result[3] = result[3] + result[3];
 	}
 
 	var rgb = {
