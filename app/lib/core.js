@@ -265,12 +265,13 @@ var APP = {
 		APP.log("debug", "APP.build");
 
 		var tabs = [];
+		var imageFolder = APP.Settings.colors.hsb.primary.b > 60 ? "/icons/dark/" : "/icons/light/";
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			tabs.push({
 				id: i,
 				title: APP.Nodes[i].title,
-				image: "/icons/" + APP.Nodes[i].image + ".png",
+				image: imageFolder + APP.Nodes[i].image + ".png",
 				controller: APP.Nodes[i].type.toLowerCase()
 			});
 		}
