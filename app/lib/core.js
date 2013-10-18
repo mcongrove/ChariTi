@@ -251,6 +251,11 @@ var APP = {
 		if(typeof APP.Settings.useSlideMenu == "undefined") {
 			APP.Settings.useSlideMenu = false;
 		}
+
+		APP.Settings.colors.hsb = {
+			primary: UTIL.hexToHsb(APP.Settings.colors.primary),
+			secondary: UTIL.hexToHsb(APP.Settings.colors.secondary)
+		};
 	},
 	/**
 	 * Builds out the tab group

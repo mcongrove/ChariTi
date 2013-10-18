@@ -57,6 +57,91 @@ exports.lastUpdate = function(_url) {
 };
 
 /**
+ * Adds thousands separators to a number
+ * @param {Integer} [_number] The number to perform the action on
+ */
+exports.formatNumber = function(_number) {
+	_number = _number + "";
+
+	x = _number.split(".");
+	x1 = x[0];
+	x2 = x.length > 1 ? "." + x[1] : "";
+
+	var expression = /(\d+)(\d{3})/;
+
+	while(expression.test(x1)) {
+		x1 = x1.replace(expression, "$1" + "," + "$2");
+	}
+
+	return x1 + x2;
+};
+
+/**
+ * Converts a hex color value to HSB
+ * @param {String} [_hex] The hex color to convert
+ */
+exports.hexToHsb = function(_hex) {
+	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(_hex);
+
+	var hsb = {
+		h: 0,
+		s: 0,
+		b: 0
+	};
+
+	if(!result) {
+		return hsb;
+	}
+
+	var rgb = {
+		r: parseInt(result[1], 16),
+		g: parseInt(result[2], 16),
+		b: parseInt(result[3], 16)
+	};
+
+	rgb.r /= 255;
+	rgb.g /= 255;
+	rgb.b /= 255;
+
+	var minVal = Math.min(rgb.r, rgb.g, rgb.b),
+		maxVal = Math.max(rgb.r, rgb.g, rgb.b),
+		delta = maxVal - minVal,
+		del_r, del_g, del_b;
+
+	hsb.b = maxVal;
+
+	if(delta !== 0) {
+		hsb.s = delta / maxVal;
+
+		del_r = (((maxVal - rgb.r) / 6) + (delta / 2)) / delta;
+		del_g = (((maxVal - rgb.g) / 6) + (delta / 2)) / delta;
+		del_b = (((maxVal - rgb.b) / 6) + (delta / 2)) / delta;
+
+		if(rgb.r === maxVal) {
+			hsb.h = del_b - del_g;
+		} else if(rgb.g === maxVal) {
+			hsb.h = (1 / 3) + del_r - del_b;
+		} else if(rgb.b === maxVal) {
+			hsb.h = (2 / 3) + del_g - del_r;
+		}
+
+		if(hsb.h < 0) {
+			hsb.h += 1;
+		}
+
+		if(hsb.h > 1) {
+			hsb.h -= 1;
+		}
+	}
+
+	hsb.h = Math.round(hsb.h * 360);
+	hsb.s = Math.round(hsb.s * 100);
+	hsb.b = Math.round(hsb.b * 100);
+
+	return hsb;
+};
+
+/**
  * Escapes a string for SQL insertion
  * @param {String} [_string] The string to perform the action on
  */
@@ -429,24 +514,4 @@ exports.htmlTranslationTable = function() {
 	};
 
 	return entities;
-};
-
-/**
- * Adds thousands separators to a number
- * @param {Integer} [_number] The number to perform the action on
- */
-exports.formatNumber = function(_number) {
-	_number = _number + "";
-
-	x = _number.split(".");
-	x1 = x[0];
-	x2 = x.length > 1 ? "." + x[1] : "";
-
-	var expression = /(\d+)(\d{3})/;
-
-	while(expression.test(x1)) {
-		x1 = x1.replace(expression, "$1" + "," + "$2");
-	}
-
-	return x1 + x2;
 };
