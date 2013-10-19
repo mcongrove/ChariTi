@@ -40,7 +40,7 @@
 			"title": "Podcast",
 			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
 			"type": "podcast",
-			"image": "audio",
+			"image": "audio2",
 			"cache": 1440,
 			"tabletSupport": true
 		},
@@ -56,7 +56,7 @@
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "article",
-			"image": "news1",
+			"image": "news",
 			"cache": 120,
 			"tabletSupport": true
 		},
@@ -65,7 +65,7 @@
 			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
-			"image": "photo1",
+			"image": "photo",
 			"cache": 1440,
 			"tabletSupport": true
 		},
@@ -73,7 +73,7 @@
 			"title": "Events",
 			"userid": "7304307941",
 			"type": "event",
-			"image": "event2",
+			"image": "event",
 			"cache": 1440,
 			"tabletSupport": true
 		},
@@ -81,7 +81,7 @@
 			"title": "Vimeo",
 			"username": "appcelerator",
 			"type": "vimeo",
-			"image": "video4",
+			"image": "video2",
 			"cache": 1440,
 			"tabletSupport": true
 		},
@@ -98,7 +98,7 @@
 				}
 			],
 			"type": "share",
-			"image": "social4",
+			"image": "social",
 			"tabletSupport": true
 		},
 		{
@@ -107,7 +107,7 @@
 			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "donate",
-			"image": "donate3",
+			"image": "donate2",
 			"tabletSupport": false
 		}
 	],
@@ -138,14 +138,14 @@
 				}
 			],
 			"type": "map",
-			"image": "map2",
+			"image": "map",
 			"tabletSupport": false
 		},
 		{
 			"title": "News",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "article",
-			"image": "news1",
+			"image": "news",
 			"cache": 120,
 			"tabletSupport": true
 		},
@@ -153,14 +153,14 @@
 			"title": "PDF",
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
-			"image": "book1",
+			"image": "book",
 			"tabletSupport": false
 		},
 		{
 			"title": "YouTube",
 			"username": "appcelerator",
 			"type": "youtube",
-			"image": "video5",
+			"image": "video2",
 			"cache": 1440,
 			"tabletSupport": true
 		},
