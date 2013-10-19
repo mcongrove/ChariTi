@@ -11,7 +11,7 @@ $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 $.NavigationBar.showBack({
 	callback: function(_event) {
 		APP.removeChild();
-		APP.SlideMenuEngaged = true;;
+		APP.SlideMenuEngaged = true;
 	}
 });
 

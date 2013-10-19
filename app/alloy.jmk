@@ -37,13 +37,17 @@ task("pre:compile", function(event, logger) {
 });
 
 task("post:compile", function(event, logger) {
+	var exec = require("child_process").exec;
 	var fs = require("fs");
 	
 	fs.writeFile(event.dir.resources + "/.gitignore", "*\n\n!.gitignore", function(err) {
 		if(err) {
 			logger.error(err);
 		} else {
-			logger.info(".gitignore file was generated!");
+			logger.info(".gitignore file generated");
 		}
 	});
+	
+	exec("jsduck --config=docs/jsduck.json app");
+	logger.info("Documentation generated");
 });
