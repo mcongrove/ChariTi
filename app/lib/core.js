@@ -23,7 +23,6 @@ var APP = {
 	/**
 	 * ChariTi framework version
 	 * @type {String}
-	 * @hide
 	 */
 	CVERSION: "1.2.0.100513",
 	/**
@@ -188,13 +187,11 @@ var APP = {
 	/**
 	 * Whether or not to cancel the loading screen open because it's already open
 	 * @type {Boolean}
-	 * @hide
 	 */
 	cancelLoading: false,
 	/**
 	 * Whether or not the loading screen is open
 	 * @type {Boolean}
-	 * @hide
 	 */
 	loadingOpen: false,
 	/**
@@ -210,7 +207,6 @@ var APP = {
 	/**
 	 * Whether or not the slide menu is open
 	 * @type {Boolean}
-	 * @hide
 	 */
 	SlideMenuOpen: false,
 	/**

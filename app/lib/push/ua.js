@@ -1,3 +1,11 @@
+/**
+ * Urban Airship push notification class
+ * 
+ * @class push.ua
+ * @uses core
+ * @uses push
+ * @uses ti.urbanairship
+ */
 var APP = require("core");
 var PUSH = require("push");
 

@@ -1,7 +1,13 @@
 /**
+ * Utility functions class
+ * 
+ * @class utilities
+ */
+
+/**
  * Checks to see if an item in the cache is stale or fresh
- * @param {String} [_url] The URL of the file we're checking
- * @param {Integer} [_time] The time, in minutes, to consider 'warm' in the cache
+ * @param {String} _url The URL of the file we're checking
+ * @param {Number} _time The time, in minutes, to consider 'warm' in the cache
  */
 exports.isStale = function(_url, _time) {
 	var db = Ti.Database.open("ChariTi");
@@ -32,7 +38,7 @@ exports.isStale = function(_url, _time) {
 
 /**
  * Returns last updated time for an item in the cache
- * @param {String} [_url] The URL of the file we're checking
+ * @param {String} _url The URL of the file we're checking
  */
 exports.lastUpdate = function(_url) {
 	var db = Ti.Database.open("ChariTi");
@@ -58,7 +64,7 @@ exports.lastUpdate = function(_url) {
 
 /**
  * Checks to see if a file exists
- * @param {String} [_path] The path of the file to check
+ * @param {String} _path The path of the file to check
  */
 exports.fileExists = function(_path) {
 	var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, _path);
@@ -72,7 +78,7 @@ exports.fileExists = function(_path) {
 
 /**
  * Adds thousands separators to a number
- * @param {Integer} [_number] The number to perform the action on
+ * @param {Number} _number The number to perform the action on
  */
 exports.formatNumber = function(_number) {
 	_number = _number + "";
@@ -92,7 +98,7 @@ exports.formatNumber = function(_number) {
 
 /**
  * Converts a hex color value to HSB
- * @param {String} [_hex] The hex color to convert
+ * @param {String} _hex The hex color to convert
  */
 exports.hexToHsb = function(_hex) {
 	var result;
@@ -169,7 +175,7 @@ exports.hexToHsb = function(_hex) {
 
 /**
  * Escapes a string for SQL insertion
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.escapeString = function(_string) {
 	if(typeof _string !== "string") {
@@ -181,7 +187,7 @@ exports.escapeString = function(_string) {
 
 /**
  * Removes HTML entities, replaces breaks/paragraphs with newline, strips HTML, trims
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.cleanString = function(_string) {
 	if(typeof _string !== "string") {
@@ -204,7 +210,7 @@ exports.cleanString = function(_string) {
 
 /**
  * Combination of clean and escape string
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.cleanEscapeString = function(_string) {
 	_string = exports.cleanString(_string);
@@ -214,7 +220,7 @@ exports.cleanEscapeString = function(_string) {
 
 /**
  * Cleans up nasty XML
- * @param {String} [_string] The XML string to perform the action on
+ * @param {String} _string The XML string to perform the action on
  */
 exports.xmlNormalize = function(_string) {
 	_string = _string.replace(/&nbsp;*/ig, " ");
@@ -251,7 +257,7 @@ String.fromCharCodePoint = function() {
 
 /**
  * Decodes HTML entities
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.htmlDecode = function(_string) {
 	var tmp_str = _string.toString();

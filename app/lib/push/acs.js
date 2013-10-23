@@ -1,17 +1,30 @@
+/**
+ * ACS push notification class
+ * 
+ * @class push.acs
+ * @uses core
+ * @uses push
+ * @uses ti.coudpush
+ */
 var APP = require("core");
 var PUSH = require("push");
 
 if(OS_ANDROID) {
 	var CloudPush = require('ti.cloudpush');
 
-	var registerAndroid = function(callback) {
-
+	/**
+	 * Registers an Android device for push notifications
+ 	 * @param {Function} _callback The function to run after registration is complete
+ 	 * @platform Android
+	 */
+	var registerAndroid = function(_callback) {
 		CloudPush.retrieveDeviceToken({
 			success: function(_data) {
 				APP.log("debug", "ACS.registerAndroid @success");
 				APP.log("trace", _data.deviceToken);
 
 				PUSH.deviceToken = _data.deviceToken;
+				
 				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
 
 				CloudPush.addEventListener('callback', function(evt) {
@@ -19,7 +32,7 @@ if(OS_ANDROID) {
 					APP.log(JSON.stringify(evt));
 				});
 
-				callback();
+				_callback();
 			},
 			error: function(_data) {
 				APP.log("debug", "ACS.registerAndroid @error");
@@ -30,7 +43,12 @@ if(OS_ANDROID) {
 }
 
 if(OS_IOS) {
-	var registeriOS = function(callback) {
+	/**
+	 * Registers an iOS device for push notifications
+ 	 * @param {Function} _callback The function to run after registration is complete
+ 	 * @platform iOS
+	 */
+	var registeriOS = function(_callback) {
 		APP.log("debug", "PUSH.registeriOS");
 
 		Ti.Network.registerForPushNotifications({
@@ -46,7 +64,7 @@ if(OS_IOS) {
 				PUSH.deviceToken = _data.deviceToken;
 				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
 
-				callback();
+				_callback();
 			},
 			error: function(_data) {
 				APP.log("debug", "ACS.registeriOS @error");
@@ -54,19 +72,23 @@ if(OS_IOS) {
 			},
 			callback: function(_data) {
 				PUSH.pushRecieved(_data);
+				
 				APP.log(JSON.stringify(_data));
 			}
 		});
 	};
 }
 
-exports.registerDevice = function(callback) {
+/**
+ * Registers a device for push notifications
+ * @param {Function} _callback The function to run after registration is complete
+ */
+exports.registerDevice = function(_callback) {
 	APP.log("debug", "ACS.registerDevice");
 
 	if(OS_IOS) {
-		registeriOS(callback);
-	}
-	if(OS_ANDROID) {
-		registerAndroid(callback);
+		registeriOS(_callback);
+	} else if(OS_ANDROID) {
+		registerAndroid(_callback);
 	}
 };

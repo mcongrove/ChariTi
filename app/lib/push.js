@@ -1,14 +1,28 @@
+/**
+ * Push notification class
+ * 
+ * @class push
+ * @uses core
+ */
 var APP = require("core");
 
+/**
+ * The device token
+ * @type String
+ */
 exports.deviceToken = null;
 
-var vendorInit = function(callback) {
+/**
+ * Initializes the push notifications based on selected vendor
+ * @param {Function} _callback The callback to run after device registration
+ */
+var vendorInit = function(_callback) {
 	if(APP.Settings.notifications.provider === "ACS") {
-		require("push/acs").registerDevice(callback);
+		require("push/acs").registerDevice(_callback);
 	}
 
 	if(APP.Settings.notifications.provider === "UA") {
-		require("push/ua").registerDevice(callback);
+		require("push/ua").registerDevice(_callback);
 	}
 };
 
@@ -23,6 +37,10 @@ exports.init = function() {
 	});
 };
 
+/**
+ * The function to run after a push has been received
+ * @param {Object} _data The push data received
+ */
 exports.pushRecieved = function(_data) {
 	APP.log("debug", "ACS.pushReceived");
 	APP.log("trace", JSON.stringify(_data));
