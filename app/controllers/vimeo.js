@@ -1,3 +1,11 @@
+/**
+ * Controller for the Vimeo list screen
+ * 
+ * @class Controllers.vimeo
+ * @uses Models.vimeo
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");

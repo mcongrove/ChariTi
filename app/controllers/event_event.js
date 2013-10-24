@@ -1,3 +1,11 @@
+/**
+ * Controller for the event node screen
+ * 
+ * @class Controllers.event.event
+ * @uses Models.event
+ * @uses core
+ * @uses social
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");

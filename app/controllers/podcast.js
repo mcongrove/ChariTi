@@ -1,3 +1,11 @@
+/**
+ * Controller for the podcast list screen
+ * 
+ * @class Controllers.podcast
+ * @uses Models.podcast
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");

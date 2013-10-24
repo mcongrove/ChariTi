@@ -1,3 +1,11 @@
+/**
+ * Controller for the event list screen
+ * 
+ * @class Controllers.event
+ * @uses Models.event
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");

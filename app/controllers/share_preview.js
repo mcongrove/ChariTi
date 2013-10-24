@@ -1,3 +1,9 @@
+/**
+ * Controller for the share preview screen
+ * 
+ * @class Controllers.share.preview
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

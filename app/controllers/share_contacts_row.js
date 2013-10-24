@@ -1,3 +1,9 @@
+/**
+ * Controller for the share contacts table row
+ * 
+ * @class Controllers.share.contacts.row
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

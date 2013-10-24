@@ -1,3 +1,11 @@
+/**
+ * YouTube model
+ * 
+ * @class Models.youtube
+ * @uses core
+ * @uses http
+ * @uses utilities
+ */
 var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");

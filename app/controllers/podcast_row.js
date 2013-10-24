@@ -1,3 +1,9 @@
+/**
+ * Controller for the podcast table row
+ * 
+ * @class Controllers.podcast.row
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

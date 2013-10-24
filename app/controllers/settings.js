@@ -1,3 +1,9 @@
+/**
+ * Controller for the settings screen
+ * 
+ * @class Controllers.settings
+ * @uses core
+ */
 var APP = require("core");
 
 $.init = function() {

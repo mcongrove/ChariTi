@@ -1,14 +1,23 @@
 /**
- * @class Controllers
- * The controller classes handle all logic for each component
+ * @class Modules.ti.cloud
+ * Cloud module
+ * @hide
  */
 
 /**
- * @class Models
- * The model classes handle all data for each component
+ * @class Modules.ti.cloudpush
+ * CloudPush module
+ * @hide
  */
 
 /**
- * @class Alloy
- * @ignore
+ * @class Modules.ti.urbanairship
+ * Urban Airship module
+ * @hide
+ */
+
+/**
+ * @class Modules.dk.napp.social
+ * Social module
+ * @hide
  */

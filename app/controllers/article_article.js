@@ -1,3 +1,11 @@
+/**
+ * Controller for the article node screen
+ * 
+ * @class Controllers.article.article
+ * @uses Models.article
+ * @uses core
+ * @uses social
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");

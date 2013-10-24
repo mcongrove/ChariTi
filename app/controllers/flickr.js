@@ -1,3 +1,11 @@
+/**
+ * Controller for the Flickr album list screen
+ * 
+ * @class Controllers.flickr
+ * @uses Models.flickr
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var MODEL = require("models/flickr")();

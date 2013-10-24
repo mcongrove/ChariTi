@@ -1,3 +1,11 @@
+/**
+ * Controller for the YouTube list screen
+ * 
+ * @class Controllers.youtube
+ * @uses Models.youtube
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");

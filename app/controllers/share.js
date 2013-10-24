@@ -1,3 +1,9 @@
+/**
+ * Controller for the share screen
+ * 
+ * @class Controllers.share
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];

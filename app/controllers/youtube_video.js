@@ -1,3 +1,9 @@
+/**
+ * Controller for the YouTube video screen
+ * 
+ * @class Controllers.youtube.video
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

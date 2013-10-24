@@ -3,7 +3,7 @@
  * 
  * @class social
  * @uses core
- * @uses dk.napp.social
+ * @uses Modules.dk.napp.social
  */
 var APP = require("core");
 

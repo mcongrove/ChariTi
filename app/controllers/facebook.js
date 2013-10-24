@@ -1,3 +1,11 @@
+/**
+ * Controller for the Facebook post list screen
+ * 
+ * @class Controllers.facebook
+ * @uses Models.facebook
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");

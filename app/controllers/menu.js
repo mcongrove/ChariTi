@@ -1,3 +1,9 @@
+/**
+ * Controller for the menu list screen
+ * 
+ * @class Controllers.menu
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];

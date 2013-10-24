@@ -4,7 +4,7 @@
  * @class push.acs
  * @uses core
  * @uses push
- * @uses ti.coudpush
+ * @uses Modules.ti.cloudpush
  */
 var APP = require("core");
 var PUSH = require("push");

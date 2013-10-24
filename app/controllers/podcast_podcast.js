@@ -1,3 +1,11 @@
+/**
+ * Controller for the podcast node screen
+ * 
+ * @class Controllers.podcast.podcast
+ * @uses Models.podcast
+ * @uses core
+ * @uses social
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");

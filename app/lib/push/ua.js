@@ -4,7 +4,7 @@
  * @class push.ua
  * @uses core
  * @uses push
- * @uses ti.urbanairship
+ * @uses Modules.ti.urbanairship
  */
 var APP = require("core");
 var PUSH = require("push");

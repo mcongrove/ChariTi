@@ -1,3 +1,9 @@
+/**
+ * Controller for the settings legal screen
+ * 
+ * @class Controllers.settings.legal
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];

@@ -1,3 +1,9 @@
+/**
+ * Controller for the YouTube table row
+ * 
+ * @class Controllers.youtube.row
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

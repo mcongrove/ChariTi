@@ -1,3 +1,11 @@
+/**
+ * Controller for the article list screen
+ * 
+ * @class Controllers.article
+ * @uses Models.article
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");

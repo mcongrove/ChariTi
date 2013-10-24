@@ -1,3 +1,11 @@
+/**
+ * Controller for the Facebook post node screen
+ * 
+ * @class Controllers.facebook.article
+ * @uses Models.facebook
+ * @uses core
+ * @uses social
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");

@@ -1,3 +1,9 @@
+/**
+ * Controller for the Vimeo table row
+ * 
+ * @class Controllers.vimeo.row
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

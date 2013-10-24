@@ -1,3 +1,9 @@
+/**
+ * Controller for the share contacts list screen
+ * 
+ * @class Controllers.share.contacts
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];

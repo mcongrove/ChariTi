@@ -1,3 +1,10 @@
+/**
+ * Controller for the Flickr photo screen
+ * 
+ * @class Controllers.flickr.photo
+ * @uses Models.flickr
+ * @uses core
+ */
 var APP = require("core");
 var MODEL = require("models/flickr")();
 

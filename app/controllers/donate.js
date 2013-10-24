@@ -1,3 +1,9 @@
+/**
+ * Controller for the donate screen
+ * 
+ * @class Controllers.donate
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];

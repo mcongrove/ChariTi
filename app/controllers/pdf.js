@@ -1,3 +1,10 @@
+/**
+ * Controller for the PDF screen
+ * 
+ * @class Controllers.pdf
+ * @uses core
+ * @uses http
+ */
 var APP = require("core");
 var HTTP = require("http");
 

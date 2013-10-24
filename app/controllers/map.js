@@ -1,3 +1,9 @@
+/**
+ * Controller for the map screen
+ * 
+ * @class Controllers.map
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
