@@ -6,6 +6,9 @@
  */
 var APP = require("core");
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "settings_credits.init");
 

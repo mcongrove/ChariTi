@@ -1,3 +1,8 @@
+/**
+ * The detail navigation widget
+ * 
+ * @class Widgets.com.chariti.detailNavigation
+ */
 var APP = require("core");
 var CONFIG = arguments[0] || {};
 

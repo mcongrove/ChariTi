@@ -10,6 +10,9 @@ var HTTP = require("http");
 
 var CONFIG = arguments[0];
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "pdf.init | " + JSON.stringify(CONFIG));
 
@@ -38,6 +41,11 @@ $.init = function() {
 	}
 };
 
+/**
+ * Handles the PDF data return
+ * @param {Object} _data The PDF data
+ * @param {Object} _url The remote URL of the PDF
+ */
 $.handlePdf = function(_data, _url) {
 	APP.log("debug", "pdf.handlePdf");
 
@@ -49,6 +57,10 @@ $.handlePdf = function(_data, _url) {
 	$.container.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(_url);
 };
 
+/**
+ * Determines the filename based on the URL
+ * @param {Object} _url The remote URL of the PDF
+ */
 $.getFileName = function(_url) {
 	APP.log("debug", "pdf.getFileName");
 
@@ -64,6 +76,10 @@ $.getFileName = function(_url) {
 	return filename + ".pdf";
 };
 
+/**
+ * Checks if the file exists locally
+ * @param {Object} _url The remote URL of the PDF
+ */
 $.fileExists = function(_url) {
 	APP.log("debug", "pdf.fileExists");
 

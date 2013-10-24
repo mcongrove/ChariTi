@@ -15,6 +15,9 @@ var CONFIG = arguments[0] || {};
 var ACTION = {};
 var STREAM;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "podcast_podcast.init | " + JSON.stringify(CONFIG));
 
@@ -25,6 +28,10 @@ $.init = function() {
 	$.position.backgroundColor = APP.Settings.colors.primary || "#000";
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "podcast_podcast.handleData");
 
@@ -55,6 +62,10 @@ $.handleData = function(_data) {
 	});
 };
 
+/**
+ * Creates an audio player
+ * @param {Object} _url The remote URL of the audio
+ */
 $.createAudioPlayer = function(_url) {
 	APP.log("debug", "podcast_podcast.createAudioPlayer(" + _url + ")");
 
@@ -107,35 +118,61 @@ $.createAudioPlayer = function(_url) {
 	$.playerContainer.add(STREAM);
 };
 
+/**
+ * Downloads the audio file from the remote source
+ */
 $.downloadRemoteFile = function() {
 	MODEL.downloadPodcast(ACTION.url);
 
 	$.disableDownload();
 };
 
+/**
+ * Disables the download option
+ */
 $.disableDownload = function() {
 	$.download.touchEnabled = false;
 	$.download.opacity = 0.4;
 };
 
+/**
+ * Handles detail navigation
+ * @param {Object} _id The ID of the current audio item
+ */
 $.handleNavigation = function(_id) {
 	ACTION.next = MODEL.getNextPodcast(_id);
 	ACTION.previous = MODEL.getPreviousPodcast(_id);
 };
 
+/**
+ * Plays the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamPlay = function(_event) {
 	STREAM.play();
 };
 
+/**
+ * Pauses the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamPause = function(_event) {
 	STREAM.pause();
 };
 
+/**
+ * Stops the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamStop = function() {
 	STREAM.stop();
 	STREAM.release();
 };
 
+/**
+ * Seeks the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamSeek = function(_event) {
 	var x = _event.x;
 	var width = $.track.rect.width;
@@ -147,6 +184,10 @@ $.streamSeek = function(_event) {
 	$.position.width = (percentage * 100) + "%";
 };
 
+/**
+ * Handles the progress event from the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamProgress = function(_event) {
 	if(STREAM.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
 		var percentage = ((STREAM.currentPlaybackTime / STREAM.getDuration()) * 100);
@@ -159,6 +200,10 @@ $.streamProgress = function(_event) {
 	}
 };
 
+/**
+ * Handles the state event from the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamState = function(_event) {
 	if(_event.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
 		$.play.visible = false;

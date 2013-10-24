@@ -13,6 +13,9 @@ var MODEL = require("models/flickr")();
 var CONFIG = arguments[0];
 var SELECTED;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "flickr.init | " + JSON.stringify(CONFIG));
 
@@ -36,6 +39,11 @@ $.init = function() {
 	}
 };
 
+/**
+ * Retrieves the NSID data
+ * @param {Object} _force Whether to force the request or not (ignores cached data)
+ * @param {Object} _callback The function to run on data retrieval
+ */
 $.retrieveData = function(_force, _callback) {
 	MODEL.generateNsid({
 		username: CONFIG.username,
@@ -58,6 +66,9 @@ $.retrieveData = function(_force, _callback) {
 	});
 };
 
+/**
+ * Handles the NSID data return
+ */
 $.handleNsid = function() {
 	APP.log("debug", "flickr.handleNsid");
 
@@ -72,6 +83,9 @@ $.handleNsid = function() {
 	});
 };
 
+/*
+ * Handles the photo set data return
+ */
 $.handleSets = function() {
 	APP.log("debug", "flickr.handleSets");
 
@@ -124,7 +138,10 @@ $.container.addEventListener("click", function(_event) {
 	});
 });
 
-// Pull to Refresh
+/**
+ * Handles the pull-to-refresh event
+ * @param {Object} _event The event
+ */
 function ptrRelease(_event) {
 	$.retrieveData(true, function() {
 		_event.hide();

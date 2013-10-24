@@ -10,6 +10,9 @@ var CONFIG = arguments[0];
 
 var currentUrl = "";
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "web.init | " + JSON.stringify(CONFIG));
 
@@ -38,6 +41,9 @@ $.init = function() {
 	}
 };
 
+/**
+ * Initializes the navigation toolbar
+ */
 $.initToolbar = function() {
 	APP.log("debug", "web.initToolbar");
 

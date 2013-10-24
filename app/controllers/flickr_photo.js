@@ -24,6 +24,9 @@ $.NavigationBar.showBack({
 
 APP.SlideMenuEngaged = false;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
 
@@ -33,6 +36,10 @@ $.init = function() {
 	$.handleData(MODEL.getPhoto(CONFIG.id));
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "flickr_photo.handleData");
 

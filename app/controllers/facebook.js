@@ -19,6 +19,9 @@ var offset = 0;
 var refreshLoading = false;
 var refreshEngaged = false;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "facebook.init | " + JSON.stringify(CONFIG));
 
@@ -41,6 +44,11 @@ $.init = function() {
 	}
 };
 
+/**
+ * Retrieves the data
+ * @param {Object} _force Whether to force the request or not (ignores cached data)
+ * @param {Object} _callback The function to run on data retrieval
+ */
 $.retrieveData = function(_force, _callback) {
 	MODEL.fetch({
 		url: CONFIG.feed,
@@ -64,6 +72,10 @@ $.retrieveData = function(_force, _callback) {
 	});
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "facebook.handleData");
 
@@ -118,7 +130,10 @@ $.container.addEventListener("click", function(_event) {
 	});
 });
 
-// Pull to Refresh
+/**
+ * Handles the pull-to-refresh event
+ * @param {Object} _event The event
+ */
 function ptrRelease(_event) {
 	$.retrieveData(true, function() {
 		_event.hide();
