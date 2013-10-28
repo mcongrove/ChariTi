@@ -6,6 +6,7 @@ This document describes the high-level changes made for each version. For a comp
 v 1.2.0 (??-??-2013)
 --------------------
 *	Support for iOS 7
+*	Brand new icons for iOS 7, custom-made for ChariTi!
 *	Added Share tab
 *	Added support for scroll-to-top
 *	Added support for Asian characters
@@ -14,6 +15,7 @@ v 1.2.0 (??-??-2013)
 *	Updated social widget
 *	Podcast now supports offline listening
 *	Made slide menu faster
+*	Smarter color selections based on configuration
 *	Fixed handling of unavailable network situations
 *	Fixed slide menu jitters
 *	Fixed Flickr gesture collisions
@@ -24,6 +26,7 @@ v 1.2.0 (??-??-2013)
 *	Fixed image downloading for PEEK
 *	Removed desktop application
 *	Removed command line scripts
+*	Developer documentation
 
 v 1.1 (02-26-2013)
 ------------------
