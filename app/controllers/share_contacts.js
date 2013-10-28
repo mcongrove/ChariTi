@@ -126,7 +126,6 @@ $.getContacts = function() {
 	return contacts;
 };
 
-
 /**
  * Retrieves the contact e-mail addresses
  * @param {Object} _contacts

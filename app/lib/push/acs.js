@@ -14,8 +14,8 @@ if(OS_ANDROID) {
 
 	/**
 	 * Registers an Android device for push notifications
- 	 * @param {Function} _callback The function to run after registration is complete
- 	 * @platform Android
+	 * @param {Function} _callback The function to run after registration is complete
+	 * @platform Android
 	 */
 	var registerAndroid = function(_callback) {
 		CloudPush.retrieveDeviceToken({
@@ -24,7 +24,7 @@ if(OS_ANDROID) {
 				APP.log("trace", _data.deviceToken);
 
 				PUSH.deviceToken = _data.deviceToken;
-				
+
 				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
 
 				CloudPush.addEventListener('callback', function(evt) {
@@ -45,8 +45,8 @@ if(OS_ANDROID) {
 if(OS_IOS) {
 	/**
 	 * Registers an iOS device for push notifications
- 	 * @param {Function} _callback The function to run after registration is complete
- 	 * @platform iOS
+	 * @param {Function} _callback The function to run after registration is complete
+	 * @platform iOS
 	 */
 	var registeriOS = function(_callback) {
 		APP.log("debug", "PUSH.registeriOS");
@@ -72,7 +72,7 @@ if(OS_IOS) {
 			},
 			callback: function(_data) {
 				PUSH.pushRecieved(_data);
-				
+
 				APP.log(JSON.stringify(_data));
 			}
 		});

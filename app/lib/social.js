@@ -9,25 +9,25 @@ var APP = require("core");
 
 if(OS_IOS) {
 	var SOCIAL = require("dk.napp.social");
-	
+
 	/**
 	 * If Twitter is supported by the device
 	 * @platform iOS
 	 */
 	exports.twitterSupported = SOCIAL.isTwitterSupported();
-	
+
 	/**
 	 * If e-mail is supported by the device
 	 * @platform iOS
 	 */
 	exports.emailSupported = Ti.UI.createEmailDialog().isSupported();
-	
+
 	/**
 	 * If ActivityView is supported by the device
 	 * @platform iOS
 	 */
 	exports.activitySupported = SOCIAL.isActivityViewSupported();
-	
+
 	/**
 	 * Shares information via e-mail
 	 * @param {String} _url The URL to share
@@ -36,14 +36,14 @@ if(OS_IOS) {
 	exports.email = function(_url) {
 		if(exports.emailSupported) {
 			var email = Ti.UI.createEmailDialog();
-	
+
 			email.html = true;
 			email.messageBody = APP.Settings.share + "<br /><br /><a href='" + _url + "'>" + _url + "</a>";
-	
+
 			email.open();
 		}
 	};
-	
+
 	/**
 	 * Shares information via Twitter
 	 * @param {String} _url The URL to share
@@ -57,7 +57,7 @@ if(OS_IOS) {
 			});
 		}
 	};
-	
+
 	/**
 	 * Opens the sharing menu for iOS 6+ users
 	 * @param {String} _url The URL to share
@@ -70,7 +70,7 @@ if(OS_IOS) {
 			cancel: 2,
 			selectedIndex: 2
 		});
-	
+
 		dialog.addEventListener("click", function(_event) {
 			switch(_event.index) {
 				case 0:
@@ -92,7 +92,7 @@ if(OS_IOS) {
 					break;
 			}
 		});
-	
+
 		if(_view === undefined) {
 			dialog.show();
 		} else {

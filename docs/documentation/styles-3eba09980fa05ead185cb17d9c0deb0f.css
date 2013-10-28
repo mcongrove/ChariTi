@@ -2,6 +2,9 @@
         .signature .deprecated {
           background-color: #aa0000;
         }
+        .deprecated-box {
+          border: 2px solid #aa0000;
+        }
         .deprecated-box strong {
           color: white;
           background-color: #aa0000;
@@ -22,6 +25,30 @@
           background-color: #efe;
           text-align: center;
         }
+
+        .signature .experimental {
+          color: #a00;
+          border: 1px dashed #a00;
+          background-color: #fee;
+        }
+        .experimental-box {
+          border: 2px dashed #ccc;
+        }
+        .experimental-box strong {
+          margin: 0 3px;
+          border: 2px dashed #a00;
+          color: #a00;
+        }
+          .deprecated-tag-box {
+            text-align: center;
+            color: #600;
+            background-color: #fee;
+          }
+          .deprecated-tag-box strong {
+            text-transform: uppercase;
+            border-radius: 2px;
+            padding: 0 3px;
+          }
 
         .signature .new {
           color: #484848;
@@ -46,9 +73,12 @@
           border: 1px solid #aa0000;
           text-decoration: line-through;
         }
+        .removed-box {
+          border: 2px solid #aa0000;
+        }
         .removed-box strong {
           color: #aa0000;
-          border: 1px solid #aa0000;
+          border: 2px solid #aa0000;
           background-color: transparent;
           text-decoration: line-through;
         }
