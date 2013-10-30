@@ -5,11 +5,6 @@
  */
 var APP = require("core");
 
-/**
- * The configuration options for the widget, passed on instantiation
- * @params {Function} CONFIG.up The function to run on 'up' press
- * @params {Function} CONFIG.down The function to run on 'down' press
- */
 var CONFIG = arguments[0] || {};
 
 $.arrowUp.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowUp.png" : "/icons/black/settings.png";
