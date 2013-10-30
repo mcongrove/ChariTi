@@ -18,10 +18,9 @@
 		},
 		"colors": {
 			"primary": "#327B9F",
-			"secondary": "#569BBE",
-			"text":	"#FFF"
+			"secondary": "#569BBE"
 		},
-		"useSlideMenu": true
+		"useSlideMenu": false
 	},
 	"manifest": [
 		"http://chariti.mobi/app/logo.png",

@@ -4,7 +4,6 @@
 	top: "17dp"
 },
 "#arrowUp": {
-	image: WPATH("/images/arrowUp.png"),
 	width: "22dp",
 	height: "12dp",
 	top: "0dp",
@@ -12,7 +11,6 @@
 	preventDefaultImage: true
 },
 "#arrowDown": {
-	image: WPATH("/images/arrowDown.png"),
 	width: "22dp",
 	height: "12dp",
 	top: "0dp",

@@ -67,7 +67,6 @@ var APP = {
 	 * @param {Object} colors Color options
 	 * @param {String} colors.primary The primary color
 	 * @param {String} colors.secondary The secondary color
-	 * @param {String} colors.text The text color
 	 * @param {String} colors.theme The theme of the primary color, either "light" or "dark"
 	 * @param {Object} colors.hsb The HSB values of the primary color
 	 * @param {Boolean} useSlideMenu Whether or not to use the slide menu (alternative is tabs)
@@ -389,7 +388,7 @@ var APP = {
 			secondary: UTIL.hexToHsb(APP.Settings.colors.secondary)
 		};
 
-		APP.Settings.colors.theme = APP.Settings.colors.hsb.primary.b > 65 ? "dark" : "light";
+		APP.Settings.colors.theme = APP.Settings.colors.hsb.primary.b < 65 ? "dark" : "light";
 	},
 	/**
 	 * Builds out the tab group
@@ -399,7 +398,7 @@ var APP = {
 		APP.log("debug", "APP.build");
 
 		var tabs = [];
-		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "dark" ? "/icons/dark/" : "/icons/light/";
+		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "dark" ? "/icons/white/" : "/icons/black/";
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			tabs.push({
