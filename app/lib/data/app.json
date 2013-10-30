@@ -20,7 +20,7 @@
 			"primary": "#327B9F",
 			"secondary": "#569BBE"
 		},
-		"useSlideMenu": false
+		"useSlideMenu": true
 	},
 	"manifest": [
 		"http://chariti.mobi/app/logo.png",
