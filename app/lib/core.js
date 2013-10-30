@@ -398,7 +398,7 @@ var APP = {
 		APP.log("debug", "APP.build");
 
 		var tabs = [];
-		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "dark" ? "/icons/white/" : "/icons/black/";
+		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "light" ? "/icons/black/" : "/icons/white/";
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			tabs.push({

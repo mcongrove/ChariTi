@@ -8,6 +8,7 @@ v 1.2.0 (??-??-2013)
 *	Support for iOS 7
 *	Brand new icons for iOS 7, custom-made for ChariTi!
 *	Added Share tab
+*	Added support for tab headers in slide menu
 *	Added support for scroll-to-top
 *	Added support for Asian characters
 *	Updated pull-to-refresh widget
@@ -16,6 +17,7 @@ v 1.2.0 (??-??-2013)
 *	Podcast now supports offline listening
 *	Made slide menu faster
 *	Smarter color selections based on configuration
+*	Removed 'text' color setting
 *	Fixed handling of unavailable network situations
 *	Fixed slide menu jitters
 *	Fixed Flickr gesture collisions

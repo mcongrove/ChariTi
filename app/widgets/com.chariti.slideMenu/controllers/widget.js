@@ -8,7 +8,7 @@ $.init = function(_params) {
 	// Add the Settings tab
 	_params.tabs.push({
 		id: "settings",
-		image: APP.Settings.colors.theme == "dark" ? "/icons/white/settings.png" : "/icons/black/settings.png",
+		image: "/icons/white/settings.png",
 		title: "Settings"
 	});
 
@@ -36,7 +36,7 @@ $.init = function(_params) {
 			top: "0dp",
 			left: "47dp",
 			right: "13dp",
-			height: "47dp",
+			height: "46dp",
 			font: {
 				fontSize: "16dp",
 				fontFamily: "HelveticaNeue-Light"
