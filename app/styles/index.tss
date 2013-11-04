@@ -18,7 +18,7 @@
 "#GlobalWrapper": {
 	width: "100%"
 },
-"#containerWrapper": {
+"#ContentWrapper": {
 	top: "0dp",
 	bottom: "60dp"
 }

@@ -1,7 +1,16 @@
+/**
+ * Controller for the menu list screen
+ * 
+ * @class Controllers.menu
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "menu.init | " + JSON.stringify(CONFIG));
 
@@ -22,6 +31,10 @@ $.init = function() {
 	}
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "menu.handleData");
 

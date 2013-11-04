@@ -1,3 +1,12 @@
+/**
+ * Controller for the Facebook post node screen
+ * 
+ * @class Controllers.facebook.article
+ * @uses Models.facebook
+ * @uses core
+ * @uses social
+ * @uses Widgets.com.chariti.detailNavigation
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
@@ -7,6 +16,9 @@ var MODEL = require("models/facebook")();
 var CONFIG = arguments[0] || {};
 var ACTION = {};
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "facebook_article.init | " + JSON.stringify(CONFIG));
 
@@ -15,6 +27,10 @@ $.init = function() {
 	$.handleData(MODEL.getArticle(CONFIG.id));
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "facebook_article.handleData");
 
@@ -47,6 +63,9 @@ $.handleData = function(_data) {
 	});
 };
 
+/**
+ * Handles detail navigation
+ */
 $.handleNavigation = function() {
 	ACTION.next = MODEL.getNextArticle(CONFIG.id);
 	ACTION.previous = MODEL.getPreviousArticle(CONFIG.id);

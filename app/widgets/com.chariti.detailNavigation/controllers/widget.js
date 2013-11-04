@@ -1,5 +1,14 @@
+/**
+ * The detail navigation widget
+ * 
+ * @class Widgets.com.chariti.detailNavigation
+ */
 var APP = require("core");
+
 var CONFIG = arguments[0] || {};
+
+$.arrowUp.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowUp.png" : "/icons/black/settings.png";
+$.arrowDown.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowDown.png" : "/icons/black/arrowDown.png";
 
 if(CONFIG.up && typeof CONFIG.up == "function") {
 	$.arrowUp.addEventListener("click", CONFIG.up);

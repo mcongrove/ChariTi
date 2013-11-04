@@ -1,3 +1,9 @@
+/**
+ * Controller for the event table row
+ * 
+ * @class Controllers.event.row
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0] || {};

@@ -1,8 +1,17 @@
+/**
+ * Controller for the share contacts list screen
+ * 
+ * @class Controllers.share.contacts
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
 var SELECTED = [];
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "share_contacts.init | " + JSON.stringify(CONFIG));
 
@@ -37,6 +46,9 @@ $.init = function() {
 	});
 };
 
+/**
+ * Loads the contacts data
+ */
 $.loadData = function() {
 	APP.log("debug", "share_contacts.loadData");
 
@@ -78,6 +90,9 @@ $.loadData = function() {
 	$.container.index = index;
 };
 
+/**
+ * Retrieves the contacts
+ */
 $.getContacts = function() {
 	APP.log("debug", "share_contacts.getAddresses");
 
@@ -111,6 +126,10 @@ $.getContacts = function() {
 	return contacts;
 };
 
+/**
+ * Retrieves the contact e-mail addresses
+ * @param {Object} _contacts
+ */
 $.getEmails = function(_contacts) {
 	var emails = [];
 
@@ -128,6 +147,10 @@ $.getEmails = function(_contacts) {
 	return emails;
 };
 
+/**
+ * Creates an e-mail dialog
+ * @param {Object} _addresses The selected e-mail recipients
+ */
 $.createEmail = function(_addresses) {
 	APP.log("debug", "share_contacts.createEmail");
 

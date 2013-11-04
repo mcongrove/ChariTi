@@ -1,3 +1,11 @@
+/**
+ * Controller for the Vimeo list screen
+ * 
+ * @class Controllers.vimeo
+ * @uses Models.vimeo
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");
@@ -7,6 +15,9 @@ var MODEL = require("models/vimeo")();
 var CONFIG = arguments[0];
 var SELECTED;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "vimeo.init | " + JSON.stringify(CONFIG));
 
@@ -31,12 +42,17 @@ $.init = function() {
 	}
 };
 
+/**
+ * Retrieves the data
+ * @param {Object} _force Whether to force the request or not (ignores cached data)
+ * @param {Object} _callback The function to run on data retrieval
+ */
 $.retrieveData = function(_force, _callback) {
 	MODEL.fetch({
 		url: CONFIG.feed,
 		cache: _force ? 0 : CONFIG.cache,
 		callback: function() {
-			$.handleVideos();
+			$.handleData();
 
 			if(typeof _callback !== "undefined") {
 				_callback();
@@ -54,8 +70,11 @@ $.retrieveData = function(_force, _callback) {
 	});
 };
 
-$.handleVideos = function() {
-	APP.log("debug", "vimeo.handleVideos");
+/**
+ * Handles the data return
+ */
+$.handleData = function() {
+	APP.log("debug", "vimeo.handleData");
 
 	var data = MODEL.getVideos();
 	var rows = [];
@@ -106,7 +125,10 @@ $.container.addEventListener("click", function(_event) {
 	});
 });
 
-// Pull to Refresh
+/**
+ * Handles the pull-to-refresh event
+ * @param {Object} _event The event
+ */
 function ptrRelease(_event) {
 	$.retrieveData(true, function() {
 		_event.hide();

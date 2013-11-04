@@ -1,9 +1,19 @@
+/**
+ * Controller for the Flickr album screen
+ * 
+ * @class Controllers.flickr.album
+ * @uses Models.flickr
+ * @uses core
+ */
 var APP = require("core");
 var MODEL = require("models/flickr")();
 
 var CONFIG = arguments[0] || {};
 var PHOTOS;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "flickr_album.init | " + JSON.stringify(CONFIG));
 
@@ -26,6 +36,9 @@ $.init = function() {
 	}
 };
 
+/**
+ * Handles the data return
+ */
 $.handleData = function() {
 	APP.log("debug", "flickr_album.handleData");
 
@@ -44,6 +57,10 @@ $.handleData = function() {
 	});
 };
 
+/**
+ * Creates the photo grid
+ * @param {Object} _data The photos data
+ */
 $.createGrid = function(_data) {
 	var width;
 

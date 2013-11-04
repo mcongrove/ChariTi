@@ -1,3 +1,11 @@
+/**
+ * Flickr model
+ * 
+ * @class Models.flickr
+ * @uses core
+ * @uses http
+ * @uses utilities
+ */
 var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");
@@ -6,6 +14,10 @@ function Model() {
 	var TID;
 	var ApiBase = null;
 
+	/**
+	 * Initializes the model
+	 * @param {Number} _id The UID of the component
+	 */
 	this.init = function(_id) {
 		APP.log("debug", "FLICKR.init(" + _id + ")");
 
@@ -19,12 +31,23 @@ function Model() {
 		db.close();
 	};
 
+	/**
+	 * Sets the API key for future requests
+	 * @param {String} _key The API key
+	 */
 	this.setApiKey = function(_key) {
 		APP.log("debug", "FLICKR.setApiKey");
 
 		ApiBase = "http://api.flickr.com/services/rest/?api_key=" + _key + "&format=json&nojsoncallback=1&method=flickr.";
 	};
 
+	/**
+	 * Retrieves the NSID
+	 * @param {Object} _params The request paramaters to send
+	 * @param {String} _params.username The username to retrieve photos from
+	 * @param {Function} _params.callback The function to run on data retrieval
+	 * @param {Function} _params.error The function to run on error
+	 */
 	this.generateNsid = function(_params) {
 		APP.log("debug", "FLICKR.generateNsid");
 
@@ -57,6 +80,12 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Handles the NSID data return
+	 * @param {Object} _data The returned data
+	 * @param {String} _url The URL of the remote source
+	 * @param {Function} _callback The function to run on data retrieval
+	 */
 	this.handleNsid = function(_data, _url, _callback) {
 		APP.log("debug", "FLICKR.handleNsid");
 
@@ -67,6 +96,13 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Fetches the remote photo sets data
+	 * @param {Object} _params The request paramaters to send
+	 * @param {Function} _params.callback The function to run on data retrieval
+	 * @param {Function} _params.error The function to run on error
+	 * @param {Number} _params.cache The length of time to consider cached data 'warm'
+	 */
 	this.retrieveSets = function(_params) {
 		APP.log("debug", "FLICKR.retrieveSets");
 
@@ -91,6 +127,12 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Handles the photo sets data return
+	 * @param {Object} _data The returned data
+	 * @param {String} _url The URL of the remote source
+	 * @param {Function} _callback The function to run on data retrieval
+	 */
 	this.handleSets = function(_data, _url, _callback) {
 		APP.log("debug", "FLICKR.handleSets");
 
@@ -124,6 +166,14 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Fetches the remote photo set data
+	 * @param {Object} _params The request paramaters to send
+	 * @param {String} _params.id The ID of the photoset to retrieve
+	 * @param {Function} _params.callback The function to run on data retrieval
+	 * @param {Function} _params.error The function to run on error
+	 * @param {Number} _params.cache The length of time to consider cached data 'warm'
+	 */
 	this.retrieveSet = function(_params) {
 		APP.log("debug", "FLICKR.retrieveSet");
 
@@ -142,6 +192,12 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Handles the photo set data return
+	 * @param {Object} _data The returned data
+	 * @param {String} _url The URL of the remote source
+	 * @param {Function} _callback The function to run on data retrieval
+	 */
 	this.handleSet = function(_data, _url, _callback) {
 		APP.log("debug", "FLICKR.handleSet");
 
@@ -174,6 +230,9 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Retrieves all photo sets
+	 */
 	this.getSets = function() {
 		APP.log("debug", "FLICKR.getSets");
 
@@ -197,6 +256,10 @@ function Model() {
 		return temp;
 	};
 
+	/**
+	 * Retrieves a photo set by ID
+	 * @param {Number} _id The photo set ID
+	 */
 	this.getSet = function(_id) {
 		APP.log("debug", "FLICKR.getSet");
 
@@ -221,6 +284,12 @@ function Model() {
 		return temp;
 	};
 
+	/**
+	 * Retrieves a photo
+	 * @param {Number} _id The photo ID (optional, but must then pass `_index` and `_setid`)
+	 * @param {Number} _index The photo index (optional, but must then pass `_id`)
+	 * @param {Number} _setid The photo's parent photo set ID (optional, only if using `_index`)
+	 */
 	this.getPhoto = function(_id, _index, _setid) {
 		APP.log("debug", "FLICKR.getPhoto");
 

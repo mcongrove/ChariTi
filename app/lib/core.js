@@ -1,25 +1,93 @@
+/**
+ * The main app singleton used throughout the app. This object contains static
+ * properties, global event handling, etc.
+ *
+ * @class core
+ * @singleton
+ * @uses utilities
+ * @uses http
+ * @uses migrate
+ * @uses update
+ * @uses push
+ * @uses Modules.ti.cloud
+ */
 var Alloy = require("alloy");
 var UTIL = require("utilities");
 var HTTP = require("http");
 
 var APP = {
 	/**
-	 * Holds data from the JSON config file
+	 * Application ID
+	 * @type {String}
 	 */
 	ID: null,
+	/**
+	 * Application version
+	 * @type {String}
+	 */
 	VERSION: null,
+	/**
+	 * ChariTi framework version
+	 * @type {String}
+	 */
 	CVERSION: "1.2.0.100513",
+	/**
+	 * Legal information
+	 * @type {Object}
+	 * @param {String} COPYRIGHT Copyright information
+	 * @param {String} TOS Terms of Service URL
+	 * @param {String} PRIVACY Privacy Policy URL
+	 */
 	LEGAL: {
 		COPYRIGHT: null,
 		TOS: null,
 		PRIVACY: null
 	},
+	/**
+	 * URL to remove JSON configuration file
+	 * 
+	 * **NOTE: This can be used for over-the-air (OTA) application updates.**
+	 * @type {String}
+	 */
 	ConfigurationURL: null,
+	/**
+	 * All the component nodes (e.g. tabs)
+	 * @type {Object}
+	 */
 	Nodes: [],
-	Plugins: null,
+	/**
+	 * Application settings as defined in JSON configuration file
+	 * @type {Object}
+	 * @param {String} share The share text
+	 * @param {Object} notifications Push notifications options
+	 * @param {Boolean} notifications.enabled Whether or not push notifications are enabled
+	 * @param {String} notifications.provider Push notifications provider
+	 * @param {String} notifications.key Push notifications key
+	 * @param {String} notifications.secret Push notifications secret
+	 * @param {Object} colors Color options
+	 * @param {String} colors.primary The primary color
+	 * @param {String} colors.secondary The secondary color
+	 * @param {String} colors.theme The theme of the primary color, either "light" or "dark"
+	 * @param {Object} colors.hsb The HSB values of the primary color
+	 * @param {Boolean} useSlideMenu Whether or not to use the slide menu (alternative is tabs)
+	 */
 	Settings: null,
 	/**
 	 * Device information
+	 * @type {Object}
+	 * @param {Boolean} isHandheld Whether the device is a handheld
+	 * @param {Boolean} isTablet Whether the device is a tablet
+	 * @param {String} type The type of device, either "handheld" or "tablet"
+	 * @param {String} os The name of the OS, either "IOS" or "ANDROID"
+	 * @param {String} name The name of the device, either "IPHONE", "IPAD" or the device model if Android
+	 * @param {String} version The version of the OS
+	 * @param {Number} versionMajor The major version of the OS
+	 * @param {Number} versionMinor The minor version of the OS
+	 * @param {Number} width The width of the device screen
+	 * @param {Number} height The height of the device screen
+	 * @param {Number} dpi The DPI of the device screen
+	 * @param {String} orientation The device orientation, either "LANDSCAPE" or "PORTRAIT"
+	 * @param {String} statusBarOrientation A Ti.UI orientation value
 	 */
 	Device: {
 		isHandheld: Alloy.isHandheld,
@@ -37,24 +105,64 @@ var APP = {
 		statusBarOrientation: null
 	},
 	/**
-	 * Network connectivity information
+	 * Network status and information
+	 * @type {Object}
+	 * @param {String} type Network type name
+	 * @param {Boolean} online Whether the device is connected to a network
 	 */
 	Network: {
 		type: Ti.Network.networkTypeName,
 		online: Ti.Network.online
 	},
 	/**
-	 * The stack controller
+	 * Current controller view stack index
+	 * @type {Number}
 	 */
 	currentStack: -1,
+	/**
+	 * The previous screen in the hierarchy
+	 * @type {Object}
+	 */
 	previousScreen: null,
+	/**
+	 * The view stack for controllers
+	 * @type {Array}
+	 */
 	controllerStacks: [],
+	/**
+	 * The view stack for modals
+	 * @type {Array}
+	 */
 	modalStack: [],
+	/**
+	 * Whether or not the current view has a tablet layout
+	 * @type {Boolean}
+	 */
 	hasDetail: false,
+	/**
+	 * Current detail view stack index
+	 * @type {Number}
+	 */
 	currentDetailStack: -1,
+	/**
+	 * The previous detail screen in the hierarchy
+	 * @type {Object}
+	 */
 	previousDetailScreen: null,
+	/**
+	 * The view stack for detail views
+	 * @type {Array}
+	 */
 	detailStacks: [],
+	/**
+	 * The view stack for master views
+	 * @type {Array}
+	 */
 	Master: [],
+	/**
+	 * The view stack for detail views
+	 * @type {Array}
+	 */
 	Detail: [],
 	/**
 	 * The main app window
@@ -63,31 +171,55 @@ var APP = {
 	MainWindow: null,
 	/**
 	 * The global view all screen controllers get added to
+	 * @type {Object}
 	 */
 	GlobalWrapper: null,
 	/**
 	 * The global view all content screen controllers get added to
+	 * @type {Object}
 	 */
 	ContentWrapper: null,
 	/**
 	 * Holder for ACS cloud module
+	 * @type {Object}
 	 */
 	ACS: null,
 	/**
 	 * The loading view
+	 * @type {Object}
 	 */
 	Loading: Alloy.createWidget("com.chariti.loading").getView(),
+	/**
+	 * Whether or not to cancel the loading screen open because it's already open
+	 * @type {Boolean}
+	 */
 	cancelLoading: false,
+	/**
+	 * Whether or not the loading screen is open
+	 * @type {Boolean}
+	 */
 	loadingOpen: false,
 	/**
-	 * Tabs Widget
+	 * Tabs widget
+	 * @type {Object}
 	 */
 	Tabs: null,
 	/**
-	 * Slide Menu Widget
+	 * Slide Menu widget
+	 * @type {Object}
 	 */
 	SlideMenu: null,
+	/**
+	 * Whether or not the slide menu is open
+	 * @type {Boolean}
+	 */
 	SlideMenuOpen: false,
+	/**
+	 * Whether or not the slide menu is engaged
+	 * 
+	 * **NOTE: Turning this false temporarily disables the slide menu**
+	 * @type {Boolean}
+	 */
 	SlideMenuEngaged: true,
 	/**
 	 * Initializes the application
@@ -127,7 +259,7 @@ var APP = {
 		// The initial screen to show
 		APP.handleNavigation(0);
 
-		// NOTICE
+		// NOTICE:
 		// The following sections are abstracted for PEEK
 
 		// Updates the app from a remote source
@@ -241,7 +373,6 @@ var APP = {
 
 		APP.ConfigurationURL = data.configurationUrl && data.configurationUrl.length > 10 ? data.configurationUrl : false;
 		APP.Settings = data.settings;
-		APP.Plugins = data.plugins;
 		APP.Nodes = data.tabs;
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
@@ -251,6 +382,13 @@ var APP = {
 		if(typeof APP.Settings.useSlideMenu == "undefined") {
 			APP.Settings.useSlideMenu = false;
 		}
+
+		APP.Settings.colors.hsb = {
+			primary: UTIL.hexToHsb(APP.Settings.colors.primary),
+			secondary: UTIL.hexToHsb(APP.Settings.colors.secondary)
+		};
+
+		APP.Settings.colors.theme = APP.Settings.colors.hsb.primary.b < 65 ? "dark" : "light";
 	},
 	/**
 	 * Builds out the tab group
@@ -260,13 +398,15 @@ var APP = {
 		APP.log("debug", "APP.build");
 
 		var tabs = [];
+		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "light" ? "/icons/black/" : "/icons/white/";
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			tabs.push({
 				id: i,
 				title: APP.Nodes[i].title,
-				image: "/icons/" + APP.Nodes[i].image + ".png",
-				controller: APP.Nodes[i].type.toLowerCase()
+				image: UTIL.fileExists(imageFolder + APP.Nodes[i].image + ".png") ? imageFolder + APP.Nodes[i].image + ".png" : null,
+				controller: APP.Nodes[i].type.toLowerCase(),
+				menuHeader: APP.Nodes[i].menuHeader
 			});
 		}
 
@@ -286,11 +426,7 @@ var APP = {
 
 		APP.Tabs.init({
 			tabs: _tabs,
-			colors: {
-				primary: APP.Settings.colors.primary,
-				secondary: APP.Settings.colors.secondary,
-				text: APP.Settings.colors.text
-			}
+			colors: APP.Settings.colors
 		});
 
 		if(!_rebuild) {
@@ -395,7 +531,6 @@ var APP = {
 	update: function() {
 		require("update").init();
 	},
-
 	/**
 	 * Set up ACS
 	 */
@@ -484,19 +619,14 @@ var APP = {
 			} else {
 				// Create a new screen
 				var type = APP.Nodes[_id].type.toLowerCase();
-				
-				//check to see if we have tablet view mentioned for custom components
 				var tabletSupport = APP.Nodes[_id].tabletSupport;
-				
 
 				// TODO: Remove this. Find other way to determine if tablet version is available
 				if(APP.Device.isTablet) {
-					
-					if(tabletSupport) { //detection from data file
-                    				type = "tablet";
-                    				APP.hasDetail = true;
-                			} else {
-					
+					if(tabletSupport) {
+						type = "tablet";
+						APP.hasDetail = true;
+					} else {
 						switch(type) {
 							case "article":
 							case "event":
@@ -510,7 +640,7 @@ var APP = {
 								APP.hasDetail = true;
 								break;
 						}
-                			}
+					}
 				}
 
 				screen = Alloy.createController(type, APP.Nodes[_id]).getView();

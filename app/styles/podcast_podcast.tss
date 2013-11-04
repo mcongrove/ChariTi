@@ -2,7 +2,7 @@
 	backgroundColor: "#000",
 	layout: "vertical"
 },
-"#content": {
+"#container": {
 	top: "0dp"
 },
 "#artworkContainer": {

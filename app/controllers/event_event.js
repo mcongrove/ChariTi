@@ -1,3 +1,12 @@
+/**
+ * Controller for the event node screen
+ * 
+ * @class Controllers.event.event
+ * @uses Models.event
+ * @uses core
+ * @uses social
+ * @uses Widgets.com.chariti.detailNavigation
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
@@ -6,6 +15,9 @@ var MODEL = require("models/event")();
 var CONFIG = arguments[0] || {};
 var ACTION = {};
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "event_event.init | " + JSON.stringify(CONFIG));
 
@@ -14,6 +26,10 @@ $.init = function() {
 	$.handleData(MODEL.getEvent(CONFIG.id));
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "event_event.handleData");
 
@@ -23,6 +39,7 @@ $.handleData = function(_data) {
 	$.heading.color = APP.Settings.colors.primary || "#000";
 	$.text.value = _data.description;
 	$.location.text = "@ " + _data.location;
+	$.photo.image = "http://graph.facebook.com/" + _data.id + "/picture?type=large";
 	$.date.text = DATE(parseInt(_data.date_start, 10)).format("MMMM Do, YYYY h:mma");
 
 	ACTION.url = "http://www.facebook.com/events/" + _data.id;
@@ -44,6 +61,10 @@ $.handleData = function(_data) {
 	});
 };
 
+/**
+ * Handles detail navigation
+ * @param {String} _date The date of the currently viewed event
+ */
 $.handleNavigation = function(_date) {
 	ACTION.next = MODEL.getNextEvent(_date);
 	ACTION.previous = MODEL.getPreviousEvent(_date);

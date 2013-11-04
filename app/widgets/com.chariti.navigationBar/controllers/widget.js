@@ -3,13 +3,13 @@ var CONFIG = arguments[0] || {};
 
 if(CONFIG.image) {
 	var image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, CONFIG.image);
-	
+
 	if(image.exists()) {
 		image = image.nativePath;
 	} else {
 		image = "/data/" + CONFIG.image;
 	}
-	
+
 	$.title = Ti.UI.createImageView({
 		image: image,
 		height: "26dp",
@@ -28,11 +28,14 @@ if(CONFIG.image) {
 			fontSize: "18dp",
 			fontFamily: "HelveticaNeue-Medium"
 		},
-		color: "#FFF",
+		color: APP.Settings.colors.theme == "dark" ? "#FFF" : "#000",
 		textAlign: "center",
 		text: CONFIG.text ? CONFIG.text : ""
 	});
 }
+
+$.backImage.image = APP.Settings.colors.theme == "dark" ? "/icons/white/back.png" : "/icons/black/back.png";
+$.nextImage.image = APP.Settings.colors.theme == "dark" ? "/icons/white/next.png" : "/icons/black/next.png";
 
 $.addNavigation = function(_view) {
 	$.Wrapper.add(_view);
@@ -48,11 +51,11 @@ $.setTitle = function(_text) {
 
 $.showBack = function(_params) {
 	$.back.visible = true;
-	
+
 	if(_params && typeof _params.callback !== "undefined") {
-		$.back.addEventListener("click",  _params.callback);
+		$.back.addEventListener("click", _params.callback);
 	} else {
-		$.back.addEventListener("click",  function(_event) {
+		$.back.addEventListener("click", function(_event) {
 			APP.removeChild();
 		});
 	}
@@ -60,8 +63,8 @@ $.showBack = function(_params) {
 
 $.showNext = function(_params) {
 	$.next.visible = true;
-	
-	$.next.addEventListener("click",  _params.callback);
+
+	$.next.addEventListener("click", _params.callback);
 };
 
 $.showLeft = function(_params) {
@@ -78,21 +81,21 @@ $.showRight = function(_params) {
 
 $.showMenu = function() {
 	$.showLeft({
-		image: WPATH("images/menu.png"),
+		image: APP.Settings.colors.theme == "dark" ? "/icons/white/menu.png" : "/icons/black/menu.png",
 		callback: APP.toggleMenu
 	});
 };
 
 $.showSettings = function() {
 	$.showRight({
-		image: WPATH("images/settings.png"),
+		image: APP.Settings.colors.theme == "dark" ? "/icons/white/settings.png" : "/icons/black/settings.png",
 		callback: APP.openSettings
 	});
 };
 
 $.showAction = function(_params) {
 	$.showRight({
-		image: WPATH("images/action.png"),
+		image: APP.Settings.colors.theme == "dark" ? "/icons/white/action.png" : "/icons/black/action.png",
 		callback: _params.callback
 	});
 };

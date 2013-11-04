@@ -1,3 +1,9 @@
+/**
+ * Controller for the Flickr thumbnail photo
+ * 
+ * @class Controllers.flickr.thumb
+ * @uses core
+ */
 var CONFIG = arguments[0] || {};
 
 $.Image.id = CONFIG.id || 0;

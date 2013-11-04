@@ -39,6 +39,18 @@
 	},
 	color: "#000"
 },
+"#photoContainer": {
+	top: "10dp",
+	left: "15dp",
+	right: "15dp",
+	height: Ti.UI.SIZE
+},
+"#photo": {
+	preventDefaultImage: true,
+	width: Ti.UI.FILL,
+	top: "0dp",
+	left: "0dp"
+},
 "#text": {
 	top: "10dp",
 	left: "6dp",

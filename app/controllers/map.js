@@ -1,7 +1,16 @@
+/**
+ * Controller for the map screen
+ * 
+ * @class Controllers.map
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "map.init | " + JSON.stringify(CONFIG));
 

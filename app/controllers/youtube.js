@@ -1,3 +1,11 @@
+/**
+ * Controller for the YouTube list screen
+ * 
+ * @class Controllers.youtube
+ * @uses Models.youtube
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");
@@ -7,6 +15,9 @@ var MODEL = require("models/youtube")();
 var CONFIG = arguments[0];
 var SELECTED;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "youtube.init | " + JSON.stringify(CONFIG));
 
@@ -29,6 +40,9 @@ $.init = function() {
 	}
 };
 
+/**
+ * Retrieves the username data
+ */
 $.retrieveData = function() {
 	MODEL.setUsername({
 		username: CONFIG.username,
@@ -36,6 +50,9 @@ $.retrieveData = function() {
 	});
 };
 
+/**
+ * Handles the username data return
+ */
 $.handleUsername = function() {
 	APP.log("debug", "youtube.handleUsername");
 
@@ -50,6 +67,9 @@ $.handleUsername = function() {
 	});
 };
 
+/**
+ * Handles the video data return
+ */
 $.handleVideos = function() {
 	APP.log("debug", "youtube.handleVideos");
 
@@ -116,7 +136,10 @@ $.container.addEventListener("click", function(_event) {
 	}
 });
 
-// Pull to Refresh
+/**
+ * Handles the pull-to-refresh event
+ * @param {Object} _event The event
+ */
 function ptrRelease(_event) {
 	$.retrieveData(true, function() {
 		_event.hide();

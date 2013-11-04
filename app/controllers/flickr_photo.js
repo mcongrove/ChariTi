@@ -1,3 +1,10 @@
+/**
+ * Controller for the Flickr photo screen
+ * 
+ * @class Controllers.flickr.photo
+ * @uses Models.flickr
+ * @uses core
+ */
 var APP = require("core");
 var MODEL = require("models/flickr")();
 
@@ -11,12 +18,15 @@ $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 $.NavigationBar.showBack({
 	callback: function(_event) {
 		APP.removeChild();
-		APP.SlideMenuEngaged = true;;
+		APP.SlideMenuEngaged = true;
 	}
 });
 
 APP.SlideMenuEngaged = false;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
 
@@ -26,6 +36,10 @@ $.init = function() {
 	$.handleData(MODEL.getPhoto(CONFIG.id));
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "flickr_photo.handleData");
 

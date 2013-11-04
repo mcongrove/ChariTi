@@ -1,3 +1,11 @@
+/**
+ * Event model
+ * 
+ * @class Models.event
+ * @uses core
+ * @uses http
+ * @uses utilities
+ */
 var APP = require("core");
 var HTTP = require("http");
 var UTIL = require("utilities");
@@ -5,6 +13,10 @@ var UTIL = require("utilities");
 function Model() {
 	var TID;
 
+	/**
+	 * Initializes the model
+	 * @param {Number} _id The UID of the component
+	 */
 	this.init = function(_id) {
 		APP.log("debug", "EVENT.init(" + _id + ")");
 
@@ -17,6 +29,14 @@ function Model() {
 		db.close();
 	};
 
+	/**
+	 * Fetches the remote data
+	 * @param {Object} _params The request paramaters to send
+	 * @param {String} _params.url The URL to retrieve data from
+	 * @param {Function} _params.callback The function to run on data retrieval
+	 * @param {Function} _params.error The function to run on error
+	 * @param {Number} _params.cache The length of time to consider cached data 'warm'
+	 */
 	this.fetch = function(_params) {
 		APP.log("debug", "EVENT.fetch");
 		APP.log("trace", JSON.stringify(_params));
@@ -42,6 +62,12 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Handles the data return
+	 * @param {Object} _data The returned data
+	 * @param {String} _url The URL of the remote source
+	 * @param {Function} _callback The function to run on data retrieval
+	 */
 	this.handleData = function(_data, _url, _callback) {
 		APP.log("debug", "EVENT.handleData");
 
@@ -86,6 +112,9 @@ function Model() {
 		}
 	};
 
+	/**
+	 * Retrieves all events
+	 */
 	this.getAllEvents = function() {
 		APP.log("debug", "EVENT.getAllEvents");
 
@@ -109,6 +138,10 @@ function Model() {
 		return temp;
 	};
 
+	/**
+	 * Retrieves an event by ID
+	 * @param {Number} _id The event ID
+	 */
 	this.getEvent = function(_id) {
 		APP.log("debug", "EVENT.getEvent");
 
@@ -135,6 +168,10 @@ function Model() {
 		return temp;
 	};
 
+	/**
+	 * Retrieves the next event
+	 * @param {Number} _id The current event date
+	 */
 	this.getNextEvent = function(_date) {
 		APP.log("debug", "EVENT.getNextEvent");
 
@@ -161,6 +198,10 @@ function Model() {
 		return temp;
 	};
 
+	/**
+	 * Retrieves the previous event
+	 * @param {Number} _id The current event date
+	 */
 	this.getPreviousEvent = function(_date) {
 		APP.log("debug", "EVENT.getPreviousEvent");
 

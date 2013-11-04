@@ -41,7 +41,6 @@
 	left: "9dp",
 	width: "28dp",
 	height: "28dp",
-	image: WPATH("images/back.png"),
 	preventDefaultImage: true
 },
 "#next": {
@@ -55,7 +54,6 @@
 	right: "9dp",
 	width: "28dp",
 	height: "28dp",
-	image: WPATH("images/next.png"),
 	preventDefaultImage: true
 },
 "#right": {

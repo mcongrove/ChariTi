@@ -1,8 +1,17 @@
+/**
+ * Controller for the share screen
+ * 
+ * @class Controllers.share
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
 var SELECTED;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "share.init | " + JSON.stringify(CONFIG));
 
@@ -21,6 +30,9 @@ $.init = function() {
 	}
 };
 
+/**
+ * Loads the e-mail templates
+ */
 $.loadData = function() {
 	APP.log("debug", "share.loadData");
 
