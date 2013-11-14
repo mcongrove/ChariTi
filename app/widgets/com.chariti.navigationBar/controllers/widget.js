@@ -1,6 +1,8 @@
 var APP = require("core");
 var CONFIG = arguments[0] || {};
 
+var navigation;
+
 if(CONFIG.image) {
 	var image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, CONFIG.image);
 
@@ -38,7 +40,13 @@ $.backImage.image = APP.Settings.colors.theme == "dark" ? "/icons/white/back.png
 $.nextImage.image = APP.Settings.colors.theme == "dark" ? "/icons/white/next.png" : "/icons/black/next.png";
 
 $.addNavigation = function(_view) {
-	$.Wrapper.add(_view);
+	navigation = _view;
+
+	$.Wrapper.add(navigation);
+};
+
+$.removeNavigation = function() {
+	$.Wrapper.remove(navigation);
 };
 
 $.setBackgroundColor = function(_color) {

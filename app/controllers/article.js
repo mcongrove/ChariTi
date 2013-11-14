@@ -29,6 +29,8 @@ $.init = function() {
 
 	APP.openLoading();
 
+	$.retrieveData();
+
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(CONFIG.isChild === true) {
@@ -107,10 +109,6 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.Wrapper.addEventListener("APP:screenAdded", function(_event) {
-	$.retrieveData();
-});
-
 $.container.addEventListener("click", function(_event) {
 	APP.log("debug", "article @click " + _event.row.id);
 

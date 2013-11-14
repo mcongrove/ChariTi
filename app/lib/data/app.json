@@ -49,7 +49,7 @@
 			"userid": "20594753592",
 			"type": "facebook",
 			"image": "facebook",
-			"cache": 10,
+			"cache": 1440,
 			"tabletSupport": true
 		},
 		{

@@ -5,6 +5,11 @@
  */
 var APP = require("core");
 
+/**
+ * @member Widgets.com.chariti.detailNavigation
+ * @property {Object} CONFIG
+ * @property {Function} CONFIG.up The function to run on 'up' press
+ */
 var CONFIG = arguments[0] || {};
 
 $.arrowUp.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowUp.png" : "/icons/black/settings.png";
