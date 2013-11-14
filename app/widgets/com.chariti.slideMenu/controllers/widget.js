@@ -131,7 +131,7 @@ function buildSections(_tabs) {
  * Clears all items from the side menu
  */
 $.clear = function() {
-	$.Tabs.setData([]);
+	$.Tabs.removeAllChildren();
 };
 
 /**
