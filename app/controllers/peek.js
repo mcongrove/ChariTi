@@ -81,7 +81,7 @@ $.loadApp = function(_url) {
 	if(_url.indexOf("://") < 0) {
 		_url = "http://" + _url;
 	}
-	
+
 	// Save the URL for later usage
 	Ti.App.Properties.setString("URL", _url);
 

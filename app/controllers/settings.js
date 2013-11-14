@@ -78,7 +78,7 @@ $.logs.addEventListener("click", function(_event) {
 });
 
 // Make PEEK modifications
-APP.PEEK.configureSettings($.content);
+APP.PEEK.configureSettings($.container);
 
 // Kick off the init
 $.init();
