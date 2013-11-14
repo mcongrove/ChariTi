@@ -30,7 +30,7 @@ var APP = {
 	 * ChariTi framework version
 	 * @type {String}
 	 */
-	CVERSION: "1.2.0.100513",
+	CVERSION: "1.2.0.111413",
 	/**
 	 * Legal information
 	 * @type {Object}
@@ -44,7 +44,7 @@ var APP = {
 		PRIVACY: null
 	},
 	/**
-	 * URL to remove JSON configuration file
+	 * URL to remote JSON configuration file
 	 * 
 	 * **NOTE: This can be used for over-the-air (OTA) application updates.**
 	 * @type {String}

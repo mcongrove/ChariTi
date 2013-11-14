@@ -46,15 +46,21 @@ $.handleData = function() {
 
 	$.createGrid(PHOTOS);
 
-	Ti.App.addEventListener("APP:orientationChange", function(_event) {
-		var children = $.container.children;
+	Ti.App.addEventListener("APP:orientationChange", $.handleOrientationChange);
+};
 
-		for(var i = 0, z = children.length; i < z; i++) {
-			$.container.remove(children[i]);
-		}
+/**
+ * Updates the UI on orientation changes
+ * @param {Object} _event The orientation change event
+ */
+$.handleOrientationChange = function(_event) {
+	var children = $.container.children;
 
-		$.createGrid(PHOTOS);
-	});
+	for(var i = 0, z = children.length; i < z; i++) {
+		$.container.remove(children[i]);
+	}
+
+	$.createGrid(PHOTOS);
 };
 
 /**

@@ -35,13 +35,14 @@ $.init = function() {
 $.handleData = function(_data) {
 	APP.log("debug", "podcast_podcast.handleData");
 
-	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
 
 	$.artwork.image = _data.image;
 	$.title.text = _data.title;
 
 	ACTION.url = _data.url;
+	ACTION.next = MODEL.getNextPodcast(_data.id);
+	ACTION.previous = MODEL.getPreviousPodcast(_data.id);
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
@@ -136,15 +137,6 @@ $.disableDownload = function() {
 };
 
 /**
- * Handles detail navigation
- * @param {Object} _id The ID of the current audio item
- */
-$.handleNavigation = function(_id) {
-	ACTION.next = MODEL.getNextPodcast(_id);
-	ACTION.previous = MODEL.getPreviousPodcast(_id);
-};
-
-/**
  * Plays the audio stream
  * @param {Object} _event The stream event
  */
@@ -214,33 +206,39 @@ $.streamState = function(_event) {
 	}
 };
 
+$.handlePrevious = function(_event) {
+	APP.log("debug", "podcast_podcast @previous");
+
+	if(ACTION.previous) {
+		$.streamStop();
+
+		APP.addChild("podcast_podcast", {
+			id: ACTION.previous.id,
+			index: CONFIG.index
+		}, false, true);
+	}
+};
+
+$.handleNext = function(_event) {
+	APP.log("debug", "podcast_podcast @next");
+
+	if(ACTION.next) {
+		$.streamStop();
+
+		APP.addChild("podcast_podcast", {
+			id: ACTION.next.id,
+			index: CONFIG.index
+		}, false, true);
+	}
+};
+
 // Event listeners
 $.play.addEventListener("click", $.streamPlay);
 $.pause.addEventListener("click", $.streamPause);
 $.track.addEventListener("click", $.streamSeek);
 $.download.addEventListener("click", $.downloadRemoteFile);
-
-$.previous.addEventListener("click", function(_event) {
-	APP.log("debug", "podcast_podcast @previous");
-
-	$.streamStop();
-
-	APP.addChild("podcast_podcast", {
-		id: ACTION.previous.id,
-		index: CONFIG.index
-	}, false, true);
-});
-
-$.next.addEventListener("click", function(_event) {
-	APP.log("debug", "podcast_podcast @next");
-
-	$.streamStop();
-
-	APP.addChild("podcast_podcast", {
-		id: ACTION.next.id,
-		index: CONFIG.index
-	}, false, true);
-});
+$.previous.addEventListener("click", $.handlePrevious);
+$.next.addEventListener("click", $.handleNext);
 
 // Kick off the init
 $.init();

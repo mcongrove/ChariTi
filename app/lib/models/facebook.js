@@ -71,7 +71,7 @@ function Model() {
 	this.handleData = function(_data, _url, _callback) {
 		APP.log("debug", "FACEBOOK.handleData");
 
-		if(_data.entries.length > 0) {
+		if(_data.entries && _data.entries.length > 0) {
 			var db = Ti.Database.open("ChariTi");
 
 			db.execute("DELETE FROM facebook_" + TID + ";");
