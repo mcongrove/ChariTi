@@ -19,7 +19,7 @@ Code Contribution Practices
 
 Code Documentation
 ------------------
-JSDuck automatically runs on each compile and generates compiled code located in the `/docs/documentation/` directory. Simply open the `index.html` page and enjoy.
+ChariTi uses JSDuck for documentation, which automatically runs on each compile, so please [install JSDuck](https://github.com/senchalabs/jsduck) on your machine. Generated documentation is located in the `/docs/documentation/` directory. Simply open the `index.html` page and enjoy.
 
 Where do I start?
 -----------------
