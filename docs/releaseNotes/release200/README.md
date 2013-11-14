@@ -3,7 +3,7 @@ Change Log
 
 This document describes the high-level changes made for each version. For a complete list of changes, please refer to the [ChariTi GitHub repository](http://github.com/mcongrove/ChariTi/).
 
-v 1.2.0 (??-??-2013)
+v 1.2.0 (11-14-2013)
 --------------------
 *	Support for iOS 7
 *	Brand new icons for iOS 7, custom-made for ChariTi!
