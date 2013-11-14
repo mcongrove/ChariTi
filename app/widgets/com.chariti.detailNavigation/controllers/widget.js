@@ -2,6 +2,7 @@
  * The detail navigation widget
  * 
  * @class Widgets.com.chariti.detailNavigation
+ * @uses core
  */
 var APP = require("core");
 
@@ -9,6 +10,7 @@ var APP = require("core");
  * @member Widgets.com.chariti.detailNavigation
  * @property {Object} CONFIG
  * @property {Function} CONFIG.up The function to run on 'up' press
+ * @property {Function} CONFIG.down The function to run on 'down' press
  */
 var CONFIG = arguments[0] || {};
 

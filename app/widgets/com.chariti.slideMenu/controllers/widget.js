@@ -1,7 +1,18 @@
+/**
+ * The slide menu widget
+ * 
+ * @class Widgets.com.chariti.slideMenu
+ * @uses core
+ */
 var APP = require("core");
 
 var sections = [];
 
+/**
+ * Initializes the slide menu
+ * @param {Object} _params
+ * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
+ */
 $.init = function(_params) {
 	$.tabs = [];
 
@@ -13,7 +24,7 @@ $.init = function(_params) {
 	});
 
 	// Creates a TableViewSection for each tab with a menuHeader property
-	$.buildSections(_params.tabs);
+	buildSections(_params.tabs);
 
 	var currentSection = -1;
 
@@ -75,7 +86,12 @@ $.init = function(_params) {
 	}
 };
 
-$.buildSections = function(_tabs) {
+/**
+ * Builds out the table sections
+ * @param {Object} _tabs The tab items to show in the side menu
+ * @private
+ */
+function buildSections(_tabs) {
 	for(var i = 0; i < _tabs.length; i++) {
 		// Assigns special menuHeader styling
 		if(_tabs[i].menuHeader) {
@@ -111,10 +127,17 @@ $.buildSections = function(_tabs) {
 	}
 };
 
+/**
+ * Clears all items from the side menu
+ */
 $.clear = function() {
 	$.Tabs.setData([]);
 };
 
+/**
+ * Sets the indexed item as active
+ * @param {Object} _index The index of the item to show as active
+ */
 $.setIndex = function(_index) {
 	$.Tabs.selectRow(_index);
 };

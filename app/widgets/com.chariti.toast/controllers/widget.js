@@ -5,6 +5,12 @@
  */
 var APP = require("core");
 
+/**
+ * @member Widgets.com.chariti.toast
+ * @property {Object} CONFIG
+ * @property {String} CONFIG.text The text to display in the toast
+ * @property {Number} CONFIG.duration The length of time (ms) to display the toast
+ */
 var CONFIG = arguments[0] || {};
 
 if(CONFIG.text) {

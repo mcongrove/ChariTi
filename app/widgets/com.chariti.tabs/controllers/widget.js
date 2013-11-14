@@ -1,3 +1,14 @@
+/**
+ * The tab bar widget
+ * 
+ * @class Widgets.com.chariti.tabs
+ */
+
+/**
+ * Initializes the tab bar
+ * @param {Object} _params
+ * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
+ */
 $.init = function(_params) {
 	$.tabs = [];
 	$.excess = false;
@@ -39,7 +50,7 @@ $.init = function(_params) {
 
 	for(var i = 0; i < _params.tabs.length; i++) {
 		if($.excess && i == ($.excessLength - 1)) {
-			$.addMoreTab(_params);
+			addMoreTab(_params);
 		}
 
 		var tab = Ti.UI.createView({
@@ -100,7 +111,12 @@ $.init = function(_params) {
 	}
 };
 
-$.addMoreTab = function(_params) {
+/**
+ * Adds the 'more' tab if necessary
+ * @param {Object} _params
+ * @private
+ */
+function addMoreTab(_params) {
 	var tab = Ti.UI.createView({
 		width: $.width + "dp"
 	});
@@ -133,11 +149,14 @@ $.addMoreTab = function(_params) {
 	tab.add(icon);
 	tab.add(label);
 
-	tab.addEventListener("click", $.moreEvent);
+	tab.addEventListener("click", moreEvent);
 
 	$.tabs.push(tab);
 };
 
+/**
+ * Clears all items from the tab bar
+ */
 $.clear = function() {
 	var children = $.Tabs.children;
 	var childrenMore = $.TabsMore.children;
@@ -151,6 +170,10 @@ $.clear = function() {
 	}
 };
 
+/**
+ * Sets the indexed item as active
+ * @param {Object} _index The index of the item to show as active
+ */
 $.setIndex = function(_index) {
 	if($.excess && _index > ($.excessLength - 2)) {
 		_moreIndex = _index - ($.excessLength - 1);
@@ -165,10 +188,15 @@ $.setIndex = function(_index) {
 	$.Indicator.left = (_index * $.width) + "dp";
 	$.Indicator.width = $.width + "dp";
 
-	$.moreClose();
+	moreClose();
 };
 
-$.moreEvent = function(_event) {
+/**
+ * Handles the click event on the 'more' tab
+ * @param {Object} _event The event
+ * @private
+ */
+function moreEvent(_event) {
 	if($.moreOpen) {
 		$.Wrapper.height = "60dp";
 
@@ -180,7 +208,11 @@ $.moreEvent = function(_event) {
 	}
 };
 
-$.moreClose = function() {
+/**
+ * Closes the 'more' tab
+ * @private
+ */
+function moreClose() {
 	$.Wrapper.height = "60dp";
 	$.moreOpen = false;
 };
