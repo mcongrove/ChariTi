@@ -1,5 +1,5 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Settings Credits">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
 		
 		<ScrollView id="container">
@@ -8,7 +8,7 @@
 			<Label text="Special thanks to Rick Blalock, Tony Lukasavage, Greg DiPaolo, Dennis Ashby, Varun Joshi, Elyse Phillips, Sandeep Johri, Jeff Haynie and the rest of the team at Appcelerator, Ray Miranda, Ivan Mathy, Oleg Polyakov, and the entire crowd of developers at Appcelerator's 2012 Hack-to-Help." />
 			<Label text="We'd also like to recognize all of the folks at ROAR and the University of Wisconsin-Milwaukee's App Brewery." />
 			<Label text="ChariTi is built on Appcelerator's Titanium Mobile and utilizes the Alloy framework. ChariTi's code is hosted for free by the amazing folks at GitHub, kept DRY by Simon Harris' Simian, and kept clean thanks to Einar Lielmanis' JS Beautifier." />
-			<Label class="last" text="Icons provided by: Donate, Home, Picture, Gears, Refresh, and Television from The Noun Project. Television designed by Matthias Schmidt und Jule Steffen, Film designed by Nicolas Ramallo, Film designed by Chris Robinson, Bullhorn designed by Shane Miller, Community designed by Rémy Médard, Community designed by Roger Cline, Friends designed by Rob Schill, Chat designed by Joe Mortell, Chat designed by Danilo Gusmão Silveira, Camera designed by Stanislav Levin, Picture designed by Ilias Ismanalijev, Notepad designed by Thomas Le Bas, Map Marker designed by Venkatesh Aiyulu, Pie Chart designed by Scott Lewis, Calendar designed by Michael Rowe, Money designed by Lemon Liu, Telephone designed by Proletkult Graphik, Book designed by Madebyelvis, Compass designed by iconoci, Newspaper designed by Scott Lewis, Book designed by Nallathambi... all from The Noun Project." />
+			<Label class="last" text="Custom icons were provided by Roger White." />
 		</ScrollView>
 	</View>
 </Alloy>

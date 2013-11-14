@@ -1,5 +1,5 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Event Event">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
 		<ScrollView id="container">
