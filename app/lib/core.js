@@ -611,11 +611,13 @@ var APP = {
 				}
 
 				// Tell the parent screen it was added to the window
+				/*
 				if(controllerStack[0].type == "tablet") {
 					controllerStack[0].fireEvent("APP:tabletScreenAdded");
 				} else {
 					controllerStack[0].fireEvent("APP:screenAdded");
 				}
+				*/
 			} else {
 				// Create a new screen
 				var type = APP.Nodes[_id].type.toLowerCase();
@@ -649,11 +651,13 @@ var APP = {
 				controllerStack.push(screen);
 
 				// Tell the screen it was added to the window
+				/*
 				if(screen.type == "tablet") {
 					screen.fireEvent("APP:tabletScreenAdded");
 				} else {
 					screen.fireEvent("APP:screenAdded");
 				}
+				*/
 			}
 
 			// Add the screen to the window
@@ -687,12 +691,12 @@ var APP = {
 		// Create the new screen controller
 		var screen = Alloy.createController(_controller, _params).getView();
 
+		if(_sibling) {
+			stack.pop();
+		}
+
 		// Add screen to the controller stack
 		stack.push(screen);
-
-		if(_sibling) {
-			stack.splice(stack.length - 2, 1);
-		}
 
 		// Add the screen to the window
 		if(APP.Device.isHandheld || !APP.hasDetail || _modal) {
@@ -756,7 +760,7 @@ var APP = {
 	},
 	/**
 	 * Removes all children screens
-	 * @param {Boolean} [_modal] Removes all children from the modal stack
+	 * @param {Boolean} [_modal] Removes all children from the stack
 	 */
 	removeAllChildren: function(_modal) {
 		var stack = _modal ? APP.modalStack : APP.controllerStacks[APP.currentStack];
@@ -802,9 +806,11 @@ var APP = {
 	addMasterScreen: function(_controller, _params, _wrapper) {
 		var screen = Alloy.createController(_controller, _params).getView();
 
+		/*
 		_wrapper.addEventListener("APP:tabletScreenAdded", function(_event) {
 			screen.fireEvent("APP:screenAdded");
 		});
+		*/
 
 		APP.Master[APP.currentStack].add(screen);
 	},

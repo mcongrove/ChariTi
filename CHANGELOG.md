@@ -18,6 +18,7 @@ v 1.2.0 (??-??-2013)
 *	Made slide menu faster
 *	Smarter color selections based on configuration
 *	Removed 'text' color setting
+*	Removed global 'screenAdded' and 'tabletScreenAdded' events
 *	Fixed handling of unavailable network situations
 *	Fixed slide menu jitters
 *	Fixed Flickr gesture collisions
