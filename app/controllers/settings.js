@@ -1,10 +1,19 @@
+/**
+ * Controller for the settings screen
+ * 
+ * @class Controllers.settings
+ * @uses core
+ */
 var APP = require("core");
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "settings.init");
 
 	if(!APP.LEGAL.TOS && !APP.LEGAL.PRIVACY) {
-		$.content.remove($.legal_table);
+		$.container.remove($.legal_table);
 	} else if(!APP.LEGAL.TOS || !APP.LEGAL.PRIVACY) {
 		if(!APP.LEGAL.TOS) {
 			$.legal_table.deleteRow(0);
@@ -18,11 +27,11 @@ $.init = function() {
 	}
 
 	if(!Ti.UI.createEmailDialog().isSupported) {
-		$.content.remove($.logs_table);
+		$.container.remove($.logs_table);
 	}
 
-	$.copyright.text = APP.LEGAL.COPYRIGHT;
-	$.version.text = "Version " + APP.VERSION + ", ChariTi " + APP.CVERSION;
+	$.copyright.text = APP.LEGAL.COPYRIGHT + " v" + APP.VERSION;
+	$.chariti.text = "ChariTi ‌© 2013 Matthew Congrove v" + APP.CVERSION;
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 

@@ -1,126 +1,120 @@
 "#Wrapper": {
-	backgroundColor: "#000"
+	backgroundColor: "#000",
+	layout: "vertical"
 },
-"#content": {
-	top: "47dp"
+"#container": {
+	top: "0dp"
 },
-"#artworkWrapper": {
-	top: "40dp",
-	bottom: "40dp",
-	width: Ti.UI.SIZE
+"#artworkContainer": {
+	backgroundColor: "#000",
+	top: "0dp",
+	bottom: "152dp",
+	width: Ti.UI.FILL
 },
 "#artwork": {
 	width: Ti.UI.FILL,
 	preventDefaultImage: true
 },
-"#controls": {
-	width: "163dp",
-	height: "69dp"
-},
-"#previous": {
-	width: "47dp",
-	height: "47dp",
-	left: "0dp",
-	top: "11dp"
-},
-"#next": {
-	width: "47dp",
-	height: "47dp",
-	left: "116dp",
-	top: "11dp"
-},
-"#play": {
-	width: "69dp",
-	height: "69dp",
-	left: "47dp"
-},
-"#pause": {
-	width: "69dp",
-	height: "69dp",
-	left: "47dp",
-	visible: false
-},
 "#meta": {
-	top: "0dp",
+	bottom: "0dp",
 	width: Ti.UI.FILL,
-	height: "40dp",
-	backgroundImage: "/images/transparent.png"
+	height: "152dp",
+	backgroundColor: "#FFF"
 },
-"#title": {
-	top: "12dp",
-	left: "12dp",
-	right: "12dp",
-	height: "16dp",
+"#time": {
+	top: "15dp",
+	left: "15dp",
+	height: "20dp",
 	font: {
-		fontSize: "14dp",
-		fontWeight: "bold"
+		fontSize: "11dp",
+		fontFamily: "HelveticaNeue-Light"
 	},
-	color: "#E6E6E6",
-	shadowColor: "#000",
+	color: "#000",
+	width: "40dp",
 	textAlign: "left",
-	shadowOffset: {
-		x: "0dp",
-		y: "1dp"
-	}
+	touchEnabled: false,
+	zIndex: 101
 },
 "#track": {
 	width: Ti.UI.FILL,
-	height: "40dp",
-	bottom: "0dp",
-	backgroundGradient: {
-		type: "linear",
-		colors: [
-			"#222",
-			"#000"
-		],
-		startPoint: {
-			x: 0,
-			y: 0
-		},
-		endPoint: {
-			x: 0,
-			y: "100%"
-		},
-		backFillStart: true
-	}
-},
-"#time": {
-	top: "12dp",
-	left: "12dp",
-	right: "12dp",
-	height: "16dp",
-	font: {
-		fontSize: "14dp",
-		fontWeight: "bold"
-	},
-	color: "#E6E6E6",
-	shadowColor: "#000",
-	textAlign: "right",
-	touchEnabled: false,
-	shadowOffset: {
-		x: "0dp",
-		y: "1dp"
-	}
+	height: "20dp",
+	top: "15dp",
+	left: "55dp",
+	right: "55dp",
+	backgroundColor: "#DDD"
 },
 "#position": {
 	width: "1%",
-	height: "40dp",
+	height: "20dp",
 	left: "0dp",
 	touchEnabled: false,
-	backgroundGradient: {
-		type: "linear",
-		colors: [
-			"#E6E6E6",
-			"#C6C6C6"
-		],
-		startPoint: {
-			x: 0,
-			y: 0
-		},
-		endPoint: {
-			x: 0,
-			y: "100%"
-		},
-		backFillStart: true
-	}
+	zIndex: 100
+},
+"#duration": {
+	top: "15dp",
+	right: "15dp",
+	height: "20dp",
+	font: {
+		fontSize: "11dp",
+		fontFamily: "HelveticaNeue-Light"
+	},
+	color: "#000",
+	width: "40dp",
+	textAlign: "right",
+	touchEnabled: false,
+	zIndex: 101
+},
+"#title": {
+	top: "50dp",
+	left: "15dp",
+	right: "15dp",
+	height: "44dp",
+	font: {
+		fontSize: "18dp",
+		fontFamily: "HelveticaNeue-Light"
+	},
+	color: "#000",
+	textAlign: "center"
+},
+"#controls": {
+	width: "252dp",
+	height: "28dp",
+	top: "109dp"
+},
+"#previous": {
+	width: "28dp",
+	height: "28dp",
+	left: "56dp",
+	top: "0dp"
+},
+"#next": {
+	width: "28dp",
+	height: "28dp",
+	right: "56dp",
+	top: "0dp"
+},
+"#play": {
+	width: "28dp",
+	height: "28dp",
+	left: "112dp",
+	top: "0dp"
+},
+"#pause": {
+	width: "28dp",
+	height: "28dp",
+	left: "112dp",
+	top: "0dp",
+	visible: false
+},
+"#download": {
+	width: "28dp",
+	height: "28dp",
+	right: "0dp",
+	top: "0dp"
+},
+"#playerContainer": {
+	width: "1dp",
+	height: "1dp",
+	top: "-1dp",
+	left: "-1dp"
 }

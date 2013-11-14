@@ -1,13 +1,10 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Article Article">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<ScrollView id="content">
-			<View id="header">
-				<Label id="date" />
-				
-				<Label id="heading" />
-			</View>
+		<ScrollView id="container">
+			<Label id="heading" />
+			<Label id="date" />
 			
 			<View id="image" />
 			

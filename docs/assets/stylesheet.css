@@ -1,0 +1,20 @@
+h1 {
+	color: #327B9F !important;
+	padding-bottom: 10px !important;
+}
+a:link {
+  color: #327B9F;
+}
+a:visited {
+	color: #327B9F;
+}
+#north-region {
+	background: #327B9F;
+}
+#header-content {
+	background-image: url("../assets/chariti.png");
+	padding-left: 25px;
+}
+#center-container h1, #center-container h1 .class-source-link {
+  color: #327B9F;
+}

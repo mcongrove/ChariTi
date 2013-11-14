@@ -1,10 +1,10 @@
 {
 	"id": "ChariTi.001",
-	"version": "1.1",
-	"minimumVersion": "1.1",
-	"_configurationUrl": "http://chariti.mobi/app/app.json",
+	"version": "1.2",
+	"minimumVersion": "1.2",
+	"configurationUrl": "",
 	"legal": {
-		"copyright": "Copyright ‌© 2013 ChariTi",
+		"copyright": "Copyright ‌2013 ChariTi",
 		"terms": "http://www.appcelerator.com/legal/terms-conditions/",
 		"privacy": "https://policy-portal.truste.com/core/privacy-policy/ChariTi/04175946-6006-4c76-b174-6bc589432474"
 	},
@@ -18,72 +18,73 @@
 		},
 		"colors": {
 			"primary": "#327B9F",
-			"secondary": "#569BBE",
-			"text":	"#FFF"
+			"secondary": "#569BBE"
 		},
-		"useSlideMenu": false
+		"useSlideMenu": true
 	},
-	"_manifest": [
-		"http://localhost/ChariTi/app/logo.png",
-		"http://localhost/ChariTi/app/logo@2x.png"
+	"manifest": [
+		"http://chariti.mobi/app/logo.png",
+		"http://chariti.mobi/app/logo@2x.png"
 	],
 	"tabs": [
 		{
+			"menuHeader": "My Tabs",
 			"title": "Text",
 			"heading": "Open Source Mobile Framework for Charities",
 			"text": "The ChariTi framework is built to allow the often-times small team of staffers at charities around the world to build a mobile application. This is achieved by removing the requirement for a highly-knowledgeable technical staff or costly app development firm and instead allowing app creation and management by anyone from a marketing director to an intern.",
 			"type": "text",
-			"image": "home"
+			"image": "chariti",
+			"tabletSupport": false
 		},
 		{
 			"title": "Podcast",
 			"feed": "http://feeds.feedburner.com/TEDTalks_audio",
 			"type": "podcast",
-			"image": "audio",
-			"cache": 1440
+			"image": "audio2",
+			"cache": 1440,
+			"tabletSupport": true
 		},
 		{
 			"title": "Facebook",
 			"userid": "20594753592",
 			"type": "facebook",
 			"image": "facebook",
-			"cache": 10
+			"cache": 1440,
+			"tabletSupport": true
 		},
 		{
 			"title": "Blog",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "article",
-			"image": "news1",
-			"cache": 120
+			"image": "news",
+			"cache": 120,
+			"tabletSupport": true
 		},
 		{
 			"title": "Flickr",
 			"username": "39494278@N04",
 			"apiKey": "e067644d8af6a8a9f2f36f8abbe32720",
 			"type": "flickr",
-			"image": "photo1",
-			"cache": 1440
+			"image": "photo",
+			"cache": 1440,
+			"tabletSupport": true
 		},
 		{
+			"menuHeader": "More Tabs",
 			"title": "Events",
 			"userid": "7304307941",
 			"type": "event",
-			"image": "event2",
-			"cache": 1440
+			"image": "event",
+			"cache": 1440,
+			"tabletSupport": true
 		},
 		{
 			"title": "Vimeo",
 			"username": "appcelerator",
 			"type": "vimeo",
-			"image": "video4",
-			"cache": 1440
-		},
-		{
-			"title": "YouTube",
-			"username": "appcelerator",
-			"type": "youtube",
-			"image": "video5",
-			"cache": 1440
+			"image": "video2",
+			"cache": 1440,
+			"tabletSupport": true
 		},
 		{
 			"title": "Share",
@@ -98,7 +99,8 @@
 				}
 			],
 			"type": "share",
-			"image": "social4"
+			"image": "social",
+			"tabletSupport": true
 		},
 		{
 			"title": "Donate",
@@ -106,7 +108,8 @@
 			"text": "ChariTi is a framework built to allow charities to quickly and easily create mobile apps.\n\nWe don't want your money, we just want your code.",
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "donate",
-			"image": "donate3"
+			"image": "donate2",
+			"tabletSupport": false
 		}
 	],
 	"examples": [
@@ -136,26 +139,38 @@
 				}
 			],
 			"type": "map",
-			"image": "map2"
+			"image": "map",
+			"tabletSupport": false
 		},
 		{
 			"title": "News",
 			"feed": "http://developer.appcelerator.com/blog/feed",
 			"type": "article",
-			"image": "news1",
-			"cache": 120
+			"image": "news",
+			"cache": 120,
+			"tabletSupport": true
 		},
 		{
 			"title": "PDF",
 			"url": "http://www.appcelerator.com.s3.amazonaws.com/pdf/casestudy_nbc.pdf",
 			"type": "pdf",
-			"image": "book1"
+			"image": "book",
+			"tabletSupport": false
+		},
+		{
+			"title": "YouTube",
+			"username": "appcelerator",
+			"type": "youtube",
+			"image": "video2",
+			"cache": 1440,
+			"tabletSupport": true
 		},
 		{
 			"title": "Web",
 			"url": "https://github.com/mcongrove/ChariTi",
 			"type": "web",
-			"image": "home"
+			"image": "home",
+			"tabletSupport": false
 		}
 	]
 }

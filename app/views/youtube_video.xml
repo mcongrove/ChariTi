@@ -1,7 +1,7 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Youtube Video">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<WebView id="content" />
+		<WebView id="container" />
 	</View>
 </Alloy>

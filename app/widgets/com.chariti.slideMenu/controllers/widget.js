@@ -1,111 +1,143 @@
+/**
+ * The slide menu widget
+ * 
+ * @class Widgets.com.chariti.slideMenu
+ * @uses core
+ */
+var APP = require("core");
+
+var sections = [];
+
+/**
+ * Initializes the slide menu
+ * @param {Object} _params
+ * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
+ */
 $.init = function(_params) {
 	$.tabs = [];
-	
+
+	// Add the Settings tab
+	_params.tabs.push({
+		id: "settings",
+		image: "/icons/white/settings.png",
+		title: "Settings"
+	});
+
+	// Creates a TableViewSection for each tab with a menuHeader property
+	buildSections(_params.tabs);
+
+	var currentSection = -1;
+
 	for(var i = 0; i < _params.tabs.length; i++) {
+		// Iterates through the created sections
+		if(_params.tabs[i].menuHeader) {
+			currentSection++;
+		}
+
 		var tab = Ti.UI.createTableViewRow({
 			id: _params.tabs[i].id,
 			height: "47dp",
-			backgroundColor: "#2E2E2E",
-			backgroundSelectedColor: "#1E1E1E",
-			selectedBackgroundColor: "#1E1E1E"
-		});
-		
-		var iconWrapper = Ti.UI.createView({
-			width: "28dp",
-			height: "28dp",
-			top: "9dp",
-			left: "7dp",
-			touchEnabled: false
+			backgroundcolor: "#111",
+			backgroundSelectedColor: "#222",
+			selectedBackgroundColor: "#222"
 		});
 
-		var icon = Ti.UI.createImageView({
-			image: _params.tabs[i].image,
-			width: Ti.UI.SIZE,
-			height: "28dp",
-			top: 0,
-			touchEnabled: false,
-			preventDefaultImage: true
-		});
-		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
 			top: "0dp",
 			left: "47dp",
-			right: "7dp",
-			height: "47dp",
+			right: "13dp",
+			height: "46dp",
 			font: {
-				fontSize: "14dp",
-				fontWeight: "bold"
+				fontSize: "16dp",
+				fontFamily: "HelveticaNeue-Light"
 			},
-			color: "#BBB",
-			shadowColor: "#1E1E1E",
-			shadowOffset: {
-				x: "0dp",
-				y: "1dp"
-			},
+			color: "#FFF",
 			touchEnabled: false
 		});
-		
-		iconWrapper.add(icon);
-		tab.add(iconWrapper);
+
+		if(_params.tabs[i].image) {
+			var icon = Ti.UI.createImageView({
+				image: _params.tabs[i].image,
+				width: "21dp",
+				height: "21dp",
+				top: "13dp",
+				left: "13dp",
+				touchEnabled: false,
+				preventDefaultImage: true
+			});
+
+			tab.add(icon);
+		}
+
 		tab.add(label);
-		
-		$.tabs.push(tab);
+
+		sections[currentSection].add(tab);
+
+		// If the last tab has been created and added to a section or
+		// the next tab is a new header, append the current section to the TableView
+		if((i + 1) !== _params.tabs.length) {
+			if(_params.tabs[i + 1].menuHeader) {
+				$.Tabs.appendSection(sections[currentSection]);
+			}
+		} else {
+			$.Tabs.appendSection(sections[currentSection]);
+		}
 	}
-	
-	$.Tabs.setData($.tabs);
-	
-	$.createSettings();
 };
 
-$.createSettings = function() {
-	var tab = Ti.UI.createTableViewRow({
-		id: "settings",
-		height: "47dp",
-		backgroundColor: "#2E2E2E",
-		backgroundSelectedColor: "#1E1E1E",
-		selectedBackgroundColor: "#1E1E1E"
-	});
-	
-	var icon = Ti.UI.createImageView({
-		image: WPATH("images/settings.png"),
-		width: "28dp",
-		height: "28dp",
-		top: "9dp",
-		left: "7dp",
-		touchEnabled: false,
-		preventDefaultImage: true
-	});
-	
-	var label = Ti.UI.createLabel({
-		text: "Settings",
-		top: "0dp",
-		left: "47dp",
-		right: "7dp",
-		height: "47dp",
-		font: {
-			fontSize: "14dp",
-			fontWeight: "bold"
-		},
-		color: "#BBB",
-		shadowColor: "#1E1E1E",
-		shadowOffset: {
-			x: "0dp",
-			y: "1dp"
-		},
-		touchEnabled: false
-	});
-	
-	tab.add(icon);
-	tab.add(label);
-	
-	$.Tabs.appendRow(tab);
+/**
+ * Builds out the table sections
+ * @param {Object} _tabs The tab items to show in the side menu
+ * @private
+ */
+function buildSections(_tabs) {
+	for(var i = 0; i < _tabs.length; i++) {
+		// Assigns special menuHeader styling
+		if(_tabs[i].menuHeader) {
+			var section = Ti.UI.createTableViewSection();
+
+			var header = Ti.UI.createView({
+				top: "0dp",
+				height: "20dp",
+				width: Ti.UI.FILL,
+				backgroundColor: APP.Settings.colors.primary
+			});
+
+			var headerText = Ti.UI.createLabel({
+				text: _tabs[i].menuHeader,
+				top: "2dp",
+				left: "13dp",
+				font: {
+					fontSize: "12dp",
+					fontWeight: "HelveticaNeue-Light"
+				},
+				color: APP.Settings.colors.theme == "dark" ? "#FFF" : "#000",
+				touchEnabled: false,
+				verticalAlignment: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+				isHeader: true
+			});
+
+			header.add(headerText);
+
+			section.headerView = header;
+
+			sections.push(section);
+		}
+	}
 };
 
+/**
+ * Clears all items from the side menu
+ */
 $.clear = function() {
 	$.Tabs.setData([]);
 };
 
+/**
+ * Sets the indexed item as active
+ * @param {Object} _index The index of the item to show as active
+ */
 $.setIndex = function(_index) {
 	$.Tabs.selectRow(_index);
 };
@@ -115,3 +147,8 @@ $.Tabs.addEventListener("click", function(_event) {
 		$.setIndex(_event.index);
 	}
 });
+
+// Move the UI down if iOS7+
+if(OS_IOS && APP.Device.versionMajor >= 7) {
+	$.Tabs.top = "20dp";
+}

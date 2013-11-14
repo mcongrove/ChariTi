@@ -1,3 +1,11 @@
+/**
+ * Controller for the Facebook post list screen
+ * 
+ * @class Controllers.facebook
+ * @uses Models.facebook
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");
@@ -11,6 +19,9 @@ var offset = 0;
 var refreshLoading = false;
 var refreshEngaged = false;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "facebook.init | " + JSON.stringify(CONFIG));
 
@@ -19,6 +30,8 @@ $.init = function() {
 	CONFIG.feed = "http://www.facebook.com/feeds/page.php?format=json&id=" + CONFIG.userid;
 
 	APP.openLoading();
+
+	$.retrieveData();
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
@@ -33,6 +46,11 @@ $.init = function() {
 	}
 };
 
+/**
+ * Retrieves the data
+ * @param {Object} _force Whether to force the request or not (ignores cached data)
+ * @param {Object} _callback The function to run on data retrieval
+ */
 $.retrieveData = function(_force, _callback) {
 	MODEL.fetch({
 		url: CONFIG.feed,
@@ -45,27 +63,37 @@ $.retrieveData = function(_force, _callback) {
 			}
 		},
 		error: function() {
-			alert("Unable to connect. Please try again later.");
+			Alloy.createWidget("com.chariti.toast", null, {
+				text: "Unable to connect; try again later",
+				duration: 2000
+			});
 
 			APP.closeLoading();
 
-			if(OS_IOS) {
-				pullToRefresh.hide();
+			if(typeof _callback !== "undefined") {
+				_callback();
 			}
 		}
 	});
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "facebook.handleData");
 
 	var rows = [];
 
 	for(var i = 0, x = _data.length; i < x; i++) {
+		var time = DATE(parseInt(_data[i].date, 10));
+		time = time.isBefore() ? time : DATE();
+
 		var row = Alloy.createController("facebook_row", {
 			id: _data[i].id,
 			heading: _data[i].title,
-			subHeading: STRING.ucfirst(DATE(parseInt(_data[i].date, 10)).fromNow())
+			subHeading: STRING.ucfirst(time.fromNow())
 		}).getView();
 
 		rows.push(row);
@@ -86,10 +114,6 @@ $.handleData = function(_data) {
 };
 
 // Event listeners
-$.Wrapper.addEventListener("APP:screenAdded", function() {
-	$.retrieveData();
-});
-
 $.container.addEventListener("click", function(_event) {
 	APP.log("debug", "facebook @click " + _event.row.id);
 
@@ -107,23 +131,14 @@ $.container.addEventListener("click", function(_event) {
 	});
 });
 
-if(OS_IOS) {
-	var pullToRefresh = Alloy.createWidget("nl.fokkezb.pullToRefresh", null, {
-		table: $.container,
-		backgroundColor: "#EEE",
-		fontColor: "#AAA",
-		indicator: "dark",
-		image: "/images/ptrArrow.png",
-		refresh: function(_callback) {
-			$.retrieveData(true, function() {
-				_callback(true);
-			});
-		}
+/**
+ * Handles the pull-to-refresh event
+ * @param {Object} _event The event
+ */
+function ptrRelease(_event) {
+	$.retrieveData(true, function() {
+		_event.hide();
 	});
-
-	if(CONFIG.feed) {
-		pullToRefresh.date(DATE(parseInt(UTIL.lastUpdate(CONFIG.feed), 10)).toDate());
-	}
 }
 
 // Kick off the init

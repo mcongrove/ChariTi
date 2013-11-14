@@ -1,0 +1,24 @@
+"#Wrapper": {
+	width: Ti.UI.FILL,
+	height: "70dp",
+	bottom: "0dp"
+},
+"#Modal": {
+	top: "70dp",
+	width: "280dp",
+	height: "30dp",
+	borderRadius: 5,
+	backgroundColor: "#000"
+},
+"#textLabel": {
+	top: "0dp",
+	left: "0dp",
+	right: "0dp",
+	height: "30dp",
+	color: "#FFF",
+	textAlign: "center",
+	font: {
+		fontSize: 13,
+		fontWeight: "bold"
+	}
+}

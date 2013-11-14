@@ -1,12 +1,31 @@
+/**
+ * Configuration file update class
+ * 
+ * @class update
+ * @uses core
+ * @uses http
+ */
 var APP = require("core");
 var HTTP = require("http");
 
+/**
+ * The number of items in the manifest
+ * @ignore
+ */
 var manifestCount = 0;
+
+/**
+ * The function to run after the new data has been processed
+ * @ignore
+ */
 var onComplete;
 
 /**
  * Updates the app.json from a remote source
  * @param {Object} _params The parameters for the function, used to force an update
+ * @param {String} _params.url The URL to retrieve the new configuration file from
+ * @param {Function} _params.callback The function to run on data retrieval
+ * @ignore
  */
 exports.init = function(_params) {
 	APP.log("debug", "UPDATE.init");
@@ -38,10 +57,9 @@ exports.init = function(_params) {
 
 /**
  * Handles the update with the new configuration file
- * @param {String} [_data] The response data
- * @param {String} [_url] The URL we requested
- * @param {Function} [_callback] The optional callback function, used to force an update
- * 
+ * @param {String} _data The response data
+ * @param {String} _url The URL we requested
+ * @param {Function} _callback The optional callback function, used to force an update
  */
 exports.handleUpdate = function(_data, _url, _callback) {
 	APP.log("debug", "UPDATE.handleUpdate");
@@ -104,7 +122,7 @@ exports.handleUpdate = function(_data, _url, _callback) {
 			});
 
 			dialog.show();
-		}
+		};
 	} else {
 		onComplete = _callback;
 	}
@@ -112,7 +130,7 @@ exports.handleUpdate = function(_data, _url, _callback) {
 
 /**
  * Retrieves remote items
- * @param {Array} [_items] An array of items from the manifest
+ * @param {Array} _items An array of items from the manifest
  */
 exports.downloadManifest = function(_items) {
 	APP.log("debug", "UPDATE.downloadManifest");
@@ -134,8 +152,8 @@ exports.downloadManifest = function(_items) {
 
 /**
  * Stores remote items locally
- * @param {String} [_data] The content of the item we downloaded
- * @param {String} [_url] The URL of the item we downloaded
+ * @param {String} _data The content of the item we downloaded
+ * @param {String} _url The URL of the item we downloaded
  */
 exports.handleManifestItem = function(_data, _url) {
 	APP.log("debug", "UPDATE.handleManifestItem");

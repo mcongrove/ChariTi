@@ -1,5 +1,14 @@
+/**
+ * Controller for the settings credits screen
+ * 
+ * @class Controllers.settings.credits
+ * @uses core
+ */
 var APP = require("core");
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "settings_credits.init");
 

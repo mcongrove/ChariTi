@@ -1,3 +1,11 @@
+/**
+ * Controller for the podcast node screen
+ * 
+ * @class Controllers.podcast.podcast
+ * @uses Models.podcast
+ * @uses core
+ * @uses social
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
@@ -7,24 +15,34 @@ var CONFIG = arguments[0] || {};
 var ACTION = {};
 var STREAM;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "podcast_podcast.init | " + JSON.stringify(CONFIG));
 
 	MODEL.init(CONFIG.index);
 
 	$.handleData(MODEL.getPodcast(CONFIG.id));
+
+	$.position.backgroundColor = APP.Settings.colors.primary || "#000";
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "podcast_podcast.handleData");
 
-	$.handleNavigation(_data.id);
 	$.createAudioPlayer(_data.url);
 
 	$.artwork.image = _data.image;
 	$.title.text = _data.title;
 
 	ACTION.url = _data.url;
+	ACTION.next = MODEL.getNextPodcast(_data.id);
+	ACTION.previous = MODEL.getPreviousPodcast(_data.id);
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
@@ -45,10 +63,13 @@ $.handleData = function(_data) {
 	});
 };
 
+/**
+ * Creates an audio player
+ * @param {Object} _url The remote URL of the audio
+ */
 $.createAudioPlayer = function(_url) {
 	APP.log("debug", "podcast_podcast.createAudioPlayer(" + _url + ")");
 
-	/* Adds support for offline listening
 	var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + '.mp3';
 	var directory;
 
@@ -63,15 +84,16 @@ $.createAudioPlayer = function(_url) {
 
 	if(file.exists()) {
 		filepath = file.getNativePath();
+
+		$.disableDownload();
 	} else {
 		filepath = _url;
 	}
-	*/
 
 	Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
 
 	STREAM = Ti.Media.createVideoPlayer({
-		url: _url,
+		url: filepath,
 		backgroundColor: "#000",
 		fullscreen: false,
 		allowsAirPlay: true,
@@ -84,54 +106,65 @@ $.createAudioPlayer = function(_url) {
 	});
 
 	STREAM.addEventListener("playbackstate", $.streamState);
-	STREAM.addEventListener("loadstate", $.streamPlay);
+
+	STREAM.addEventListener("loadstate", function(_event) {
+		var duration = DATE.duration(STREAM.getDuration());
+		$.duration.text = (duration.hours() !== 0 ? duration.hours() + ":" : "") + duration.minutes() + ":" + (duration.seconds() < 10 ? "0" : "") + duration.seconds();
+
+		$.streamPlay();
+	});
 
 	setInterval($.streamProgress, 500);
+
+	$.playerContainer.add(STREAM);
 };
 
-$.handleNavigation = function(_id) {
-	ACTION.next = MODEL.getNextPodcast(_id);
-	ACTION.previous = MODEL.getPreviousPodcast(_id);
+/**
+ * Downloads the audio file from the remote source
+ */
+$.downloadRemoteFile = function() {
+	MODEL.downloadPodcast(ACTION.url);
 
-	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
-		down: function(_event) {
-			APP.log("debug", "podcast_podcast @next");
-
-			$.streamStop();
-
-			APP.addChild("podcast_podcast", {
-				id: ACTION.next.id,
-				index: CONFIG.index
-			});
-		},
-		up: function(_event) {
-			APP.log("debug", "podcast_podcast @previous");
-
-			$.streamStop();
-
-			APP.addChild("podcast_podcast", {
-				id: ACTION.previous.id,
-				index: CONFIG.index
-			});
-		}
-	}).getView();
-
-	$.NavigationBar.addNavigation(navigation);
+	$.disableDownload();
 };
 
+/**
+ * Disables the download option
+ */
+$.disableDownload = function() {
+	$.download.touchEnabled = false;
+	$.download.opacity = 0.4;
+};
+
+/**
+ * Plays the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamPlay = function(_event) {
 	STREAM.play();
 };
 
+/**
+ * Pauses the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamPause = function(_event) {
 	STREAM.pause();
 };
 
+/**
+ * Stops the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamStop = function() {
 	STREAM.stop();
 	STREAM.release();
 };
 
+/**
+ * Seeks the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamSeek = function(_event) {
 	var x = _event.x;
 	var width = $.track.rect.width;
@@ -143,6 +176,10 @@ $.streamSeek = function(_event) {
 	$.position.width = (percentage * 100) + "%";
 };
 
+/**
+ * Handles the progress event from the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamProgress = function(_event) {
 	if(STREAM.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
 		var percentage = ((STREAM.currentPlaybackTime / STREAM.getDuration()) * 100);
@@ -155,6 +192,10 @@ $.streamProgress = function(_event) {
 	}
 };
 
+/**
+ * Handles the state event from the audio stream
+ * @param {Object} _event The stream event
+ */
 $.streamState = function(_event) {
 	if(_event.playbackState == Ti.Media.VIDEO_PLAYBACK_STATE_PLAYING) {
 		$.play.visible = false;
@@ -165,32 +206,39 @@ $.streamState = function(_event) {
 	}
 };
 
+$.handlePrevious = function(_event) {
+	APP.log("debug", "podcast_podcast @previous");
+
+	if(ACTION.previous) {
+		$.streamStop();
+
+		APP.addChild("podcast_podcast", {
+			id: ACTION.previous.id,
+			index: CONFIG.index
+		}, false, true);
+	}
+};
+
+$.handleNext = function(_event) {
+	APP.log("debug", "podcast_podcast @next");
+
+	if(ACTION.next) {
+		$.streamStop();
+
+		APP.addChild("podcast_podcast", {
+			id: ACTION.next.id,
+			index: CONFIG.index
+		}, false, true);
+	}
+};
+
 // Event listeners
 $.play.addEventListener("click", $.streamPlay);
 $.pause.addEventListener("click", $.streamPause);
 $.track.addEventListener("click", $.streamSeek);
-
-$.previous.addEventListener("click", function(_event) {
-	APP.log("debug", "podcast_podcast @previous");
-
-	$.streamStop();
-
-	APP.addChild("podcast_podcast", {
-		id: ACTION.previous.id,
-		index: CONFIG.index
-	});
-});
-
-$.next.addEventListener("click", function(_event) {
-	APP.log("debug", "podcast_podcast @next");
-
-	$.streamStop();
-
-	APP.addChild("podcast_podcast", {
-		id: ACTION.next.id,
-		index: CONFIG.index
-	});
-});
+$.download.addEventListener("click", $.downloadRemoteFile);
+$.previous.addEventListener("click", $.handlePrevious);
+$.next.addEventListener("click", $.handleNext);
 
 // Kick off the init
 $.init();

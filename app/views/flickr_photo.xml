@@ -1,8 +1,8 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Flickr Photo">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<View id="content">
+		<View id="container">
 			<ImageView id="image" />
 			
 			<View id="meta">

@@ -1,3 +1,9 @@
+/**
+ * Controller for the text screen
+ * 
+ * @class Controllers.text
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
@@ -8,7 +14,7 @@ $.heading.text = CONFIG.heading;
 $.heading.color = APP.Settings.colors.primary || "#666";
 $.text.text = CONFIG.text;
 
-$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#FFF");
 
 if(CONFIG.isChild === true) {
 	$.NavigationBar.showBack();

@@ -1,3 +1,11 @@
+/**
+ * Controller for the YouTube list screen
+ * 
+ * @class Controllers.youtube
+ * @uses Models.youtube
+ * @uses core
+ * @uses utilities
+ */
 var APP = require("core");
 var UTIL = require("utilities");
 var DATE = require("alloy/moment");
@@ -7,6 +15,9 @@ var MODEL = require("models/youtube")();
 var CONFIG = arguments[0];
 var SELECTED;
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "youtube.init | " + JSON.stringify(CONFIG));
 
@@ -29,6 +40,9 @@ $.init = function() {
 	}
 };
 
+/**
+ * Retrieves the username data
+ */
 $.retrieveData = function() {
 	MODEL.setUsername({
 		username: CONFIG.username,
@@ -36,6 +50,9 @@ $.retrieveData = function() {
 	});
 };
 
+/**
+ * Handles the username data return
+ */
 $.handleUsername = function() {
 	APP.log("debug", "youtube.handleUsername");
 
@@ -43,13 +60,19 @@ $.handleUsername = function() {
 		cache: CONFIG.cache,
 		callback: $.handleVideos,
 		error: function() {
-			alert("Unable to connect. Please try again later.");
+			Alloy.createWidget("com.chariti.toast", null, {
+				text: "Unable to connect; try again later",
+				duration: 2000
+			});
 
 			APP.closeLoading();
 		}
 	});
 };
 
+/**
+ * Handles the video data return
+ */
 $.handleVideos = function() {
 	APP.log("debug", "youtube.handleVideos");
 
@@ -57,11 +80,14 @@ $.handleVideos = function() {
 	var rows = [];
 
 	for(var i = 0, x = data.length; i < x; i++) {
+		var time = DATE(data[i].date, "YYYY/MM/DD HH:mm:ss");
+		time = time.isBefore() ? time : DATE();
+
 		var row = Alloy.createController("youtube_row", {
 			id: data[i].id,
 			url: data[i].link,
 			heading: data[i].title,
-			subHeading: STRING.ucfirst(DATE(data[i].date, "YYYY/MM/DD HH:mm:ss").fromNow())
+			subHeading: STRING.ucfirst(time.fromNow())
 		}).getView();
 
 		rows.push(row);
@@ -112,6 +138,16 @@ $.container.addEventListener("click", function(_event) {
 		Ti.Platform.openURL(_event.row.url);
 	}
 });
+
+/**
+ * Handles the pull-to-refresh event
+ * @param {Object} _event The event
+ */
+function ptrRelease(_event) {
+	$.retrieveData(true, function() {
+		_event.hide();
+	});
+}
 
 // Kick off the init
 $.init();

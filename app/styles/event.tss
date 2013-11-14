@@ -1,7 +1,13 @@
+"#Wrapper": {
+	layout: "vertical"
+},
+"#tableWrapper": {
+	top: "0dp"
+},
 "#container": {
-	top: "47dp",
-	backgroundColor: "#EEE",
+	top: "0dp",
+	backgroundColor: "#FFF",
 	rowHeight: "48dp",
-	separatorColor: "#DDD",
+	separatorColor: "#EEE",
 	scrollsToTop: true
 }

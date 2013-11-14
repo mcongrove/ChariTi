@@ -1,7 +1,15 @@
+/**
+ * Version migration class
+ * 
+ * @class migrate
+ * @uses core
+ */
+
 var APP = require("core");
 
 /**
  * Checks versions, determines need for migration
+ * @ignore
  */
 exports.init = function() {
 	Ti.API.debug("MIGRATE.init");

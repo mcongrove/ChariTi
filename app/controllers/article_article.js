@@ -1,3 +1,12 @@
+/**
+ * Controller for the article node screen
+ * 
+ * @class Controllers.article.article
+ * @uses Models.article
+ * @uses core
+ * @uses social
+ * @uses Widgets.com.chariti.detailNavigation
+ */
 var APP = require("core");
 var SOCIAL = require("social");
 var DATE = require("alloy/moment");
@@ -7,6 +16,9 @@ var MODEL = require("models/article")();
 var CONFIG = arguments[0] || {};
 var ACTION = {};
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "article_article.init | " + JSON.stringify(CONFIG));
 
@@ -15,29 +27,34 @@ $.init = function() {
 	$.handleData(MODEL.getArticle(CONFIG.id));
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "article_article.handleData");
 
 	$.handleNavigation();
 
+	var time = DATE(parseInt(_data.date, 10));
+	time = time.isBefore() ? time : DATE();
+
 	$.heading.text = _data.title;
+	$.heading.color = APP.Settings.colors.primary || "#000";
 	$.text.value = _data.description;
-	$.date.text = STRING.ucfirst(DATE(parseInt(_data.date, 10)).fromNow());
-	$.date.color = APP.Settings.colors.primary;
+	$.date.text = STRING.ucfirst(time.fromNow());
 
 	if(_data.image) {
-		var width = APP.Device.width - 60;
-
 		var image = Ti.UI.createImageView({
 			image: _data.image,
-			width: width + "dp",
+			width: APP.Device.width + "dp",
 			height: Ti.UI.SIZE,
 			preventDefaultImage: true
 		});
 
 		$.image.add(image);
 	} else {
-		$.content.remove($.image)
+		$.container.remove($.image);
 	}
 
 	ACTION.url = _data.link;
@@ -59,6 +76,9 @@ $.handleData = function(_data) {
 	});
 };
 
+/**
+ * Handles detail navigation
+ */
 $.handleNavigation = function() {
 	ACTION.next = MODEL.getNextArticle(CONFIG.id);
 	ACTION.previous = MODEL.getPreviousArticle(CONFIG.id);
@@ -70,7 +90,7 @@ $.handleNavigation = function() {
 			APP.addChild("article_article", {
 				id: ACTION.next.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		},
 		up: function(_event) {
 			APP.log("debug", "article_article @previous");
@@ -78,7 +98,7 @@ $.handleNavigation = function() {
 			APP.addChild("article_article", {
 				id: ACTION.previous.id,
 				index: CONFIG.index
-			});
+			}, false, true);
 		}
 	}).getView();
 

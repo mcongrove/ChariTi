@@ -1,180 +1,257 @@
-var CONFIG = arguments[0] || {};
+var args = arguments[0] || {};
 
-var options = null;
-var initted = false;
-var pulling = false;
-var pulled = false;
-var loading = false;
-var offset = 0;
-
-exports.init = function(_params) {
-	if(initted) {
-		return false;
-	}
-
-	options = _.defaults(_params, {
-		msgPull: "Pull down to refresh...",
-		msgRelease: "Release to refresh...",
-		msgUpdating: "Updating...",
-		msgUpdated: "Last Updated: %s %s",
-		backgroundColor: "#e2e7ed",
-		fontColor: "#576c89",
-		image: WPATH("images/arrow.png"),
-		indicator: "PLAIN"
-	});
-
-	$.headerPullView.backgroundColor = options.backgroundColor;
-	$.status.color = options.fontColor;
-	$.updated.color = options.fontColor;
-	$.arrow.image = options.image;
-	
-	switch(options.indicator.toLowerCase()) {
-		case "plain":
-			$.activityIndicator.style = Ti.UI.iPhone.ActivityIndicatorStyle.PLAIN;
-			break;
-		case "dark":
-			$.activityIndicator.style = Ti.UI.iPhone.ActivityIndicatorStyle.DARK;
-			break;
-	}
-
-	options.table.setHeaderPullView($.headerPullView);
-
-	options.table.addEventListener("scroll", scrollListener);
-	options.table.addEventListener("dragEnd", dragEndListener);
+var options = {
+	msgPull: L('ptrPull', 'Pull to refresh...'),
+	msgRelease: L('ptrRelease', 'Release to refresh...'),
+	msgUpdating: L('ptrUpating', 'Updating...'),
+	top: 0
 };
 
-exports.date = function(_date) {
-	if(_date === false) {
-		$.updated.hide();
-	} else {
-		$.updated.show();
+var height = 50,
+	attached = false,
+	hidden = true,
+	pulling = false,
+	pulled = false,
+	loading = false,
+	offset = 0;
 
-		if(_date !== true) {
-			$.updated.text = String.format(options.msgUpdated, String.formatDate(_date, "short"), String.formatTime(_date, "short"));
-		}
-	}
-};
+// delete special args
+delete args.__parentSymbol;
+delete args.__itemTemplate;
+delete args.$model;
 
-exports.show = function(_message) {
-	if(pulled) {
+// set args as options
+setOptions(args);
+
+init();
+
+function show(msg) {
+
+	if (!attached || pulled) {
 		return false;
 	}
 
 	pulled = true;
+	hidden = false;
 
-	$.status.text = _message || options.msgUpdating;
-	
-	$.arrow.hide();
-	$.activityIndicator.show();
+	$.view.ptrText.text = msg || options.msgUpdating;
+	$.view.ptrArrow.opacity = 0;
+	$.view.ptrIndicator.show();
+	$.view.prtCenter.show();
 
-	options.table.setContentInsets(
-		{ top: 80 },
-		{ animated: true }
-	);
+	if (OS_IOS) {
+
+		__parentSymbol.setContentInsets({
+			top: options.top + height
+		}, {
+			animated: true
+		});
+
+	} else {
+		__parentSymbol.animate({
+			top: 0
+		});
+	}
 
 	return true;
-};
+}
 
-exports.hide = function() {
-	if(!pulled) {
+function hide() {
+
+	if (!attached || !pulled) {
 		return false;
 	}
 
-	options.table.setContentInsets(
-		{ top: 0 },
-		{ animated: true }
-	);
+	$.view.ptrIndicator.hide();
+	$.view.ptrArrow.transform = Ti.UI.create2DMatrix();
+	$.view.ptrArrow.opacity = 1;
+	$.view.ptrText.text = options.msgPull;
 
-	$.activityIndicator.hide();
-	$.arrow.transform = Ti.UI.create2DMatrix();
-	$.arrow.show();
-	
-	$.status.text = options.msgPull;
+	if (OS_IOS) {
 
+		__parentSymbol.setContentInsets({
+			top: options.top
+		}, {
+			animated: true,
+			duration: 250
+		});
+
+	} else {
+		__parentSymbol.animate({
+			top: 0 - height,
+			duration: 250
+		});
+	}
+
+	setTimeout(function () {
+		$.view.prtCenter.hide();
+	}, 250);
+
+	hidden = true;
 	pulled = false;
 	loading = false;
-};
 
-exports.trigger = function() {
-	if(loading) {
+	return true;
+}
+
+function refresh() {
+
+	if (!attached || loading) {
 		return false;
 	}
 
 	loading = true;
 
-	exports.show();
+	show();
 
-	options.refresh(finishLoading);
-};
+	$.trigger('release', {
+		hide: hide
+	});
 
-exports.remove = function() {
-	if(!initted) {
+	return true;
+}
+
+function scrollListener(e) {
+
+	if (OS_IOS) {
+
+		if (pulled) {
+			return;
+		}
+
+		offset = e.contentOffset.y;
+
+		if (offset >= 0 - options.top) {
+
+			if (!hidden) {
+				$.view.prtCenter.hide();
+				hidden = true;
+			}
+
+		} else if (hidden) {
+			$.view.prtCenter.show();
+			hidden = false;
+		}
+
+		if (pulling && !loading && offset > 0 - options.top - height) {
+			pulling = false;
+			var unrotate = Ti.UI.create2DMatrix();
+			$.view.ptrArrow.animate({
+				transform: unrotate,
+				duration: 180
+			});
+			$.view.ptrText.text = options.msgPull;
+
+		} else if (!pulling && !loading && offset <= 0 - options.top - height) {
+			pulling = true;
+			var rotate = Ti.UI.create2DMatrix().rotate(180);
+			$.view.ptrArrow.animate({
+				transform: rotate,
+				duration: 180
+			});
+			$.view.ptrText.text = options.msgRelease;
+		}
+
+	} else {
+		offset = e.firstVisibleItem;
+	}
+
+	return;
+}
+
+function dragEndListener(e) {
+
+	if (!pulled && pulling && !loading && offset <= 0 - options.top - height) {
+		pulling = false;
+
+		refresh();
+	}
+
+	return;
+}
+
+function swipeListener(e) {
+
+	if (offset === 0 && e.direction === 'down') {
+		refresh();
+	}
+
+	return;
+}
+
+function setOptions(_properties) {
+	_.extend(options, _properties);
+
+	return;
+}
+
+function attach() {
+
+	if (attached) {
 		return false;
 	}
 
-	options.table.setHeaderPullView(null);
+	if (OS_IOS) {
+		__parentSymbol.headerPullView = $.view.ptr;
+	}
 
-	options.table.removeEventListener("scroll", scrollListener);
-	options.table.removeEventListener("dragEnd", dragEndListener);
+	init();
 
-	options = null;
-	initted = false;
+	return true;
+}
+
+function init() {
+	__parentSymbol.addEventListener('scroll', scrollListener);
+
+	height = $.view.ptr.height;
+	attached = true;
 	pulling = false;
+	pulled = false;
 	loading = false;
-	shown = false;
+
 	offset = 0;
-};
 
-function finishLoading(_update) {
-	if(_update) {
-		exports.date(new Date());
+	if (OS_IOS) {
+		__parentSymbol.addEventListener('dragEnd', dragEndListener);
+
+	} else {
+		__parentSymbol.top = 0 - height;
+
+		__parentSymbol.addEventListener('swipe', swipeListener);
 	}
 
-	exports.hide();
+	$.view.ptrText.text = options.msgPull;
 
-	loading = false;
+	return;
 }
 
-function scrollListener(_event) {
-	offset = _event.contentOffset.y;
+function dettach() {
 
-	if(pulled) {
-		return;
+	if (!attached) {
+		return false;
 	}
 
-	if(pulling && !loading && offset > -80 && offset < 0) {
-		pulling = false;
-		
-		var unrotate = Ti.UI.create2DMatrix();
-		
-		$.arrow.animate({
-			transform: unrotate,
-			duration: 180
-		});
-		
-		$.status.text = options.msgPull;
-	} else if(!pulling && !loading && offset < -80) {
-		pulling = true;
-		
-		var rotate = Ti.UI.create2DMatrix().rotate(180);
-		
-		$.arrow.animate({
-			transform: rotate,
-			duration: 180
-		});
-		
-		$.status.text = options.msgRelease;
+	__parentSymbol.removeEventListener('scroll', scrollListener);
+
+	if (OS_IOS) {
+		__parentSymbol.removeEventListener('dragEnd', dragEndListener);
+
+		__parentSymbol.headerPullView = null;
+
+	} else {
+		__parentSymbol.removeEventListener('swipe', swipeListener);
+
+		hide();
 	}
+
+	attached = false;
+
+	return true;
 }
 
-function dragEndListener(_event) {
-	if(!pulled && pulling && !loading && offset < -80) {
-		pulling = false;
-
-		exports.trigger();
-	}
-}
-
-if(CONFIG.table && CONFIG.refresh) {
-	exports.init(CONFIG);
-}
+exports.setOptions = setOptions;
+exports.show = show;
+exports.hide = hide;
+exports.refresh = refresh;
+exports.dettach = dettach;
+exports.attach = attach;

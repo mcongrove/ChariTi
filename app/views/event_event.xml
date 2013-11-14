@@ -1,14 +1,14 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Event Event">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<ScrollView id="content">
-			<View id="header">
-				<Label id="date" />
-				
-				<Label id="heading" />
-				
-				<Label id="location" />
+		<ScrollView id="container">
+			<Label id="heading" />
+			<Label id="date" />
+			<Label id="location" />
+			
+			<View id="photoContainer">
+				<ImageView id="photo" />
 			</View>
 			
 			<TextArea id="text" />

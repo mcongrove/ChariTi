@@ -1,7 +1,16 @@
+/**
+ * Controller for the donate screen
+ * 
+ * @class Controllers.donate
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "donate.init | " + JSON.stringify(CONFIG));
 
@@ -9,7 +18,7 @@ $.init = function() {
 	$.heading.color = APP.Settings.colors.primary || "#666";
 	$.text.text = CONFIG.text;
 	$.button.backgroundColor = APP.Settings.colors.primary || "#000";
-	$.buttonText.color = APP.Settings.colors.text || "#FFF";
+	$.buttonText.color = APP.Settings.colors.theme == "dark" ? "#FFF" : "#000";
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 

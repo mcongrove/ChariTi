@@ -1,3 +1,11 @@
+/**
+ * Urban Airship push notification class
+ * 
+ * @class push.ua
+ * @uses core
+ * @uses push
+ * @uses Modules.ti.urbanairship
+ */
 var APP = require("core");
 var PUSH = require("push");
 
@@ -29,7 +37,7 @@ exports.init = function() {
 		success: function(_data) {
 			APP.log("debug", "UA.init @success");
 			APP.log("trace", _data.deviceToken);
-			
+
 			PUSH.deviceToken = _data.deviceToken;
 
 			UA.registerDevice(PUSH.deviceToken, {
@@ -57,7 +65,7 @@ exports.init = function() {
 			APP.log("debug", "UA.init @callback");
 			APP.log("trace", JSON.stringify(_data));
 
-			UA.handleNotification(_data.data);
+			PUSH.pushRecieved(_data.data);
 
 			if(_data.data.tab) {
 				var tabIndex = parseInt(_data.data.tab, 10) - 1;

@@ -1,64 +1,66 @@
+/**
+ * The tab bar widget
+ * 
+ * @class Widgets.com.chariti.tabs
+ */
+
+/**
+ * Initializes the tab bar
+ * @param {Object} _params
+ * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
+ */
 $.init = function(_params) {
-	$.tabs			= [];
-	$.excess		= false;
-	$.excessLength	= 5;
-	$.moreOpen		= false;
-	$.width			= 0;
-	$.display		= {
-		width:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
-		height:	Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
-		dpi:	Ti.Platform.displayCaps.dpi
+	$.tabs = [];
+	$.excess = false;
+	$.excessLength = 5;
+	$.moreOpen = false;
+	$.width = 0;
+	$.display = {
+		width: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformHeight : Ti.Platform.displayCaps.platformWidth,
+		height: Ti.Platform.displayCaps.platformWidth > Ti.Platform.displayCaps.platformHeight ? Ti.Platform.displayCaps.platformWidth : Ti.Platform.displayCaps.platformHeight,
+		dpi: Ti.Platform.displayCaps.dpi
 	};
-	
+
 	if(OS_ANDROID) {
-		$.display.width		= ($.display.width / ($.display.dpi / 160));
-		$.display.height	= ($.display.height / ($.display.dpi / 160));
+		$.display.width = ($.display.width / ($.display.dpi / 160));
+		$.display.height = ($.display.height / ($.display.dpi / 160));
 	}
-	
+
 	if(Alloy.isTablet) {
 		$.excessLength = Math.floor($.display.width / 70);
 	}
-	
+
 	if(_params.tabs.length > $.excessLength) {
 		$.excess = true;
 	}
-	
-	$.width	= $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.tabs.length);
-	
-	$.TabGroup.backgroundColor			= _params.colors.primary;
-	$.TabContainerMore.backgroundColor	= _params.colors.primary;
-	$.Indicator.backgroundColor			= _params.colors.secondary;
-	$.IndicatorMore.backgroundColor		= _params.colors.secondary;
-	
-	$.IndicatorContainer.width		= $.display.width + "dp";
-	$.Indicator.width				= ($.width - 1) + "dp";
-	$.IndicatorMore.width			= $.width + "dp";
-	$.TabContainer.width			= $.display.width + "dp";
-	$.TabGroupMore.width			= $.display.width + "dp";
-	$.TabContainerMore.width		= ($.width + 1) + "dp";
-	
+
+	$.width = $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.tabs.length);
+
+	$.TabGroup.backgroundColor = _params.colors.primary;
+	$.TabContainerMore.backgroundColor = _params.colors.primary;
+	$.Indicator.backgroundColor = _params.colors.secondary;
+	$.IndicatorMore.backgroundColor = _params.colors.secondary;
+
+	$.IndicatorContainer.width = $.display.width + "dp";
+	$.Indicator.width = $.width + "dp";
+	$.IndicatorMore.width = $.width + "dp";
+	$.TabContainer.width = $.display.width + "dp";
+	$.TabGroupMore.width = $.display.width + "dp";
+	$.TabContainerMore.width = $.width + "dp";
+
 	for(var i = 0; i < _params.tabs.length; i++) {
 		if($.excess && i == ($.excessLength - 1)) {
-			$.addMoreTab(_params);
+			addMoreTab(_params);
 		}
-		
+
 		var tab = Ti.UI.createView({
 			id: _params.tabs[i].id,
 			width: $.width + "dp",
 			height: "60dp",
-			top: "0dp",
+			bottom: "0dp",
 			left: "0dp"
 		});
 
-		var icon = Ti.UI.createImageView({
-			image: _params.tabs[i].image,
-			width: "32dp",
-			height: "32dp",
-			top: "7dp",
-			touchEnabled: false,
-			preventDefaultImage: true
-		});
-		
 		var label = Ti.UI.createLabel({
 			text: _params.tabs[i].title,
 			top: "42dp",
@@ -67,59 +69,41 @@ $.init = function(_params) {
 			width: Ti.UI.FILL,
 			height: "15dp",
 			font: {
-				fontSize: "11dp",
-				fontWeight: "bold"
+				fontSize: "10dp",
+				fontFamily: "HelveticaNeue"
 			},
-			shadowColor: "#000",
-			shadowOffset: {
-				x: "0dp",
-				y: "1dp"
-			},
-			color: _params.colors.text,
+			color: _params.colors.theme == "dark" ? "#FFF" : "#000",
 			textAlign: "center",
 			touchEnabled: false
 		});
 
-		tab.add(icon);
-		tab.add(label);
-		
-		if($.excess && i >= ($.excessLength - 1)) {
-			tab.backgroundImage = WPATH("images/overlay.png");
-			tab.width	= ($.width + 1) + "dp";
-			label.left	= "6dp";
-			
-			var border = Ti.UI.createImageView({
-				width: "1dp",
-				height: "59dp",
-				top: "1dp",
-				left: "0dp",
-				image: WPATH("images/border.png"),
+		if(_params.tabs[i].image) {
+			var icon = Ti.UI.createImageView({
+				image: _params.tabs[i].image,
+				width: "32dp",
+				height: "32dp",
+				top: "7dp",
+				touchEnabled: false,
 				preventDefaultImage: true
 			});
-			
-			tab.add(border);
-			
+
+			tab.add(icon);
+		}
+
+		tab.add(label);
+
+		if($.excess && i >= ($.excessLength - 1)) {
+			tab.width = $.width + "dp";
+			label.left = "5dp";
+
 			$.tabs.push(tab);
-			
+
 			$.TabsMore.add(tab);
 		} else {
-			if((i + 1) < _params.tabs.length) {
-				var border = Ti.UI.createImageView({
-					width: "1dp",
-					height: "59dp",
-					top: "1dp",
-					right: "0dp",
-					image: WPATH("images/border.png"),
-					preventDefaultImage: true
-				});
-				
-				tab.add(border);
-			}
-		
 			$.tabs.push(tab);
 		}
 	}
-	
+
 	for(var i = 0, z = $.excessLength; i < z; i++) {
 		if($.tabs[i]) {
 			$.Tabs.add($.tabs[i]);
@@ -127,20 +111,25 @@ $.init = function(_params) {
 	}
 };
 
-$.addMoreTab = function(_params) {
+/**
+ * Adds the 'more' tab if necessary
+ * @param {Object} _params
+ * @private
+ */
+function addMoreTab(_params) {
 	var tab = Ti.UI.createView({
 		width: $.width + "dp"
 	});
 
 	var icon = Ti.UI.createImageView({
-		image: "/icons/more.png",
+		image: _params.colors.theme == "dark" ? "/icons/white/more.png" : "/icons/black/more.png",
 		width: "32dp",
 		height: "32dp",
 		top: "7dp",
 		touchEnabled: false,
 		preventDefaultImage: true
 	});
-	
+
 	var label = Ti.UI.createLabel({
 		text: "More",
 		top: "43dp",
@@ -149,72 +138,83 @@ $.addMoreTab = function(_params) {
 		width: Ti.UI.FILL,
 		height: "13dp",
 		font: {
-			fontSize: "11dp",
-			fontWeight: "bold"
+			fontSize: "10dp",
+			fontFamily: "HelveticaNeue"
 		},
-		shadowColor: "#000",
-		shadowOffset: {
-			x: "0dp",
-			y: "1dp"
-		},
-		color: _params.colors.text,
+		color: _params.colors.theme == "dark" ? "#FFF" : "#000",
 		textAlign: "center",
 		touchEnabled: false
 	});
 
 	tab.add(icon);
 	tab.add(label);
-	
-	tab.addEventListener("click", $.moreEvent);
-	
+
+	tab.addEventListener("click", moreEvent);
+
 	$.tabs.push(tab);
 };
 
+/**
+ * Clears all items from the tab bar
+ */
 $.clear = function() {
-	var children		= $.Tabs.children;
-	var childrenMore	= $.TabsMore.children;
-	
+	var children = $.Tabs.children;
+	var childrenMore = $.TabsMore.children;
+
 	for(var i = 0; i < children.length; i++) {
 		$.Tabs.remove(children[i]);
 	}
-	
+
 	for(var i = 0; i < childrenMore.length; i++) {
 		$.TabsMore.remove(childrenMore[i]);
 	}
 };
 
+/**
+ * Sets the indexed item as active
+ * @param {Object} _index The index of the item to show as active
+ */
 $.setIndex = function(_index) {
 	if($.excess && _index > ($.excessLength - 2)) {
-		_moreIndex	= _index - ($.excessLength - 1);
-		_index		= ($.excessLength - 1);
-		
+		_moreIndex = _index - ($.excessLength - 1);
+		_index = ($.excessLength - 1);
+
 		$.IndicatorMore.visible = true;
-		$.IndicatorMore.top		= ((_moreIndex * 60)) + "dp";
+		$.IndicatorMore.top = ((_moreIndex * 60)) + "dp";
 	} else {
 		$.IndicatorMore.visible = false;
 	}
-	
-	$.Indicator.left	= (_index * $.width) + "dp";
-	$.Indicator.width	= $.width + "dp";
-	
-	$.moreClose();
+
+	$.Indicator.left = (_index * $.width) + "dp";
+	$.Indicator.width = $.width + "dp";
+
+	moreClose();
 };
 
-$.moreEvent = function(_event) {
-	 if($.moreOpen) {
-	 	$.Wrapper.height = "60dp";
-	 	
-	 	$.moreOpen = false;
-	 } else {
-	 	$.moreOpen = true;
-	 	
-	 	$.Wrapper.height = Ti.UI.SIZE;
-	 }
+/**
+ * Handles the click event on the 'more' tab
+ * @param {Object} _event The event
+ * @private
+ */
+function moreEvent(_event) {
+	if($.moreOpen) {
+		$.Wrapper.height = "60dp";
+
+		$.moreOpen = false;
+	} else {
+		$.moreOpen = true;
+
+		$.Wrapper.height = Ti.UI.SIZE;
+	}
 };
 
-$.moreClose = function() {
-	$.Wrapper.height	= "60dp";
-	$.moreOpen			= false;
+/**
+ * Closes the 'more' tab
+ * @private
+ */
+function moreClose() {
+	$.Wrapper.height = "60dp";
+	$.moreOpen = false;
 };
 
 $.Wrapper.addEventListener("click", function(_event) {

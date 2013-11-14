@@ -1,3 +1,10 @@
+/**
+ * Controller for the Flickr photo screen
+ * 
+ * @class Controllers.flickr.photo
+ * @uses Models.flickr
+ * @uses core
+ */
 var APP = require("core");
 var MODEL = require("models/flickr")();
 
@@ -8,8 +15,18 @@ var NEXT = null;
 var metaVisible = true;
 
 $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
-$.NavigationBar.showBack();
+$.NavigationBar.showBack({
+	callback: function(_event) {
+		APP.removeChild();
+		APP.SlideMenuEngaged = true;
+	}
+});
 
+APP.SlideMenuEngaged = false;
+
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "flickr_photo.init | " + JSON.stringify(CONFIG));
 
@@ -19,6 +36,10 @@ $.init = function() {
 	$.handleData(MODEL.getPhoto(CONFIG.id));
 };
 
+/**
+ * Handles the data return
+ * @param {Object} _data The returned data
+ */
 $.handleData = function(_data) {
 	APP.log("debug", "flickr_photo.handleData");
 
@@ -27,21 +48,35 @@ $.handleData = function(_data) {
 
 	$.image.image = _data.url_m;
 	$.title.text = _data.title ? _data.title : "";
-	$.description.text = _data.description ? _data.description.substring(0, 150) : "";
+
+	if(_data.description) {
+		$.description.text = _data.description.substring(0, 150);
+	} else {
+		$.meta.remove($.description);
+		$.title.bottom = "15dp";
+	}
 };
 
 // Event listeners
-$.content.addEventListener("singletap", function(_event) {
+$.container.addEventListener("singletap", function(_event) {
 	if(metaVisible) {
 		metaVisible = false;
-		$.meta.visible = false;
+
+		$.meta.animate({
+			opacity: 0,
+			duration: 500
+		});
 	} else {
 		metaVisible = true;
-		$.meta.visible = true;
+
+		$.meta.animate({
+			opacity: 1,
+			duration: 500
+		});
 	}
 });
 
-$.content.addEventListener("swipe", function(_event) {
+$.container.addEventListener("swipe", function(_event) {
 	if(_event.direction == "right") {
 		if(PREVIOUS) {
 			APP.log("debug", "flickr_photo @previous");
@@ -49,8 +84,6 @@ $.content.addEventListener("swipe", function(_event) {
 			CONFIG.id = PREVIOUS.id;
 			PREVIOUS = null;
 			NEXT = null;
-			metaVisible = true;
-			$.meta.visible = true;
 
 			$.init();
 		}
@@ -61,8 +94,6 @@ $.content.addEventListener("swipe", function(_event) {
 			CONFIG.id = NEXT.id;
 			PREVIOUS = null;
 			NEXT = null;
-			metaVisible = true;
-			$.meta.visible = true;
 
 			$.init();
 		}

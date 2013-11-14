@@ -5,8 +5,14 @@
 	height: "47dp",
 	backgroundColor: "#000"
 },
+"#border": {
+	bottom: "0dp",
+	height: "1dp",
+	width: Ti.UI.FILL,
+	backgroundColor: "#000",
+	opacity: 0.2
+},
 "#overlay": {
-	backgroundImage: WPATH("images/overlay.png"),
 	height: Ti.UI.FILL,
 	width: Ti.UI.FILL,
 	left: "0dp",
@@ -16,8 +22,7 @@
 	top: "0dp",
 	left: "0dp",
 	width: "48dp",
-	height: "47dp",
-	backgroundImage: WPATH("images/overlay_left.png")
+	height: "47dp"
 },
 "#leftImage": {
 	top: "9dp",
@@ -29,23 +34,33 @@
 	top: "0dp",
 	left: "0dp",
 	width: "48dp",
-	height: "47dp",
-	backgroundImage: WPATH("images/overlay_left.png")
+	height: "47dp"
 },
 "#backImage": {
 	top: "9dp",
 	left: "9dp",
 	width: "28dp",
 	height: "28dp",
-	image: WPATH("images/back.png"),
+	preventDefaultImage: true
+},
+"#next": {
+	top: "0dp",
+	right: "0dp",
+	width: "48dp",
+	height: "47dp"
+},
+"#nextImage": {
+	top: "9dp",
+	right: "9dp",
+	width: "28dp",
+	height: "28dp",
 	preventDefaultImage: true
 },
 "#right": {
 	top: "0dp",
 	right: "0dp",
 	width: "48dp",
-	height: "47dp",
-	backgroundImage: WPATH("images/overlay_right.png")
+	height: "47dp"
 },
 "#rightImage": {
 	top: "9dp",

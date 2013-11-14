@@ -1,0 +1,11 @@
+{
+	"--title": "ChariTi",
+	"--output": "./documentation",
+	"--touch-examples": true,
+	"--no-source": true,
+	"--welcome": "./index.html",
+	"--guides": "./guides.json",
+	"--tags": "./customTags/customTags.rb",
+	"--ignore-global": true	,
+	"--head-html": "<link rel=\"stylesheet\" href=\"../assets/stylesheet.css\" type=\"text/css\" />"
+}

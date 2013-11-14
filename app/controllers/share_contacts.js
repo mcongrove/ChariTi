@@ -1,8 +1,17 @@
+/**
+ * Controller for the share contacts list screen
+ * 
+ * @class Controllers.share.contacts
+ * @uses core
+ */
 var APP = require("core");
 
 var CONFIG = arguments[0];
 var SELECTED = [];
 
+/**
+ * Initializes the controller
+ */
 $.init = function() {
 	APP.log("debug", "share_contacts.init | " + JSON.stringify(CONFIG));
 
@@ -23,21 +32,23 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
 
 	if(APP.Device.isHandheld) {
-		$.NavigationBar.showBack();
+		$.NavigationBar.showBack({
+			callback: function(_event) {
+				APP.removeAllChildren();
+			}
+		});
 	}
 
-	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu();
-	}
-
-	$.NavigationBar.showRight({
-		image: "/images/next.png",
+	$.NavigationBar.showNext({
 		callback: function() {
 			$.createEmail(SELECTED);
 		}
 	});
 };
 
+/**
+ * Loads the contacts data
+ */
 $.loadData = function() {
 	APP.log("debug", "share_contacts.loadData");
 
@@ -74,11 +85,14 @@ $.loadData = function() {
 		rows.push(row);
 	}
 
-	$.content.setData(rows);
+	$.container.setData(rows);
 
-	$.content.index = index;
+	$.container.index = index;
 };
 
+/**
+ * Retrieves the contacts
+ */
 $.getContacts = function() {
 	APP.log("debug", "share_contacts.getAddresses");
 
@@ -112,6 +126,10 @@ $.getContacts = function() {
 	return contacts;
 };
 
+/**
+ * Retrieves the contact e-mail addresses
+ * @param {Object} _contacts
+ */
 $.getEmails = function(_contacts) {
 	var emails = [];
 
@@ -129,27 +147,38 @@ $.getEmails = function(_contacts) {
 	return emails;
 };
 
+/**
+ * Creates an e-mail dialog
+ * @param {Object} _addresses The selected e-mail recipients
+ */
 $.createEmail = function(_addresses) {
 	APP.log("debug", "share_contacts.createEmail");
 
-	var email = Ti.UI.createEmailDialog();
+	var email = Ti.UI.createEmailDialog({
+		barColor: APP.Settings.colors.primary || "#000"
+	});
 
 	if(_addresses) {
 		email.bccRecipients = _addresses;
 	}
 
 	email.html = true;
+	email.subject = CONFIG.title;
 	email.messageBody = CONFIG.text;
 
 	email.addEventListener("complete", function(_event) {
-		APP.removeAllChildren();
+		if(APP.Device.isTablet) {
+			APP.removeChild();
+		} else {
+			APP.removeAllChildren();
+		}
 	});
 
 	email.open();
 };
 
 // Event listeners
-$.content.addEventListener("click", function(_event) {
+$.container.addEventListener("click", function(_event) {
 	APP.log("debug", "share_contacts @click " + _event.row.id);
 
 	if(SELECTED.indexOf(_event.row.id) === -1) {

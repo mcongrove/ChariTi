@@ -1,7 +1,11 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Article">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
 		
-		<TableView id="container" />
+		<View id="tableWrapper">
+			<TableView id="container">
+				<Widget id="ptr" src="nl.fokkezb.pullToRefresh" onRelease="ptrRelease" />
+			</TableView>
+		</View>
 	</View>
 </Alloy>

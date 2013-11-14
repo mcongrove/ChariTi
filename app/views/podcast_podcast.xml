@@ -1,28 +1,32 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" name="Podcast Podcast">
 		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
 		
-		<View id="content">
-			<View id="meta">
-				<Label id="title" />
+		<View id="container">
+			<View id="artworkContainer">
+				<ImageView id="artwork" />
 			</View>
 			
-			<View id="artworkWrapper">
-				<ImageView id="artwork" />
+			<View id="meta">
+				<Label id="time" />
+				
+				<View id="track">
+					<View id="position" />
+				</View>
+				
+				<Label id="duration" />
+				<Label id="title" />
 				
 				<View id="controls">
 					<ImageView id="previous" image="/images/audioPrevious.png" />
 					<ImageView id="play" image="/images/audioPlay.png" />
 					<ImageView id="pause" image="/images/audioPause.png" />
 					<ImageView id="next" image="/images/audioNext.png" />
+					<ImageView id="download" image="/images/audioDownload.png" />
 				</View>
 			</View>
-			
-			<View id="track">
-				<Label id="time" />
-				
-				<View id="position" />
-			</View>
 		</View>
+		
+		<View id="playerContainer" />
 	</View>
 </Alloy>

@@ -1,7 +1,13 @@
 /**
+ * Utility functions class
+ * 
+ * @class utilities
+ */
+
+/**
  * Checks to see if an item in the cache is stale or fresh
- * @param {String} [_url] The URL of the file we're checking
- * @param {Integer} [_time] The time, in minutes, to consider 'warm' in the cache
+ * @param {String} _url The URL of the file we're checking
+ * @param {Number} _time The time, in minutes, to consider 'warm' in the cache
  */
 exports.isStale = function(_url, _time) {
 	var db = Ti.Database.open("ChariTi");
@@ -32,7 +38,7 @@ exports.isStale = function(_url, _time) {
 
 /**
  * Returns last updated time for an item in the cache
- * @param {String} [_url] The URL of the file we're checking
+ * @param {String} _url The URL of the file we're checking
  */
 exports.lastUpdate = function(_url) {
 	var db = Ti.Database.open("ChariTi");
@@ -57,8 +63,119 @@ exports.lastUpdate = function(_url) {
 };
 
 /**
+ * Checks to see if a file exists
+ * @param {String} _path The path of the file to check
+ */
+exports.fileExists = function(_path) {
+	var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, _path);
+
+	if(file.exists()) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+/**
+ * Adds thousands separators to a number
+ * @param {Number} _number The number to perform the action on
+ */
+exports.formatNumber = function(_number) {
+	_number = _number + "";
+
+	x = _number.split(".");
+	x1 = x[0];
+	x2 = x.length > 1 ? "." + x[1] : "";
+
+	var expression = /(\d+)(\d{3})/;
+
+	while(expression.test(x1)) {
+		x1 = x1.replace(expression, "$1" + "," + "$2");
+	}
+
+	return x1 + x2;
+};
+
+/**
+ * Converts a hex color value to HSB
+ * @param {String} _hex The hex color to convert
+ */
+exports.hexToHsb = function(_hex) {
+	var result;
+
+	if(_hex.length < 6) {
+		result = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(_hex);
+	} else {
+		result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(_hex);
+	}
+
+	var hsb = {
+		h: 0,
+		s: 0,
+		b: 0
+	};
+
+	if(!result) {
+		return hsb;
+	}
+
+	if(result[1].length == 1) {
+		result[1] = result[1] + result[1];
+		result[2] = result[2] + result[2];
+		result[3] = result[3] + result[3];
+	}
+
+	var rgb = {
+		r: parseInt(result[1], 16),
+		g: parseInt(result[2], 16),
+		b: parseInt(result[3], 16)
+	};
+
+	rgb.r /= 255;
+	rgb.g /= 255;
+	rgb.b /= 255;
+
+	var minVal = Math.min(rgb.r, rgb.g, rgb.b),
+		maxVal = Math.max(rgb.r, rgb.g, rgb.b),
+		delta = maxVal - minVal,
+		del_r, del_g, del_b;
+
+	hsb.b = maxVal;
+
+	if(delta !== 0) {
+		hsb.s = delta / maxVal;
+
+		del_r = (((maxVal - rgb.r) / 6) + (delta / 2)) / delta;
+		del_g = (((maxVal - rgb.g) / 6) + (delta / 2)) / delta;
+		del_b = (((maxVal - rgb.b) / 6) + (delta / 2)) / delta;
+
+		if(rgb.r === maxVal) {
+			hsb.h = del_b - del_g;
+		} else if(rgb.g === maxVal) {
+			hsb.h = (1 / 3) + del_r - del_b;
+		} else if(rgb.b === maxVal) {
+			hsb.h = (2 / 3) + del_g - del_r;
+		}
+
+		if(hsb.h < 0) {
+			hsb.h += 1;
+		}
+
+		if(hsb.h > 1) {
+			hsb.h -= 1;
+		}
+	}
+
+	hsb.h = Math.round(hsb.h * 360);
+	hsb.s = Math.round(hsb.s * 100);
+	hsb.b = Math.round(hsb.b * 100);
+
+	return hsb;
+};
+
+/**
  * Escapes a string for SQL insertion
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.escapeString = function(_string) {
 	if(typeof _string !== "string") {
@@ -70,7 +187,7 @@ exports.escapeString = function(_string) {
 
 /**
  * Removes HTML entities, replaces breaks/paragraphs with newline, strips HTML, trims
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.cleanString = function(_string) {
 	if(typeof _string !== "string") {
@@ -93,7 +210,7 @@ exports.cleanString = function(_string) {
 
 /**
  * Combination of clean and escape string
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.cleanEscapeString = function(_string) {
 	_string = exports.cleanString(_string);
@@ -118,7 +235,7 @@ exports.parseUrl = function(_key, _url) {
 
 /**
  * Cleans up nasty XML
- * @param {String} [_string] The XML string to perform the action on
+ * @param {String} _string The XML string to perform the action on
  */
 exports.xmlNormalize = function(_string) {
 	_string = _string.replace(/&nbsp;*/ig, " ");
@@ -133,21 +250,39 @@ exports.xmlNormalize = function(_string) {
 };
 
 /**
+ * Converts a hex unicode character into a normal character
+ */
+String.fromCharCodePoint = function() {
+	var codeunits = [];
+
+	for(var i = 0; i < arguments.length; i++) {
+		var c = arguments[i];
+
+		if(arguments[i] < 0x10000) {
+			codeunits.push(arguments[i]);
+		} else if(arguments[i] < 0x110000) {
+			c -= 0x10000;
+			codeunits.push((c >> 10 & 0x3FF) + 0xD800);
+			codeunits.push((c & 0x3FF) + 0xDC00);
+		}
+	}
+
+	return String.fromCharCode.apply(String, codeunits);
+};
+
+/**
  * Decodes HTML entities
- * @param {String} [_string] The string to perform the action on
+ * @param {String} _string The string to perform the action on
  */
 exports.htmlDecode = function(_string) {
 	var tmp_str = _string.toString();
 	var hash_map = exports.htmlTranslationTable();
-	var results = tmp_str.match(/&#\d*;/ig);
 
-	if(results) {
-		for(var i = 0, x = results.length; i < x; i++) {
-			var code = parseInt(results[i].replace("&#", "").replace(";", ""), 10);
-
-			hash_map[results[i]] = code;
-		}
-	}
+	tmp_str = tmp_str.replace(/&#(\d+);/g, function(_, n) {
+		return String.fromCharCodePoint(parseInt(n, 10));
+	}).replace(/&#x([0-9a-f]+);/gi, function(_, n) {
+		return String.fromCharCodePoint(parseInt(n, 16));
+	});
 
 	for(var entity in hash_map) {
 		var symbol = String.fromCharCode(hash_map[entity]);
@@ -426,24 +561,4 @@ exports.htmlTranslationTable = function() {
 	};
 
 	return entities;
-};
-
-/**
- * Adds thousands separators to a number
- * @param {Integer} [_number] The number to perform the action on
- */
-exports.formatNumber = function(_number) {
-	_number = _number + "";
-
-	x = _number.split(".");
-	x1 = x[0];
-	x2 = x.length > 1 ? "." + x[1] : "";
-
-	var expression = /(\d+)(\d{3})/;
-
-	while(expression.test(x1)) {
-		x1 = x1.replace(expression, "$1" + "," + "$2");
-	}
-
-	return x1 + x2;
 };

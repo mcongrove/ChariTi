@@ -1,11 +1,56 @@
+/**
+ * ACS push notification class
+ * 
+ * @class push.acs
+ * @uses core
+ * @uses push
+ * @uses Modules.ti.cloudpush
+ */
 var APP = require("core");
 var PUSH = require("push");
 
-exports.init = function() {
-	APP.log("debug", "ACS.init");
+if(OS_ANDROID) {
+	var CloudPush = require('ti.cloudpush');
 
-	// We have to login into ACS first.
-	require("user").init(function() {
+	/**
+	 * Registers an Android device for push notifications
+	 * @param {Function} _callback The function to run after registration is complete
+	 * @platform Android
+	 */
+	var registerAndroid = function(_callback) {
+		CloudPush.retrieveDeviceToken({
+			success: function(_data) {
+				APP.log("debug", "ACS.registerAndroid @success");
+				APP.log("trace", _data.deviceToken);
+
+				PUSH.deviceToken = _data.deviceToken;
+
+				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
+
+				CloudPush.addEventListener('callback', function(evt) {
+					PUSH.pushRecieved(evt);
+					APP.log(JSON.stringify(evt));
+				});
+
+				_callback();
+			},
+			error: function(_data) {
+				APP.log("debug", "ACS.registerAndroid @error");
+				APP.log("trace", JSON.stringify(_data));
+			}
+		});
+	};
+}
+
+if(OS_IOS) {
+	/**
+	 * Registers an iOS device for push notifications
+	 * @param {Function} _callback The function to run after registration is complete
+	 * @platform iOS
+	 */
+	var registeriOS = function(_callback) {
+		APP.log("debug", "PUSH.registeriOS");
+
 		Ti.Network.registerForPushNotifications({
 			types: [
                 Ti.Network.NOTIFICATION_TYPE_BADGE,
@@ -13,62 +58,37 @@ exports.init = function() {
                 Ti.Network.NOTIFICATION_TYPE_SOUND
             ],
 			success: function(_data) {
-				APP.log("debug", "ACS.init @success");
+				APP.log("debug", "ACS.registeriOS @success");
 				APP.log("trace", _data.deviceToken);
-				
+
 				PUSH.deviceToken = _data.deviceToken;
-				
-				exports.subscribe({
-					channel: "all"
-				});
+				Ti.App.Properties.setString("PUSH_DEVICETOKEN", _data.deviceToken);
+
+				_callback();
 			},
 			error: function(_data) {
-				APP.log("debug", "ACS.init @error");
+				APP.log("debug", "ACS.registeriOS @error");
 				APP.log("trace", JSON.stringify(_data));
 			},
 			callback: function(_data) {
-				exports.pushRecieved(_data.data);
+				PUSH.pushRecieved(_data);
+
+				APP.log(JSON.stringify(_data));
 			}
 		});
-	});
-};
+	};
+}
 
-exports.subscribe = function(_params) {
-	APP.log("debug", "ACS.subscribe");
+/**
+ * Registers a device for push notifications
+ * @param {Function} _callback The function to run after registration is complete
+ */
+exports.registerDevice = function(_callback) {
+	APP.log("debug", "ACS.registerDevice");
 
-	if(!PUSH.deviceToken || !_params.channel) {
-		APP.log("error", "ACS.subscribe - Missing required parameter");
+	if(OS_IOS) {
+		registeriOS(_callback);
+	} else if(OS_ANDROID) {
+		registerAndroid(_callback);
 	}
-
-	APP.ACS.PushNotifications.subscribe({
-		channel: _params.channel,
-		device_token: PUSH.deviceToken
-	}, function(_event) {
-		if(_event.success) {
-			APP.log("debug", "ACS.subscribe @success");
-		} else {
-			APP.log("error", "ACS.subscribe @failure");
-		}
-	});
-
-};
-
-exports.pushRecieved = function(_data) {
-	APP.log("debug", "ACS.pushReceived");
-	APP.log("trace", JSON.stringify(_data));
-
-	var dialog = Titanium.UI.createAlertDialog({
-		title: "Push Notification",
-		message: _data.alert,
-		buttonNames: [ "OK", "Cancel" ],
-		cancel: 1
-	});
-
-	dialog.show();
-
-	dialog.addEventListener("click", function(_event) {
-		if(_event.index === 0) {
-			// _data.openPage specifies which page to open
-		}
-	});
 };

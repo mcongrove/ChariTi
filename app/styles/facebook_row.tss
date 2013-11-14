@@ -1,53 +1,39 @@
 "#Wrapper": {
 	height: Ti.UI.SIZE,
-	selectedBackgroundColor: "#DDD",
-	backgroundGradient: {
-		type: "linear",
-		colors: [
-			"#F8F8F8",
-			"#ECECEC"
-		],
-		startPoint: {
-			x: 0,
-			y: 0
-		},
-		endPoint: {
-			x: 0,
-			y: "100%"
-		},
-		backFillStart: true
-	}
+	selectedBackgroundColor: "#EEE",
+	backgroundColor: "#FFF"
 },
-"#content": {
+"#container": {
 	height: Ti.UI.SIZE,
 	layout: "vertical",
 	top: "0dp",
 	left: "0dp"
 },
 "#subHeading": {
-	left: "10dp",
-	right: "47dp",
-	top: "10dp",
-	height: "14dp",
-	font: {
-		fontSize: "12dp",
-		fontWeight: "normal"
-	},
-	color: "#777"
-},
-"#heading": {
-	bottom: "10dp",
-	left: "10dp",
-	right: "47dp",
+	left: "15dp",
+	right: "38dp",
+	top: "15dp",
 	height: Ti.UI.SIZE,
 	font: {
-		fontSize: "16dp",
-		fontWeight: "bold"
+		fontSize: "12dp",
+		fontFamily: "HelveticaNeue"
 	},
-	color: "#333"
+	color: "#000"
+},
+"#heading": {
+	top: "5dp",
+	bottom: "15dp",
+	left: "15dp",
+	right: "38dp",
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: "18dp",
+		fontFamily: "HelveticaNeue-Light"
+	},
+	color: "#000"
 },
 "#arrow": {
-	width: "27dp",
-	height: "27dp",
-	right: "10dp"
+	width: "8dp",
+	height: "13dp",
+	right: "15dp"
 }

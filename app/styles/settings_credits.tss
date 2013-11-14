@@ -1,6 +1,9 @@
-"#content": {
-	top: "47dp",
-	backgroundColor: "#EEE",
+"#Wrapper": {
+	layout: "vertical"
+},
+"#container": {
+	top: "0dp",
+	backgroundColor: "#FFF",
 	contentWidth: "auto",
 	contentHeight: "auto",
 	layout: "vertical"
@@ -12,9 +15,9 @@
 	height: Ti.UI.SIZE,
 	font: {
 		fontSize: "14dp",
-		fontWeight: "normal"
+		fontFamily: "HelveticaNeue"
 	},
-	color: "#666"
+	color: "#000"
 },
 ".last": {
 	bottom: "15dp"
