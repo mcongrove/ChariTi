@@ -1,0 +1,8 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="Modal">
+			<View id="Background" />
+			<Label id="textLabel" />
+		</View>
+	</View>
+</Alloy>

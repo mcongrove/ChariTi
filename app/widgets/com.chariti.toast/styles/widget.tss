@@ -1,0 +1,34 @@
+"#Wrapper": {
+	width: Ti.UI.FILL,
+	height: "70dp",
+	bottom: "0dp"
+},
+"#Background": {
+	backgroundColor: "#000",
+	opacity: 0.95,
+	left: "20dp",
+	right: "20dp",
+	top: "0dp",
+	height: "30dp",
+	borderRadius: 5
+},
+"#Modal": {
+	left: "20dp",
+	right: "20dp",
+	top: "70dp",
+	height: "30dp",
+	borderRadius: 5,
+	backgroundColor: "transparent"
+},
+"#textLabel": {
+	top: "0dp",
+	left: "0dp",
+	right: "0dp",
+	height: "30dp",
+	color: "#FFF",
+	textAlign: "center",
+	font: {
+		fontSize: 13,
+		fontWeight: "bold"
+	}
+}
