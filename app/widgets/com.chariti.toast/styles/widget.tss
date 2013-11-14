@@ -3,22 +3,12 @@
 	height: "70dp",
 	bottom: "0dp"
 },
-"#Background": {
-	backgroundColor: "#000",
-	opacity: 0.95,
-	left: "20dp",
-	right: "20dp",
-	top: "0dp",
-	height: "30dp",
-	borderRadius: 5
-},
 "#Modal": {
-	left: "20dp",
-	right: "20dp",
 	top: "70dp",
+	width: "280dp",
 	height: "30dp",
 	borderRadius: 5,
-	backgroundColor: "transparent"
+	backgroundColor: "#000"
 },
 "#textLabel": {
 	top: "0dp",

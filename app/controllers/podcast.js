@@ -56,7 +56,10 @@ $.retrieveData = function(_force, _callback) {
 			}
 		},
 		error: function() {
-			alert("Unable to connect. Please try again later.");
+			Alloy.createWidget("com.chariti.toast", null, {
+				text: "Unable to connect; try again later",
+				duration: 2000
+			});
 
 			APP.closeLoading();
 

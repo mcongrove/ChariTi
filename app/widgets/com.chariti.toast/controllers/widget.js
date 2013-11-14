@@ -17,6 +17,10 @@ if(CONFIG.text) {
 	}, CONFIG.duration ? (CONFIG.duration + 250) : 3000);
 }
 
+/**
+ * Opens the toast notification
+ * @private
+ */
 function open() {
 	APP.GlobalWrapper.add($.Wrapper);
 	
@@ -26,6 +30,10 @@ function open() {
 	});
 };
 
+/**
+ * Closes the toast notification
+ * @private
+ */
 function close() {
 	$.Modal.animate({
 		top: "70dp",
