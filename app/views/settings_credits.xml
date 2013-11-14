@@ -7,7 +7,7 @@
 			<Label text="Uses open source code or designs developed by Mads Møller, Fokke Zandbergen, Jon Alter, Tim Wood, Ivo Ivanov and Sérgio Jardim." />
 			<Label text="Special thanks to Rick Blalock, Tony Lukasavage, Greg DiPaolo, Dennis Ashby, Varun Joshi, Elyse Phillips, Sandeep Johri, Jeff Haynie and the rest of the team at Appcelerator, Ray Miranda, Ivan Mathy, Oleg Polyakov, and the entire crowd of developers at Appcelerator's 2012 Hack-to-Help." />
 			<Label text="We'd also like to recognize all of the folks at ROAR and the University of Wisconsin-Milwaukee's App Brewery." />
-			<Label text="ChariTi is built on Appcelerator's Titanium Mobile and utilizes the Alloy framework. ChariTi's code is hosted for free by the amazing folks at GitHub, kept DRY by Simon Harris' Simian, and kept clean thanks to Einar Lielmanis' JS Beautifier." />
+			<Label text="ChariTi is built on Appcelerator's Titanium Mobile and utilizes the Alloy framework. ChariTi's code is hosted for free by the amazing folks at GitHub, kept DRY by Simon Harris' Simian, documented by JSDuck, and kept clean thanks to Einar Lielmanis' JS Beautifier." />
 			<Label class="last" text="Custom icons were provided by Roger White." />
 		</ScrollView>
 	</View>

@@ -17,7 +17,9 @@ v 1.2.0 (??-??-2013)
 *	Podcast now supports offline listening
 *	Made slide menu faster
 *	Smarter color selections based on configuration
-*	Removed 'text' color setting
+*	Removed 'text' color setting (see above)
+*	Removed global 'screenAdded' and 'tabletScreenAdded' events
+*	Removed alerts in favor of toasts
 *	Fixed handling of unavailable network situations
 *	Fixed slide menu jitters
 *	Fixed Flickr gesture collisions

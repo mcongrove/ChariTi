@@ -15,6 +15,11 @@ Code Contribution Practices
 * Poorly written or inefficient contributions will be rejected; it's not personal, we still love you
 * If you follow the coding standards established in our existing code, we'll love you even more
 	* We've included JS Beautifier in this project; it automatically runs each time you compile to keep code uniform and beautiful
+	* Document your code! Other people need to know what's in your head when you write something
+
+Code Documentation
+------------------
+JSDuck automatically runs on each compile and generates compiled code located in the `/docs/documentation/` directory. Simply open the `index.html` page and enjoy.
 
 Where do I start?
 -----------------
