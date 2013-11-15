@@ -7,6 +7,7 @@
 var APP = require("core");
 
 var sections = [];
+var tabs = [];
 
 /**
  * Initializes the slide menu
@@ -14,7 +15,8 @@ var sections = [];
  * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
  */
 $.init = function(_params) {
-	$.tabs = [];
+	sections = [];
+	tabs = [];
 
 	// Add the Settings tab
 	_params.tabs.push({
@@ -26,7 +28,9 @@ $.init = function(_params) {
 	// Creates a TableViewSection for each tab with a menuHeader property
 	buildSections(_params.tabs);
 
-	var currentSection = -1;
+	if(sections.length > 0) {
+		var currentSection = -1;
+	}
 
 	for(var i = 0; i < _params.tabs.length; i++) {
 		// Iterates through the created sections
@@ -72,17 +76,39 @@ $.init = function(_params) {
 
 		tab.add(label);
 
-		sections[currentSection].add(tab);
+		if(sections.length > 0) {
+			sections[currentSection].add(tab);
 
-		// If the last tab has been created and added to a section or
-		// the next tab is a new header, append the current section to the TableView
-		if((i + 1) !== _params.tabs.length) {
-			if(_params.tabs[i + 1].menuHeader) {
+			// If the last tab has been created and added to a section or
+			// the next tab is a new header, append the current section to the TableView
+			if(i + 1 !== _params.tabs.length) {
+				if(_params.tabs[i + 1].menuHeader) {
+					$.Tabs.appendSection(sections[currentSection]);
+				}
+			} else {
 				$.Tabs.appendSection(sections[currentSection]);
 			}
 		} else {
-			$.Tabs.appendSection(sections[currentSection]);
+			tabs.push(tab);
 		}
+	}
+
+	if(tabs.length > 0) {
+		$.Tabs.setData(tabs);
+	}
+
+	// We have to remove before adding to make sure we're not duplicating
+	$.Tabs.removeEventListener("click", handleClick);
+	$.Tabs.addEventListener("click", handleClick);
+};
+
+/**
+ * Handles a click event on the tabs container
+ * @param {Object} _event The event
+ */
+function handleClick(_event) {
+	if(typeof _event.index !== "undefined") {
+		$.setIndex(_event.index);
 	}
 };
 
@@ -95,8 +121,6 @@ function buildSections(_tabs) {
 	for(var i = 0; i < _tabs.length; i++) {
 		// Assigns special menuHeader styling
 		if(_tabs[i].menuHeader) {
-			var section = Ti.UI.createTableViewSection();
-
 			var header = Ti.UI.createView({
 				top: "0dp",
 				height: "20dp",
@@ -120,7 +144,9 @@ function buildSections(_tabs) {
 
 			header.add(headerText);
 
-			section.headerView = header;
+			var section = Ti.UI.createTableViewSection({
+				headerView: header
+			});
 
 			sections.push(section);
 		}
@@ -131,7 +157,7 @@ function buildSections(_tabs) {
  * Clears all items from the side menu
  */
 $.clear = function() {
-	$.Tabs.setData([]);
+	$.Tabs.removeAllChildren();
 };
 
 /**
@@ -141,12 +167,6 @@ $.clear = function() {
 $.setIndex = function(_index) {
 	$.Tabs.selectRow(_index);
 };
-
-$.Tabs.addEventListener("click", function(_event) {
-	if(typeof _event.index !== "undefined") {
-		$.setIndex(_event.index);
-	}
-});
 
 // Move the UI down if iOS7+
 if(OS_IOS && APP.Device.versionMajor >= 7) {
