@@ -18,24 +18,14 @@ exports.init = function() {
 
 	var current = APP.CVERSION.match(regexp)[0];
 	current = current.substr(0, current.length - 1);
+	var previous = Ti.App.Properties.getString("CVERSION", APP.CVERSION);
 
-	var db = Ti.Database.open("ChariTi");
-	var result = db.execute("SELECT name FROM sqlite_master WHERE name = 'log';");
-	var previousInstall = result.rowCount == 1 ? true : false;
+	if(current !== previous) {
+		APP.dropDatabase();
 
-	result.close();
-	db.close();
+		Ti.App.Properties.setBool("OUTDATED", false);
 
-	if(previousInstall) {
-		var previous = Ti.App.Properties.getString("CVERSION", "1.0.0");
-
-		if(current !== previous) {
-			APP.dropDatabase();
-
-			Ti.App.Properties.setBool("OUTDATED", false);
-
-			Ti.API.info("Migrating " + previous + " => " + current);
-		}
+		Ti.API.info("Migrating " + previous + " => " + current);
 	}
 
 	Ti.App.Properties.setString("CVERSION", current);
