@@ -14,7 +14,7 @@ $.refresh.addEventListener("click", function(_event) {
 			APP.rebuild();
 
 			// Start the APP
-			APP.init(true);
+			APP.init();
 		}
 	});
 });

@@ -223,9 +223,8 @@ var APP = {
 	SlideMenuEngaged: true,
 	/**
 	 * Initializes the application
-	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
-	init: function(_rebuild) {
+	init: function() {
 		Ti.API.debug("APP.init");
 
 		// Global system Events
@@ -252,7 +251,7 @@ var APP = {
 		APP.loadContent();
 
 		// Builds out the tab group
-		APP.build(_rebuild);
+		APP.build();
 
 		// Open the main window
 		APP.MainWindow.open();
@@ -393,9 +392,8 @@ var APP = {
 	},
 	/**
 	 * Builds out the tab group
-	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
-	build: function(_rebuild) {
+	build: function() {
 		APP.log("debug", "APP.build");
 
 		var tabs = [];
@@ -412,17 +410,16 @@ var APP = {
 		}
 
 		if(APP.Settings.useSlideMenu) {
-			APP.buildMenu(tabs, _rebuild);
+			APP.buildMenu(tabs);
 		} else {
-			APP.buildTabs(tabs, _rebuild);
+			APP.buildTabs(tabs);
 		}
 	},
 	/**
 	 * Builds a TabGroup
 	 * @param {Array} _tabs The tabs to build
-	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
-	buildTabs: function(_tabs, _rebuild) {
+	buildTabs: function(_tabs) {
 		APP.log("debug", "APP.buildTabs");
 
 		APP.Tabs.init({
@@ -430,21 +427,15 @@ var APP = {
 			colors: APP.Settings.colors
 		});
 
-		if(!_rebuild) {
-			// Add a handler for the tabs
-			APP.Tabs.Wrapper.addEventListener("click", function(_event) {
-				if(typeof _event.source.id !== "undefined" && typeof _event.source.id == "number") {
-					APP.handleNavigation(_event.source.id);
-				}
-			});
-		}
+		// Add a handler for the tabs (make sure we remove existing ones first)
+		APP.Tabs.Wrapper.removeEventListener("click", APP.handleTabClick);
+		APP.Tabs.Wrapper.addEventListener("click", APP.handleTabClick);
 	},
 	/**
 	 * Builds a slide menu
 	 * @param {Array} _tabs The tabs to build
-	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
-	buildMenu: function(_tabs, _rebuild) {
+	buildMenu: function(_tabs) {
 		APP.log("debug", "APP.buildMenu");
 
 		APP.SlideMenu.init({
@@ -457,20 +448,9 @@ var APP = {
 		// Move everything down to take up the TabGroup space
 		APP.ContentWrapper.bottom = "0dp";
 
-		if(!_rebuild) {
-			// Add a handler for the tabs
-			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
-				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
-					APP.closeSettings();
-
-					APP.handleNavigation(_event.row.id);
-				} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
-					APP.openSettings();
-				}
-
-				APP.toggleMenu();
-			});
-		}
+		// Add a handler for the tabs (make sure we remove existing ones first)
+		APP.SlideMenu.Tabs.removeEventListener("click", APP.handleMenuClick);
+		APP.SlideMenu.Tabs.addEventListener("click", APP.handleMenuClick);
 
 		// Listen for gestures on the main window to open/close the slide menu
 		APP.GlobalWrapper.addEventListener("swipe", function(_event) {
@@ -523,7 +503,7 @@ var APP = {
 		APP.dropDatabase();
 		APP.setupDatabase();
 		APP.loadContent();
-		APP.build(true);
+		APP.build();
 		APP.handleNavigation(0);
 	},
 	/**
@@ -549,6 +529,30 @@ var APP = {
 		if(APP.Settings.notifications.enabled) {
 			require("push").init();
 		}
+	},
+	/**
+	 * Handles the click event on a tab
+	 * @param {Object} _event The event
+	 */
+	handleTabClick: function(_event) {
+		if(typeof _event.source.id !== "undefined" && typeof _event.source.id == "number") {
+			APP.handleNavigation(_event.source.id);
+		}
+	},
+	/**
+	 * Handles the click event on a menu item
+	 * @param {Object} _event The event
+	 */
+	handleMenuClick: function(_event) {
+		if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
+			APP.closeSettings();
+
+			APP.handleNavigation(_event.row.id);
+		} else if(typeof _event.row.id !== "undefined" && _event.row.id == "settings") {
+			APP.openSettings();
+		}
+
+		APP.toggleMenu();
 	},
 	/**
 	 * Global event handler to change screens
