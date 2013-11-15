@@ -7,6 +7,7 @@
 var APP = require("core");
 
 var sections = [];
+var tabs = [];
 
 /**
  * Initializes the slide menu
@@ -23,10 +24,12 @@ $.init = function(_params) {
 		title: "Settings"
 	});
 
-	// Creates a TableViewSection for each tab with a menuHeader property
+	//creates a TableViewSection for each tab with a menuHeader property
 	buildSections(_params.tabs);
 
-	var currentSection = -1;
+	if(sections.length > 0) {
+		var currentSection = -1;
+	}
 
 	for(var i = 0; i < _params.tabs.length; i++) {
 		// Iterates through the created sections
@@ -72,17 +75,25 @@ $.init = function(_params) {
 
 		tab.add(label);
 
-		sections[currentSection].add(tab);
+		if(sections.length > 0) {
+			sections[currentSection].add(tab);
 
-		// If the last tab has been created and added to a section or
-		// the next tab is a new header, append the current section to the TableView
-		if((i + 1) !== _params.tabs.length) {
-			if(_params.tabs[i + 1].menuHeader) {
+			//If the last tab has been created and added to a section or
+			//the next tab is a new header, append the current section to the TableView
+			if(i + 1 !== _params.tabs.length) {
+				if(_params.tabs[i + 1].menuHeader) {
+					$.Tabs.appendSection(sections[currentSection]);
+				}
+			} else {
 				$.Tabs.appendSection(sections[currentSection]);
 			}
 		} else {
-			$.Tabs.appendSection(sections[currentSection]);
+			tabs.push(tab);
 		}
+	}
+
+	if(tabs.length > 0) {
+		$.Tabs.setData(tabs);
 	}
 };
 
