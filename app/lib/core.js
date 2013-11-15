@@ -458,7 +458,6 @@ var APP = {
 		APP.ContentWrapper.bottom = "0dp";
 
 		if(!_rebuild) {
-			Ti.API.error("False");
 			// Add a handler for the tabs
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
@@ -471,8 +470,6 @@ var APP = {
 
 				APP.toggleMenu();
 			});
-		} else {
-			Ti.API.error("True");
 		}
 
 		// Listen for gestures on the main window to open/close the slide menu

@@ -106,7 +106,6 @@ $.init = function(_params) {
  * @param {Object} _event The event
  */
 function handleClick(_event) {
-	Ti.API.error("Click");
 	if(typeof _event.index !== "undefined") {
 		$.setIndex(_event.index);
 	}
