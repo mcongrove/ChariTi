@@ -27,7 +27,7 @@ exports.request = function(_params) {
 
 		/**
 		 * Data return
-		 * @param {Object} [_data] The HTTP response object
+		 * @param {Object} _data The HTTP response object
 		 * @ignore
 		 */
 		xhr.onload = function(_data) {

@@ -32,7 +32,7 @@ exports.init = function() {
 		],
 		/**
 		 * Fired after we've registered the device
-		 * @param {Object} [_data] UrbanAirship data object
+		 * @param {Object} _data UrbanAirship data object
 		 */
 		success: function(_data) {
 			APP.log("debug", "UA.init @success");
@@ -51,7 +51,7 @@ exports.init = function() {
 		},
 		/**
 		 * Fired on an error
-		 * @param {Object} [_data] UrbanAirship data object
+		 * @param {Object} _data UrbanAirship data object
 		 */
 		error: function(_data) {
 			APP.log("debug", "UA.init @error");
@@ -59,7 +59,7 @@ exports.init = function() {
 		},
 		/**
 		 * Fired when a push notification is received
-		 * @param {Object} [_data] UrbanAirship data object
+		 * @param {Object} _data UrbanAirship data object
 		 */
 		callback: function(_data) {
 			APP.log("debug", "UA.init @callback");

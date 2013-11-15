@@ -15,7 +15,7 @@ var tabs = [];
  * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
  */
 $.init = function(_params) {
-	$.tabs = [];
+	tabs = [];
 
 	// Add the Settings tab
 	_params.tabs.push({
@@ -95,6 +95,20 @@ $.init = function(_params) {
 	if(tabs.length > 0) {
 		$.Tabs.setData(tabs);
 	}
+
+	// We have to remove before adding to make sure we're not duplicating
+	$.Tabs.removeEventListener("click", handleClick);
+	$.Tabs.addEventListener("click", handleClick);
+};
+
+/**
+ * Handles a click event on the tabs container
+ * @param {Object} _event The event
+ */
+function handleClick(_event) {
+	if(typeof _event.index !== "undefined") {
+		$.setIndex(_event.index);
+	}
 };
 
 /**
@@ -152,12 +166,6 @@ $.clear = function() {
 $.setIndex = function(_index) {
 	$.Tabs.selectRow(_index);
 };
-
-$.Tabs.addEventListener("click", function(_event) {
-	if(typeof _event.index !== "undefined") {
-		$.setIndex(_event.index);
-	}
-});
 
 // Move the UI down if iOS7+
 if(OS_IOS && APP.Device.versionMajor >= 7) {
