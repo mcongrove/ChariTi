@@ -220,8 +220,8 @@ exports.cleanEscapeString = function(_string) {
 
 /**
  * Parse a URL query string
- * @param {String} [_key] The key of the pair to retrieve
- * @param {String} [_url] The URL string to parse
+ * @param {String} _key The key of the pair to retrieve
+ * @param {String} _url The URL string to parse
  */
 exports.parseUrl = function(_key, _url) {
 	var results = new RegExp("[\\?&]" + _key + "=([^&#]*)").exec(_url);

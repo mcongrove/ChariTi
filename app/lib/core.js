@@ -223,8 +223,9 @@ var APP = {
 	SlideMenuEngaged: true,
 	/**
 	 * Initializes the application
+	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
-	init: function() {
+	init: function(_rebuild) {
 		Ti.API.debug("APP.init");
 
 		// Global system Events
@@ -251,7 +252,7 @@ var APP = {
 		APP.loadContent();
 
 		// Builds out the tab group
-		APP.build();
+		APP.build(_rebuild);
 
 		// Open the main window
 		APP.MainWindow.open();
@@ -392,7 +393,7 @@ var APP = {
 	},
 	/**
 	 * Builds out the tab group
-	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
+	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
 	build: function(_rebuild) {
 		APP.log("debug", "APP.build");
@@ -418,8 +419,8 @@ var APP = {
 	},
 	/**
 	 * Builds a TabGroup
-	 * @param {Array} [_tabs] The tabs to build
-	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
+	 * @param {Array} _tabs The tabs to build
+	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
 	buildTabs: function(_tabs, _rebuild) {
 		APP.log("debug", "APP.buildTabs");
@@ -440,8 +441,8 @@ var APP = {
 	},
 	/**
 	 * Builds a slide menu
-	 * @param {Array} [_tabs] The tabs to build
-	 * @param {Boolean} [_rebuild] Whether this is a re-build or not
+	 * @param {Array} _tabs The tabs to build
+	 * @param {Boolean} _rebuild Whether this is a re-build or not
 	 */
 	buildMenu: function(_tabs, _rebuild) {
 		APP.log("debug", "APP.buildMenu");
@@ -457,6 +458,7 @@ var APP = {
 		APP.ContentWrapper.bottom = "0dp";
 
 		if(!_rebuild) {
+			Ti.API.error("False");
 			// Add a handler for the tabs
 			APP.SlideMenu.Tabs.addEventListener("click", function(_event) {
 				if(typeof _event.row.id !== "undefined" && typeof _event.row.id == "number") {
@@ -469,6 +471,8 @@ var APP = {
 
 				APP.toggleMenu();
 			});
+		} else {
+			Ti.API.error("True");
 		}
 
 		// Listen for gestures on the main window to open/close the slide menu
@@ -551,7 +555,7 @@ var APP = {
 	},
 	/**
 	 * Global event handler to change screens
-	 * @param {String} [_id] The ID (index) of the tab being opened
+	 * @param {String} _id The ID (index) of the tab being opened
 	 */
 	handleNavigation: function(_id) {
 		APP.log("debug", "APP.handleNavigation | " + APP.Nodes[_id].type);
@@ -669,10 +673,10 @@ var APP = {
 	},
 	/**
 	 * Open a child screen
-	 * @param {String} [_controller] The name of the controller to open
-	 * @param {Object} [_params] An optional dictionary of parameters to pass to the controller
-	 * @param {Boolean} [_modal] Whether this is for the modal stack
-	 * @param {Boolean} [_sibling] Whether this is a sibling view
+	 * @param {String} _controller The name of the controller to open
+	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
+	 * @param {Boolean} _modal Whether this is for the modal stack
+	 * @param {Boolean} _sibling Whether this is a sibling view
 	 */
 	addChild: function(_controller, _params, _modal, _sibling) {
 		var stack;
@@ -707,7 +711,7 @@ var APP = {
 	},
 	/**
 	 * Removes a child screen
-	 * @param {Boolean} [_modal] Removes the child from the modal stack
+	 * @param {Boolean} _modal Removes the child from the modal stack
 	 */
 	removeChild: function(_modal) {
 		var stack;
@@ -760,7 +764,7 @@ var APP = {
 	},
 	/**
 	 * Removes all children screens
-	 * @param {Boolean} [_modal] Removes all children from the stack
+	 * @param {Boolean} _modal Removes all children from the stack
 	 */
 	removeAllChildren: function(_modal) {
 		var stack = _modal ? APP.modalStack : APP.controllerStacks[APP.currentStack];
@@ -773,7 +777,7 @@ var APP = {
 	},
 	/**
 	 * Global function to add a screen
-	 * @param {Object} [_screen] The screen to add
+	 * @param {Object} _screen The screen to add
 	 */
 	addScreen: function(_screen) {
 		if(_screen) {
@@ -788,7 +792,7 @@ var APP = {
 	},
 	/**
 	 * Global function to remove a screen
-	 * @param {Object} [_screen] The screen to remove
+	 * @param {Object} _screen The screen to remove
 	 */
 	removeScreen: function(_screen) {
 		if(_screen) {
@@ -799,9 +803,9 @@ var APP = {
 	},
 	/**
 	 * Adds a screen to the Master window
-	 * @param {String} [_controller] The name of the controller to open
-	 * @param {Object} [_params] An optional dictionary of parameters to pass to the controller
-	 * @param {Object} [_wrapper] The parent wrapper screen to fire events to
+	 * @param {String} _controller The name of the controller to open
+	 * @param {Object} _params An optional dictionary of parameters to pass to the controller
+	 * @param {Object} _wrapper The parent wrapper screen to fire events to
 	 */
 	addMasterScreen: function(_controller, _params, _wrapper) {
 		var screen = Alloy.createController(_controller, _params).getView();
@@ -816,7 +820,7 @@ var APP = {
 	},
 	/**
 	 * Adds a screen to the Detail window
-	 * @param {Object} [_screen] The screen to add
+	 * @param {Object} _screen The screen to add
 	 */
 	addDetailScreen: function(_screen) {
 		if(_screen) {
@@ -837,8 +841,8 @@ var APP = {
 	},
 	/**
 	 * Removes a screen from the Detail window
-	 * @param {Object} [_screen] The screen to remove
-	 * @param {Boolean} [_pop] Whether to pop the item off the controller stack
+	 * @param {Object} _screen The screen to remove
+	 * @param {Boolean} _pop Whether to pop the item off the controller stack
 	 */
 	removeDetailScreen: function(_screen, _pop) {
 		if(_screen) {
