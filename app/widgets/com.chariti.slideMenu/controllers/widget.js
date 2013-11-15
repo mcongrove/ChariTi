@@ -15,6 +15,7 @@ var tabs = [];
  * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
  */
 $.init = function(_params) {
+	sections = [];
 	tabs = [];
 
 	// Add the Settings tab
@@ -24,7 +25,7 @@ $.init = function(_params) {
 		title: "Settings"
 	});
 
-	//creates a TableViewSection for each tab with a menuHeader property
+	// Creates a TableViewSection for each tab with a menuHeader property
 	buildSections(_params.tabs);
 
 	if(sections.length > 0) {
@@ -78,8 +79,8 @@ $.init = function(_params) {
 		if(sections.length > 0) {
 			sections[currentSection].add(tab);
 
-			//If the last tab has been created and added to a section or
-			//the next tab is a new header, append the current section to the TableView
+			// If the last tab has been created and added to a section or
+			// the next tab is a new header, append the current section to the TableView
 			if(i + 1 !== _params.tabs.length) {
 				if(_params.tabs[i + 1].menuHeader) {
 					$.Tabs.appendSection(sections[currentSection]);
