@@ -121,8 +121,6 @@ function buildSections(_tabs) {
 	for(var i = 0; i < _tabs.length; i++) {
 		// Assigns special menuHeader styling
 		if(_tabs[i].menuHeader) {
-			var section = Ti.UI.createTableViewSection();
-
 			var header = Ti.UI.createView({
 				top: "0dp",
 				height: "20dp",
@@ -146,7 +144,9 @@ function buildSections(_tabs) {
 
 			header.add(headerText);
 
-			section.headerView = header;
+			var section = Ti.UI.createTableViewSection({
+				headerView: header
+			});
 
 			sections.push(section);
 		}
