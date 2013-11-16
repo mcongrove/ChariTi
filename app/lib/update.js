@@ -78,7 +78,10 @@ exports.handleUpdate = function(_data, _url, _callback) {
 
 	// Determine if this configuration file is supported by installed ChariTi version
 	if(!Ti.App.Properties.getBool("OUTDATED", false)) {
-		if(data.minimumVersion > Ti.App.Properties.getString("CVERSION", "1.0.0")) {
+		var current = parseInt(Ti.App.Properties.getString("CVERSION", APP.CVERSION).replace(".", ""), 10);
+		var minimum = parseInt(data.minimumVersion.replace(".", ""), 10);
+
+		if(minimum > current) {
 			// Un-supported configuration file, die
 			APP.log("error", "Configuration file not supported by this version");
 
