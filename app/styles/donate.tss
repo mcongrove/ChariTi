@@ -33,6 +33,7 @@
 "#button": {
 	top: "10dp",
 	left: "15dp",
+	bottom: "15dp",
 	height: "50dp",
 	width: Ti.UI.SIZE
 },

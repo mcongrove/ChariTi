@@ -489,7 +489,7 @@ var APP = {
 		APP.Detail = [];
 		APP.cancelLoading = false;
 		APP.loadingOpen = false;
-		
+
 		APP.dropDatabase();
 
 		// NOTICE
@@ -501,7 +501,7 @@ var APP = {
 	 * Kicks off the newly re-built application
 	 */
 	rebuildRestart: function() {
-		APP.log("debug", "APP.rebuildRestart");
+		Ti.API.debug("APP.rebuildRestart");
 
 		APP.setupDatabase();
 		APP.loadContent();
