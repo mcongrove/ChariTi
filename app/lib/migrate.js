@@ -14,13 +14,10 @@ var APP = require("core");
 exports.init = function() {
 	Ti.API.debug("MIGRATE.init");
 
-	var regexp = /(\d+\.?)*\./g;
+	var current = parseInt(APP.CVERSION.replace(".", ""), 10);
+	var previous = parseInt(Ti.App.Properties.getString("CVERSION", APP.CVERSION).replace(".", ""), 10);
 
-	var current = APP.CVERSION.match(regexp)[0];
-	current = current.substr(0, current.length - 1);
-	var previous = Ti.App.Properties.getString("CVERSION", APP.CVERSION);
-
-	if(current !== previous) {
+	if(current > previous) {
 		APP.dropDatabase();
 
 		Ti.App.Properties.setBool("OUTDATED", false);
