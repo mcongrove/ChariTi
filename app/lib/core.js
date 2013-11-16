@@ -473,6 +473,7 @@ var APP = {
 		APP.Tabs.clear();
 
 		// Undo removal of TabGroup
+		APP.GlobalWrapper.remove(APP.Tabs.Wrapper);
 		APP.GlobalWrapper.add(APP.Tabs.Wrapper);
 		APP.ContentWrapper.bottom = "60dp";
 
@@ -488,6 +489,8 @@ var APP = {
 		APP.Detail = [];
 		APP.cancelLoading = false;
 		APP.loadingOpen = false;
+		
+		APP.dropDatabase();
 
 		// NOTICE
 		// The following section is abstracted for PEEK
@@ -500,7 +503,6 @@ var APP = {
 	rebuildRestart: function() {
 		APP.log("debug", "APP.rebuildRestart");
 
-		APP.dropDatabase();
 		APP.setupDatabase();
 		APP.loadContent();
 		APP.build();
