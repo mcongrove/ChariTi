@@ -6,6 +6,7 @@ $.appInit = null;
 $.init = function() {
 	APP.Configuration = $.Wrapper;
 
+	APP.determineDevice();
 	APP.setupDatabase();
 
 	$.overrideCore();
@@ -18,16 +19,15 @@ $.overrideCore = function() {
 	$.appInit = APP.init;
 
 	APP.init = function() {};
-	APP.rebuildRestart = function() {};
+	APP.initACS = function() {};
+	APP.initPush = function() {};
 	APP.update = function() {};
-	APP.registerForPush = function() {};
+	APP.rebuildRestart = function() {};
 };
 
 $.openConfiguration = function() {
 	APP.MainWindow.add(APP.Configuration);
-
-	APP.GlobalWrapper.visible = false;
-	APP.Configuration.visible = true;
+	APP.MainWindow.remove(APP.GlobalWrapper);
 
 	APP.MainWindow.open();
 };
@@ -93,8 +93,8 @@ $.loadApp = function(_url) {
 		url: _url,
 		callback: function() {
 			// Remove configuration screen
-			APP.GlobalWrapper.visible = true;
-			APP.Configuration.visible = false;
+			APP.MainWindow.add(APP.GlobalWrapper);
+			APP.MainWindow.remove(APP.Configuration);
 
 			// Rebuild
 			APP.rebuild();
@@ -190,3 +190,8 @@ if(OS_IOS) {
 
 // Kick off the init
 $.init();
+
+// Move the UI down if iOS7+
+if(OS_IOS && APP.Device.versionMajor >= 7) {
+	$.logo.top = "40dp";
+}
