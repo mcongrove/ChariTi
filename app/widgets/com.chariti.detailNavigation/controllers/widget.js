@@ -18,13 +18,13 @@ $.arrowUp.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowUp.pn
 $.arrowDown.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowDown.png" : "/icons/black/arrowDown.png";
 
 if(CONFIG.up && typeof CONFIG.up == "function") {
-	$.arrowUp.addEventListener("click", CONFIG.up);
+	$.arrowUpWrapper.addEventListener("click", CONFIG.up);
 } else {
 	$.arrowUp.opacity = 0.4;
 }
 
 if(CONFIG.down && typeof CONFIG.down == "function") {
-	$.arrowDown.addEventListener("click", CONFIG.down);
+	$.arrowDownWrapper.addEventListener("click", CONFIG.down);
 } else {
 	$.arrowDown.opacity = 0.4;
 }
