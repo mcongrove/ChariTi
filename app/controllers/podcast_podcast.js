@@ -125,7 +125,20 @@ $.createAudioPlayer = function(_url) {
  * Downloads the audio file from the remote source
  */
 $.downloadRemoteFile = function() {
-	MODEL.downloadPodcast(ACTION.url);
+	Alloy.createWidget("com.chariti.toast", null, {
+		text: "Starting Download",
+		duration: 2000
+	});
+
+	MODEL.downloadPodcast({
+		url: ACTION.url,
+		callback: function(_event) {
+			Alloy.createWidget("com.chariti.toast", null, {
+				text: "Download Complete",
+				duration: 2000
+			});
+		}
+	});
 
 	$.disableDownload();
 };
@@ -238,9 +251,13 @@ $.handleNext = function(_event) {
 $.play.addEventListener("click", $.streamPlay);
 $.pause.addEventListener("click", $.streamPause);
 $.track.addEventListener("click", $.streamSeek);
-$.download.addEventListener("click", $.downloadRemoteFile);
 $.previous.addEventListener("click", $.handlePrevious);
 $.next.addEventListener("click", $.handleNext);
+
+if(OS_IOS) {
+	// Download is disabled for Android, we get a SIGSEGV
+	$.download.addEventListener("click", $.downloadRemoteFile);
+}
 
 // Kick off the init
 $.init();

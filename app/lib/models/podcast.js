@@ -169,12 +169,13 @@ function Model() {
 
 	/**
 	 * Downloads a remote podcast to local storage
-	 * @param {String} _url The remote source URL
+	 * @param {String} _params.url The remote source URL
+	 * @param {String} _params.callback The function to call on download complete
 	 */
-	this.downloadPodcast = function(_url) {
-		APP.log("debug", "PODCAST.downloadPodcast(" + _url + ")");
+	this.downloadPodcast = function(_params) {
+		APP.log("debug", "PODCAST.downloadPodcast(" + _params.url + ")");
 
-		var filename = _url.substring(_url.lastIndexOf("/") + 1, _url.lastIndexOf(".mp3")) + ".mp3";
+		var filename = _params.url.substring(_params.url.lastIndexOf("/") + 1, _params.url.lastIndexOf(".mp3")) + ".mp3";
 		var directory;
 
 		if(OS_ANDROID) {
@@ -186,13 +187,25 @@ function Model() {
 		var file = Ti.Filesystem.getFile(directory, filename);
 
 		if(!file.exists()) {
+			file = null;
+
 			HTTP.request({
 				timeout: 10000,
 				type: "GET",
 				format: "DATA",
-				url: _url,
+				url: _params.url,
 				success: function(_data) {
-					file.write(_data);
+					var writeFile = Ti.Filesystem.getFile(directory, filename);
+
+					if(writeFile.write(_data) === false) {
+						APP.log("error", "Podcast file write failed");
+					}
+
+					writeFile = null;
+
+					if(_params.callback) {
+						_params.callback();
+					}
 				}
 			});
 		}

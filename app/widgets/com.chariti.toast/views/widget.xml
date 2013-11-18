@@ -1,5 +1,5 @@
 <Alloy>
-	<View id="Wrapper">
+	<View id="Wrapper" platform="ios">
 		<View id="Modal">
 			<Label id="textLabel" />
 		</View>

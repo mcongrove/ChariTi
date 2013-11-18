@@ -30,7 +30,7 @@ var APP = {
 	 * ChariTi framework version
 	 * @type {String}
 	 */
-	CVERSION: "1.2.0.111413",
+	CVERSION: "1.2.1",
 	/**
 	 * Legal information
 	 * @type {Object}
