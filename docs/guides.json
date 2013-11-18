@@ -3,9 +3,15 @@
         "title": "Release Notes",
         "items": [
             {
-                "name": "release200",
-                "url": "releaseNotes/release200",
-                "title": "Release 2.0.0",
+                "name": "release121",
+                "url": "releaseNotes/release121",
+                "title": "Release 1.2.1",
+                "description": ""
+            },
+            {
+                "name": "release120",
+                "url": "releaseNotes/release120",
+                "title": "Release 1.2.0",
                 "description": ""
             },
             {
