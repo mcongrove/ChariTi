@@ -125,7 +125,20 @@ $.createAudioPlayer = function(_url) {
  * Downloads the audio file from the remote source
  */
 $.downloadRemoteFile = function() {
-	MODEL.downloadPodcast(ACTION.url);
+	Alloy.createWidget("com.chariti.toast", null, {
+		text: "Starting Download",
+		duration: 2000
+	});
+
+	MODEL.downloadPodcast({
+		url: ACTION.url,
+		callback: function(_event) {
+			Alloy.createWidget("com.chariti.toast", null, {
+				text: "Download Complete",
+				duration: 2000
+			});
+		}
+	});
 
 	$.disableDownload();
 };
