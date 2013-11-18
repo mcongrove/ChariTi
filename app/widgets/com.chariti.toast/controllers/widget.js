@@ -14,13 +14,22 @@ var APP = require("core");
 var CONFIG = arguments[0] || {};
 
 if(CONFIG.text) {
-	$.textLabel.text = CONFIG.text;
-
-	open();
+	if(OS_IOS) {
+		$.textLabel.text = CONFIG.text;
 	
-	setTimeout(function() {
-		close();
-	}, CONFIG.duration ? (CONFIG.duration + 250) : 3000);
+		open();
+		
+		setTimeout(function() {
+			close();
+		}, CONFIG.duration ? (CONFIG.duration + 250) : 3000);
+	} else if(OS_ANDROID) {
+		var toast = Ti.UI.createNotification({
+			message: CONFIG.text,
+			duration: CONFIG.duration < 2000 ? Ti.UI.NOTIFICATION_DURATION_SHORT : Ti.UI.NOTIFICATION_DURATION_LONG
+		});
+		
+		toast.show();
+	}
 }
 
 /**
