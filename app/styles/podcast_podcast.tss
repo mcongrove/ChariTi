@@ -106,7 +106,7 @@
 	top: "0dp",
 	visible: false
 },
-"#download": {
+"#download[platform=ios]": {
 	width: "28dp",
 	height: "28dp",
 	right: "0dp",

@@ -238,9 +238,13 @@ $.handleNext = function(_event) {
 $.play.addEventListener("click", $.streamPlay);
 $.pause.addEventListener("click", $.streamPause);
 $.track.addEventListener("click", $.streamSeek);
-$.download.addEventListener("click", $.downloadRemoteFile);
 $.previous.addEventListener("click", $.handlePrevious);
 $.next.addEventListener("click", $.handleNext);
+
+if(OS_IOS) {
+	// Download is disabled for Android, we get a SIGSEGV
+	$.download.addEventListener("click", $.downloadRemoteFile);
+}
 
 // Kick off the init
 $.init();
