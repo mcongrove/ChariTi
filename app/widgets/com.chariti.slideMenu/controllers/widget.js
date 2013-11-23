@@ -15,14 +15,25 @@ var tabs = [];
  * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
  */
 $.init = function(_params) {
+	var hasMenuHeaders = false;
+
 	sections = [];
 	tabs = [];
+
+	// Check to see if we're using menu headers
+	for(var i = 0; i < _params.tabs.length; i++) {
+		if(_params.tabs[i].menuHeader) {
+			hasMenuHeaders = true;
+			break;
+		}
+	}
 
 	// Add the Settings tab
 	_params.tabs.push({
 		id: "settings",
+		title: "Settings",
 		image: "/icons/white/settings.png",
-		title: "Settings"
+		menuHeader: hasMenuHeaders ? "Application" : null
 	});
 
 	// Creates a TableViewSection for each tab with a menuHeader property
