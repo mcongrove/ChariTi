@@ -3,6 +3,13 @@ Change Log
 
 This document describes the high-level changes made for each version. For a complete list of changes, please refer to the [ChariTi GitHub repository](http://github.com/mcongrove/ChariTi/).
 
+v 1.2.2 (11-??-2013)
+--------------------
+*	StatusBar styling now based on themes
+*	Added menu header for Settings if menu headers used elsewhere
+*	Fixed missing toolbar on web view
+*	Fixed UI inconsistencies for Settings screen
+
 v 1.2.1 (11-18-2013)
 --------------------
 *	Using native toast notifications for Android

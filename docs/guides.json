@@ -3,34 +3,40 @@
         "title": "Release Notes",
         "items": [
             {
+                "name": "release122",
+                "url": "releaseNotes/release122",
+                "title": "Release 1.2.2",
+                "description": "November ??, 2013"
+            },
+            {
                 "name": "release121",
                 "url": "releaseNotes/release121",
                 "title": "Release 1.2.1",
-                "description": ""
+                "description": "November 18, 2013"
             },
             {
                 "name": "release120",
                 "url": "releaseNotes/release120",
                 "title": "Release 1.2.0",
-                "description": ""
+                "description": "November 14, 2013"
             },
             {
                 "name": "release110",
                 "url": "releaseNotes/release110",
                 "title": "Release 1.1.0",
-                "description": ""
+                "description": "February 26, 2013"
             },
             {
                 "name": "release101",
                 "url": "releaseNotes/release101",
                 "title": "Release 1.0.1",
-                "description": ""
+                "description": "January 22, 2013"
             },
             {
                 "name": "release100",
                 "url": "releaseNotes/release100",
                 "title": "Release 1.0.0",
-                "description": ""
+                "description": "January 12, 2013"
             }
         ]
     }
