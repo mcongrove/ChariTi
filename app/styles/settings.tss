@@ -18,12 +18,13 @@
 	scrollable: false
 },
 "TableViewRow": {
-	selectedBackgroundColor: "#EEE",
+	selectedBackgroundColor: "#DDD",
 	font: {
 		fontSize: "17dp",
 		fontFamily: "HelveticaNeue-Light"
 	},
 	color: "#000",
+	selectedColor: "#000",
 	height: "45dp"
 },
 "Label": {
