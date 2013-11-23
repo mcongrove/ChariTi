@@ -7,29 +7,29 @@
 var APP = require("core");
 
 var sections = [];
-var tabs = [];
+var nodes = [];
 
 /**
  * Initializes the slide menu
  * @param {Object} _params
- * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
+ * @param {Object} _params.nodes The nodes (menu items) to show in the side menu as defined by the JSON configuration file
  */
 $.init = function(_params) {
 	var hasMenuHeaders = false;
 
 	sections = [];
-	tabs = [];
+	nodes = [];
 
 	// Check to see if we're using menu headers
-	for(var i = 0; i < _params.tabs.length; i++) {
-		if(_params.tabs[i].menuHeader) {
+	for(var i = 0; i < _params.nodes.length; i++) {
+		if(_params.nodes[i].menuHeader) {
 			hasMenuHeaders = true;
 			break;
 		}
 	}
 
 	// Add the Settings tab
-	_params.tabs.push({
+	_params.nodes.push({
 		id: "settings",
 		title: "Settings",
 		image: "/icons/white/settings.png",
@@ -37,20 +37,20 @@ $.init = function(_params) {
 	});
 
 	// Creates a TableViewSection for each tab with a menuHeader property
-	buildSections(_params.tabs);
+	buildSections(_params.nodes);
 
 	if(sections.length > 0) {
 		var currentSection = -1;
 	}
 
-	for(var i = 0; i < _params.tabs.length; i++) {
+	for(var i = 0; i < _params.nodes.length; i++) {
 		// Iterates through the created sections
-		if(_params.tabs[i].menuHeader) {
+		if(_params.nodes[i].menuHeader) {
 			currentSection++;
 		}
 
 		var tab = Ti.UI.createTableViewRow({
-			id: _params.tabs[i].id,
+			id: _params.nodes[i].id,
 			height: "47dp",
 			backgroundcolor: "#111",
 			backgroundSelectedColor: "#222",
@@ -58,7 +58,7 @@ $.init = function(_params) {
 		});
 
 		var label = Ti.UI.createLabel({
-			text: _params.tabs[i].title,
+			text: _params.nodes[i].title,
 			top: "0dp",
 			left: "47dp",
 			right: "13dp",
@@ -71,9 +71,9 @@ $.init = function(_params) {
 			touchEnabled: false
 		});
 
-		if(_params.tabs[i].image) {
+		if(_params.nodes[i].image) {
 			var icon = Ti.UI.createImageView({
-				image: _params.tabs[i].image,
+				image: _params.nodes[i].image,
 				width: "21dp",
 				height: "21dp",
 				top: "13dp",
@@ -92,29 +92,29 @@ $.init = function(_params) {
 
 			// If the last tab has been created and added to a section or
 			// the next tab is a new header, append the current section to the TableView
-			if(i + 1 !== _params.tabs.length) {
-				if(_params.tabs[i + 1].menuHeader) {
-					$.Tabs.appendSection(sections[currentSection]);
+			if(i + 1 !== _params.nodes.length) {
+				if(_params.nodes[i + 1].menuHeader) {
+					$.Nodes.appendSection(sections[currentSection]);
 				}
 			} else {
-				$.Tabs.appendSection(sections[currentSection]);
+				$.Nodes.appendSection(sections[currentSection]);
 			}
 		} else {
-			tabs.push(tab);
+			nodes.push(tab);
 		}
 	}
 
-	if(tabs.length > 0) {
-		$.Tabs.setData(tabs);
+	if(nodes.length > 0) {
+		$.Nodes.setData(nodes);
 	}
 
 	// We have to remove before adding to make sure we're not duplicating
-	$.Tabs.removeEventListener("click", handleClick);
-	$.Tabs.addEventListener("click", handleClick);
+	$.Nodes.removeEventListener("click", handleClick);
+	$.Nodes.addEventListener("click", handleClick);
 };
 
 /**
- * Handles a click event on the tabs container
+ * Handles a click event on the nodes container
  * @param {Object} _event The event
  */
 function handleClick(_event) {
@@ -125,13 +125,13 @@ function handleClick(_event) {
 
 /**
  * Builds out the table sections
- * @param {Object} _tabs The tab items to show in the side menu
+ * @param {Object} _nodes The tab items to show in the side menu
  * @private
  */
-function buildSections(_tabs) {
-	for(var i = 0; i < _tabs.length; i++) {
+function buildSections(_nodes) {
+	for(var i = 0; i < _nodes.length; i++) {
 		// Assigns special menuHeader styling
-		if(_tabs[i].menuHeader) {
+		if(_nodes[i].menuHeader) {
 			var header = Ti.UI.createView({
 				top: "0dp",
 				height: "20dp",
@@ -140,7 +140,7 @@ function buildSections(_tabs) {
 			});
 
 			var headerText = Ti.UI.createLabel({
-				text: _tabs[i].menuHeader,
+				text: _nodes[i].menuHeader,
 				top: "2dp",
 				left: "13dp",
 				font: {
@@ -168,8 +168,8 @@ function buildSections(_tabs) {
  * Clears all items from the side menu
  */
 $.clear = function() {
-	$.Tabs.setData([]);
-	$.Tabs.removeAllChildren();
+	$.Nodes.setData([]);
+	$.Nodes.removeAllChildren();
 };
 
 /**
@@ -177,10 +177,10 @@ $.clear = function() {
  * @param {Object} _index The index of the item to show as active
  */
 $.setIndex = function(_index) {
-	$.Tabs.selectRow(_index);
+	$.Nodes.selectRow(_index);
 };
 
 // Move the UI down if iOS7+
 if(OS_IOS && APP.Device.versionMajor >= 7) {
-	$.Tabs.top = "20dp";
+	$.Nodes.top = "20dp";
 }

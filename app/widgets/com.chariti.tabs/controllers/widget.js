@@ -7,10 +7,10 @@
 /**
  * Initializes the tab bar
  * @param {Object} _params
- * @param {Object} _params.tabs The tab items to show in the side menu as defined by the JSON configuration file
+ * @param {Object} _params.nodes The nodes (tab items) to show in the TabGroup as defined by the JSON configuration file
  */
 $.init = function(_params) {
-	$.tabs = [];
+	$.nodes = [];
 	$.excess = false;
 	$.excessLength = 5;
 	$.moreOpen = false;
@@ -30,11 +30,11 @@ $.init = function(_params) {
 		$.excessLength = Math.floor($.display.width / 70);
 	}
 
-	if(_params.tabs.length > $.excessLength) {
+	if(_params.nodes.length > $.excessLength) {
 		$.excess = true;
 	}
 
-	$.width = $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.tabs.length);
+	$.width = $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.nodes.length);
 
 	$.TabGroup.backgroundColor = _params.colors.primary;
 	$.TabContainerMore.backgroundColor = _params.colors.primary;
@@ -48,13 +48,13 @@ $.init = function(_params) {
 	$.TabGroupMore.width = $.display.width + "dp";
 	$.TabContainerMore.width = $.width + "dp";
 
-	for(var i = 0; i < _params.tabs.length; i++) {
+	for(var i = 0; i < _params.nodes.length; i++) {
 		if($.excess && i == ($.excessLength - 1)) {
 			addMoreTab(_params);
 		}
 
 		var tab = Ti.UI.createView({
-			id: _params.tabs[i].id,
+			id: _params.nodes[i].id,
 			width: $.width + "dp",
 			height: "60dp",
 			bottom: "0dp",
@@ -62,7 +62,7 @@ $.init = function(_params) {
 		});
 
 		var label = Ti.UI.createLabel({
-			text: _params.tabs[i].title,
+			text: _params.nodes[i].title,
 			top: "42dp",
 			left: "5dp",
 			right: "5dp",
@@ -77,9 +77,9 @@ $.init = function(_params) {
 			touchEnabled: false
 		});
 
-		if(_params.tabs[i].image) {
+		if(_params.nodes[i].image) {
 			var icon = Ti.UI.createImageView({
-				image: _params.tabs[i].image,
+				image: _params.nodes[i].image,
 				width: "32dp",
 				height: "32dp",
 				top: "7dp",
@@ -96,17 +96,17 @@ $.init = function(_params) {
 			tab.width = $.width + "dp";
 			label.left = "5dp";
 
-			$.tabs.push(tab);
+			$.nodes.push(tab);
 
 			$.TabsMore.add(tab);
 		} else {
-			$.tabs.push(tab);
+			$.nodes.push(tab);
 		}
 	}
 
 	for(var i = 0, z = $.excessLength; i < z; i++) {
-		if($.tabs[i]) {
-			$.Tabs.add($.tabs[i]);
+		if($.nodes[i]) {
+			$.Tabs.add($.nodes[i]);
 		}
 	}
 };
@@ -151,7 +151,7 @@ function addMoreTab(_params) {
 
 	tab.addEventListener("click", moreEvent);
 
-	$.tabs.push(tab);
+	$.nodes.push(tab);
 };
 
 /**

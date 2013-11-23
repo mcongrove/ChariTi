@@ -400,11 +400,11 @@ var APP = {
 	build: function() {
 		APP.log("debug", "APP.build");
 
-		var tabs = [];
+		var nodes = [];
 		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "light" ? "/icons/black/" : "/icons/white/";
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
-			tabs.push({
+			nodes.push({
 				id: i,
 				title: APP.Nodes[i].title,
 				image: UTIL.fileExists(imageFolder + APP.Nodes[i].image + ".png") ? imageFolder + APP.Nodes[i].image + ".png" : null,
@@ -414,20 +414,20 @@ var APP = {
 		}
 
 		if(APP.Settings.useSlideMenu) {
-			APP.buildMenu(tabs);
+			APP.buildMenu(nodes);
 		} else {
-			APP.buildTabs(tabs);
+			APP.buildTabs(nodes);
 		}
 	},
 	/**
 	 * Builds a TabGroup
-	 * @param {Array} _tabs The tabs to build
+	 * @param {Array} _nodes The items (tabs) to build
 	 */
-	buildTabs: function(_tabs) {
+	buildTabs: function(_nodes) {
 		APP.log("debug", "APP.buildTabs");
 
 		APP.Tabs.init({
-			tabs: _tabs,
+			nodes: _nodes,
 			colors: APP.Settings.colors
 		});
 
@@ -437,13 +437,13 @@ var APP = {
 	},
 	/**
 	 * Builds a slide menu
-	 * @param {Array} _tabs The tabs to build
+	 * @param {Array} _nodes The items (menu nodes) to build
 	 */
-	buildMenu: function(_tabs) {
+	buildMenu: function(_nodes) {
 		APP.log("debug", "APP.buildMenu");
 
 		APP.SlideMenu.init({
-			tabs: _tabs
+			nodes: _nodes
 		});
 
 		// Remove the TabGroup
@@ -452,9 +452,9 @@ var APP = {
 		// Move everything down to take up the TabGroup space
 		APP.ContentWrapper.bottom = "0dp";
 
-		// Add a handler for the tabs (make sure we remove existing ones first)
-		APP.SlideMenu.Tabs.removeEventListener("click", APP.handleMenuClick);
-		APP.SlideMenu.Tabs.addEventListener("click", APP.handleMenuClick);
+		// Add a handler for the nodes (make sure we remove existing ones first)
+		APP.SlideMenu.Nodes.removeEventListener("click", APP.handleMenuClick);
+		APP.SlideMenu.Nodes.addEventListener("click", APP.handleMenuClick);
 
 		// Listen for gestures on the main window to open/close the slide menu
 		APP.GlobalWrapper.addEventListener("swipe", function(_event) {

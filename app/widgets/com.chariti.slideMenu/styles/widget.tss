@@ -4,7 +4,7 @@
 	left: "-200dp",
 	backgroundColor: "#000"
 },
-"#Tabs": {
+"#Nodes": {
 	top: "0dp",
 	backgroundColor: "#111",
 	separatorColor: "#222",

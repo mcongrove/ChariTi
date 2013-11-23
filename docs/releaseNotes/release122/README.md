@@ -8,4 +8,5 @@ v 1.2.2 (11-??-2013)
 *	StatusBar styling now based on themes
 *	Added menu header for Settings if menu headers used elsewhere
 *	Fixed missing toolbar on web view
+*	Fixed UI problems for PDF screen
 *	Fixed UI inconsistencies for Settings screen
