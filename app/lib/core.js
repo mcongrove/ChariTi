@@ -389,6 +389,10 @@ var APP = {
 		};
 
 		APP.Settings.colors.theme = APP.Settings.colors.hsb.primary.b < 65 ? "dark" : "light";
+
+		if(OS_IOS) {
+			APP.MainWindow.statusBarStyle = APP.Settings.colors.theme == "dark" ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : Ti.UI.iPhone.StatusBar.DEFAULT;
+		}
 	},
 	/**
 	 * Builds out the tab group
