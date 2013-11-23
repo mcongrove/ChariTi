@@ -16,11 +16,15 @@ $.init = function() {
 		$.container.remove($.legal_table);
 	} else if(!APP.LEGAL.TOS || !APP.LEGAL.PRIVACY) {
 		if(!APP.LEGAL.TOS) {
-			$.legal_table.deleteRow(0);
+			setTimeout(function() {
+				$.legal_table.deleteRow(0);
+			}, 1);
 		}
 
 		if(!APP.LEGAL.PRIVACY) {
-			$.legal_table.deleteRow(1);
+			setTimeout(function() {
+				$.legal_table.deleteRow(1);
+			}, 1);
 		}
 
 		$.legal_table.height = "45dp";
