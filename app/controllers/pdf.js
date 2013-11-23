@@ -6,9 +6,12 @@
  * @uses http
  */
 var APP = require("core");
+var UTIL = require("utilities");
 var HTTP = require("http");
 
 var CONFIG = arguments[0];
+
+var filename;
 
 /**
  * Initializes the controller
@@ -16,7 +19,9 @@ var CONFIG = arguments[0];
 $.init = function() {
 	APP.log("debug", "pdf.init | " + JSON.stringify(CONFIG));
 
-	if(!$.fileExists(CONFIG.url)) {
+	filename = $.getFileName(CONFIG.url)
+
+	if(!UTIL.fileExists(filename)) {
 		HTTP.request({
 			timeout: 10000,
 			type: "GET",
@@ -25,7 +30,7 @@ $.init = function() {
 			success: $.handlePdf
 		});
 	} else {
-		$.container.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(CONFIG.url);
+		$.container.url = Ti.Filesystem.applicationDataDirectory + filename;
 	}
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
@@ -49,12 +54,12 @@ $.init = function() {
 $.handlePdf = function(_data, _url) {
 	APP.log("debug", "pdf.handlePdf");
 
-	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, $.getFileName(_url));
+	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, filename);
 
 	file.createFile();
 	file.write(_data);
 
-	$.container.url = Ti.Filesystem.applicationDataDirectory + $.getFileName(_url);
+	$.container.url = Ti.Filesystem.applicationDataDirectory + filename;
 };
 
 /**
@@ -74,22 +79,6 @@ $.getFileName = function(_url) {
 	}
 
 	return filename + ".pdf";
-};
-
-/**
- * Checks if the file exists locally
- * @param {Object} _url The remote URL of the PDF
- */
-$.fileExists = function(_url) {
-	APP.log("debug", "pdf.fileExists");
-
-	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, $.getFileName(_url));
-
-	if(file.exists()) {
-		return true;
-	} else {
-		return false;
-	}
 };
 
 // Kick off the init
