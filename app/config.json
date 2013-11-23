@@ -6,7 +6,7 @@
     "os:ios": {},
     "os:android": {},
     "dependencies": {
-        "com.chariti.detailNavigation": "1.0",
+        "com.chariti.detailNavigation": "1.1",
         "com.chariti.loading": "1.0",
         "com.chariti.navigationBar": "1.0",
         "com.chariti.slideMenu": "1.0",

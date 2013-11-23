@@ -84,6 +84,7 @@ $.handleNavigation = function() {
 	ACTION.previous = MODEL.getPreviousArticle(CONFIG.id);
 
 	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
+		color: APP.Settings.colors.theme == "dark" ? "white" : "black",
 		down: function(_event) {
 			APP.log("debug", "article_article @next");
 

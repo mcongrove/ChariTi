@@ -9,13 +9,14 @@ var APP = require("core");
 /**
  * @member Widgets.com.chariti.detailNavigation
  * @property {Object} CONFIG
+ * @property {Function} CONFIG.color The color of the icons (either "white" or "black")
  * @property {Function} CONFIG.up The function to run on 'up' press
  * @property {Function} CONFIG.down The function to run on 'down' press
  */
 var CONFIG = arguments[0] || {};
 
-$.arrowUp.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowUp.png" : "/icons/black/arrowUp.png";
-$.arrowDown.image = APP.Settings.colors.theme == "dark" ? "/icons/white/arrowDown.png" : "/icons/black/arrowDown.png";
+$.arrowUp.image = CONFIG.color.toLowerCase() == "white" ? WPATH("/images/white/arrowUp.png") : WPATH("/images/black/arrowUp.png");
+$.arrowDown.image = CONFIG.color.toLowerCase() == "white" ? WPATH("/images/white/arrowDown.png") : WPATH("/images/black/arrowDown.png");
 
 if(CONFIG.up && typeof CONFIG.up == "function") {
 	$.arrowUpWrapper.addEventListener("click", CONFIG.up);
