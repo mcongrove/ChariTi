@@ -119,23 +119,23 @@
 				{
 					"latitude": "28.24560022171899",
 					"longitude": "-80.72571516036987",
-					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"pinColor": "RED",
 					"title": "Place A",
 					"subTitle": "This is a subtitle"
 				},
 				{
 					"latitude": "28.24704626421908",
 					"longitude": "-80.73882579803467",
-					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"pinColor": "GREEN",
 					"title": "Place B",
-					"subTitle": ""
+					"subTitle": "This is another subtitle"
 				},
 				{
 					"latitude": "28.228406881099808",
 					"longitude": "-80.73399782180786",
-					"pinColor": "Ti.Map.ANNOTATION_RED",
+					"pinColor": "PURPLE",
 					"title": "Place C",
-					"subTitle": "This is a subtitle"
+					"subTitle": ""
 				}
 			],
 			"type": "map",

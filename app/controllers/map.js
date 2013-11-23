@@ -17,12 +17,26 @@ $.init = function() {
 	var annotations = [];
 
 	for(var i = 0, x = CONFIG.points.length; i < x; i++) {
+		var pinColor;
+
+		switch(CONFIG.points[i].pinColor.toUpperCase()) {
+			case "PURPLE":
+				pinColor = "PURPLE";
+				break;
+			case "GREEN":
+				pinColor = "GREEN";
+				break;
+			default:
+				pinColor = "RED";
+				break;
+		}
+
 		var annotation = Ti.Map.createAnnotation({
 			latitude: CONFIG.points[i].latitude,
 			longitude: CONFIG.points[i].longitude,
 			title: CONFIG.points[i].title,
 			subtitle: CONFIG.points[i].subTitle,
-			pincolor: CONFIG.points[i].pinColor
+			pincolor: Ti.Map["ANNOTATION_" + pinColor]
 		});
 
 		annotations.push(annotation);
