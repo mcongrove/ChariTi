@@ -25,7 +25,7 @@ $.init = function() {
 
 	$.handleData(MODEL.getPodcast(CONFIG.id));
 
-	$.position.backgroundColor = APP.Settings.colors.primary || "#000";
+	$.position.backgroundColor = APP.Settings.colors.primary;
 };
 
 /**
@@ -44,7 +44,7 @@ $.handleData = function(_data) {
 	ACTION.next = MODEL.getNextPodcast(_data.id);
 	ACTION.previous = MODEL.getPreviousPodcast(_data.id);
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
 		$.NavigationBar.showBack({

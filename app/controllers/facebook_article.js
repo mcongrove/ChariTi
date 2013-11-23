@@ -40,13 +40,13 @@ $.handleData = function(_data) {
 	time = time.isBefore() ? time : DATE();
 
 	$.heading.text = _data.title;
-	$.heading.color = APP.Settings.colors.primary || "#000";
+	$.heading.color = APP.Settings.colors.hsb.primary.b > 70 ? "#000" : APP.Settings.colors.primary;
 	$.text.value = _data.description;
 	$.date.text = STRING.ucfirst(time.fromNow());
 
 	ACTION.url = _data.link;
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
 		$.NavigationBar.showBack({

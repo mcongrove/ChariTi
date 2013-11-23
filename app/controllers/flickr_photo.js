@@ -14,7 +14,7 @@ var NEXT = null;
 
 var metaVisible = true;
 
-$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 $.NavigationBar.showBack({
 	callback: function(_event) {
 		APP.removeChild();

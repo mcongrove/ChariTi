@@ -37,7 +37,7 @@ $.init = function() {
 	$.copyright.text = APP.LEGAL.COPYRIGHT + " v" + APP.VERSION;
 	$.chariti.text = "ChariTi ‌© 2013 Matthew Congrove v" + APP.CVERSION;
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Settings.useSlideMenu) {
 		$.NavigationBar.showMenu();

@@ -15,7 +15,7 @@ var SELECTED;
 $.init = function() {
 	APP.log("debug", "share.init | " + JSON.stringify(CONFIG));
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	$.loadData();
 

@@ -18,7 +18,7 @@ $.init = function() {
 
 	$.handleData(CONFIG.items);
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.showBack();

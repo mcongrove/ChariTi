@@ -39,7 +39,7 @@ $.init = function() {
 
 	$.container.selectAnnotation(annotations[0]);
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.showBack();

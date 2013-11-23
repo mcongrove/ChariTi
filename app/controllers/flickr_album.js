@@ -32,7 +32,7 @@ $.init = function() {
 		}
 	});
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
 		$.NavigationBar.showBack();

@@ -14,7 +14,7 @@ $.container.url = CONFIG.url || "";
 $.container.scalesPageToFit = true;
 $.container.willHandleTouches = false;
 
-$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 if(APP.Device.isHandheld) {
 	$.NavigationBar.showBack();

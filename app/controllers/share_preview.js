@@ -10,11 +10,10 @@ var CONFIG = arguments[0] || {};
 
 $.Wrapper.id = CONFIG.id || 0;
 $.title.text = CONFIG.title || "";
-$.title.color = APP.Settings.colors.primary || "#000";
+$.title.color = APP.Settings.colors.hsb.primary.b > 70 ? "#000" : APP.Settings.colors.primary;
 $.text.text = CONFIG.text.replace(/\s*<br[^>]*>\s*/ig, "\n").replace(/<[^>]*>/g, "") || "";
-$.buttonConfirm.color = APP.Settings.colors.primary || "#000";
 
-$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 if(APP.Device.isHandheld) {
 	$.NavigationBar.showBack({

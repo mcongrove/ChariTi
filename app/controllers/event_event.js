@@ -36,7 +36,7 @@ $.handleData = function(_data) {
 	$.handleNavigation(_data.date_start);
 
 	$.heading.text = _data.title;
-	$.heading.color = APP.Settings.colors.primary || "#000";
+	$.heading.color = APP.Settings.colors.hsb.primary.b > 70 ? "#000" : APP.Settings.colors.primary;
 	$.text.value = _data.description;
 	$.location.text = "@ " + _data.location;
 	$.photo.image = "http://graph.facebook.com/" + _data.id + "/picture?type=large";
@@ -44,7 +44,7 @@ $.handleData = function(_data) {
 
 	ACTION.url = "http://www.facebook.com/events/" + _data.id;
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
 		$.NavigationBar.showBack({

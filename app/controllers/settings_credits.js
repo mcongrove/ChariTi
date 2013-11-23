@@ -12,7 +12,7 @@ var APP = require("core");
 $.init = function() {
 	APP.log("debug", "settings_credits.init");
 
-	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary || "#000");
+	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	$.NavigationBar.showBack({
 		callback: function(_event) {
