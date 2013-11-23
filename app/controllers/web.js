@@ -39,6 +39,13 @@ $.init = function() {
 	} else {
 		$.NavigationBar.showSettings();
 	}
+
+	// Move the UI down if iOS7+
+	// NOTE: This is because of problems surrounding a vertical layout on the wrapper
+	//       so we have to bump down the container (47dp normally, 67dp for iOS 7+)
+	if(OS_IOS && APP.Device.versionMajor >= 7) {
+		$.container.top = "67dp";
+	}
 };
 
 /**

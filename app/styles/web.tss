@@ -1,8 +1,5 @@
-"#Wrapper": {
-	layout: "vertical"
-},
 "#container": {
-	top: "0dp",
+	top: "47dp",
 	backgroundColor: "#000"
 },
 "#toolbar": {
@@ -10,7 +7,8 @@
 	backgroundColor: "#FFF",
 	height: "44dp",
 	layout: "horizontal",
-	bottom: "0dp"
+	bottom: "0dp",
+	width: Ti.UI.FILL
 },
 "#border": {
 	top: "0dp",
