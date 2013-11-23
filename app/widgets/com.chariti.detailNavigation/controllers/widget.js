@@ -2,9 +2,7 @@
  * The detail navigation widget
  * 
  * @class Widgets.com.chariti.detailNavigation
- * @uses core
  */
-var APP = require("core");
 
 /**
  * @member Widgets.com.chariti.detailNavigation
@@ -31,6 +29,6 @@ if(CONFIG.down && typeof CONFIG.down == "function") {
 }
 
 // Move the UI down if iOS7+
-if(OS_IOS && APP.Device.versionMajor >= 7) {
+if(OS_IOS && parseInt(Ti.Platform.version.split(".")[0], 10) >= 7) {
 	$.Wrapper.top = "37dp";
 }
