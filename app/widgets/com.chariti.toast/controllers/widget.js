@@ -9,7 +9,7 @@
  * @property {Object} CONFIG
  * @property {String} CONFIG.text The text to display in the toast
  * @property {Number} CONFIG.duration The length of time (ms) to display the toast
- * @property {Function} CONFIG.close The function to run after closing the toast
+ * @property {Function} CONFIG.view The view to attach the toast to
  */
 var CONFIG = arguments[0] || {};
 
@@ -37,6 +37,8 @@ if(CONFIG.text) {
  * @private
  */
 function open() {
+	CONFIG.view.add($.Wrapper);
+	
 	$.Modal.animate({
 		top: "20dp",
 		duration: 250
@@ -53,7 +55,7 @@ function close() {
 		duration: 250
 	}, function(_event) {
 		if(typeof CONFIG.close !== "undefined") {
-			CONFIG.close();
+			CONFIG.view.remove($.Wrapper);
 		}
 	});
 };
