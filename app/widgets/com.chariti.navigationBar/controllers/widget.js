@@ -14,7 +14,8 @@ var APP = require("core");
  */
 var CONFIG = arguments[0] || {};
 
-var navigation;
+var navigation, theme;
+var deviceVersion = parseInt(Titanium.Platform.version.split(".")[0], 10);
 
 if(CONFIG.image) {
 	var image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, CONFIG.image);
@@ -29,13 +30,13 @@ if(CONFIG.image) {
 		image: image,
 		height: "26dp",
 		width: Ti.UI.SIZE,
-		top: (OS_IOS && APP.Device.versionMajor >= 7) ? "30dp" : "10dp",
+		top: (OS_IOS && deviceVersion >= 7) ? "30dp" : "10dp",
 		bottom: "10dp",
 		preventDefaultImage: true
 	});
 } else {
 	$.title = Ti.UI.createLabel({
-		top: (OS_IOS && APP.Device.versionMajor >= 7) ? "20dp" : "0dp",
+		top: (OS_IOS && deviceVersion >= 7) ? "20dp" : "0dp",
 		left: "58dp",
 		right: "58dp",
 		height: "46dp",
@@ -43,14 +44,11 @@ if(CONFIG.image) {
 			fontSize: "18dp",
 			fontFamily: "HelveticaNeue-Medium"
 		},
-		color: APP.Settings.colors.theme == "dark" ? "#FFF" : "#000",
+		color: theme == "white" ? "#FFF" : "#000",
 		textAlign: "center",
 		text: CONFIG.text ? CONFIG.text : ""
 	});
 }
-
-$.backImage.image = APP.Settings.colors.theme == "dark" ? "/icons/white/back.png" : "/icons/black/back.png";
-$.nextImage.image = APP.Settings.colors.theme == "dark" ? "/icons/white/next.png" : "/icons/black/next.png";
 
 /**
  * Adds the navigation bar to the passed view
@@ -76,6 +74,13 @@ $.removeNavigation = function() {
  */
 $.setBackgroundColor = function(_color) {
 	$.Wrapper.backgroundColor = _color;
+
+	// Checks the brightness of the background color, sets color of icons/text
+	if(hexToHsb(_color).b < 65) {
+		theme = "white";
+	} else {
+		theme = "black"
+	}
 };
 
 /**
@@ -92,6 +97,7 @@ $.setTitle = function(_text) {
  * @param {Function} _params.callback The function to run on back button press
  */
 $.showBack = function(_params) {
+	$.backImage.image = theme == "white" ? WPATH("/images/white/back.png") : WPATH("/images/black/back.png");
 	$.back.visible = true;
 
 	if(_params && typeof _params.callback !== "undefined") {
@@ -109,6 +115,7 @@ $.showBack = function(_params) {
  * @param {Function} _params.callback The function to run on next button press
  */
 $.showNext = function(_params) {
+	$.nextImage.image = theme == "white" ? WPATH("/images/white/next.png") : WPATH("/images/black/next.png");
 	$.next.visible = true;
 
 	$.next.addEventListener("click", _params.callback);
@@ -143,7 +150,7 @@ $.showRight = function(_params) {
  */
 $.showMenu = function() {
 	$.showLeft({
-		image: APP.Settings.colors.theme == "dark" ? "/icons/white/menu.png" : "/icons/black/menu.png",
+		image: theme == "white" ? WPATH("/images/white/menu.png") : WPATH("/images/black/menu.png"),
 		callback: APP.toggleMenu
 	});
 };
@@ -153,7 +160,7 @@ $.showMenu = function() {
  */
 $.showSettings = function() {
 	$.showRight({
-		image: APP.Settings.colors.theme == "dark" ? "/icons/white/settings.png" : "/icons/black/settings.png",
+		image: theme == "white" ? WPATH("/images/white/settings.png") : WPATH("/images/black/settings.png"),
 		callback: APP.openSettings
 	});
 };
@@ -165,15 +172,92 @@ $.showSettings = function() {
  */
 $.showAction = function(_params) {
 	$.showRight({
-		image: APP.Settings.colors.theme == "dark" ? "/icons/white/action.png" : "/icons/black/action.png",
+		image: theme == "white" ? WPATH("/images/white/action.png") : WPATH("/images/black/action.png"),
 		callback: _params.callback
 	});
 };
 
+/**
+ * Converts a hex color value to HSB
+ * @param {String} _hex The hex color to convert
+ */
+function hexToHsb(_hex) {
+	var result;
+
+	if(_hex.length < 6) {
+		result = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(_hex);
+	} else {
+		result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(_hex);
+	}
+
+	var hsb = {
+		h: 0,
+		s: 0,
+		b: 0
+	};
+
+	if(!result) {
+		return hsb;
+	}
+
+	if(result[1].length == 1) {
+		result[1] = result[1] + result[1];
+		result[2] = result[2] + result[2];
+		result[3] = result[3] + result[3];
+	}
+
+	var rgb = {
+		r: parseInt(result[1], 16),
+		g: parseInt(result[2], 16),
+		b: parseInt(result[3], 16)
+	};
+
+	rgb.r /= 255;
+	rgb.g /= 255;
+	rgb.b /= 255;
+
+	var minVal = Math.min(rgb.r, rgb.g, rgb.b),
+		maxVal = Math.max(rgb.r, rgb.g, rgb.b),
+		delta = maxVal - minVal,
+		del_r, del_g, del_b;
+
+	hsb.b = maxVal;
+
+	if(delta !== 0) {
+		hsb.s = delta / maxVal;
+
+		del_r = (((maxVal - rgb.r) / 6) + (delta / 2)) / delta;
+		del_g = (((maxVal - rgb.g) / 6) + (delta / 2)) / delta;
+		del_b = (((maxVal - rgb.b) / 6) + (delta / 2)) / delta;
+
+		if(rgb.r === maxVal) {
+			hsb.h = del_b - del_g;
+		} else if(rgb.g === maxVal) {
+			hsb.h = (1 / 3) + del_r - del_b;
+		} else if(rgb.b === maxVal) {
+			hsb.h = (2 / 3) + del_g - del_r;
+		}
+
+		if(hsb.h < 0) {
+			hsb.h += 1;
+		}
+
+		if(hsb.h > 1) {
+			hsb.h -= 1;
+		}
+	}
+
+	hsb.h = Math.round(hsb.h * 360);
+	hsb.s = Math.round(hsb.s * 100);
+	hsb.b = Math.round(hsb.b * 100);
+
+	return hsb;
+}
+
 $.Wrapper.add($.title);
 
 // Move the UI down if iOS7+
-if(OS_IOS && APP.Device.versionMajor >= 7) {
+if(OS_IOS && deviceVersion >= 7) {
 	$.Wrapper.height = "67dp";
 	$.overlay.top = "20dp";
 }
