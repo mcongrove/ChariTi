@@ -7,12 +7,12 @@
 /**
  * Initializes the tab bar
  * @param {Object} _params
- * @param {Object} _params.nodes The nodes (tab items) to show in the TabGroup as defined by the JSON configuration file
- * @param {Object} _params.more The image for the "..." (more) tab
+ * @param {Array} _params.nodes The nodes (tab items) to show in the TabGroup as defined by the JSON configuration file
+ * @param {String} _params.more The image for the "..." (more) tab
  * @param {Object} _params.color The colors to use for the tab bar
- * @param {Object} _params.color.background The background of the tab bar
- * @param {Object} _params.color.active The background of an active tab
- * @param {Object} _params.color.text The tab text color
+ * @param {String} _params.color.background The background of the tab bar (hex)
+ * @param {String} _params.color.active The background of an active tab (hex)
+ * @param {String} _params.color.text The tab text color (hex)
  */
 $.init = function(_params) {
 	$.nodes = [];

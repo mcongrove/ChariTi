@@ -2,39 +2,23 @@
  * The slide menu widget
  * 
  * @class Widgets.com.chariti.slideMenu
- * @uses core
  */
-var APP = require("core");
-
 var sections = [];
 var nodes = [];
+var color;
 
 /**
  * Initializes the slide menu
  * @param {Object} _params
- * @param {Object} _params.nodes The nodes (menu items) to show in the side menu as defined by the JSON configuration file
+ * @param {Array} _params.nodes The nodes (menu items) to show in the side menu as defined by the JSON configuration file
+ * @param {Object} _params.color The colors for the menu
+ * @param {String} _params.color.headingBackground The background color for menu headers
+ * @param {String} _params.color.headingText The text color for menu headers
  */
 $.init = function(_params) {
-	var hasMenuHeaders = false;
-
 	sections = [];
 	nodes = [];
-
-	// Check to see if we're using menu headers
-	for(var i = 0; i < _params.nodes.length; i++) {
-		if(_params.nodes[i].menuHeader) {
-			hasMenuHeaders = true;
-			break;
-		}
-	}
-
-	// Add the Settings tab
-	_params.nodes.push({
-		id: "settings",
-		title: "Settings",
-		image: "/icons/white/settings.png",
-		menuHeader: hasMenuHeaders ? "Application" : null
-	});
+	color = typeof _params.color !== "undefined" ? _params.color : null;
 
 	// Creates a TableViewSection for each tab with a menuHeader property
 	buildSections(_params.nodes);
@@ -136,7 +120,7 @@ function buildSections(_nodes) {
 				top: "0dp",
 				height: "20dp",
 				width: Ti.UI.FILL,
-				backgroundColor: APP.Settings.colors.primary
+				backgroundColor: color.headingBackground
 			});
 
 			var headerText = Ti.UI.createLabel({
@@ -147,7 +131,7 @@ function buildSections(_nodes) {
 					fontSize: "12dp",
 					fontWeight: "HelveticaNeue-Light"
 				},
-				color: APP.Settings.colors.theme == "dark" ? "#FFF" : "#000",
+				color: color.headingText,
 				touchEnabled: false,
 				verticalAlignment: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 				isHeader: true
@@ -181,6 +165,6 @@ $.setIndex = function(_index) {
 };
 
 // Move the UI down if iOS7+
-if(OS_IOS && APP.Device.versionMajor >= 7) {
+if(OS_IOS && parseInt(Ti.Platform.version.split(".")[0], 10) >= 7) {
 	$.Nodes.top = "20dp";
 }

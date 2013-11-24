@@ -402,6 +402,7 @@ var APP = {
 
 		var nodes = [];
 		var imageFolder = !APP.Settings.useSlideMenu && APP.Settings.colors.theme == "light" ? "/icons/black/" : "/icons/white/";
+		var hasMenuHeaders = false;
 
 		for(var i = 0, x = APP.Nodes.length; i < x; i++) {
 			nodes.push({
@@ -411,9 +412,21 @@ var APP = {
 				controller: APP.Nodes[i].type.toLowerCase(),
 				menuHeader: APP.Nodes[i].menuHeader
 			});
+
+			if(APP.Settings.useSlideMenu && APP.Nodes[i].menuHeader) {
+				hasMenuHeaders = true;
+			}
 		}
 
 		if(APP.Settings.useSlideMenu) {
+			// Add the Settings tab
+			nodes.push({
+				id: "settings",
+				title: "Settings",
+				image: "/icons/white/settings.png",
+				menuHeader: hasMenuHeaders ? "Application" : null
+			});
+
 			APP.buildMenu(nodes);
 		} else {
 			APP.buildTabs(nodes);
@@ -448,7 +461,11 @@ var APP = {
 		APP.log("debug", "APP.buildMenu");
 
 		APP.SlideMenu.init({
-			nodes: _nodes
+			nodes: _nodes,
+			color: {
+				headingBackground: APP.Settings.colors.primary,
+				headingText: APP.Settings.colors.theme == "dark" ? "#FFF" : "#000"
+			}
 		});
 
 		// Remove the TabGroup
