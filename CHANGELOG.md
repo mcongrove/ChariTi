@@ -12,6 +12,8 @@ v 1.2.2 (11-??-2013)
 *	Fixed missing toolbar on web view
 *	Fixed UI problems for PDF screen
 *	Fixed UI inconsistencies for Settings screen
+*	Fixed file misnaming, misreferences
+*	Widgets are now self-contained
 
 v 1.2.1 (11-18-2013)
 --------------------
