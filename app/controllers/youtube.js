@@ -74,7 +74,7 @@ $.handleUsername = function() {
 		error: function() {
 			APP.closeLoading();
 
-			Alloy.createWidget("com.chariti.toast", null, {
+			Alloy.createWidget("com.mcongrove.toast", null, {
 				text: "Unable to connect; try again later",
 				duration: 2000,
 				view: APP.GlobalWrapper

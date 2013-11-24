@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Settings Legal">
-		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" image="logo.png" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="logo.png" />
 		
 		<WebView id="container" />
 	</View>

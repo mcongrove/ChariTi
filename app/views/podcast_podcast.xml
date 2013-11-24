@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Podcast Podcast">
-		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		
 		<View id="container">
 			<View id="artworkContainer">

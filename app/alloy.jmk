@@ -34,11 +34,6 @@ task("pre:compile", function(event, logger) {
 	beautify(event.dir.project + "/app/lib/models");
 	beautify(event.dir.project + "/app/lib/push");
 	beautify(event.dir.project + "/app/styles");
-	beautify(event.dir.project + "/app/widgets/com.chariti.detailNavigation/controllers");
-	beautify(event.dir.project + "/app/widgets/com.chariti.loading/controllers");
-	beautify(event.dir.project + "/app/widgets/com.chariti.navigationBar/controllers");
-	beautify(event.dir.project + "/app/widgets/com.chariti.slideMenu/controllers");
-	beautify(event.dir.project + "/app/widgets/com.chariti.tabs/controllers");
 });
 
 task("post:compile", function(event, logger) {

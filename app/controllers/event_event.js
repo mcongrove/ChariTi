@@ -5,7 +5,7 @@
  * @uses Models.event
  * @uses core
  * @uses social
- * @uses Widgets.com.chariti.detailNavigation
+ * @uses Widgets.com.mcongrove.detailNavigation
  */
 var APP = require("core");
 var SOCIAL = require("social");
@@ -69,7 +69,7 @@ $.handleNavigation = function(_date) {
 	ACTION.next = MODEL.getNextEvent(_date);
 	ACTION.previous = MODEL.getPreviousEvent(_date);
 
-	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
+	var navigation = Alloy.createWidget("com.mcongrove.detailNavigation", null, {
 		color: APP.Settings.colors.theme == "dark" ? "white" : "black",
 		down: function(_event) {
 			APP.log("debug", "event_event @next");

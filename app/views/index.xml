@@ -1,11 +1,11 @@
 <Alloy>
 	<Window id="MainWindow">
-		<Require type="widget" src="com.chariti.slideMenu" id="SlideMenu" />
+		<Require type="widget" src="com.mcongrove.slideMenu" id="SlideMenu" />
 		
 		<View id="GlobalWrapper">
 			<View id="ContentWrapper" />
 			
-			<Require type="widget" src="com.chariti.tabs" id="Tabs" />
+			<Require type="widget" src="com.mcongrove.tabs" id="Tabs" />
 		</View>
 	</Window>
 </Alloy>

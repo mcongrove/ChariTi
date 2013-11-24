@@ -125,7 +125,7 @@ $.createAudioPlayer = function(_url) {
  * Downloads the audio file from the remote source
  */
 $.downloadRemoteFile = function() {
-	Alloy.createWidget("com.chariti.toast", null, {
+	Alloy.createWidget("com.mcongrove.toast", null, {
 		text: "Starting Download",
 		duration: 2000,
 		view: APP.GlobalWrapper
@@ -134,7 +134,7 @@ $.downloadRemoteFile = function() {
 	MODEL.downloadPodcast({
 		url: ACTION.url,
 		callback: function(_event) {
-			Alloy.createWidget("com.chariti.toast", null, {
+			Alloy.createWidget("com.mcongrove.toast", null, {
 				text: "Download Complete",
 				duration: 2000,
 				view: APP.GlobalWrapper

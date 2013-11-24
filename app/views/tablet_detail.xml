@@ -1,5 +1,5 @@
 <Alloy>
 	<View id="Wrapper">
-		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 	</View>
 </Alloy>

@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Article Article">
-		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		
 		<ScrollView id="container">
 			<Label id="heading" />

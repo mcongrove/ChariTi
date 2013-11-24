@@ -188,7 +188,7 @@ var APP = {
 	 * The loading view
 	 * @type {Object}
 	 */
-	Loading: Alloy.createWidget("com.chariti.loading").getView(),
+	Loading: Alloy.createWidget("com.mcongrove.loading").getView(),
 	/**
 	 * Whether or not to cancel the loading screen open because it's already open
 	 * @type {Boolean}

@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Vimeo Video">
-		<Require type="widget" src="com.chariti.navigationBar" id="NavigationBar" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		
 		<WebView id="container" />
 	</View>

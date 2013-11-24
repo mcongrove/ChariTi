@@ -5,7 +5,7 @@
  * @uses Models.article
  * @uses core
  * @uses social
- * @uses Widgets.com.chariti.detailNavigation
+ * @uses Widgets.com.mcongrove.detailNavigation
  */
 var APP = require("core");
 var SOCIAL = require("social");
@@ -83,7 +83,7 @@ $.handleNavigation = function() {
 	ACTION.next = MODEL.getNextArticle(CONFIG.id);
 	ACTION.previous = MODEL.getPreviousArticle(CONFIG.id);
 
-	var navigation = Alloy.createWidget("com.chariti.detailNavigation", null, {
+	var navigation = Alloy.createWidget("com.mcongrove.detailNavigation", null, {
 		color: APP.Settings.colors.theme == "dark" ? "white" : "black",
 		down: function(_event) {
 			APP.log("debug", "article_article @next");
