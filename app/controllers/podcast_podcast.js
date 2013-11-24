@@ -125,18 +125,28 @@ $.createAudioPlayer = function(_url) {
  * Downloads the audio file from the remote source
  */
 $.downloadRemoteFile = function() {
-	Alloy.createWidget("com.chariti.toast", null, {
+	var toastStart = Alloy.createWidget("com.chariti.toast", null, {
 		text: "Starting Download",
-		duration: 2000
-	});
+		duration: 2000,
+		close: function(_event) {
+			APP.GlobalWrapper.remove(toastStart);
+		}
+	}).getView();
+
+	APP.GlobalWrapper.add(toastStart);
 
 	MODEL.downloadPodcast({
 		url: ACTION.url,
 		callback: function(_event) {
-			Alloy.createWidget("com.chariti.toast", null, {
+			var toastComplete = Alloy.createWidget("com.chariti.toast", null, {
 				text: "Download Complete",
-				duration: 2000
-			});
+				duration: 2000,
+				close: function(_event) {
+					APP.GlobalWrapper.remove(toastComplete);
+				}
+			}).getView();
+
+			APP.GlobalWrapper.add(toastComplete);
 		}
 	});
 

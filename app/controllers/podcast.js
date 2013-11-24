@@ -68,12 +68,17 @@ $.retrieveData = function(_force, _callback) {
 			}
 		},
 		error: function() {
-			Alloy.createWidget("com.chariti.toast", null, {
-				text: "Unable to connect; try again later",
-				duration: 2000
-			});
-
 			APP.closeLoading();
+
+			var toast = Alloy.createWidget("com.chariti.toast", null, {
+				text: "Unable to connect; try again later",
+				duration: 2000,
+				close: function(_event) {
+					APP.GlobalWrapper.remove(toast);
+				}
+			}).getView();
+
+			APP.GlobalWrapper.add(toast);
 
 			if(typeof _callback !== "undefined") {
 				_callback();

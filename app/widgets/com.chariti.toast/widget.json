@@ -3,7 +3,7 @@
 	"name": "com.chariti.toast",
 	"description" : "A toast notification.",
 	"author": "Matthew Congrove",
-	"version": "1.0",
+	"version": "1.1",
 	"copyright":"Copyright 2013 Matthew Congrove",
 	"license":"Public Domain",
 	"min-alloy-version": "1.0",

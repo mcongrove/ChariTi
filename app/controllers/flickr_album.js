@@ -25,10 +25,15 @@ $.init = function() {
 		cache: CONFIG.cache,
 		callback: $.handleData,
 		error: function() {
-			Alloy.createWidget("com.chariti.toast", null, {
+			var toast = Alloy.createWidget("com.chariti.toast", null, {
 				text: "Unable to connect; try again later",
-				duration: 2000
-			});
+				duration: 2000,
+				close: function(_event) {
+					APP.GlobalWrapper.remove(toast);
+				}
+			}).getView();
+
+			APP.GlobalWrapper.add(toast);
 		}
 	});
 
