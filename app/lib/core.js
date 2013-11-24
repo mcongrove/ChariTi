@@ -428,7 +428,12 @@ var APP = {
 
 		APP.Tabs.init({
 			nodes: _nodes,
-			colors: APP.Settings.colors
+			more: APP.Settings.colors.theme == "dark" ? "/icons/white/more.png" : "/icons/black/more.png",
+			color: {
+				background: APP.Settings.colors.primary,
+				active: APP.Settings.colors.secondary,
+				text: APP.Settings.colors.theme == "dark" ? "#FFF" : "#000"
+			}
 		});
 
 		// Add a handler for the tabs (make sure we remove existing ones first)

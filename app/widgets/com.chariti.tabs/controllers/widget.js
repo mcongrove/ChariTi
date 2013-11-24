@@ -8,6 +8,11 @@
  * Initializes the tab bar
  * @param {Object} _params
  * @param {Object} _params.nodes The nodes (tab items) to show in the TabGroup as defined by the JSON configuration file
+ * @param {Object} _params.more The image for the "..." (more) tab
+ * @param {Object} _params.color The colors to use for the tab bar
+ * @param {Object} _params.color.background The background of the tab bar
+ * @param {Object} _params.color.active The background of an active tab
+ * @param {Object} _params.color.text The tab text color
  */
 $.init = function(_params) {
 	$.nodes = [];
@@ -36,10 +41,10 @@ $.init = function(_params) {
 
 	$.width = $.excess ? Math.floor($.display.width / $.excessLength) : Math.floor($.display.width / _params.nodes.length);
 
-	$.TabGroup.backgroundColor = _params.colors.primary;
-	$.TabContainerMore.backgroundColor = _params.colors.primary;
-	$.Indicator.backgroundColor = _params.colors.secondary;
-	$.IndicatorMore.backgroundColor = _params.colors.secondary;
+	$.TabGroup.backgroundColor = _params.color.background;
+	$.TabContainerMore.backgroundColor = _params.color.background;
+	$.Indicator.backgroundColor = _params.color.active;
+	$.IndicatorMore.backgroundColor = _params.color.active;
 
 	$.IndicatorContainer.width = $.display.width + "dp";
 	$.Indicator.width = $.width + "dp";
@@ -72,7 +77,7 @@ $.init = function(_params) {
 				fontSize: "10dp",
 				fontFamily: "HelveticaNeue"
 			},
-			color: _params.colors.theme == "dark" ? "#FFF" : "#000",
+			color: _params.color.text,
 			textAlign: "center",
 			touchEnabled: false
 		});
@@ -122,7 +127,7 @@ function addMoreTab(_params) {
 	});
 
 	var icon = Ti.UI.createImageView({
-		image: _params.colors.theme == "dark" ? "/icons/white/more.png" : "/icons/black/more.png",
+		image: _params.more,
 		width: "32dp",
 		height: "32dp",
 		top: "7dp",
@@ -141,7 +146,7 @@ function addMoreTab(_params) {
 			fontSize: "10dp",
 			fontFamily: "HelveticaNeue"
 		},
-		color: _params.colors.theme == "dark" ? "#FFF" : "#000",
+		color: _params.color.text,
 		textAlign: "center",
 		touchEnabled: false
 	});
