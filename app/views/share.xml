@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Share">
-		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="logo.png" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="data/logo.png" />
 		
 		<View id="container">
 			<Label id="heading" text="Want to help spread the word? Send one of these templates to your contacts:" />

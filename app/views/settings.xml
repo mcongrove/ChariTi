@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Settings">
-		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="logo.png" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="data/logo.png" />
 		
 		<ScrollView id="container">
 			<TableView id="legal_table" height="90dp">

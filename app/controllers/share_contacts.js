@@ -32,18 +32,18 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
-		$.NavigationBar.showBack({
-			callback: function(_event) {
+		$.NavigationBar.showBack(
+			function(_event) {
 				APP.removeAllChildren();
 			}
-		});
+		);
 	}
 
-	$.NavigationBar.showNext({
-		callback: function() {
+	$.NavigationBar.showNext(
+		function() {
 			$.createEmail(SELECTED);
 		}
-	});
+	);
 };
 
 /**

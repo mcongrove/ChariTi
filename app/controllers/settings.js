@@ -40,17 +40,17 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu({
-			callback: function(_event) {
+		$.NavigationBar.showMenu(
+			function(_event) {
 				APP.toggleMenu();
 			}
-		});
+		);
 	} else {
-		$.NavigationBar.showBack({
-			callback: function(_event) {
+		$.NavigationBar.showBack(
+			function(_event) {
 				APP.removeChild(true);
 			}
-		});
+		);
 	}
 };
 

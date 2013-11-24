@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Share Contacts">
-		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="logo.png" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="data/logo.png" />
 		
 		<TableView id="container" />
 	</View>

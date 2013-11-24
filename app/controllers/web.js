@@ -31,25 +31,25 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(CONFIG.isChild === true) {
-		$.NavigationBar.showBack({
-			callback: function(_event) {
+		$.NavigationBar.showBack(
+			function(_event) {
 				APP.removeChild();
 			}
-		});
+		);
 	}
 
 	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu({
-			callback: function(_event) {
+		$.NavigationBar.showMenu(
+			function(_event) {
 				APP.toggleMenu();
 			}
-		});
+		);
 	} else {
-		$.NavigationBar.showSettings({
-			callback: function(_event) {
+		$.NavigationBar.showSettings(
+			function(_event) {
 				APP.openSettings();
 			}
-		});
+		);
 	}
 
 	// Move the UI down if iOS7+

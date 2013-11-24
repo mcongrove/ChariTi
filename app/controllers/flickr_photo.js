@@ -15,12 +15,12 @@ var NEXT = null;
 var metaVisible = true;
 
 $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
-$.NavigationBar.showBack({
-	callback: function(_event) {
+$.NavigationBar.showBack(
+	function(_event) {
 		APP.removeChild();
 		APP.SlideMenuEngaged = true;
 	}
-});
+);
 
 APP.SlideMenuEngaged = false;
 

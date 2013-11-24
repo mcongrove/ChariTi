@@ -47,20 +47,20 @@ $.handleData = function(_data) {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
-		$.NavigationBar.showBack({
-			callback: function(_event) {
+		$.NavigationBar.showBack(
+			function(_event) {
 				$.streamStop();
 
 				APP.removeAllChildren();
 			}
-		});
+		);
 	}
 
-	$.NavigationBar.showAction({
-		callback: function(_event) {
+	$.NavigationBar.showAction(
+		function(_event) {
 			SOCIAL.share(ACTION.url, $.NavigationBar.right);
 		}
-	});
+	);
 };
 
 /**

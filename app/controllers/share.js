@@ -20,25 +20,25 @@ $.init = function() {
 	$.loadData();
 
 	if(CONFIG.isChild === true) {
-		$.NavigationBar.showBack({
-			callback: function(_event) {
+		$.NavigationBar.showBack(
+			function(_event) {
 				APP.removeChild();
 			}
-		});
+		);
 	}
 
 	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu({
-			callback: function(_event) {
+		$.NavigationBar.showMenu(
+			function(_event) {
 				APP.toggleMenu();
 			}
-		});
+		);
 	} else {
-		$.NavigationBar.showSettings({
-			callback: function(_event) {
+		$.NavigationBar.showSettings(
+			function(_event) {
 				APP.openSettings();
 			}
-		});
+		);
 	}
 };
 

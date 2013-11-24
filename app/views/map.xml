@@ -1,6 +1,6 @@
 <Alloy>
 	<View id="Wrapper" name="Map">
-		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="logo.png" />
+		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" image="data/logo.png" />
 		
 		<View ns="Ti.Map" id="container" />
 	</View>

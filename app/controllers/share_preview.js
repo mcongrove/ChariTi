@@ -16,11 +16,11 @@ $.text.text = CONFIG.text.replace(/\s*<br[^>]*>\s*/ig, "\n").replace(/<[^>]*>/g,
 $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 if(APP.Device.isHandheld) {
-	$.NavigationBar.showBack({
-		callback: function(_event) {
+	$.NavigationBar.showBack(
+		function(_event) {
 			APP.removeChild();
 		}
-	});
+	);
 }
 
 // Event listeners
