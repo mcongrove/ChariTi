@@ -1,0 +1,3 @@
+[submodule "app/widgets/nl.fokkezb.pullToRefresh"]
+	path = app/widgets/nl.fokkezb.pullToRefresh
+	url = git@github.com:FokkeZB/nl.fokkezb.pullToRefresh.git
