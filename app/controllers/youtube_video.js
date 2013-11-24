@@ -17,5 +17,9 @@ $.container.willHandleTouches = false;
 $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 if(APP.Device.isHandheld) {
-	$.NavigationBar.showBack();
+	$.NavigationBar.showBack({
+		callback: function(_event) {
+			APP.removeChild();
+		}
+	});
 }

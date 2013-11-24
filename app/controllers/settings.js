@@ -40,7 +40,11 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu();
+		$.NavigationBar.showMenu({
+			callback: function(_event) {
+				APP.toggleMenu();
+			}
+		});
 	} else {
 		$.NavigationBar.showBack({
 			callback: function(_event) {

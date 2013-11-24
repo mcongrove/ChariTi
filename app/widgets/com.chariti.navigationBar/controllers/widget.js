@@ -2,9 +2,7 @@
  * The navigation bar widget
  * 
  * @class Widgets.com.chariti.navigationBar
- * @uses core
  */
-var APP = require("core");
 
 /**
  * @member Widgets.com.chariti.navigationBar
@@ -92,45 +90,18 @@ $.setTitle = function(_text) {
 };
 
 /**
- * Shows the back button
- * @param {Object} _params
- * @param {Function} _params.callback The function to run on back button press
- */
-$.showBack = function(_params) {
-	$.backImage.image = theme == "white" ? WPATH("/images/white/back.png") : WPATH("/images/black/back.png");
-	$.back.visible = true;
-
-	if(_params && typeof _params.callback !== "undefined") {
-		$.back.addEventListener("click", _params.callback);
-	} else {
-		$.back.addEventListener("click", function(_event) {
-			APP.removeChild();
-		});
-	}
-};
-
-/**
- * Shows the next button
- * @param {Object} _params
- * @param {Function} _params.callback The function to run on next button press
- */
-$.showNext = function(_params) {
-	$.nextImage.image = theme == "white" ? WPATH("/images/white/next.png") : WPATH("/images/black/next.png");
-	$.next.visible = true;
-
-	$.next.addEventListener("click", _params.callback);
-};
-
-/**
  * Shows the left button
  * @param {Object} _params
  * @param {Function} _params.callback The function to run on left button press
  * @param {String} _params.image The image to show for the left button
  */
 $.showLeft = function(_params) {
-	$.left.visible = true;
-	$.leftImage.image = _params.image;
-	$.left.addEventListener("click", _params.callback);
+	if(_params && typeof _params.callback !== "undefined") {
+		$.left.visible = true;
+		$.leftImage.image = _params.image;
+
+		$.left.addEventListener("click", _params.callback);
+	}
 };
 
 /**
@@ -140,29 +111,68 @@ $.showLeft = function(_params) {
  * @param {String} _params.image The image to show for the right button
  */
 $.showRight = function(_params) {
-	$.right.visible = true;
-	$.rightImage.image = _params.image;
-	$.right.addEventListener("click", _params.callback);
+	if(_params && typeof _params.callback !== "undefined") {
+		$.right.visible = true;
+		$.rightImage.image = _params.image;
+
+		$.right.addEventListener("click", _params.callback);
+	}
+};
+
+/**
+ * Shows the back button
+ * @param {Object} _params
+ * @param {Function} _params.callback The function to run on back button press
+ */
+$.showBack = function(_params) {
+	if(_params && typeof _params.callback !== "undefined") {
+		$.backImage.image = theme == "white" ? WPATH("/images/white/back.png") : WPATH("/images/black/back.png");
+		$.back.visible = true;
+
+		$.back.addEventListener("click", _params.callback);
+	}
+};
+
+/**
+ * Shows the next button
+ * @param {Object} _params
+ * @param {Function} _params.callback The function to run on next button press
+ */
+$.showNext = function(_params) {
+	if(_params && typeof _params.callback !== "undefined") {
+		$.nextImage.image = theme == "white" ? WPATH("/images/white/next.png") : WPATH("/images/black/next.png");
+		$.next.visible = true;
+
+		$.next.addEventListener("click", _params.callback);
+	}
 };
 
 /**
  * Shows the menu button
+ * @param {Object} _params
+ * @param {Function} _params.callback The function to run on action button press
  */
-$.showMenu = function() {
-	$.showLeft({
-		image: theme == "white" ? WPATH("/images/white/menu.png") : WPATH("/images/black/menu.png"),
-		callback: APP.toggleMenu
-	});
+$.showMenu = function(_params) {
+	if(_params && typeof _params.callback !== "undefined") {
+		$.showLeft({
+			image: theme == "white" ? WPATH("/images/white/menu.png") : WPATH("/images/black/menu.png"),
+			callback: _params.callback
+		});
+	}
 };
 
 /**
  * Shows the settings button
+ * @param {Object} _params
+ * @param {Function} _params.callback The function to run on action button press
  */
-$.showSettings = function() {
-	$.showRight({
-		image: theme == "white" ? WPATH("/images/white/settings.png") : WPATH("/images/black/settings.png"),
-		callback: APP.openSettings
-	});
+$.showSettings = function(_params) {
+	if(_params && typeof _params.callback !== "undefined") {
+		$.showRight({
+			image: theme == "white" ? WPATH("/images/white/settings.png") : WPATH("/images/black/settings.png"),
+			callback: _params.callback
+		});
+	}
 };
 
 /**
@@ -171,10 +181,12 @@ $.showSettings = function() {
  * @param {Function} _params.callback The function to run on action button press
  */
 $.showAction = function(_params) {
-	$.showRight({
-		image: theme == "white" ? WPATH("/images/white/action.png") : WPATH("/images/black/action.png"),
-		callback: _params.callback
-	});
+	if(_params && typeof _params.callback !== "undefined") {
+		$.showRight({
+			image: theme == "white" ? WPATH("/images/white/action.png") : WPATH("/images/black/action.png"),
+			callback: _params.callback
+		});
+	}
 };
 
 /**

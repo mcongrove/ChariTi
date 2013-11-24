@@ -17,11 +17,23 @@ $.text.text = CONFIG.text;
 $.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 if(CONFIG.isChild === true) {
-	$.NavigationBar.showBack();
+	$.NavigationBar.showBack({
+		callback: function(_event) {
+			APP.removeChild();
+		}
+	});
 }
 
 if(APP.Settings.useSlideMenu) {
-	$.NavigationBar.showMenu();
+	$.NavigationBar.showMenu({
+		callback: function(_event) {
+			APP.toggleMenu();
+		}
+	});
 } else {
-	$.NavigationBar.showSettings();
+	$.NavigationBar.showSettings({
+		callback: function(_event) {
+			APP.openSettings();
+		}
+	});
 }
