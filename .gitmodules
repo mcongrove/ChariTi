@@ -1,3 +1,21 @@
 [submodule "app/widgets/nl.fokkezb.pullToRefresh"]
 	path = app/widgets/nl.fokkezb.pullToRefresh
 	url = git@github.com:FokkeZB/nl.fokkezb.pullToRefresh.git
+[submodule "app/widgets/com.mcongrove.detailNavigation"]
+	path = app/widgets/com.mcongrove.detailNavigation
+	url = git@github.com:mcongrove/com.mcongrove.detailNavigation.git
+[submodule "app/widgets/com.mcongrove.loading"]
+	path = app/widgets/com.mcongrove.loading
+	url = git@github.com:mcongrove/com.mcongrove.loading.git
+[submodule "app/widgets/com.mcongrove.tabs"]
+	path = app/widgets/com.mcongrove.tabs
+	url = git@github.com:mcongrove/com.mcongrove.tabs.git
+[submodule "app/widgets/com.mcongrove.navigationBar"]
+	path = app/widgets/com.mcongrove.navigationBar
+	url = git@github.com:mcongrove/com.mcongrove.navigationBar.git
+[submodule "app/widgets/com.mcongrove.toast"]
+	path = app/widgets/com.mcongrove.toast
+	url = git@github.com:mcongrove/com.mcongrove.toast.git
+[submodule "app/widgets/com.mcongrove.slideMenu"]
+	path = app/widgets/com.mcongrove.slideMenu
+	url = git@github.com:mcongrove/com.mcongrove.slideMenu.git
