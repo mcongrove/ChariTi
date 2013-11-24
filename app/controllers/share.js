@@ -20,25 +20,19 @@ $.init = function() {
 	$.loadData();
 
 	if(CONFIG.isChild === true) {
-		$.NavigationBar.showBack(
-			function(_event) {
-				APP.removeChild();
-			}
-		);
+		$.NavigationBar.showBack(function(_event) {
+			APP.removeChild();
+		});
 	}
 
 	if(APP.Settings.useSlideMenu) {
-		$.NavigationBar.showMenu(
-			function(_event) {
-				APP.toggleMenu();
-			}
-		);
+		$.NavigationBar.showMenu(function(_event) {
+			APP.toggleMenu();
+		});
 	} else {
-		$.NavigationBar.showSettings(
-			function(_event) {
-				APP.openSettings();
-			}
-		);
+		$.NavigationBar.showSettings(function(_event) {
+			APP.openSettings();
+		});
 	}
 };
 

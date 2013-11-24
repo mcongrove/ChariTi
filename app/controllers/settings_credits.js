@@ -14,11 +14,9 @@ $.init = function() {
 
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
-	$.NavigationBar.showBack(
-		function(_event) {
-			APP.removeChild(true);
-		}
-	);
+	$.NavigationBar.showBack(function(_event) {
+		APP.removeChild(true);
+	});
 };
 
 // Kick off the init

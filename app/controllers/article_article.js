@@ -62,18 +62,14 @@ $.handleData = function(_data) {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 
 	if(APP.Device.isHandheld) {
-		$.NavigationBar.showBack(
-			function(_event) {
-				APP.removeAllChildren();
-			}
-		);
+		$.NavigationBar.showBack(function(_event) {
+			APP.removeAllChildren();
+		});
 	}
 
-	$.NavigationBar.showAction(
-		function(_event) {
-			SOCIAL.share(ACTION.url, $.NavigationBar.right);
-		}
-	);
+	$.NavigationBar.showAction(function(_event) {
+		SOCIAL.share(ACTION.url, $.NavigationBar.right);
+	});
 };
 
 /**

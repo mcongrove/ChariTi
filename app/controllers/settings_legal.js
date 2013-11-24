@@ -21,11 +21,9 @@ $.init = function() {
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
 	$.NavigationBar.setTitle(CONFIG.title);
 
-	$.NavigationBar.showBack(
-		function(_event) {
-			APP.removeChild(true);
-		}
-	);
+	$.NavigationBar.showBack(function(_event) {
+		APP.removeChild(true);
+	});
 };
 
 // Kick off the init
