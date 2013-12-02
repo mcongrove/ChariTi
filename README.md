@@ -6,6 +6,15 @@ ChariTi is a framework built to allow charities to quickly and easily create mob
 
 Information about ChariTi is available on the [ChariTi Website](http://chariti.mobi/).
 
+Getting Started
+---------------
+
+To download your own copy of ChariTi, run the following command in terminal:
+
+	git clone --recursive git@github.com:mcongrove/ChariTi.git
+
+Please include the `--recursive` option to ensure you download all of the submodules!
+
 Code Contribution Practices
 ---------------------------
 * Please _do not_ use the `master` branch; instead, use the next release branch
