@@ -1,0 +1,11 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="arrowUpWrapper">
+			<ImageView id="arrowUp" />
+		</View>
+		
+		<View id="arrowDownWrapper">
+			<ImageView id="arrowDown" />
+		</View>
+	</View>
+</Alloy>

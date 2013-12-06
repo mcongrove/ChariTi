@@ -1,0 +1,24 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="TabGroup">
+			<View id="Border" />
+			
+			<View id="IndicatorContainer">
+				<View id="Indicator" />
+			</View>
+			
+			<View id="Overlay" />
+			
+			<View id="TabContainer">
+				<View id="Tabs" />
+			</View>
+		</View>
+		
+		<View id="TabGroupMore">
+			<View id="TabContainerMore">
+				<View id="IndicatorMore" />
+				<View id="TabsMore" />
+			</View>
+		</View>
+	</View>
+</Alloy>

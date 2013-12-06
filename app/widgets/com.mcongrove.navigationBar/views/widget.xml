@@ -1,0 +1,23 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="overlay">
+			<View id="back" visible="false">
+				<ImageView id="backImage" />
+			</View>
+			
+			<View id="next" visible="false">
+				<ImageView id="nextImage" />
+			</View>
+			
+			<View id="left" visible="false">
+				<ImageView id="leftImage" />
+			</View>
+			
+			<View id="right" visible="false">
+				<ImageView id="rightImage" />
+			</View>
+		</View>
+		
+		<View id="border" />
+	</View>
+</Alloy>

@@ -1,0 +1,31 @@
+"#Wrapper": {
+	width: "66dp",
+	height: "12dp",
+	top: "17dp"
+},
+"#arrowUpWrapper": {
+	width: "22dp",
+	height: "12dp",
+	top: "0dp",
+	left: "0dp"
+},
+"#arrowUp": {
+	width: "22dp",
+	height: "12dp",
+	top: "0dp",
+	left: "0dp",
+	preventDefaultImage: true
+},
+"#arrowDownWrapper": {
+	width: "22dp",
+	height: "12dp",
+	top: "0dp",
+	right: "0dp"
+},
+"#arrowDown": {
+	width: "22dp",
+	height: "12dp",
+	top: "0dp",
+	right: "0dp",
+	preventDefaultImage: true
+}

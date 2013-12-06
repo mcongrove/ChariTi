@@ -1,0 +1,11 @@
+<Alloy>
+	<View id="Wrapper">
+		<View id="Background" />
+		
+		<View id="Modal">
+			<ImageView id="Loading" />
+			
+			<Label id="Label" text="Loading" />
+		</View>
+	</View>
+</Alloy>

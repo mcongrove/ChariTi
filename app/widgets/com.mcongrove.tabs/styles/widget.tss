@@ -1,0 +1,59 @@
+"#Wrapper": {
+	height: "60dp",
+	bottom: "0dp"
+},
+"#TabGroup": {
+	height: "60dp",
+	width: Ti.UI.FILL,
+	bottom: "0dp"
+},
+"#Border": {
+	top: "0dp",
+	height: "1dp",
+	width: Ti.UI.FILL,
+	backgroundColor: "#000",
+	opacity: 0.2
+},
+"#IndicatorContainer": {
+	height: "59dp"
+},
+"#Indicator": {
+	height: "59dp",
+	bottom: "0dp",
+	left: "0dp",
+	backgroundColor: "#FFF",
+	opacity: 0.4
+},
+"#Overlay": {
+	width: Ti.UI.FILL,
+	height: "60dp"
+},
+"#TabContainer": {
+	height: "60dp"
+},
+"#Tabs": {
+	layout: "horizontal",
+	height: "60dp",
+	width: Ti.UI.FILL
+},
+"#TabGroupMore": {
+	height: Ti.UI.SIZE,
+	bottom: "60dp"
+},
+"#IndicatorMore": {
+	height: "60dp",
+	top: "0dp",
+	left: "0dp",
+	width: Ti.UI.FILL,
+	backgroundColor: "#FFF",
+	opacity: 0.4
+},
+"#TabContainerMore": {
+	height: Ti.UI.SIZE,
+	right: "0dp"
+},
+"#TabsMore": {
+	layout: "vertical",
+	height: Ti.UI.SIZE,
+	bottom: "0dp"
+}
