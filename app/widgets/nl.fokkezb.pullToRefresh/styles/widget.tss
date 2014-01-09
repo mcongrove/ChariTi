@@ -1,0 +1,35 @@
+".ptr": {
+	backgroundColor: '#eeeeee'
+}
+
+".ptrCenter": {
+	bottom: 10,
+	width: Ti.UI.SIZE, height: Ti.UI.SIZE
+}
+
+".ptrArrow": {
+	left: 8,
+	width: 12, height: 30,
+	
+    image: WPATH('/images/grey.png')
+}
+
+".ptrIndicator": {
+	left: 0,
+    
+    style: Ti.UI.ActivityIndicatorStyle.DARK
+}
+
+".ptrIndicator[platform=ios]": {
+	style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+}
+
+".ptrText": {
+    left: 30,
+    
+    color: '#777',
+    font: {
+    	fontSize: 13,
+    	fontWeight: 'bold'
+    }
+}
