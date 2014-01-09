@@ -203,13 +203,26 @@ $.setIndex = function(_index) {
  */
 function moreEvent(_event) {
 	if($.moreOpen) {
-		$.Wrapper.height = "60dp";
+
+		var animation = Titanium.UI.createAnimation({
+			height: "60dp",
+			duration: 100,
+			curve: Titanium.UI.ANIMATION_CURVE_EASE_IN			
+		});
+
+		$.Wrapper.animate(animation);		
 
 		$.moreOpen = false;
 	} else {
 		$.moreOpen = true;
 
-		$.Wrapper.height = Ti.UI.SIZE;
+		var animation = Titanium.UI.createAnimation({
+			height: Ti.UI.SIZE,
+			duration: 100,
+			curve: Titanium.UI.ANIMATION_CURVE_EASE_IN			
+		});
+
+		$.Wrapper.animate(animation);
 	}
 };
 
