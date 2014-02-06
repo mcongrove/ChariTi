@@ -109,6 +109,10 @@ $.getContacts = function() {
 	}
 
 	contacts.sort(function(a, b) {
+		//Handles Null value, seems this is Android only issue
+		a.name = a.name || '';
+		b.name = b.name || '';
+
 		a = a.name.toLowerCase();
 		b = b.name.toLowerCase();
 
