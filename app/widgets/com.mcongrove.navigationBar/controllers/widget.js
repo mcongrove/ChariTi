@@ -1,6 +1,6 @@
 /**
  * The navigation bar widget
- * 
+ *
  * @class Widgets.com.mcongrove.navigationBar
  */
 
@@ -124,7 +124,8 @@ $.showRight = function(_params) {
 $.showBack = function(_callback) {
 	if(_callback && typeof _callback !== "undefined") {
 		$.backImage.image = theme == "white" ? WPATH("/images/white/back.png") : WPATH("/images/black/back.png");
-		$.back.visible = true;
+		$.backImage.setAccessibilityLabel("Back");
+    $.back.visible = true;
 
 		$.back.addEventListener("click", _callback);
 	}
@@ -137,7 +138,8 @@ $.showBack = function(_callback) {
 $.showNext = function(_callback) {
 	if(_callback && typeof _callback !== "undefined") {
 		$.nextImage.image = theme == "white" ? WPATH("/images/white/next.png") : WPATH("/images/black/next.png");
-		$.next.visible = true;
+		$.nextImage.setAccessibilityLabel("Next");
+    $.next.visible = true;
 
 		$.next.addEventListener("click", _callback);
 	}
@@ -153,6 +155,7 @@ $.showMenu = function(_callback) {
 			image: theme == "white" ? WPATH("/images/white/menu.png") : WPATH("/images/black/menu.png"),
 			callback: _callback
 		});
+    $.leftImage.setAccessibilityLabel("Toggle Menu");
 	}
 };
 
@@ -166,6 +169,8 @@ $.showSettings = function(_callback) {
 			image: theme == "white" ? WPATH("/images/white/settings.png") : WPATH("/images/black/settings.png"),
 			callback: _callback
 		});
+
+    $.rightImage.setAccessibilityLabel("Settings");
 	}
 };
 
@@ -179,6 +184,8 @@ $.showAction = function(_callback) {
 			image: theme == "white" ? WPATH("/images/white/action.png") : WPATH("/images/black/action.png"),
 			callback: _callback
 		});
+    // not clear possibly add property for this?
+    $.rightImage.setAccessibilityLabel("Action");
 	}
 };
 

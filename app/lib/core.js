@@ -45,7 +45,7 @@ var APP = {
 	},
 	/**
 	 * URL to remote JSON configuration file
-	 * 
+	 *
 	 * **NOTE: This can be used for over-the-air (OTA) application updates.**
 	 * @type {String}
 	 */
@@ -216,7 +216,7 @@ var APP = {
 	SlideMenuOpen: false,
 	/**
 	 * Whether or not the slide menu is engaged
-	 * 
+	 *
 	 * **NOTE: Turning this false temporarily disables the slide menu**
 	 * @type {Boolean}
 	 */
@@ -917,7 +917,7 @@ var APP = {
 	 */
 	openMenu: function() {
 		APP.SlideMenu.Wrapper.left = "0dp";
-
+    APP.SlideMenu.Wrapper.setAccessibilityHidden(false);
 		APP.GlobalWrapper.animate({
 			left: "200dp",
 			duration: 250,
@@ -935,7 +935,7 @@ var APP = {
 			duration: 250,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
-
+    APP.SlideMenu.Wrapper.setAccessibilityHidden(true);
 		APP.SlideMenuOpen = false;
 	},
 	/**
