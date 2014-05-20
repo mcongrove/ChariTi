@@ -124,7 +124,7 @@ $.showRight = function(_params) {
 $.showBack = function(_callback) {
 	if(_callback && typeof _callback !== "undefined") {
 		$.backImage.image = theme == "white" ? WPATH("/images/white/back.png") : WPATH("/images/black/back.png");
-		$.backIamge.setAccessibilityLabel("Back");
+		$.backImage.setAccessibilityLabel("Back");
     $.back.visible = true;
 
 		$.back.addEventListener("click", _callback);
@@ -138,7 +138,7 @@ $.showBack = function(_callback) {
 $.showNext = function(_callback) {
 	if(_callback && typeof _callback !== "undefined") {
 		$.nextImage.image = theme == "white" ? WPATH("/images/white/next.png") : WPATH("/images/black/next.png");
-		$.nextImageset.setAccessibilityLabel("Next");
+		$.nextImage.setAccessibilityLabel("Next");
     $.next.visible = true;
 
 		$.next.addEventListener("click", _callback);
@@ -155,7 +155,7 @@ $.showMenu = function(_callback) {
 			image: theme == "white" ? WPATH("/images/white/menu.png") : WPATH("/images/black/menu.png"),
 			callback: _callback
 		});
-    $.leftImage.setsetAccessibilityLabel("Toggle Menu");
+    $.leftImage.setAccessibilityLabel("Toggle Menu");
 	}
 };
 
